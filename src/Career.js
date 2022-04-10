@@ -1,42 +1,49 @@
 let jobsData = [{
-    job1: {
-        yearsOfExperienceAtEachStep:
-            [0, 4, 5, 8],
-        incomeAtBeginningOfEachStep:
-            [60000, 120000, 150000, 300000],
-    }
+    yearsOfExperienceAtEachStep:
+        [0, 4, 5, 8],
+    incomeAtBeginningOfEachStep:
+        [60000, 120000, 150000, 300000],
 },{
-    job2: {
-        immediateIncome: 35000,
-        incomeCeiling: 70000,
-        yearsToIncomeCeiling: 5,
-    }
+    immediateIncome: 35000,
+    incomeCeiling: 70000,
+    yearIncomeBegins: 5,
+    yearsToIncomeCeiling: 5,
 }];
+
+let graphMaxNumberOfYears = 15 - 1;
 
 let cc = console.log;
 
 function JobContainer({jobsData}) {
-
-    //let stepsInIncome = 4; array makes this redundant; count via index.
-    //let incomeAtEachStep = [60000, 120000, 150000, 300000];
-    //let yearsOfExperienceAtEachStep = [0, 4, 5, 8];
-
-    //
-    //let beginningSalary = 25000;
-    //let endSalary = 80000;
-
     cc(jobsData);
+    checkIsIncomeLinearOrStepped(jobsData);
 
-    function checkIsIncomeLinearOrStepped(){
+    function checkIsIncomeLinearOrStepped(jobsData){
+        jobsData.forEach(job => {
+            if (job.yearsOfExperienceAtEachStep){
+                cc("stepped");
+            } else if (job.yearsOfExperienceAtEachStep) {
+                sumLinearIncome(job);
+            } else {
+                //throw error: value not set
+            }
+        });
+    }
+
+    function doesLinearIncomeTimeframeExceedLimit(job){
+        cc(job);
+        if ((job.yearIncomeBegins + job.yearsToIncomeCeiling) <= graphMaxNumberOfYears){
+        } else {
+            //throw error: exceeds graph's limit
+        }
+    }
+
+    function calculateLinearIncomeEachYear(){
 
     }
 
-    function checkIfStepsExist(){
 
-    }
-
-    function sumIncome(){
-
+    function sumLinearIncome(job){
 
     }
 
