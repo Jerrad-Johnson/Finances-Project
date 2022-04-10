@@ -1,4 +1,5 @@
-let jobsData = [{
+let jobsData =
+[{
     yearsOfExperienceAtEachStep:
         [0, 4, 5, 8],
     incomeAtBeginningOfEachStep:
@@ -12,23 +13,57 @@ let jobsData = [{
 
 let graphMaxNumberOfYears = 15 - 1;
 
-let cc = console.log;
+
+
+var cc = console.log;
 
 function JobContainer({jobsData}) {
-    cc(jobsData);
-    checkIsIncomeLinearOrStepped(jobsData);
+    //let x = separateLinearAndSteppedIncomeJobs(jobsData);
 
-    function checkIsIncomeLinearOrStepped(jobsData){
+/*    function separateLinearAndSteppedIncomeJobs(jobsData){
+        let steppedIncomeJobs = [], linearIncomeJobs = [];
+
         jobsData.forEach(job => {
             if (job.yearsOfExperienceAtEachStep){
-                cc("stepped");
-            } else if (job.yearsOfExperienceAtEachStep) {
-                sumLinearIncome(job);
-            } else {
-                //throw error: value not set
+                steppedIncomeJobs.push(job);
+            } else if (job.immediateIncome) {
+                linearIncomeJobs.push(job);
             }
         });
+
+        return [steppedIncomeJobs, linearIncomeJobs];
+    }*/
+
+    let y = findLinearIncomeJobs(jobsData);
+    let z = findSteppedIncomeJobs(jobsData);
+
+    cc( y, z );
+
+    function findLinearIncomeJobs(jobsData){
+        let linearIncomeJobs = [];
+
+        jobsData.forEach(job => {
+            if (job.immediateIncome) {
+                linearIncomeJobs.push(job);
+            }
+        });
+
+        return [linearIncomeJobs];
     }
+
+    function findSteppedIncomeJobs(jobsData){
+        let steppedIncomeJobs = [];
+
+        jobsData.forEach(job => {
+            if (job.yearsOfExperienceAtEachStep) {
+                steppedIncomeJobs.push(job);
+            }
+        });
+
+        return [steppedIncomeJobs];
+    }
+
+
 
     function doesLinearIncomeTimeframeExceedLimit(job){
         cc(job);
