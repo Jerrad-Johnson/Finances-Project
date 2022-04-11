@@ -18,6 +18,7 @@ class JobDataHandler {
 
     beginLinear(jobs){
         this.doesLinearIncomeTimeframeExceedGraphLimit(jobs);
+        this.calculateLinearIncomeEachYear(jobs);
         return(jobs);
     }
 
@@ -58,30 +59,41 @@ class JobDataHandler {
 
     doesLinearIncomeTimeframeExceedGraphLimit(jobs) {
         let jobsToBeReturned = [];
-        this.cc(jobs);
 
         jobs.forEach(job => {
             //this.cc(job);
             if ((job.yearIncomeBegins + job.yearsToIncomeCeiling) <= this.graphMaxNumberOfYears) {
                 jobsToBeReturned.push(job);
-                this.cc(jobsToBeReturned);
-
             } else {
                 throw new Error("Total years in occupation exceeds " +this.graphMaxNumberOfYears + " which" +
                     " is the graph's limit. Job by key " +  job.key + " removed from array.");
             }
         });
+
         return jobsToBeReturned;
     }
 
-    calculateLinearIncomeEachYear() {
+    calculateLinearIncomeEachYear(jobs) {
+        let incomeIncreaseOverCareer;
+        let jobsToBeReturned = [];
 
+        this.cc(jobs);
+
+        jobs.forEach(job => {
+            incomeIncreaseOverCareer = job.incomeCeiling - job.immediateIncome;
+            job.incomeIncreasePerYear = incomeIncreaseOverCareer / job.yearsToIncomeCeiling;
+            jobsToBeReturned.push(job);
+        });
+
+        return jobsToBeReturned;
     }
 
-
+/*
     sumLinearIncome(job) {
+        jobs.forEach(job => {
 
-    }
+        });
+    }*/
 
     calculateSteps() {
 
