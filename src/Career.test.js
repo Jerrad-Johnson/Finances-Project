@@ -32,10 +32,10 @@ var jobsDataWithoutLinearEntry = [{
 
 
 test('Checks linear data', () => {
-    let x = new JobDataHandler(jobsData).findLinear();
+    let x = new JobDataHandler(jobsData).findLinearIncomeJobs();
     expect(x).toBeDefined();
 
-    let y = new JobDataHandler(jobsDataWithoutLinearEntry).findLinear();
+    let y = new JobDataHandler(jobsDataWithoutLinearEntry).findLinearIncomeJobs();
     expect(y).toBeUndefined();
 });
 

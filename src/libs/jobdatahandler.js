@@ -7,50 +7,71 @@ class JobDataHandler {
     }
 
     findLinear(){
-        let linearJobs = this.findLinearIncomeJobs(this.jobsData);
-        return (this.begin(linearJobs));
+        let linearJobs = this.findLinearIncomeJobs();
+        return (this.beginLinear(linearJobs));
     }
 
     findStepped(){
         let steppedJobs = this.findSteppedIncomeJobs(this.jobsData);
-        return (this.begin(steppedJobs));
+        return (this.beginStepped(steppedJobs));
     }
 
-    begin(jobs){
+    beginLinear(jobs){
+        this.doesLinearIncomeTimeframeExceedGraphLimit(jobs);
         return(jobs);
     }
 
-    findLinearIncomeJobs(jobsData) {
-        let linearIncomeJobs = [];
+    beginStepped(jobs){
+        return(jobs);
+    }
 
-        jobsData.forEach(job => {
+    findLinearIncomeJobs() {
+        let linearIncomeJobs = [];
+        let testObj = {};
+
+        this.jobsData.forEach(job => {
             if (job.immediateIncome) {
                 linearIncomeJobs.push(job);
             }
         });
+
         if (linearIncomeJobs.length >= 1){
-            return [linearIncomeJobs];
+            return linearIncomeJobs;
         }
     }
 
-    findSteppedIncomeJobs(jobsData) {
+    findSteppedIncomeJobs() {
         let steppedIncomeJobs = [];
 
-        jobsData.forEach(job => {
+        this.jobsData.forEach(job => {
             if (job.yearsOfExperienceAtEachStep) {
                 steppedIncomeJobs.push(job);
             }
         });
+
         if (steppedIncomeJobs.length >= 1){
-            return [steppedIncomeJobs];
+            return steppedIncomeJobs;
         }
     }
 
-    doesLinearIncomeTimeframeExceedLimit(job) {
-        if ((job.yearIncomeBegins + job.yearsToIncomeCeiling) <= this.graphMaxNumberOfYears) {
-        } else {
-            //throw error: exceeds graph's limit
-        }
+    //TODO combine ^ into single loop logic
+
+    doesLinearIncomeTimeframeExceedGraphLimit(jobs) {
+        let jobsToBeReturned = [];
+        this.cc(jobs);
+
+        jobs.forEach(job => {
+            //this.cc(job);
+            if ((job.yearIncomeBegins + job.yearsToIncomeCeiling) <= this.graphMaxNumberOfYears) {
+                jobsToBeReturned.push(job);
+                this.cc(jobsToBeReturned);
+
+            } else {
+                throw new Error("Total years in occupation exceeds " +this.graphMaxNumberOfYears + " which" +
+                    " is the graph's limit. Job by key " +  job.key + " removed from array.");
+            }
+        });
+        return jobsToBeReturned;
     }
 
     calculateLinearIncomeEachYear() {
