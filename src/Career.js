@@ -19,7 +19,7 @@ var cc = console.log;
 
 function JobContainer({jobsData}) {
     const linearIncome = new JobDataHandler(jobsData).findLinear();
-    cc(linearIncome);
+
 
 
     return (
