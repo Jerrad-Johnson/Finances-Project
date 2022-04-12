@@ -4,32 +4,6 @@ import Jobdatahandler from "./libs/jobdatahandler";
 import JobDataHandler from "./libs/jobdatahandler";
 
 
-var jobsData = [{
-    yearsOfExperienceAtEachStep:
-        [0, 4, 5, 8],
-    incomeAtBeginningOfEachStep:
-        [60000, 120000, 150000, 300000],
-},{
-    immediateIncome: 35000,
-    incomeCeiling: 70000,
-    yearIncomeBegins: 5,
-    yearsToIncomeCeiling: 5,
-}];
-
-var jobsDataWithLinearEntry = [{
-    immediateIncome: 35000,
-    incomeCeiling: 70000,
-    yearIncomeBegins: 5,
-    yearsToIncomeCeiling: 5,
-    key: 5,
-}];
-
-var jobsDataWithSteppedEntry = [{
-    yearsOfExperienceAtEachStep:
-        [0, 4, 5, 8],
-    incomeAtBeginningOfEachStep:
-        [60000, 120000, 150000, 300000],
-}];
 
 
 test('Checks linear data', () => {
@@ -48,18 +22,85 @@ test('Checks stepped data', () => {
     expect(y).toBeUndefined();
 });
 
-test('Checks whether linear income is calculated over more than an X-year period', () => {
-    let x = new JobDataHandler().doesLinearIncomeTimeframeExceedGraphLimit(jobsDataWithLinearEntry);
-    expect(x).toBeDefined();
-
-    /*let z = new JobDataHandler().doesLinearIncomeTimeframeExceedGraphLimit(jobsDataWithSteppedEntry);
-    expect(z).toThrow();*/
-});
-
 test('Calculates salary raise per year from a linear-income job.', () => {
-    let x = new JobDataHandler().calculateLinearIncomeEachYear(jobsDataWithLinearEntry);
+    let x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(jobsDataWithLinearEntry);
 
     x.forEach(job => {
         expect(job.incomeIncreasePerYear).toBe(7000);
     });
+
+    let a = jobsDataWithLinearEntry;
+    a[0].immediateIncome = 0;
+
+    x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(a);
+
+    x.forEach(job => {
+        expect(job.incomeIncreasePerYear).toBe(14000);
+    });
+
+    a = jobsDataWithLinearEntry;
+    a[0].immediateIncome = 70000;
+
+    x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(a);
+
+    x.forEach(job => {
+        expect(job.incomeIncreasePerYear).toBe(0);
+    });
+
+    a = jobsDataWithLinearEntry;
+    a[0].immediateIncome = 0;
+    a[0].incomeCeiling = 13;
+
+    x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(a);
+
+    x.forEach(job => {
+        expect(job.incomeIncreasePerYear).toBe(2);
+    });
+
+    a = jobsDataWithLinearEntry;
+    a[0].yearToIncomeCeiling = 5;
+
+    x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(a);
+
+    x.forEach(job => {
+        expect(job.incomeIncreasePerYear).toBe(0);
+    });
+
+    a = jobsDataWithLinearEntry;
+    a[0].yearToIncomeCeiling = 2;
+
+    x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(a);
+
+    x.forEach(job => {
+        expect(job.incomeIncreasePerYear).toBe(0);
+    });
+
 });
+
+
+var jobsData = [{
+    yearsOfExperienceAtEachStep:
+        [0, 4, 5, 8],
+    incomeAtBeginningOfEachStep:
+        [60000, 120000, 150000, 300000],
+},{
+    immediateIncome: 35000,
+    incomeCeiling: 70000,
+    yearIncomeBegins: 5,
+    yearToIncomeCeiling: 10,
+}];
+
+var jobsDataWithLinearEntry = [{
+    immediateIncome: 35000,
+    incomeCeiling: 70000,
+    yearIncomeBegins: 5,
+    yearToIncomeCeiling: 10,
+    key: 5,
+}];
+
+var jobsDataWithSteppedEntry = [{
+    yearsOfExperienceAtEachStep:
+        [0, 4, 5, 8],
+    incomeAtBeginningOfEachStep:
+        [60000, 120000, 150000, 300000],
+}];

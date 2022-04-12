@@ -11,18 +11,16 @@ let jobsData =
         immediateIncome: 35000,
         incomeCeiling: 70000,
         yearIncomeBegins: 5,
-        yearsToIncomeCeiling: 5,
+        yearToIncomeCeiling: 10,
         key: 1,
     }];
 
-let graphMaxNumberOfYears = 15 - 1;
 var cc = console.log;
 
 
 function JobContainer({jobsData}) {
     const linearIncome = new JobDataHandler(jobsData).findLinear();
     //const steppedIncome = new JobDataHandler(jobsData).findStepped();
-
 
 
     return (
