@@ -1,48 +1,27 @@
-let jobsData = [{
-    job1: {
+import JobDataHandler from "./libs/jobdatahandler";
+
+let jobsData =
+    [{
         yearsOfExperienceAtEachStep:
             [0, 4, 5, 8],
         incomeAtBeginningOfEachStep:
             [60000, 120000, 150000, 300000],
-    }
-},{
-    job2: {
+        key: 0,
+    },{
         immediateIncome: 35000,
         incomeCeiling: 70000,
-        yearsToIncomeCeiling: 5,
-    }
-}];
+        yearIncomeBegins: 5,
+        yearToIncomeCeiling: 10,
+        key: 1,
+    }];
 
-let cc = console.log;
+var cc = console.log;
+
 
 function JobContainer({jobsData}) {
+    const linearIncome = new JobDataHandler(jobsData).findLinear();
+    //const steppedIncome = new JobDataHandler(jobsData).findStepped();
 
-    //let stepsInIncome = 4; array makes this redundant; count via index.
-    //let incomeAtEachStep = [60000, 120000, 150000, 300000];
-    //let yearsOfExperienceAtEachStep = [0, 4, 5, 8];
-
-    //
-    //let beginningSalary = 25000;
-    //let endSalary = 80000;
-
-    cc(jobsData);
-
-    function checkIsIncomeLinearOrStepped(){
-
-    }
-
-    function checkIfStepsExist(){
-
-    }
-
-    function sumIncome(){
-
-
-    }
-
-    function calculateSteps(){
-
-    }
 
     return (
       <>
