@@ -20,6 +20,7 @@ class JobDataHandler {
         jobs = this.calculateLinearIncomeIncreaseEachYear(jobs);
         jobs = this.createIncomeArrayWithGraphYearsNumberOfSteps(jobs);
         jobs = this.sumIncomeFromLinearJob(jobs);
+        this.cc(jobs)
         return(jobs);
     }
 

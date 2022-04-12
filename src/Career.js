@@ -1,4 +1,8 @@
 import JobDataHandler from "./libs/jobdatahandler";
+import React from "react";
+import Chart from 'react-apexcharts';
+//import ReactApexChart from 'react-apexcharts';
+import {DonutChart} from "./graphs/IncomeGraphs";
 
 let jobsData =
     [{
@@ -13,6 +17,12 @@ let jobsData =
         yearIncomeBegins: 5,
         yearToIncomeCeiling: 10,
         key: 1,
+    },{
+        immediateIncome: 35000,
+        incomeCeiling: 70000,
+        yearIncomeBegins: 5,
+        yearToIncomeCeiling: 10,
+        key: 2,
     }];
 
 var cc = console.log;
@@ -25,11 +35,16 @@ function JobContainer({jobsData}) {
 
     return (
       <>
-          <span></span>
+          <DonutChart
+              jobsData = {jobsData}
+          />
+          <DonutChart
+              jobsData = {jobsData}
+          />
       </>
     );
-
 }
+
 
 function Career() {
     return (
@@ -39,6 +54,7 @@ function Career() {
           <JobContainer
                jobsData = {jobsData}
           />
+
       </>
     );
 }
