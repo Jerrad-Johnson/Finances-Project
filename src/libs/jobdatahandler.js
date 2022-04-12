@@ -17,7 +17,6 @@ class JobDataHandler {
     }
 
     beginLinear(jobs){
-        //this.doesLinearIncomeTimeframeExceedGraphLimit(jobs);
         jobs = this.calculateLinearIncomeIncreaseEachYear(jobs);
         jobs = this.createIncomeArrayWithGraphYearsNumberOfSteps(jobs);
         jobs = this.sumIncomeFromLinearJob(jobs);
@@ -120,6 +119,10 @@ class JobDataHandler {
 
         return jobsToBeReturned;
     }
+
+
+
+
 }
 
 export default JobDataHandler;
