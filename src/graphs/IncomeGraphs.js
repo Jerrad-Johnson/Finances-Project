@@ -25,18 +25,16 @@ export function DonutChart({jobsData}) {
 }
 
 
-export function BarChart({jobsData}) {
-
-    /*cc(jobsData)
-    cc(jobsData.key)*/
-
+export function BarChart({linearIncome}) {
+    cc(linearIncome)
+//cc(linearIncome.incomeInGraphYearsNumberOfSteps)
 
     return (
-        <div key={jobsData.key}> {/*TODO Does not render key*/}
+        <div /*key={linearIncome.key}*/> {/*TODO Does not render key*/}
             <Chart
                 series = {[
                 {
-                    data: [43, 53, 50, 57]
+                    data: linearIncome.incomeInGraphYearsNumberOfSteps
                 }
                 ]}
                 type="bar"
@@ -46,7 +44,7 @@ export function BarChart({jobsData}) {
                         '#00aa00', '#880000', '#880000',
                     ],
                     xaxis: {
-                        categories: [jobsData.immediateIncome]
+                        categories: linearIncome.yearsNumbered
                         ,
 
                     }

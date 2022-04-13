@@ -32,15 +32,15 @@ var cc = console.log;
 function JobContainer({jobsData}) {
     const linearIncome = new JobDataHandler(jobsData).findLinear();
     //const steppedIncome = new JobDataHandler(jobsData).findStepped();
-
+    cc(linearIncome[1])
 
     return (
       <>
-          <DonutChart
+          {/*<DonutChart
               jobsData = {jobsData[1]}
-          />
+          />*/}
           <BarChart
-              jobsData = {jobsData[2]}
+              linearIncome = {linearIncome[1]}
           />
       </>
     );

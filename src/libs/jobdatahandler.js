@@ -20,7 +20,7 @@ class JobDataHandler {
         jobs = this.calculateLinearIncomeIncreaseEachYear(jobs);
         jobs = this.createIncomeArrayWithGraphYearsNumberOfSteps(jobs);
         jobs = this.sumIncomeFromLinearJob(jobs);
-        this.cc(jobs)
+        jobs = this.addArrayOfNumberedYears(jobs);
         return(jobs);
     }
 
@@ -86,7 +86,6 @@ class JobDataHandler {
         let runningTotalSalary = 0 ;
         let jobsToBeReturned = [];
 
-
         jobs.forEach(job => {
             for (let i = 0; i <= job.yearIncomeBegins; i++){
                 incomeInGraphYearsNumberOfSteps[i] = 0;
@@ -121,6 +120,22 @@ class JobDataHandler {
             job.linearIncomeSum = sum;
             jobsToBeReturned.push(job);
             sum = 0;
+        });
+
+        return jobsToBeReturned;
+    }
+
+    addArrayOfNumberedYears(jobs){
+        let jobsToBeReturned = [];
+        let yearNumbers = [];
+
+        jobs.forEach(job => {
+            for (let i = 0; i <= (this.graphMaxNumberOfYears - 1); i++){
+                yearNumbers[i] = "Year " + (i + 1);
+            }
+
+            job.yearsNumbered = yearNumbers;
+            jobsToBeReturned.push(job);
         });
 
         return jobsToBeReturned;
