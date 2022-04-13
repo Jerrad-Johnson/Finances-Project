@@ -27,8 +27,8 @@ export function DonutChart({jobsData}) {
 
 export function BarChart({jobsData}) {
 
-    cc(jobsData)
-    cc(jobsData.key)
+    /*cc(jobsData)
+    cc(jobsData.key)*/
 
 
     return (
