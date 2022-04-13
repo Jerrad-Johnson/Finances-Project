@@ -3,6 +3,7 @@ import React from "react";
 import Chart from 'react-apexcharts';
 //import ReactApexChart from 'react-apexcharts';
 import {DonutChart} from "./graphs/IncomeGraphs";
+import {BarChart} from "./graphs/IncomeGraphs";
 
 let jobsData =
     [{
@@ -18,8 +19,8 @@ let jobsData =
         yearToIncomeCeiling: 10,
         key: 1,
     },{
-        immediateIncome: 35000,
-        incomeCeiling: 70000,
+        immediateIncome: 15000,
+        incomeCeiling: 40000,
         yearIncomeBegins: 5,
         yearToIncomeCeiling: 10,
         key: 2,
@@ -36,10 +37,10 @@ function JobContainer({jobsData}) {
     return (
       <>
           <DonutChart
-              jobsData = {jobsData}
+              jobsData = {jobsData[1]}
           />
-          <DonutChart
-              jobsData = {jobsData}
+          <BarChart
+              jobsData = {jobsData[2]}
           />
       </>
     );
