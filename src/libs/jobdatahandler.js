@@ -30,7 +30,6 @@ class JobDataHandler {
 
     findLinearIncomeJobs() {
         let linearIncomeJobs = [];
-        let testObj = {};
 
         this.jobsData.forEach(job => {
             if (job.immediateIncome) {

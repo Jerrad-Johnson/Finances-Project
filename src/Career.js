@@ -29,19 +29,33 @@ let jobsData =
 var cc = console.log;
 
 
+function DynamicChartTest() {
+    const linearIncome = new JobDataHandler(jobsData).findLinear();
+
+    const linearIncomeBarGraph = linearIncome.map((job) =>
+        ( <BarChart linearIncome={job} /> )
+    );
+
+
+    return (
+        <>
+            {linearIncomeBarGraph}
+        </>
+    );
+}
+
 function JobContainer({jobsData}) {
     const linearIncome = new JobDataHandler(jobsData).findLinear();
     //const steppedIncome = new JobDataHandler(jobsData).findStepped();
-    cc(linearIncome[1])
 
     return (
       <>
           {/*<DonutChart
               jobsData = {jobsData[1]}
           />*/}
-          <BarChart
-              linearIncome = {linearIncome[1]}
-          />
+{/*          <BarChart
+              linearIncome = {linearIncome[0]}
+          />*/}
       </>
     );
 }
@@ -52,9 +66,12 @@ function Career() {
       <>
           <span>Test</span>
           <br />
-          <JobContainer
+          <DynamicChartTest
                jobsData = {jobsData}
-          />
+           />
+{/*          <JobContainer
+               jobsData = {jobsData}
+          />*/}
 
       </>
     );

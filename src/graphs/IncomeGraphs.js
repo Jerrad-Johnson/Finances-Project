@@ -1,4 +1,3 @@
-import JobDataHandler from "../libs/jobdatahandler";
 import Chart from "react-apexcharts";
 import React from "react";
 
