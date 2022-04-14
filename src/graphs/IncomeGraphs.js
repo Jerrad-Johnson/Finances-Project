@@ -25,7 +25,6 @@ export function DonutChart({jobsData}) {
 
 
 export function BarChart({linearIncome}) {
-    cc(linearIncome)
 //cc(linearIncome.incomeInGraphYearsNumberOfSteps)
 
     return (

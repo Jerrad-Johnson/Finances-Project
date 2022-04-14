@@ -27,15 +27,15 @@ let jobsData =
     }];
 
 var cc = console.log;
+var lengthOfGraphInYears = new JobDataHandler();
+lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
 
 
 function DynamicChartTest() {
     const linearIncome = new JobDataHandler(jobsData).findLinear();
-
     const linearIncomeBarGraph = linearIncome.map((job) =>
         ( <BarChart linearIncome={job} key={job.key}/> )
     );
-
 
     return (
         <>
@@ -44,34 +44,67 @@ function DynamicChartTest() {
     );
 }
 
-/*
 
-function JobContainer({jobsData}) {
-    const linearIncome = new JobDataHandler(jobsData).findLinear();
-    //const steppedIncome = new JobDataHandler(jobsData).findStepped();
+function createArrayWithNumberOfYearsToGraph() {
+    let numberOfYearsToGraph = [];
+    let yearsToBeReturned = [];
+
+    for (let i = 0; i < lengthOfGraphInYears;){
+        numberOfYearsToGraph = ++i;
+        yearsToBeReturned.push(numberOfYearsToGraph);
+    }
+
+    return yearsToBeReturned;
+}
+
+
+function CreateOptionForms({formTitle}) {
+
+    const numberOfYearsToGraph = createArrayWithNumberOfYearsToGraph();
+    const optionElements = numberOfYearsToGraph.map((year) =>
+            ( <option value={year} className={"text-slate-500"}></option> )
+    );
 
     return (
-      <>
-          {/!*<DonutChart
-              jobsData = {jobsData[1]}
-          />*!/}
-{/!*          <BarChart
-              linearIncome = {linearIncome[0]}
-          />*!/}
-      </>
+        <>
+                <select>
+                    {optionElements}
+                </select>
+            <label> {formTitle} </label><br />
+        </>
     );
 }
 
-*/
+
+function IncomeForms() {
+
+    return (
+        <div className={'formContainer'}>
+            <form>
+                <input type={"text"}></input> <br />
+                <CreateOptionForms
+                    formTitle={"Year income begins"}
+                />
+
+                <input type={"text"}></input> <br />
+            </form>
+        </div>
+    );
+}
+
 
 function Career() {
+
     return (
       <>
           <span>Test</span>
           <br />
+          <IncomeForms />
+
           <DynamicChartTest
                jobsData = {jobsData}
            />
+
 {/*          <JobContainer
                jobsData = {jobsData}
           />*/}
