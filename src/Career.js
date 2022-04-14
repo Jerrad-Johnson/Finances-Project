@@ -1,8 +1,5 @@
 import JobDataHandler from "./libs/jobdatahandler";
 import React from "react";
-import Chart from 'react-apexcharts';
-//import ReactApexChart from 'react-apexcharts';
-import {DonutChart} from "./graphs/IncomeGraphs";
 import {BarChart} from "./graphs/IncomeGraphs";
 
 let jobsData =
@@ -15,13 +12,13 @@ let jobsData =
     },{
         immediateIncome: 35000,
         incomeCeiling: 70000,
-        yearIncomeBegins: 2,
+        yearIncomeBegins: 0,
         yearToIncomeCeiling: 10,
         key: 1,
     },{
-        immediateIncome: 15000,
+        immediateIncome: 20000,
         incomeCeiling: 20000,
-        yearIncomeBegins: 5,
+        yearIncomeBegins: 3,
         yearToIncomeCeiling: 10,
         key: 2,
     }];
@@ -85,8 +82,10 @@ function IncomeForms() {
                 <CreateOptionForms
                     formTitle={"Year income begins"}
                 />
-
                 <input type={"text"}></input> <br />
+                <CreateOptionForms
+                    formTitle={"Year to income ceiling"}
+                />
             </form>
         </div>
     );
@@ -97,18 +96,12 @@ function Career() {
 
     return (
       <>
-          <span>Test</span>
           <br />
           <IncomeForms />
 
           <DynamicChartTest
                jobsData = {jobsData}
            />
-
-{/*          <JobContainer
-               jobsData = {jobsData}
-          />*/}
-
       </>
     );
 }
