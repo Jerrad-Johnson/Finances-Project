@@ -33,7 +33,7 @@ class JobDataHandler {
         let linearIncomeJobs = [];
 
         this.jobsData.forEach(job => {
-            if (job.immediateIncome) {
+            if (job.incomeImmediate) {
                 linearIncomeJobs.push(job);
             }
         });
@@ -65,7 +65,7 @@ class JobDataHandler {
 
         jobs.forEach(job => {
             if ((job.yearToIncomeCeiling - job.yearIncomeBegins) >= 1) {
-                incomeIncreaseOverCareer = job.incomeCeiling - job.immediateIncome;
+                incomeIncreaseOverCareer = job.incomeCeiling - job.incomeImmediate;
                 job.incomeIncreasePerYear = Math.trunc(
                     incomeIncreaseOverCareer / (
                         job.yearToIncomeCeiling - job.yearIncomeBegins));
@@ -91,7 +91,7 @@ class JobDataHandler {
                 incomeInGraphYearsNumberOfSteps[i] = 0;
             }
             for (let i = job.yearIncomeBegins; i <= job.yearToIncomeCeiling; i++){
-                incomeInGraphYearsNumberOfSteps[i] = (job.immediateIncome + runningTotalSalary);
+                incomeInGraphYearsNumberOfSteps[i] = (job.incomeImmediate + runningTotalSalary);
                 runningTotalSalary = (runningTotalSalary + job.incomeIncreasePerYear);
             }
 

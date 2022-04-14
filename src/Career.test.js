@@ -30,7 +30,7 @@ test('Calculates salary raise per year from a linear-income job.', () => {
     });
 
     let a = jobsDataWithLinearEntry;
-    a[0].immediateIncome = 0;
+    a[0].incomeImmediate = 0;
 
     x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(a);
 
@@ -39,7 +39,7 @@ test('Calculates salary raise per year from a linear-income job.', () => {
     });
 
     a = jobsDataWithLinearEntry;
-    a[0].immediateIncome = 70000;
+    a[0].incomeImmediate = 70000;
 
     x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(a);
 
@@ -48,7 +48,7 @@ test('Calculates salary raise per year from a linear-income job.', () => {
     });
 
     a = jobsDataWithLinearEntry;
-    a[0].immediateIncome = 0;
+    a[0].incomeImmediate = 0;
     a[0].incomeCeiling = 13;
 
     x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(a);
@@ -84,14 +84,14 @@ var jobsData = [{
     incomeAtBeginningOfEachStep:
         [60000, 120000, 150000, 300000],
 },{
-    immediateIncome: 35000,
+    incomeImmediate: 35000,
     incomeCeiling: 70000,
     yearIncomeBegins: 5,
     yearToIncomeCeiling: 10,
 }];
 
 var jobsDataWithLinearEntry = [{
-    immediateIncome: 35000,
+    incomeImmediate: 35000,
     incomeCeiling: 70000,
     yearIncomeBegins: 5,
     yearToIncomeCeiling: 10,

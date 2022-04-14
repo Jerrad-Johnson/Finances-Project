@@ -1,6 +1,7 @@
 import JobDataHandler from "./libs/jobdatahandler";
 import React from "react";
 import {BarChart} from "./graphs/IncomeGraphs";
+import {useState} from "react";
 
 let jobsData =
     [{
@@ -10,13 +11,13 @@ let jobsData =
             [60000, 120000, 150000, 300000],
         key: 0,
     },{
-        immediateIncome: 35000,
+        incomeImmediate: 35000,
         incomeCeiling: 70000,
         yearIncomeBegins: 0,
         yearToIncomeCeiling: 10,
         key: 1,
     },{
-        immediateIncome: 20000,
+        incomeImmediate: 20000,
         incomeCeiling: 20000,
         yearIncomeBegins: 3,
         yearToIncomeCeiling: 10,
@@ -28,8 +29,8 @@ var lengthOfGraphInYears = new JobDataHandler();
 lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
 
 
-function DynamicChartTest() {
-    const linearIncome = new JobDataHandler(jobsData).findLinear();
+function DynamicChartTest({jobDataState}) {
+    const linearIncome = new JobDataHandler(jobsData).findLinear(); //TODO Note: Set arg to "jobsData" to return to hard-coded data.
     const linearIncomeBarGraph = linearIncome.map((job) =>
         ( <BarChart linearIncome={job} key={job.key}/> )
     );
@@ -55,16 +56,16 @@ function createArrayWithNumberOfYearsToGraph() {
 }
 
 
-function CreateOptionForms({formTitle}) {
+function CreateOptionForms({formTitle, id, key}) {
 
     const numberOfYearsToGraph = createArrayWithNumberOfYearsToGraph();
     const optionElements = numberOfYearsToGraph.map((year) =>
-            ( <option value={year} className={"text-slate-500"}></option> )
+            ( <option value={year} key={year}></option> )
     );
 
     return (
         <>
-                <select>
+                <select className={"text-slate-500"} id={id} key={key}>
                     {optionElements}
                 </select>
             <label> {formTitle} </label><br />
@@ -73,34 +74,51 @@ function CreateOptionForms({formTitle}) {
 }
 
 
-function IncomeForms() {
+function IncomeForms({jobDataState, setJobDataState}) {
 
     return (
         <div className={'formContainer'}>
             <form>
-                <input type={"text"}></input> <br />
+                <input type={"text"} id={"jobTitle"}></input> Job Title <br />
+                <input type={"text"} id={"incomeImmediate"}></input> Starting income
                 <CreateOptionForms
                     formTitle={"Year income begins"}
+                    id={"yearIncomeBegins"}
+                    /*keyNumber={"1"}*/
                 />
-                <input type={"text"}></input> <br />
+                <input type={"text"} id={"incomeCeiling"}></input> Ceiling income
                 <CreateOptionForms
                     formTitle={"Year to income ceiling"}
+                    id={"yearToIncomeCeiling"}
+                    /*keyNumber={"2"}*/
                 />
+                <button type={"click"} onClick={(e) => {
+                    e.preventDefault(); handleLinearSubmit(jobDataState, setJobDataState) }}>
+                    Submit
+                </button>
+
             </form>
         </div>
     );
 }
 
+function handleLinearSubmit(jobDataState, setJobDataState){
+    cc(jobDataState)
+}
+
 
 function Career() {
 
+    const [jobDataState, setJobDataState] = useState([]);
     return (
       <>
           <br />
-          <IncomeForms />
-
+          <IncomeForms
+              jobDataState = {jobDataState}
+              setJobDataState = {setJobDataState}
+          />
           <DynamicChartTest
-               jobsData = {jobsData}
+              jobDataState = {jobDataState}
            />
       </>
     );
