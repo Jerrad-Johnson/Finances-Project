@@ -15,12 +15,12 @@ let jobsData =
     },{
         immediateIncome: 35000,
         incomeCeiling: 70000,
-        yearIncomeBegins: 5,
+        yearIncomeBegins: 2,
         yearToIncomeCeiling: 10,
         key: 1,
     },{
         immediateIncome: 15000,
-        incomeCeiling: 40000,
+        incomeCeiling: 20000,
         yearIncomeBegins: 5,
         yearToIncomeCeiling: 10,
         key: 2,
@@ -33,7 +33,7 @@ function DynamicChartTest() {
     const linearIncome = new JobDataHandler(jobsData).findLinear();
 
     const linearIncomeBarGraph = linearIncome.map((job) =>
-        ( <BarChart linearIncome={job} /> )
+        ( <BarChart linearIncome={job} key={job.key}/> )
     );
 
 
@@ -44,22 +44,25 @@ function DynamicChartTest() {
     );
 }
 
+/*
+
 function JobContainer({jobsData}) {
     const linearIncome = new JobDataHandler(jobsData).findLinear();
     //const steppedIncome = new JobDataHandler(jobsData).findStepped();
 
     return (
       <>
-          {/*<DonutChart
+          {/!*<DonutChart
               jobsData = {jobsData[1]}
-          />*/}
-{/*          <BarChart
+          />*!/}
+{/!*          <BarChart
               linearIncome = {linearIncome[0]}
-          />*/}
+          />*!/}
       </>
     );
 }
 
+*/
 
 function Career() {
     return (
