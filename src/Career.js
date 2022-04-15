@@ -103,7 +103,76 @@ function IncomeForms({jobDataState, setJobDataState}) {
 }
 
 function handleLinearSubmit(jobDataState, setJobDataState){
-    cc(jobDataState)
+    //let job = getLinearSubmissionValues();
+    let checkPassed = checkLinearData();
+    //if (checkPassed)
+
+}
+
+function checkLinearData(){
+    let jobData = [];
+    let incomeCeiling = document.querySelector('#incomeCeiling').value;
+    let incomeImmediate = document.querySelector('#incomeImmediate').value;
+    let yearToIncomeCeiling = document.querySelector('#yearToIncomeCeiling').value;
+    let yearIncomeBegins = document.querySelector('#yearIncomeBegins').value;
+
+    try {
+        if (isNumeric(incomeCeiling)) {
+            jobData.incomeCeiling = incomeCeiling;
+
+        } else {
+            throw new Error("Ceiling Income NaN");
+            return;
+        }
+
+        if (isNumeric(incomeImmediate)) {
+            jobData.incomeImmediate = incomeImmediate;
+        } else {
+            throw new Error("Starting income NaN");
+            return;
+        }
+
+        if (isNumeric(yearToIncomeCeiling)) {
+            jobData.yearToIncomeCeiling = yearToIncomeCeiling;
+        } else {
+            throw new Error("Year to income ceiling not set.");
+            return;
+        }
+
+        if (isNumeric(yearIncomeBegins)) {
+            jobData.yearIncomeBegins = yearIncomeBegins;
+        } else {
+            throw new Error("Year to beginning of income not set.");
+            return;
+        }
+    } catch (err) {
+        cc("Error - " + err.message)
+    }
+
+    return jobData;
+}
+
+function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+/*
+function getLinearSubmissionValues(){
+    let jobData = [];
+
+
+    incomeCeiling = {incomeCeiling: incomeCeiling};
+    cc(incomeCeiling);
+
+    return jobData;
+}*/
+
+
+
+function updateLinearData(){
+    let incomeCeiling = document.querySelector('#incomeCeiling').value;
+    let incomeStarting = document.querySelector('#incomeImmediate').value;
+    let newJobData = [];
+
 }
 
 
