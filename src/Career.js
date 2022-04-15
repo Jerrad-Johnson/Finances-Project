@@ -5,18 +5,6 @@ import {useState} from "react";
 
 let jobsData =
     [{
-        yearsOfExperienceAtEachStep:
-            [0, 4, 5, 8],
-        incomeAtBeginningOfEachStep:
-            [60000, 120000, 150000, 300000],
-        key: 0,
-    },{
-        incomeImmediate: 35000,
-        incomeCeiling: 70000,
-        yearIncomeBegins: 0,
-        yearToIncomeCeiling: 10,
-        key: 1,
-    },{
         incomeImmediate: 20000,
         incomeCeiling: 20000,
         yearIncomeBegins: 3,
@@ -27,8 +15,9 @@ let jobsData =
 var cc = console.log;
 var lengthOfGraphInYears = new JobDataHandler();
 lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
+cc(jobsData)
 
-
+/*
 function DynamicChartTest({jobDataState}) {
     const linearIncome = new JobDataHandler(jobsData).findLinear(); //TODO Note: Set arg to "jobsData" to return to hard-coded data.
     const linearIncomeBarGraph = linearIncome.map((job) =>
@@ -41,6 +30,7 @@ function DynamicChartTest({jobDataState}) {
         </>
     );
 }
+*/
 
 
 function createArrayWithNumberOfYearsToGraph() {
@@ -103,22 +93,35 @@ function IncomeForms({jobDataState, setJobDataState}) {
 }
 
 function handleLinearSubmit(jobDataState, setJobDataState){
-    //let job = getLinearSubmissionValues();
-    let checkPassed = checkLinearData();
-    //if (checkPassed)
+    let jobData = checkLinearData();
+    let dataUpdated = (jobData[0].yearIncomeBegins) ?
+        updateLinearData(jobDataState, setJobDataState, jobData) : false;
 
+    /*if (jobData.yearIncomeBegins) {
+        updateLinearData(jobDataState, setJobDataState, jobData);
+    }*/
 }
 
 function checkLinearData(){
-    let jobData = [];
+    let jobData = {};
+    let jobDataToBeReturned = [];
+    let jobTitle = document.querySelector('#jobTitle').value;
     let incomeCeiling = document.querySelector('#incomeCeiling').value;
     let incomeImmediate = document.querySelector('#incomeImmediate').value;
     let yearToIncomeCeiling = document.querySelector('#yearToIncomeCeiling').value;
     let yearIncomeBegins = document.querySelector('#yearIncomeBegins').value;
 
     try {
+
+        if ((jobTitle !== undefined) && (jobTitle !== '')){
+            jobData.jobTitle = jobTitle;
+        } else {
+            throw new Error("Job Title not set");
+            return;
+        }
+
         if (isNumeric(incomeCeiling)) {
-            jobData.incomeCeiling = incomeCeiling;
+            jobData.incomeCeiling = +incomeCeiling;
 
         } else {
             throw new Error("Ceiling Income NaN");
@@ -126,21 +129,21 @@ function checkLinearData(){
         }
 
         if (isNumeric(incomeImmediate)) {
-            jobData.incomeImmediate = incomeImmediate;
+            jobData.incomeImmediate = +incomeImmediate;
         } else {
             throw new Error("Starting income NaN");
             return;
         }
 
         if (isNumeric(yearToIncomeCeiling)) {
-            jobData.yearToIncomeCeiling = yearToIncomeCeiling;
+            jobData.yearToIncomeCeiling = +yearToIncomeCeiling;
         } else {
             throw new Error("Year to income ceiling not set.");
             return;
         }
 
         if (isNumeric(yearIncomeBegins)) {
-            jobData.yearIncomeBegins = yearIncomeBegins;
+            jobData.yearIncomeBegins = +yearIncomeBegins;
         } else {
             throw new Error("Year to beginning of income not set.");
             return;
@@ -148,30 +151,18 @@ function checkLinearData(){
     } catch (err) {
         cc("Error - " + err.message)
     }
-
-    return jobData;
+    jobDataToBeReturned.push(jobData)
+    return jobDataToBeReturned;
 }
 
 function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
-/*
-function getLinearSubmissionValues(){
-    let jobData = [];
 
+function updateLinearData(jobDataState, setJobDataState, jobData){
+    let runCalculationsOnJobData = new JobDataHandler(jobData).findLinear();
 
-    incomeCeiling = {incomeCeiling: incomeCeiling};
-    cc(incomeCeiling);
-
-    return jobData;
-}*/
-
-
-
-function updateLinearData(){
-    let incomeCeiling = document.querySelector('#incomeCeiling').value;
-    let incomeStarting = document.querySelector('#incomeImmediate').value;
-    let newJobData = [];
+    cc(runCalculationsOnJobData)
 
 }
 
@@ -186,9 +177,9 @@ function Career() {
               jobDataState = {jobDataState}
               setJobDataState = {setJobDataState}
           />
-          <DynamicChartTest
+          {/*<DynamicChartTest
               jobDataState = {jobDataState}
-           />
+           />*/}
       </>
     );
 }

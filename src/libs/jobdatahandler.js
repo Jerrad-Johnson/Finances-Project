@@ -8,6 +8,7 @@ class JobDataHandler {
 
     findLinear(){
         let linearJobs = this.findLinearIncomeJobs();
+        this.cc(JSON.stringify(this.jobsData))
         return (this.beginLinear(linearJobs));
     }
 
@@ -85,6 +86,8 @@ class JobDataHandler {
         let incomeInGraphYearsNumberOfSteps = [];
         let runningTotalSalary = 0 ;
         let jobsToBeReturned = [];
+
+
 
         jobs.forEach(job => {
             for (let i = 0; i <= job.yearIncomeBegins; i++){
