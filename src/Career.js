@@ -15,7 +15,6 @@ let jobsData =
 var cc = console.log;
 var lengthOfGraphInYears = new JobDataHandler();
 lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
-cc(jobsData)
 
 /*
 function DynamicChartTest({jobDataState}) {
@@ -32,6 +31,9 @@ function DynamicChartTest({jobDataState}) {
 }
 */
 
+function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
 
 function createArrayWithNumberOfYearsToGraph() {
     let numberOfYearsToGraph = [];
@@ -92,15 +94,16 @@ function IncomeForms({jobDataState, setJobDataState}) {
     );
 }
 
-function handleLinearSubmit(jobDataState, setJobDataState){
-    let jobData = checkLinearData();
-    let dataUpdated = (jobData[0].yearIncomeBegins) ?
-        updateLinearData(jobDataState, setJobDataState, jobData) : false;
 
-    /*if (jobData.yearIncomeBegins) {
-        updateLinearData(jobDataState, setJobDataState, jobData);
-    }*/
+function handleLinearSubmit(jobDataState, setJobDataState){
+    let jobData = undefined;
+    jobData = checkLinearData();
+    if (jobData != false) {
+        jobData = updateLinearData(jobDataState, setJobDataState, jobData);
+        jobData = updateJobDataState(jobData, jobDataState, setJobDataState);
+    }
 }
+
 
 function checkLinearData(){
     let jobData = {};
@@ -136,34 +139,52 @@ function checkLinearData(){
         }
 
         if (isNumeric(yearToIncomeCeiling)) {
-            jobData.yearToIncomeCeiling = +yearToIncomeCeiling;
+            jobData.yearToIncomeCeiling = --yearToIncomeCeiling;
         } else {
             throw new Error("Year to income ceiling not set.");
             return;
         }
 
         if (isNumeric(yearIncomeBegins)) {
-            jobData.yearIncomeBegins = +yearIncomeBegins;
+            jobData.yearIncomeBegins = --yearIncomeBegins;
         } else {
             throw new Error("Year to beginning of income not set.");
             return;
         }
+
+        if (+yearIncomeBegins >= +yearToIncomeCeiling) {
+            throw new Error("Beginning income year is later than or equal to ceiling income year.");
+        }
+
     } catch (err) {
         cc("Error - " + err.message)
+        return false;
     }
     jobDataToBeReturned.push(jobData)
+    jobData = {};
+    return jobDataToBeReturned;
+    //TODO Split this into check and set
+    //TODO Allow user to skip Starting Income field
+}
+
+
+function updateLinearData(jobDataState, setJobDataState, jobData){
+    let jobDataToBeReturned = new JobDataHandler(jobData).findLinear();
     return jobDataToBeReturned;
 }
 
-function isNumeric(n) {
-    return !isNaN(parseFloat(n)) && isFinite(n);
-}
 
-function updateLinearData(jobDataState, setJobDataState, jobData){
-    let runCalculationsOnJobData = new JobDataHandler(jobData).findLinear();
+function updateJobDataState(jobData, jobDataState, setJobDataState){
+    let extantJobs = [...jobDataState];
 
-    cc(runCalculationsOnJobData)
+    if (jobDataState.length == 0){
+        setJobDataState(jobData);
+    } else {
 
+    let combinedJobs = [...jobData, ...extantJobs];
+    setJobDataState(combinedJobs);
+    cc(jobDataState)
+    }
 }
 
 

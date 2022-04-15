@@ -8,7 +8,6 @@ class JobDataHandler {
 
     findLinear(){
         let linearJobs = this.findLinearIncomeJobs();
-        this.cc(JSON.stringify(this.jobsData))
         return (this.beginLinear(linearJobs));
     }
 
