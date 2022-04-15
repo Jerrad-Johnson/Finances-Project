@@ -15,21 +15,24 @@ let jobsData =
 var cc = console.log;
 var lengthOfGraphInYears = new JobDataHandler();
 lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
+var linearKey = 0;
 
-/*
+
 function DynamicChartTest({jobDataState}) {
-    const linearIncome = new JobDataHandler(jobsData).findLinear(); //TODO Note: Set arg to "jobsData" to return to hard-coded data.
-    const linearIncomeBarGraph = linearIncome.map((job) =>
-        ( <BarChart linearIncome={job} key={job.key}/> )
-    );
+    if (jobDataState.length != 0) {
+        //const linearIncome = new JobDataHandler(jobDataState).findLinear(); //TODO Note: Set arg to "jobsData" to return to hard-coded data.
+        const linearIncomeBarGraph = jobDataState.map((job) =>
+            (<BarChart linearIncome={job} key={job.key}/>)
+        );
 
-    return (
-        <>
-            {linearIncomeBarGraph}
-        </>
-    );
+        return (
+            <>
+             {(jobDataState.length != 0) && linearIncomeBarGraph}
+            </>
+        );
+    }
 }
-*/
+
 
 function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
@@ -160,8 +163,10 @@ function checkLinearData(){
         cc("Error - " + err.message)
         return false;
     }
+    jobData.key = linearKey;
     jobDataToBeReturned.push(jobData)
     jobData = {};
+    linearKey++;
     return jobDataToBeReturned;
     //TODO Split this into check and set
     //TODO Allow user to skip Starting Income field
@@ -180,10 +185,9 @@ function updateJobDataState(jobData, jobDataState, setJobDataState){
     if (jobDataState.length == 0){
         setJobDataState(jobData);
     } else {
-
-    let combinedJobs = [...jobData, ...extantJobs];
-    setJobDataState(combinedJobs);
-    cc(jobDataState)
+        let combinedJobs = [...extantJobs, ...jobData];
+        setJobDataState(combinedJobs);
+        cc(jobDataState)
     }
 }
 
@@ -198,9 +202,9 @@ function Career() {
               jobDataState = {jobDataState}
               setJobDataState = {setJobDataState}
           />
-          {/*<DynamicChartTest
+          <DynamicChartTest
               jobDataState = {jobDataState}
-           />*/}
+           />
       </>
     );
 }
