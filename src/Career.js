@@ -18,21 +18,6 @@ lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
 var linearKey = 0;
 
 
-function DynamicChartTest({jobDataState}) {
-    if (jobDataState.length != 0) {
-        //const linearIncome = new JobDataHandler(jobDataState).findLinear(); //TODO Note: Set arg to "jobsData" to return to hard-coded data.
-        const linearIncomeBarGraph = jobDataState.map((job) =>
-            (<BarChart linearIncome={job} key={job.key}/>)
-        );
-
-        return (
-            <>
-             {(jobDataState.length != 0) && linearIncomeBarGraph}
-            </>
-        );
-    }
-}
-
 
 function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
@@ -98,6 +83,29 @@ function IncomeForms({jobDataState, setJobDataState}) {
 }
 
 
+function DynamicChartTest({jobDataState, setJobDataState}) {
+    if (jobDataState.length != 0) {
+        const linearIncomeBarGraph = jobDataState.map((job) => (
+            <div id="linearJob" key={job.key}>
+                <BarChart linearIncome={job}/>
+                <button type={"click"} onClick={(e) => {
+                    e.preventDefault();
+                    handleLinearJobDelete(job.key, jobDataState, setJobDataState);
+                }} >
+                    Delete Row {job.key}
+                </button>
+            </div>
+        ));
+
+        return (
+            <>
+             {(jobDataState.length != 0) && linearIncomeBarGraph}
+            </>
+        );
+    }
+}
+
+
 function handleLinearSubmit(jobDataState, setJobDataState){
     let jobData = undefined;
     jobData = checkLinearData();
@@ -105,6 +113,15 @@ function handleLinearSubmit(jobDataState, setJobDataState){
         jobData = updateLinearData(jobDataState, setJobDataState, jobData);
         jobData = updateJobDataState(jobData, jobDataState, setJobDataState);
     }
+}
+
+
+function handleLinearJobDelete(key, jobDataState, setJobDataState){
+    let arrayToBeReturned = [];
+    arrayToBeReturned = [...jobDataState]
+    let keyPositionInArray = arrayToBeReturned.findIndex(o => o.key === key);
+    arrayToBeReturned.splice(keyPositionInArray, 1);
+    setJobDataState(arrayToBeReturned);
 }
 
 
@@ -187,14 +204,15 @@ function updateJobDataState(jobData, jobDataState, setJobDataState){
     } else {
         let combinedJobs = [...extantJobs, ...jobData];
         setJobDataState(combinedJobs);
-        cc(jobDataState)
     }
 }
 
 
-function Career() {
 
+
+function Career() {
     const [jobDataState, setJobDataState] = useState([]);
+
     return (
       <>
           <br />
@@ -204,6 +222,7 @@ function Career() {
           />
           <DynamicChartTest
               jobDataState = {jobDataState}
+              setJobDataState = {setJobDataState}
            />
       </>
     );
