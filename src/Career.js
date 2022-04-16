@@ -105,7 +105,7 @@ function DynamicChartTest({jobDataState, setJobDataState}) {
     }
 }
 
-
+//TODO Hide submit button for two seconds after click.
 function handleLinearSubmit(jobDataState, setJobDataState){
     let jobData = undefined;
     jobData = checkLinearData();
@@ -115,7 +115,7 @@ function handleLinearSubmit(jobDataState, setJobDataState){
     }
 }
 
-
+//TODO Add delete confirmation.
 function handleLinearJobDelete(key, jobDataState, setJobDataState){
     let arrayToBeReturned = [];
     arrayToBeReturned = [...jobDataState]
