@@ -97,8 +97,19 @@ test(`Creation of array with number of steps (years) in graph, each step showing
 
 });
 
+test("Returns the sum of the user's income over the years", () => {
+    let job = [{
+        incomeImmediate: 100,
+        incomeCeiling: 200,
+        yearIncomeBegins: 0,
+        yearToIncomeCeiling: 14,
+        incomeIncreasePerYear: 7.14,
+        incomeInGraphYearsNumberOfSteps: [100, 107, 114, 121, 129, 136, 143, 150, 157, 164, 171, 179, 186, 193, 200]
+    }]
 
-
+    let x = new JobDataHandler().sumIncomeFromLinearJob(job)
+    expect(x[0].linearIncomeSum).toEqual(2250);
+});
 
 
 
@@ -143,4 +154,5 @@ var job1DataForGraphingSteps = [{
     yearToIncomeCeiling: 14,
     incomeIncreasePerYear: 7.14,
 }]
+
 

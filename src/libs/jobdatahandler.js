@@ -116,7 +116,7 @@ class JobDataHandler {
         let jobsToBeReturned = [];
 
         jobs.forEach(job => {
-            for (let i = 0; i < 15; i++){
+            for (let i = 0; i < this.graphMaxNumberOfYears; i++){
                 sum = sum + job.incomeInGraphYearsNumberOfSteps[i];
             }
 
