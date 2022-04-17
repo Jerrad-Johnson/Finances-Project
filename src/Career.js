@@ -3,15 +3,6 @@ import React from "react";
 import {BarChart} from "./graphs/IncomeGraphs";
 import {useState} from "react";
 
-let jobsData =
-    [{
-        incomeImmediate: 20000,
-        incomeCeiling: 20000,
-        yearIncomeBegins: 3,
-        yearToIncomeCeiling: 10,
-        key: 2,
-    }];
-
 var cc = console.log;
 var lengthOfGraphInYears = new JobDataHandler();
 lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
@@ -84,7 +75,7 @@ function IncomeForms({jobDataState, setJobDataState}) {
 
 
 function DynamicChartTest({jobDataState, setJobDataState}) {
-    if (jobDataState.length != 0) {
+    if (jobDataState.length !== 0) {
         const linearIncomeBarGraph = jobDataState.map((job) => (
             <div id="linearJob" key={job.key}>
                 <BarChart linearIncome={job}/>
@@ -99,7 +90,7 @@ function DynamicChartTest({jobDataState, setJobDataState}) {
 
         return (
             <>
-             {(jobDataState.length != 0) && linearIncomeBarGraph}
+             {(jobDataState.length !== 0) && linearIncomeBarGraph}
             </>
         );
     }
@@ -109,7 +100,7 @@ function DynamicChartTest({jobDataState, setJobDataState}) {
 function handleLinearSubmit(jobDataState, setJobDataState){
     let jobData = undefined;
     jobData = checkLinearData();
-    if (jobData != false) {
+    if (jobData !== false) {
         jobData = updateLinearData(jobDataState, setJobDataState, jobData);
         jobData = updateJobDataState(jobData, jobDataState, setJobDataState);
     }
@@ -140,7 +131,6 @@ function checkLinearData(){
             jobData.jobTitle = jobTitle;
         } else {
             throw new Error("Job Title not set");
-            return;
         }
 
         if (isNumeric(incomeCeiling)) {
@@ -148,28 +138,24 @@ function checkLinearData(){
 
         } else {
             throw new Error("Ceiling Income NaN");
-            return;
         }
 
         if (isNumeric(incomeImmediate)) {
             jobData.incomeImmediate = +incomeImmediate;
         } else {
             throw new Error("Starting income NaN");
-            return;
         }
 
         if (isNumeric(yearToIncomeCeiling)) {
             jobData.yearToIncomeCeiling = --yearToIncomeCeiling;
         } else {
             throw new Error("Year to income ceiling not set.");
-            return;
         }
 
         if (isNumeric(yearIncomeBegins)) {
             jobData.yearIncomeBegins = --yearIncomeBegins;
         } else {
             throw new Error("Year to beginning of income not set.");
-            return;
         }
 
         if (+yearIncomeBegins >= +yearToIncomeCeiling) {
@@ -199,7 +185,7 @@ function updateLinearData(jobDataState, setJobDataState, jobData){
 function updateJobDataState(jobData, jobDataState, setJobDataState){
     let extantJobs = [...jobDataState];
 
-    if (jobDataState.length == 0){
+    if (jobDataState.length === 0){
         setJobDataState(jobData);
     } else {
         let combinedJobs = [...extantJobs, ...jobData];
