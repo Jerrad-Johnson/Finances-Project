@@ -8,17 +8,22 @@ test("Test error checks in checkLinearData.", () => {
     let yearToIncomeCeiling = 7;
     let yearIncomeBegins = 1;
 
-   let x = checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearToIncomeCeiling, yearIncomeBegins);
-   let jobTitleErrorCheck = checkLinearData("", incomeCeiling, incomeImmediate,
+    let x = checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearToIncomeCeiling, yearIncomeBegins);
+    let jobTitleErrorCheck = checkLinearData("", incomeCeiling, incomeImmediate,
        yearToIncomeCeiling, yearIncomeBegins);
-   let incomeCeilingErrorCheck = checkLinearData("Wally", null, incomeImmediate,
+    let incomeCeilingErrorCheck = checkLinearData("Wally", null, incomeImmediate,
        yearToIncomeCeiling, yearIncomeBegins);
-   let incomeImmediateErrorCheck = checkLinearData("Wally", incomeCeiling,  undefined,
+    let incomeImmediateErrorCheck = checkLinearData("Wally", incomeCeiling,  undefined,
        yearToIncomeCeiling, yearIncomeBegins);
-   let yearToIncomeCeilingErrorCheck = checkLinearData(jobTitle, incomeCeiling, incomeImmediate,
+    let yearToIncomeCeilingErrorCheck = checkLinearData(jobTitle, incomeCeiling, incomeImmediate,
        null, yearIncomeBegins);
-   let yearIncomeBeginsErrorCheck = checkLinearData(jobTitle, incomeCeiling, incomeImmediate,
+    let yearIncomeBeginsErrorCheck = checkLinearData(jobTitle, incomeCeiling, incomeImmediate,
        yearToIncomeCeiling,  null);
+    let yearDifferenceErrorCheck = checkLinearData(jobTitle, incomeCeiling, incomeImmediate,
+       5,  5);
+    let yearDifferenceErrorCheck2 = checkLinearData(jobTitle, incomeCeiling, incomeImmediate,
+        1,  5);
+
 
     expect(x[0].jobTitle).toBe("Wal-Mart");
     expect(x[0].incomeCeiling).toBe(+200);
@@ -31,6 +36,8 @@ test("Test error checks in checkLinearData.", () => {
     expect(incomeImmediateErrorCheck).toThrow("Starting income NaN.");
     expect(yearToIncomeCeilingErrorCheck).toThrow("Year to income ceiling not set.");
     expect(yearIncomeBeginsErrorCheck).toThrow("Year to beginning of income not set.");
+    expect(yearDifferenceErrorCheck).toThrow("Beginning income year is later than or equal to ceiling income year.")
+    expect(yearDifferenceErrorCheck2).toThrow("Beginning income year is later than or equal to ceiling income year.")
 
 })
 
