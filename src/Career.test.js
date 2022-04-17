@@ -22,6 +22,7 @@ test('Checks stepped data', () => {
     expect(y).toBeUndefined();
 });
 
+
 test('Calculates salary raise per year from a linear-income job.', () => {
     let x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(jobsDataWithLinearEntry);
 
@@ -54,7 +55,7 @@ test('Calculates salary raise per year from a linear-income job.', () => {
     x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(a);
 
     x.forEach(job => {
-        expect(job.incomeIncreasePerYear).toBe(2);
+        expect(job.incomeIncreasePerYear).toBe(2.60);
     });
 
     a = jobsDataWithLinearEntry;
@@ -78,8 +79,10 @@ test('Calculates salary raise per year from a linear-income job.', () => {
 });
 
 
-test(`Creation of array with number of steps (years) in graph.`, () => {
+test(`Creation of array with number of steps (years) in graph, each step showing the user's salary for that year.`, () => {
+    let incomeSteps = [100, 107, 114, 121, 129, 136, 143, 150, 157, 164, 171, 179, 186, 193, 200]
     let x = new JobDataHandler().createIncomeArrayWithGraphYearsNumberOfSteps(jobsDataWithLinearEntry);
+    let y = new JobDataHandler().createIncomeArrayWithGraphYearsNumberOfSteps(job1DataForGraphingSteps);
     let graphYears = new JobDataHandler().graphMaxNumberOfYears;
 
     x.forEach(job => {
@@ -90,8 +93,21 @@ test(`Creation of array with number of steps (years) in graph.`, () => {
         expect(job.incomeInGraphYearsNumberOfSteps).toHaveLength(graphYears)
     });
 
+    expect(y[0].incomeInGraphYearsNumberOfSteps).toEqual(incomeSteps);
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 var jobsData = [{
     yearsOfExperienceAtEachStep:
@@ -121,8 +137,10 @@ var jobsDataWithSteppedEntry = [{
 }];
 
 var job1DataForGraphingSteps = [{
-    incomeImmediate: 35000,
-    incomeCeiling: 70000,
-    yearIncomeBegins: 5,
-    yearToIncomeCeiling: 10,
+    incomeImmediate: 100,
+    incomeCeiling: 200,
+    yearIncomeBegins: 0,
+    yearToIncomeCeiling: 14,
+    incomeIncreasePerYear: 7.14,
 }]
+
