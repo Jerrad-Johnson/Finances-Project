@@ -17,7 +17,7 @@ test("Test error checks in checkLinearData.", () => {
     expect(x[0].yearToIncomeCeiling).toBe(+6);
     expect(x[0].yearIncomeBegins).toBe(+0);
 
-    expect(errorCheckJobTitle.fn).toThrow("Job Title not set");
+    expect(errorCheckJobTitle).toThrow("Job Title not set");
 
 })
 

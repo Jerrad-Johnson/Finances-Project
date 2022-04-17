@@ -109,8 +109,8 @@ function handleLinearSubmit(jobDataState, setJobDataState){
     let yearIncomeBegins = document.querySelector('#yearIncomeBegins').value;
 
     jobData = checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearToIncomeCeiling, yearIncomeBegins);
-    cc(jobData.fn);
-    if (jobData.pass !== false) {
+
+    if (jobData.jobTitle !== undefined) {
         jobData = updateLinearData(jobDataState, setJobDataState, jobData);
         jobData = updateJobDataState(jobData, jobDataState, setJobDataState);
     }
@@ -172,9 +172,8 @@ export function checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearTo
         let returnObject = {}
         returnObject.pass = false;
         returnObject.fn = (() => { handleError(err.message) });
-        cc(returnObject.fn)
 
-        return returnObject;
+        return (() => { handleError(err.message)});
     }
 
     jobData.key = linearKey;
