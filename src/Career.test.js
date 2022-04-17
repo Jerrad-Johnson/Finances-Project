@@ -30,18 +30,18 @@ test("Test error checks in checkLinearData.", () => {
     expect(x[0].yearToIncomeCeiling).toBe(+6);
     expect(x[0].yearIncomeBegins).toBe(+0);
 
-    expect(jobTitleErrorCheck).toThrow("Job Title not set.");
-    expect(incomeCeilingErrorCheck).toThrow("Ceiling Income NaN.");
-    expect(incomeImmediateErrorCheck).toThrow("Starting income NaN.");
-    expect(yearToIncomeCeilingErrorCheck).toThrow("Year to income ceiling not set.");
-    expect(yearIncomeBeginsErrorCheck).toThrow("Year to beginning of income not set.");
-    expect(yearDifferenceErrorCheck).toThrow("Beginning income year is later than or equal to ceiling income year.")
-    expect(yearDifferenceErrorCheck2).toThrow("Beginning income year is later than or equal to ceiling income year.")
+    expect(jobTitleErrorCheck.fn).toThrow("Job Title not set.");
+    expect(incomeCeilingErrorCheck.fn).toThrow("Ceiling Income NaN.");
+    expect(incomeImmediateErrorCheck.fn).toThrow("Starting income NaN.");
+    expect(yearToIncomeCeilingErrorCheck.fn).toThrow("Year to income ceiling not set.");
+    expect(yearIncomeBeginsErrorCheck.fn).toThrow("Year to beginning of income not set.");
+    expect(yearDifferenceErrorCheck.fn).toThrow("Beginning income year is later than or equal to ceiling income year.")
+    expect(yearDifferenceErrorCheck2.fn).toThrow("Beginning income year is later than or equal to ceiling income year.")
 });
 
 test("Create array with 15 entries numbered 1-15 for select elements", () => {
     let x = createArrayWithNumberOfYearsToGraph();
-    let selectFormOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+    let selectFormOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]; //TODO This is fragile; won't update when graphYears changes.
 
     expect(x).toEqual(selectFormOptions);
 });

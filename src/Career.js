@@ -66,7 +66,7 @@ function IncomeForms({jobDataState, setJobDataState}) {
                     id={"yearToIncomeCeiling"}
                     /*keyNumber={"2"}*/
                 />
-                <button type={"click"} onClick={(e) => {
+                <button type={"click"} id={"submitLinearJob"} onClick={(e) => {
                     e.preventDefault(); handleLinearSubmit(jobDataState, setJobDataState) }}>
                     Submit
                 </button>
@@ -109,8 +109,9 @@ function handleLinearSubmit(jobDataState, setJobDataState){
     let yearIncomeBegins = document.querySelector('#yearIncomeBegins').value;
 
     jobData = checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearToIncomeCeiling, yearIncomeBegins);
+        cc(jobData)
 
-    if (jobData.jobTitle !== undefined) {
+    if (jobData[0].pass === true) {
         jobData = updateLinearData(jobDataState, setJobDataState, jobData);
         jobData = updateJobDataState(jobData, jobDataState, setJobDataState);
     }
@@ -168,16 +169,15 @@ export function checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearTo
         }
 
     } catch (err) {
-        /*
 
         let returnObject = {}
-        returnObject.pass = false;
+        //returnObject.pass = false;
         returnObject.fn = (() => { handleError(err.message) });
-*/
-
-        return (() => { handleError(err.message)});
+        return returnObject;
+//      return (() => { handleError(err.message)});
     }
 
+    jobData.pass = true;
     jobData.key = linearKey;
     jobDataToBeReturned.push(jobData)
     jobData = {};
