@@ -9,7 +9,16 @@ test("Test error checks in checkLinearData.", () => {
     let yearIncomeBegins = 1;
 
    let x = checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearToIncomeCeiling, yearIncomeBegins);
-   let errorCheckJobTitle = checkLinearData("", incomeCeiling, incomeImmediate, yearToIncomeCeiling, yearIncomeBegins);
+   let jobTitleErrorCheck = checkLinearData("", incomeCeiling, incomeImmediate,
+       yearToIncomeCeiling, yearIncomeBegins);
+   let incomeCeilingErrorCheck = checkLinearData("Wally", null, incomeImmediate,
+       yearToIncomeCeiling, yearIncomeBegins);
+   let incomeImmediateErrorCheck = checkLinearData("Wally", incomeCeiling,  undefined,
+       yearToIncomeCeiling, yearIncomeBegins);
+   let yearToIncomeCeilingErrorCheck = checkLinearData(jobTitle, incomeCeiling, incomeImmediate,
+       null, yearIncomeBegins);
+   let yearIncomeBeginsErrorCheck = checkLinearData(jobTitle, incomeCeiling, incomeImmediate,
+       yearToIncomeCeiling,  null);
 
     expect(x[0].jobTitle).toBe("Wal-Mart");
     expect(x[0].incomeCeiling).toBe(+200);
@@ -17,7 +26,11 @@ test("Test error checks in checkLinearData.", () => {
     expect(x[0].yearToIncomeCeiling).toBe(+6);
     expect(x[0].yearIncomeBegins).toBe(+0);
 
-    expect(errorCheckJobTitle).toThrow("Job Title not set");
+    expect(jobTitleErrorCheck).toThrow("Job Title not set.");
+    expect(incomeCeilingErrorCheck).toThrow("Ceiling Income NaN.");
+    expect(incomeImmediateErrorCheck).toThrow("Starting income NaN.");
+    expect(yearToIncomeCeilingErrorCheck).toThrow("Year to income ceiling not set.");
+    expect(yearIncomeBeginsErrorCheck).toThrow("Year to beginning of income not set.");
 
 })
 

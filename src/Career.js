@@ -135,20 +135,20 @@ export function checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearTo
         if ((jobTitle !== undefined) && (jobTitle !== '')){
             jobData.jobTitle = jobTitle;
         } else {
-            throw new Error("Job Title not set");
+            throw new Error("Job Title not set.");
         }
 
         if (isNumeric(incomeCeiling)) {
             jobData.incomeCeiling = +incomeCeiling;
 
         } else {
-            throw new Error("Ceiling Income NaN");
+            throw new Error("Ceiling Income NaN.");
         }
 
         if (isNumeric(incomeImmediate)) {
             jobData.incomeImmediate = +incomeImmediate;
         } else {
-            throw new Error("Starting income NaN");
+            throw new Error("Starting income NaN.");
         }
 
         if (isNumeric(yearToIncomeCeiling)) {
@@ -168,10 +168,12 @@ export function checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearTo
         }
 
     } catch (err) {
+        /*
 
         let returnObject = {}
         returnObject.pass = false;
         returnObject.fn = (() => { handleError(err.message) });
+*/
 
         return (() => { handleError(err.message)});
     }
