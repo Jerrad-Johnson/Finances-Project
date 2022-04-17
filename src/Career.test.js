@@ -81,9 +81,20 @@ test('Calculates salary raise per year from a linear-income job.', () => {
 
 test(`Creation of array with number of steps (years) in graph, each step showing the user's salary for that year.`, () => {
     let incomeSteps = [100, 107, 114, 121, 129, 136, 143, 150, 157, 164, 171, 179, 186, 193, 200]
+    let job1DataForGraphingSteps = [{
+        incomeImmediate: 100,
+        incomeCeiling: 200,
+        yearIncomeBegins: 0,
+        yearToIncomeCeiling: 14,
+        incomeIncreasePerYear: 7.14,
+    }]
     let x = new JobDataHandler().createIncomeArrayWithGraphYearsNumberOfSteps(jobsDataWithLinearEntry);
     let y = new JobDataHandler().createIncomeArrayWithGraphYearsNumberOfSteps(job1DataForGraphingSteps);
     let graphYears = new JobDataHandler().graphMaxNumberOfYears;
+
+
+
+
 
     x.forEach(job => {
         expect(job.incomeInGraphYearsNumberOfSteps).toBeDefined();
@@ -113,8 +124,21 @@ test("Returns the sum of the user's income over the years", () => {
 
 
 
+test("Returns the sum of the user's income over the years", () => {
+    let job = [{
+        incomeImmediate: 100,
+        incomeCeiling: 200,
+        yearIncomeBegins: 0,
+        yearToIncomeCeiling: 14,
+        incomeIncreasePerYear: 7.14,
+        incomeInGraphYearsNumberOfSteps: [100, 107, 114, 121, 129, 136, 143, 150, 157, 164, 171, 179, 186, 193, 200],
+        linearIncomeSum: 2250,
+    }]
+    let incomeSumByYear = [100, 207, 321, 442, 571, 707, 850, 1000, 1157, 1321, 1492, 1671, 1857, 2050, 2250]
+    let x = new JobDataHandler().sumIncomeFromLinearJobByYear(job)
 
-
+    expect(x[0].sumIncomeByYear).toEqual(incomeSumByYear);
+});
 
 
 
@@ -146,13 +170,5 @@ var jobsDataWithSteppedEntry = [{
     incomeAtBeginningOfEachStep:
         [60000, 120000, 150000, 300000],
 }];
-
-var job1DataForGraphingSteps = [{
-    incomeImmediate: 100,
-    incomeCeiling: 200,
-    yearIncomeBegins: 0,
-    yearToIncomeCeiling: 14,
-    incomeIncreasePerYear: 7.14,
-}]
 
 
