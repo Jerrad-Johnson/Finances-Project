@@ -17,7 +17,7 @@ function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
-function createArrayWithNumberOfYearsToGraph() {
+export function createArrayWithNumberOfYearsToGraph() {
     let numberOfYearsToGraph = [];
     let yearsToBeReturned = [];
 
@@ -45,7 +45,7 @@ function CreateOptionForms({formTitle, id, key}) {
             <label> {formTitle} </label><br />
         </>
     );
-}
+} //TODO Turn into class; will be reused
 
 
 function IncomeForms({jobDataState, setJobDataState}) {

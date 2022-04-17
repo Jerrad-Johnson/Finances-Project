@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Career, {checkLinearData} from "./Career";
+import Career, {checkLinearData, createArrayWithNumberOfYearsToGraph} from "./Career";
 
 test("Test error checks in checkLinearData.", () => {
     let jobTitle = "Wal-Mart";
@@ -24,7 +24,6 @@ test("Test error checks in checkLinearData.", () => {
     let yearDifferenceErrorCheck2 = checkLinearData(jobTitle, incomeCeiling, incomeImmediate,
         1,  5);
 
-
     expect(x[0].jobTitle).toBe("Wal-Mart");
     expect(x[0].incomeCeiling).toBe(+200);
     expect(x[0].incomeImmediate).toBe(+100);
@@ -38,8 +37,16 @@ test("Test error checks in checkLinearData.", () => {
     expect(yearIncomeBeginsErrorCheck).toThrow("Year to beginning of income not set.");
     expect(yearDifferenceErrorCheck).toThrow("Beginning income year is later than or equal to ceiling income year.")
     expect(yearDifferenceErrorCheck2).toThrow("Beginning income year is later than or equal to ceiling income year.")
+});
 
-})
+test("Create array with 15 entries numbered 1-15 for select elements", () => {
+    let x = createArrayWithNumberOfYearsToGraph();
+    let selectFormOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+
+    expect(x).toEqual(selectFormOptions);
+});
+
+
 
 
 let job = [{
