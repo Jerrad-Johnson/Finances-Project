@@ -78,6 +78,21 @@ test('Calculates salary raise per year from a linear-income job.', () => {
 });
 
 
+test(`Creation of array with number of steps (years) in graph.`, () => {
+    let x = new JobDataHandler().createIncomeArrayWithGraphYearsNumberOfSteps(jobsDataWithLinearEntry);
+    let graphYears = new JobDataHandler().graphMaxNumberOfYears;
+
+    x.forEach(job => {
+        expect(job.incomeInGraphYearsNumberOfSteps).toBeDefined();
+    });
+
+    x.forEach(job => {
+        expect(job.incomeInGraphYearsNumberOfSteps).toHaveLength(graphYears)
+    });
+
+
+});
+
 var jobsData = [{
     yearsOfExperienceAtEachStep:
         [0, 4, 5, 8],
@@ -104,3 +119,10 @@ var jobsDataWithSteppedEntry = [{
     incomeAtBeginningOfEachStep:
         [60000, 120000, 150000, 300000],
 }];
+
+var job1DataForGraphingSteps = [{
+    incomeImmediate: 35000,
+    incomeCeiling: 70000,
+    yearIncomeBegins: 5,
+    yearToIncomeCeiling: 10,
+}]

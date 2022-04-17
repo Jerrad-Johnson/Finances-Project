@@ -66,9 +66,9 @@ class JobDataHandler {
         jobs.forEach(job => {
             if ((job.yearToIncomeCeiling - job.yearIncomeBegins) >= 1) {
                 incomeIncreaseOverCareer = job.incomeCeiling - job.incomeImmediate;
-                job.incomeIncreasePerYear = Math.trunc(
-                    incomeIncreaseOverCareer / (
-                        job.yearToIncomeCeiling - job.yearIncomeBegins));
+                job.incomeIncreasePerYear = (incomeIncreaseOverCareer /
+                    (job.yearToIncomeCeiling - job.yearIncomeBegins)).toFixed(2);
+                job.incomeIncreasePerYear = +job.incomeIncreasePerYear
                 jobsToBeReturned.push(job);
             } else {
                 job.incomeIncreasePerYear = 0;
@@ -85,15 +85,15 @@ class JobDataHandler {
         let incomeInGraphYearsNumberOfSteps = [];
         let runningTotalSalary = 0 ;
         let jobsToBeReturned = [];
-
-
+        let roundedValue;
 
         jobs.forEach(job => {
             for (let i = 0; i <= job.yearIncomeBegins; i++){
                 incomeInGraphYearsNumberOfSteps[i] = 0;
             }
             for (let i = job.yearIncomeBegins; i <= job.yearToIncomeCeiling; i++){
-                incomeInGraphYearsNumberOfSteps[i] = (job.incomeImmediate + runningTotalSalary);
+                roundedValue = Math.round(job.incomeImmediate + +runningTotalSalary)
+                incomeInGraphYearsNumberOfSteps[i] = roundedValue
                 runningTotalSalary = (runningTotalSalary + job.incomeIncreasePerYear);
             }
 

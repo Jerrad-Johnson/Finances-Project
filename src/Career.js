@@ -75,6 +75,7 @@ function IncomeForms({jobDataState, setJobDataState}) {
 
 
 function DynamicChartTest({jobDataState, setJobDataState}) {
+    cc(jobDataState)
     if (jobDataState.length !== 0) {
         const linearIncomeBarGraph = jobDataState.map((job) => (
             <div id="linearJob" key={job.key}>
