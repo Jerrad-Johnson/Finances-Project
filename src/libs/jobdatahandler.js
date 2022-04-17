@@ -82,7 +82,6 @@ class JobDataHandler {
 
 
     createIncomeArrayWithGraphYearsNumberOfSteps(jobs) {
-        this.cc(jobs)
         let incomeInGraphYearsNumberOfSteps = [];
         let runningTotalSalary = 0 ;
         let jobsToBeReturned = [];
