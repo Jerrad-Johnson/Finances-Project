@@ -1,106 +1,57 @@
 import { render, screen } from '@testing-library/react';
-import Career from "./Career";
-import Jobdatahandler from "./libs/jobdatahandler";
-import JobDataHandler from "./libs/jobdatahandler";
+import Career, {checkLinearData} from "./Career";
+
+test("Test error checks in checkLinearData.", () => {
+    let jobTitle = "Wal-Mart";
+    let incomeCeiling = 200;
+    let incomeImmediate = 100;
+    let yearToIncomeCeiling = 7;
+    let yearIncomeBegins = 1;
+
+    let x = checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearToIncomeCeiling, yearIncomeBegins);
+    let jobTitleErrorCheck = checkLinearData("", incomeCeiling, incomeImmediate,
+       yearToIncomeCeiling, yearIncomeBegins);
+    let incomeCeilingErrorCheck = checkLinearData("Wally", null, incomeImmediate,
+       yearToIncomeCeiling, yearIncomeBegins);
+    let incomeImmediateErrorCheck = checkLinearData("Wally", incomeCeiling,  undefined,
+       yearToIncomeCeiling, yearIncomeBegins);
+    let yearToIncomeCeilingErrorCheck = checkLinearData(jobTitle, incomeCeiling, incomeImmediate,
+       null, yearIncomeBegins);
+    let yearIncomeBeginsErrorCheck = checkLinearData(jobTitle, incomeCeiling, incomeImmediate,
+       yearToIncomeCeiling,  null);
+    let yearDifferenceErrorCheck = checkLinearData(jobTitle, incomeCeiling, incomeImmediate,
+       5,  5);
+    let yearDifferenceErrorCheck2 = checkLinearData(jobTitle, incomeCeiling, incomeImmediate,
+        1,  5);
 
 
+    expect(x[0].jobTitle).toBe("Wal-Mart");
+    expect(x[0].incomeCeiling).toBe(+200);
+    expect(x[0].incomeImmediate).toBe(+100);
+    expect(x[0].yearToIncomeCeiling).toBe(+6);
+    expect(x[0].yearIncomeBegins).toBe(+0);
+
+    expect(jobTitleErrorCheck).toThrow("Job Title not set.");
+    expect(incomeCeilingErrorCheck).toThrow("Ceiling Income NaN.");
+    expect(incomeImmediateErrorCheck).toThrow("Starting income NaN.");
+    expect(yearToIncomeCeilingErrorCheck).toThrow("Year to income ceiling not set.");
+    expect(yearIncomeBeginsErrorCheck).toThrow("Year to beginning of income not set.");
+    expect(yearDifferenceErrorCheck).toThrow("Beginning income year is later than or equal to ceiling income year.")
+    expect(yearDifferenceErrorCheck2).toThrow("Beginning income year is later than or equal to ceiling income year.")
+
+})
 
 
-test('Checks linear data', () => {
-    let x = new JobDataHandler(jobsData).findLinearIncomeJobs();
-    expect(x).toBeDefined();
-
-    let y = new JobDataHandler(jobsDataWithSteppedEntry).findLinearIncomeJobs();
-    expect(y).toBeUndefined();
-});
-
-test('Checks stepped data', () => {
-    let x = new JobDataHandler(jobsData).findStepped();
-    expect(x).toBeDefined();
-
-    let y = new JobDataHandler(jobsDataWithLinearEntry).findStepped();
-    expect(y).toBeUndefined();
-});
-
-test('Calculates salary raise per year from a linear-income job.', () => {
-    let x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(jobsDataWithLinearEntry);
-
-    x.forEach(job => {
-        expect(job.incomeIncreasePerYear).toBe(7000);
-    });
-
-    let a = jobsDataWithLinearEntry;
-    a[0].incomeImmediate = 0;
-
-    x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(a);
-
-    x.forEach(job => {
-        expect(job.incomeIncreasePerYear).toBe(14000);
-    });
-
-    a = jobsDataWithLinearEntry;
-    a[0].incomeImmediate = 70000;
-
-    x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(a);
-
-    x.forEach(job => {
-        expect(job.incomeIncreasePerYear).toBe(0);
-    });
-
-    a = jobsDataWithLinearEntry;
-    a[0].incomeImmediate = 0;
-    a[0].incomeCeiling = 13;
-
-    x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(a);
-
-    x.forEach(job => {
-        expect(job.incomeIncreasePerYear).toBe(2);
-    });
-
-    a = jobsDataWithLinearEntry;
-    a[0].yearToIncomeCeiling = 5;
-
-    x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(a);
-
-    x.forEach(job => {
-        expect(job.incomeIncreasePerYear).toBe(0);
-    });
-
-    a = jobsDataWithLinearEntry;
-    a[0].yearToIncomeCeiling = 2;
-
-    x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(a);
-
-    x.forEach(job => {
-        expect(job.incomeIncreasePerYear).toBe(0);
-    });
-
-});
-
-
-var jobsData = [{
-    yearsOfExperienceAtEachStep:
-        [0, 4, 5, 8],
-    incomeAtBeginningOfEachStep:
-        [60000, 120000, 150000, 300000],
-},{
-    incomeImmediate: 35000,
-    incomeCeiling: 70000,
-    yearIncomeBegins: 5,
-    yearToIncomeCeiling: 10,
-}];
-
-var jobsDataWithLinearEntry = [{
-    incomeImmediate: 35000,
-    incomeCeiling: 70000,
-    yearIncomeBegins: 5,
-    yearToIncomeCeiling: 10,
-    key: 5,
-}];
-
-var jobsDataWithSteppedEntry = [{
-    yearsOfExperienceAtEachStep:
-        [0, 4, 5, 8],
-    incomeAtBeginningOfEachStep:
-        [60000, 120000, 150000, 300000],
+let job = [{
+    incomeCeiling: 200,
+    incomeImmediate: 100,
+    incomeInGraphYearsNumberOfSteps: [100, 107, 114, 121, 129, 136, 143, 150, 157, 164, 171, 179, 186, 193, 200],
+    incomeIncreasePerYear: 7.14,
+    jobTitle: "Wally",
+    key: 0,
+    linearIncomeSum: 2250,
+    sumIncomeByYear: [100, 207, 321, 442, 571, 707, 850, 1000, 1157, 1321, 1492, 1671, 1857, 2050, 2250],
+    yearIncomeBegins: 0,
+    yearToIncomeCeiling: 14,
+    yearsNumbered: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6', 'Year 7', 'Year 8', 'Year 9', 'Year 10', 'Year 11', 'Year 12', 'Year 13', 'Year 14', 'Year 15'],
 }];
