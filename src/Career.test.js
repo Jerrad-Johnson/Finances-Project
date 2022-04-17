@@ -118,7 +118,7 @@ test("Returns the sum of the user's income over the years", () => {
         incomeInGraphYearsNumberOfSteps: [100, 107, 114, 121, 129, 136, 143, 150, 157, 164, 171, 179, 186, 193, 200]
     }]
 
-    let x = new JobDataHandler().sumIncomeFromLinearJob(job)
+    let x = new JobDataHandler().sumIncomeFromLinearJob(job);
     expect(x[0].linearIncomeSum).toEqual(2250);
 });
 
@@ -133,13 +133,31 @@ test("Returns the sum of the user's income over the years", () => {
         incomeIncreasePerYear: 7.14,
         incomeInGraphYearsNumberOfSteps: [100, 107, 114, 121, 129, 136, 143, 150, 157, 164, 171, 179, 186, 193, 200],
         linearIncomeSum: 2250,
-    }]
+    }];
     let incomeSumByYear = [100, 207, 321, 442, 571, 707, 850, 1000, 1157, 1321, 1492, 1671, 1857, 2050, 2250]
-    let x = new JobDataHandler().sumIncomeFromLinearJobByYear(job)
+    let x = new JobDataHandler().sumIncomeFromLinearJobByYear(job);
 
     expect(x[0].sumIncomeByYear).toEqual(incomeSumByYear);
 });
 
+test("Add an array of named years (as a string) for printing to graphs.", () => {
+    let job = [{
+        incomeImmediate: 100,
+        incomeCeiling: 200,
+        yearIncomeBegins: 0,
+        yearToIncomeCeiling: 14,
+        incomeIncreasePerYear: 7.14,
+        incomeInGraphYearsNumberOfSteps: [100, 107, 114, 121, 129, 136, 143, 150, 157, 164, 171, 179, 186, 193, 200],
+        linearIncomeSum: 2250,
+        sumIncomeByYear: [100, 207, 321, 442, 571, 707, 850, 1000, 1157, 1321, 1492, 1671, 1857, 2050, 2250]
+    }];
+    let x = new JobDataHandler().addArrayOfNumberedYears(job);
+    let graphYears = new JobDataHandler().graphMaxNumberOfYears;
+
+    for (let i = 0; i <= graphYears; i++){
+        expect(x[0].yearsNumbered[i]).toEqual("Year " + [++i]);
+    }
+});
 
 
 
