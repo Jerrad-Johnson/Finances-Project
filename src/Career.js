@@ -47,8 +47,10 @@ function CreateOptionForms({formTitle, id, key}) {
     );
 } //TODO Turn into class; will be reused
 
+function FormContainer({linearJobDataState, setLinearJobDataState, staticJobDataState, setStaticJobDataState}) {
+}
 
-function IncomeForms({jobDataState, setJobDataState}) {
+function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
 
     return (
         <div className={'formContainer'}>
@@ -67,7 +69,7 @@ function IncomeForms({jobDataState, setJobDataState}) {
                     /*keyNumber={"2"}*/
                 />
                 <button type={"click"} id={"submitLinearJob"} onClick={(e) => {
-                    e.preventDefault(); handleLinearSubmit(jobDataState, setJobDataState) }}>
+                    e.preventDefault(); handleLinearSubmit(linearJobDataState, setLinearJobDataState) }}>
                     Submit
                 </button>
 
@@ -76,15 +78,20 @@ function IncomeForms({jobDataState, setJobDataState}) {
     );
 }
 
+function StaticIncomeForms({staticJobDataState, setStaticJobDataState}) {
 
-function DynamicChartTest({jobDataState, setJobDataState}) {
-    if (jobDataState.length !== 0) {
-        const linearIncomeBarGraph = jobDataState.map((job) => (
+    //return
+}
+
+
+function DynamicChartTest({linearJobDataState, setLinearJobDataState}) {
+    if (linearJobDataState.length !== 0) {
+        const linearIncomeBarGraph = linearJobDataState.map((job) => (
             <div id="linearJob" className={"linearJobKey" + job.key } key={job.key}>
                 <BarChart linearIncome={job}/>
                 <button type={"click"} className={"deleteLinearJobKey" + job.key} onClick={(e) => {
                     e.preventDefault();
-                    handleLinearJobDelete(job.key, jobDataState, setJobDataState);
+                    handleLinearJobDelete(job.key, linearJobDataState, setLinearJobDataState);
                 }} >
                     Delete Row {job.key}
                 </button>
@@ -93,14 +100,14 @@ function DynamicChartTest({jobDataState, setJobDataState}) {
 
         return (
             <>
-             {(jobDataState.length !== 0) && linearIncomeBarGraph}
+             {(linearJobDataState.length !== 0) && linearIncomeBarGraph}
             </>
         );
     }
 }
 
 //TODO Hide submit button for two seconds after click.
-function handleLinearSubmit(jobDataState, setJobDataState){
+function handleLinearSubmit(linearJobDataState, setLinearJobDataState){
     let jobData = undefined;
     let jobTitle = document.querySelector('#jobTitle').value;
     let incomeCeiling = document.querySelector('#incomeCeiling').value;
@@ -111,18 +118,18 @@ function handleLinearSubmit(jobDataState, setJobDataState){
     jobData = checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearToIncomeCeiling, yearIncomeBegins);
 
     if (jobData[0].pass === true) {
-        jobData = updateLinearData(jobDataState, setJobDataState, jobData);
-        jobData = updateJobDataState(jobData, jobDataState, setJobDataState);
+        jobData = updateLinearData(linearJobDataState, setLinearJobDataState, jobData);
+        jobData = updateJobDataState(jobData, linearJobDataState, setLinearJobDataState);
     }
 }
 
 //TODO Add delete confirmation.
-function handleLinearJobDelete(key, jobDataState, setJobDataState){
+function handleLinearJobDelete(key, linearJobDataState, setLinearJobDataState){
     let arrayToBeReturned = [];
-    arrayToBeReturned = [...jobDataState]
+    arrayToBeReturned = [...linearJobDataState]
     let keyPositionInArray = arrayToBeReturned.findIndex(o => o.key === key);
     arrayToBeReturned.splice(keyPositionInArray, 1);
-    setJobDataState(arrayToBeReturned);
+    setLinearJobDataState(arrayToBeReturned);
 }
 
 
@@ -187,7 +194,7 @@ export function checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearTo
 }
 
 
-function updateLinearData(jobDataState, setJobDataState, jobData){
+function updateLinearData(linearJobDataState, setLinearJobDataState, jobData){
     let jobDataToBeReturned = new JobDataHandler(jobData).findLinear();
     return jobDataToBeReturned;
 }
@@ -208,19 +215,26 @@ function updateJobDataState(jobData, jobDataState, setJobDataState){
 
 //TODO Display job title in graph
 function Career() {
-    const [jobDataState, setJobDataState] = useState([]);
+    const [linearJobDataState, setLinearJobDataState] = useState([]);
+    const [staticJobDataState, setStaticJobDataState] = useState([]);
+
 
     return (
       <>
           <br />
-          <IncomeForms
-              jobDataState = {jobDataState}
-              setJobDataState = {setJobDataState}
+          <LinearIncomeForms
+              linearJobDataState= {linearJobDataState}
+              setLinearJobDataState= {setLinearJobDataState}
           />
           <DynamicChartTest
-              jobDataState = {jobDataState}
-              setJobDataState = {setJobDataState}
+              linearJobDataState = {linearJobDataState}
+              setLinearJobDataState = {setLinearJobDataState}
            />
+          <StaticIncomeForms
+              staticJobDataState = {staticJobDataState}
+              setStaticJobDataState = {setStaticJobDataState}
+          />
+
       </>
     );
 }

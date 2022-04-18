@@ -8,8 +8,13 @@
 
 
 describe("Career page checks", () => {
-    beforeEach(() => {
+    /*beforeEach(() => {
+
+    });*/
+
+    it("Page rendered", () => {
         cy.visit("/");
+        cy.get("body").should("exist");
     });
 
    it("Linear form rendered", () => {
@@ -22,7 +27,7 @@ describe("Career page checks", () => {
        cy.get("#submitLinearJob").should("exist");
    });
 
-   it("Enters a linear job", () => {
+   it("Creates a linear job", () => {
        cy.get("#jobTitle").type("Wally");
        cy.get("#incomeImmediate").type("500");
        cy.get("#incomeCeiling").type("800");
@@ -31,9 +36,12 @@ describe("Career page checks", () => {
        cy.get("#submitLinearJob").click();
        cy.get(".linearJobKey0").should("exist");
        cy.wait(1000);
-       cy.get(".deleteLinearJobKey0").click();
-       cy.wait(1000);
-       cy.get(".linearJobKey0").should("not.exist");
+   });
+
+   it("Deletes the previously-created linear job.", () => {
+        cy.get(".deleteLinearJobKey0").click();
+        cy.wait(1000);
+        cy.get(".linearJobKey0").should("not.exist");
    });
 });
 
