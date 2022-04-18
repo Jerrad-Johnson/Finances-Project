@@ -48,12 +48,21 @@ function CreateOptionForms({formTitle, id, key}) {
 } //TODO Turn into class; will be reused
 
 function FormContainer({linearJobDataState, setLinearJobDataState, staticJobDataState, setStaticJobDataState}) {
+
+    return (
+        <div id={"formContainer"}>
+            <LinearIncomeForms
+                linearJobDataState = {linearJobDataState}
+                setLinearJobDataState = {setLinearJobDataState}
+            />
+        </div>
+    );
 }
 
 function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
 
     return (
-        <div className={'formContainer'}>
+        <>
             <form>
                 <input type={"text"} id={"jobTitle"}></input> Job Title <br />
                 <input type={"text"} id={"incomeImmediate"}></input> Starting income
@@ -74,7 +83,7 @@ function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
                 </button>
 
             </form>
-        </div>
+        </>
     );
 }
 
@@ -221,11 +230,13 @@ function Career() {
 
     return (
       <>
-          <br />
-          <LinearIncomeForms
-              linearJobDataState= {linearJobDataState}
-              setLinearJobDataState= {setLinearJobDataState}
+          <FormContainer
+              linearJobDataState = {linearJobDataState}
+              setLinearJobDataState = {setLinearJobDataState}
+              staticJobDataState = {staticJobDataState}
+              setStaticJobDataState = {setStaticJobDataState}
           />
+          <br />
           <DynamicChartTest
               linearJobDataState = {linearJobDataState}
               setLinearJobDataState = {setLinearJobDataState}

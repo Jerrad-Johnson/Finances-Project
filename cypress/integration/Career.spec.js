@@ -18,7 +18,7 @@ describe("Career page checks", () => {
     });
 
    it("Linear form rendered", () => {
-       cy.get(".formContainer").should("exist");
+       cy.get("#formContainer").should("exist");
        cy.get("#incomeImmediate").should("exist");
        cy.get("#jobTitle").should("exist");
        cy.get("#incomeCeiling").should("exist");
