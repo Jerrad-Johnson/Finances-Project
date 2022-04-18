@@ -109,7 +109,6 @@ function handleLinearSubmit(jobDataState, setJobDataState){
     let yearIncomeBegins = document.querySelector('#yearIncomeBegins').value;
 
     jobData = checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearToIncomeCeiling, yearIncomeBegins);
-        cc(jobData)
 
     if (jobData[0].pass === true) {
         jobData = updateLinearData(jobDataState, setJobDataState, jobData);
@@ -207,7 +206,7 @@ function updateJobDataState(jobData, jobDataState, setJobDataState){
 
 
 
-
+//TODO Display job title in graph
 function Career() {
     const [jobDataState, setJobDataState] = useState([]);
 
