@@ -47,7 +47,7 @@ function CreateOptionForms({formTitle, id, key}) {
     );
 } //TODO Turn into class; will be reused
 
-function FormContainer({linearJobDataState, setLinearJobDataState, staticJobDataState, setStaticJobDataState}) {
+function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDataState, setsteppedJobDataState}) {
 
     return (
         <div id={"formContainer"}>
@@ -87,7 +87,7 @@ function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
     );
 }
 
-function StaticIncomeForms({staticJobDataState, setStaticJobDataState}) {
+function steppedIncomeForms({steppedJobDataState, setsteppedJobDataState}) {
 
     //return
 }
@@ -225,7 +225,7 @@ function updateJobDataState(jobData, jobDataState, setJobDataState){
 //TODO Display job title in graph
 function Career() {
     const [linearJobDataState, setLinearJobDataState] = useState([]);
-    const [staticJobDataState, setStaticJobDataState] = useState([]);
+    const [steppedJobDataState, setsteppedJobDataState] = useState([]);
 
 
     return (
@@ -233,17 +233,17 @@ function Career() {
           <FormContainer
               linearJobDataState = {linearJobDataState}
               setLinearJobDataState = {setLinearJobDataState}
-              staticJobDataState = {staticJobDataState}
-              setStaticJobDataState = {setStaticJobDataState}
+              steppedJobDataState = {steppedJobDataState}
+              setsteppedJobDataState = {setsteppedJobDataState}
           />
           <br />
           <DynamicChartTest
               linearJobDataState = {linearJobDataState}
               setLinearJobDataState = {setLinearJobDataState}
            />
-          <StaticIncomeForms
-              staticJobDataState = {staticJobDataState}
-              setStaticJobDataState = {setStaticJobDataState}
+          <steppedIncomeForms
+              steppedJobDataState = {steppedJobDataState}
+              setsteppedJobDataState = {setsteppedJobDataState}
           />
 
       </>
