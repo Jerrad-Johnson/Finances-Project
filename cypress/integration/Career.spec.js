@@ -29,6 +29,11 @@ describe("Career page checks", () => {
        cy.get("#yearToIncomeCeiling").select("5");
        cy.get("#yearIncomeBegins").select("2");
        cy.get("#submitLinearJob").click();
+       cy.get(".linearJobKey0").should("exist");
+       cy.wait(1000);
+       cy.get(".deleteLinearJobKey0").click();
+       cy.wait(1000);
+       cy.get(".linearJobKey0").should("not.exist");
    });
 });
 

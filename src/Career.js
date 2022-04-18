@@ -80,9 +80,9 @@ function IncomeForms({jobDataState, setJobDataState}) {
 function DynamicChartTest({jobDataState, setJobDataState}) {
     if (jobDataState.length !== 0) {
         const linearIncomeBarGraph = jobDataState.map((job) => (
-            <div id="linearJob" key={job.key}>
+            <div id="linearJob" className={"linearJobKey" + job.key } key={job.key}>
                 <BarChart linearIncome={job}/>
-                <button type={"click"} onClick={(e) => {
+                <button type={"click"} className={"deleteLinearJobKey" + job.key} onClick={(e) => {
                     e.preventDefault();
                     handleLinearJobDelete(job.key, jobDataState, setJobDataState);
                 }} >
