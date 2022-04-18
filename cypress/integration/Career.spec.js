@@ -20,7 +20,7 @@ describe("Career page checks", () => {
    it("Linear form rendered", () => {
        cy.get("#formContainer").should("exist");
        cy.get("#incomeImmediate").should("exist");
-       cy.get("#jobTitle").should("exist");
+       cy.get("#linearJobTitle").should("exist");
        cy.get("#incomeCeiling").should("exist");
        cy.get("#yearToIncomeCeiling").should("exist");
        cy.get("#yearIncomeBegins").should("exist");
@@ -28,7 +28,7 @@ describe("Career page checks", () => {
    });
 
    it("Creates a linear job", () => {
-       cy.get("#jobTitle").type("Wally");
+       cy.get("#linearJobTitle").type("Wally");
        cy.get("#incomeImmediate").type("500");
        cy.get("#incomeCeiling").type("800");
        cy.get("#yearToIncomeCeiling").select("5");

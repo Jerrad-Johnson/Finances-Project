@@ -47,7 +47,7 @@ function CreateOptionForms({formTitle, id, key}) {
     );
 } //TODO Turn into class; will be reused
 
-function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDataState, setsteppedJobDataState}) {
+function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDataState, setSteppedJobDataState}) {
 
     return (
         <div id={"formContainer"}>
@@ -64,7 +64,32 @@ function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
     return (
         <>
             <form>
-                <input type={"text"} id={"jobTitle"}></input> Job Title <br />
+                <input type={"text"} id={"linearJobTitle"}></input> Job Title <br />
+                <input type={"text"} id={"incomeImmediate"}></input> Starting income
+                <CreateOptionForms
+                    formTitle={"Year income begins"}
+                    id={"yearIncomeBegins"}
+                />
+                <input type={"text"} id={"incomeCeiling"}></input> Ceiling income
+                <CreateOptionForms
+                    formTitle={"Year to income ceiling"}
+                    id={"yearToIncomeCeiling"}
+                />
+                <button type={"click"} id={"submitLinearJob"} onClick={(e) => {
+                    e.preventDefault(); handleLinearSubmit(linearJobDataState, setLinearJobDataState) }}>
+                    Submit
+                </button>
+            </form>
+        </>
+    );
+}
+
+function steppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
+
+    return (
+        <>
+            <form>
+                <input type={"text"} id={"steppedJobTitle"}></input> Job Title <br />
                 <input type={"text"} id={"incomeImmediate"}></input> Starting income
                 <CreateOptionForms
                     formTitle={"Year income begins"}
@@ -78,18 +103,13 @@ function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
                     /*keyNumber={"2"}*/
                 />
                 <button type={"click"} id={"submitLinearJob"} onClick={(e) => {
-                    e.preventDefault(); handleLinearSubmit(linearJobDataState, setLinearJobDataState) }}>
+                    e.preventDefault(); handleLinearSubmit(steppedJobDataState, setSteppedJobDataState) }}>
                     Submit
                 </button>
 
             </form>
         </>
-    );
-}
-
-function steppedIncomeForms({steppedJobDataState, setsteppedJobDataState}) {
-
-    //return
+    )
 }
 
 
@@ -118,7 +138,7 @@ function DynamicChartTest({linearJobDataState, setLinearJobDataState}) {
 //TODO Hide submit button for two seconds after click.
 function handleLinearSubmit(linearJobDataState, setLinearJobDataState){
     let jobData = undefined;
-    let jobTitle = document.querySelector('#jobTitle').value;
+    let jobTitle = document.querySelector('#linearJobTitle').value;
     let incomeCeiling = document.querySelector('#incomeCeiling').value;
     let incomeImmediate = document.querySelector('#incomeImmediate').value;
     let yearToIncomeCeiling = document.querySelector('#yearToIncomeCeiling').value;
@@ -223,9 +243,10 @@ function updateJobDataState(jobData, jobDataState, setJobDataState){
 
 
 //TODO Display job title in graph
+//TODO Create a Youtube video demonstrating this app.
 function Career() {
     const [linearJobDataState, setLinearJobDataState] = useState([]);
-    const [steppedJobDataState, setsteppedJobDataState] = useState([]);
+    const [steppedJobDataState, setSteppedJobDataState] = useState([]);
 
 
     return (
@@ -234,7 +255,7 @@ function Career() {
               linearJobDataState = {linearJobDataState}
               setLinearJobDataState = {setLinearJobDataState}
               steppedJobDataState = {steppedJobDataState}
-              setsteppedJobDataState = {setsteppedJobDataState}
+              setSteppedJobDataState = {setSteppedJobDataState}
           />
           <br />
           <DynamicChartTest
@@ -243,7 +264,7 @@ function Career() {
            />
           <steppedIncomeForms
               steppedJobDataState = {steppedJobDataState}
-              setsteppedJobDataState = {setsteppedJobDataState}
+              setSteppedJobDataState = {setSteppedJobDataState}
           />
 
       </>
