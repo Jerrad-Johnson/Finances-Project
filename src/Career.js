@@ -2,15 +2,17 @@ import JobDataHandler from "./libs/jobdatahandler";
 import React from "react";
 import {BarChart} from "./graphs/IncomeGraphs";
 import {useState} from "react";
+import {list} from "postcss";
 
 var cc = console.log;
 var lengthOfGraphInYears = new JobDataHandler();
 lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
 var linearKey = 0;
+var steppedKey = 0;
 
 
 function handleError(message){
-    throw new Error(message);
+    throw new Error(message)
 }
 
 function isNumeric(n) {
@@ -29,6 +31,18 @@ export function createArrayWithNumberOfYearsToGraph() {
     return yearsToBeReturned;
 }
 
+function CreateSteppedJobIncomeForm({id}){
+
+    return(
+        <>
+            <input type={"text"} id={"incomeSteppedJob"}></input> Income from this year
+            onward: &nbsp;
+            <CreateOptionForms
+                id = {id}
+            />
+        </>
+    )
+}
 
 function CreateOptionForms({formTitle, id, key}) {
 
@@ -47,7 +61,9 @@ function CreateOptionForms({formTitle, id, key}) {
     );
 } //TODO Turn into class; will be reused
 
-function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDataState, setSteppedJobDataState}) {
+//TODO Make this container show as a pseudo-popup.
+function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDataState,
+                           setSteppedJobDataState}) {
 
     return (
         <div id={"formContainer"}>
@@ -59,7 +75,18 @@ function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDat
     );
 }
 
+/*
+var onAddLinearJobButtonClick = {
+    jobType: "linear",
+}
+
+var onAddSteppedJobButtonClick = {
+    jobType: "stepped",
+}
+*/
+
 function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
+    let formType = "linearincome";
 
     return (
         <>
@@ -76,7 +103,8 @@ function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
                     id={"yearToIncomeCeiling"}
                 />
                 <button type={"click"} id={"submitLinearJob"} onClick={(e) => {
-                    e.preventDefault(); handleLinearSubmit(linearJobDataState, setLinearJobDataState) }}>
+                    e.preventDefault(); handleLinearJobSubmission(linearJobDataState,
+                        setLinearJobDataState) }}>
                     Submit
                 </button>
             </form>
@@ -84,26 +112,38 @@ function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
     );
 }
 
-function steppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
+function SteppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
+    let steppedIncomeFormKey = 0;
+    let initialIncomeFormState = [{ key: steppedIncomeFormKey }];
+
+    const [steppedIncomeFormState, setSteppedIncomeFormState] = useState(initialIncomeFormState);
+
 
     return (
         <>
             <form>
                 <input type={"text"} id={"steppedJobTitle"}></input> Job Title <br />
-                <input type={"text"} id={"incomeImmediate"}></input> Starting income
-                <CreateOptionForms
-                    formTitle={"Year income begins"}
-                    id={"yearIncomeBegins"}
-                    /*keyNumber={"1"}*/
+
+                <ListJobIncomeForms
+                    steppedIncomeFormState = {steppedIncomeFormState}
                 />
-                <input type={"text"} id={"incomeCeiling"}></input> Ceiling income
-                <CreateOptionForms
-                    formTitle={"Year to income ceiling"}
-                    id={"yearToIncomeCeiling"}
-                    /*keyNumber={"2"}*/
-                />
+
+                <button type={"click"} id={"addSteppedIncome"} onClick={(e) => {
+                    e.preventDefault(); steppedIncomeFormKey = steppedIncomeFormKey +1;
+                        addSteppedIncomeField(steppedIncomeFormState,
+                            setSteppedIncomeFormState, steppedIncomeFormKey) }}>
+                    Add income change
+                </button> &nbsp;
+
+                <button type={"click"} id={"addSteppedIncome"} onClick={(e) => {
+                    e.preventDefault(); removeSteppedIncomeField(steppedIncomeFormState,
+                        setSteppedIncomeFormState) }}>
+                    Delete income change
+                </button>
+                <br />
                 <button type={"click"} id={"submitLinearJob"} onClick={(e) => {
-                    e.preventDefault(); handleLinearSubmit(steppedJobDataState, setSteppedJobDataState) }}>
+                    e.preventDefault(); handleLinearJobSubmission(steppedJobDataState,
+                        setSteppedJobDataState) }}>
                     Submit
                 </button>
 
@@ -112,13 +152,64 @@ function steppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
     )
 }
 
+function addSteppedIncomeField(steppedIncomeFormState, setSteppedIncomeFormState,
+                               steppedIncomeFormKey){
+    try {
+        if (steppedIncomeFormState.length >= lengthOfGraphInYears) {
+            throw new Error("There are as many fields as years; you cannot add more.")
+        }
+    } catch (err) {
+        handleError(err.message);
+        return;
+    }
+
+
+    let arrayToBeReturned = [...steppedIncomeFormState];
+    let dataToAppend = [{
+            key: steppedIncomeFormKey
+        }];
+    arrayToBeReturned = [...arrayToBeReturned, ...dataToAppend];
+    setSteppedIncomeFormState(arrayToBeReturned);
+}
+
+function removeSteppedIncomeField(steppedIncomeFormState, setSteppedIncomeFormState){
+    if (steppedIncomeFormState <= 1){
+        return;
+    }
+
+    let arrToBeReturned = [...steppedIncomeFormState];
+    let whichEntryToRemove = arrToBeReturned.length -1;
+    cc(whichEntryToRemove)
+    arrToBeReturned.splice(whichEntryToRemove, 1);
+    cc(arrToBeReturned)
+    setSteppedIncomeFormState(arrToBeReturned);
+}
+
+
+function ListJobIncomeForms({steppedIncomeFormState}){
+
+    let printToDom = steppedIncomeFormState.map(entry => {
+        return(
+            <CreateSteppedJobIncomeForm
+                id={"yearThiSteppedIncomeBegins"}
+            />
+        )
+    });
+
+    return (
+        <>
+            {printToDom}
+        </>
+    )
+}
 
 function DynamicChartTest({linearJobDataState, setLinearJobDataState}) {
     if (linearJobDataState.length !== 0) {
         const linearIncomeBarGraph = linearJobDataState.map((job) => (
             <div id="linearJob" className={"linearJobKey" + job.key } key={job.key}>
                 <BarChart linearIncome={job}/>
-                <button type={"click"} className={"deleteLinearJobKey" + job.key} onClick={(e) => {
+                <button type={"click"} className={"deleteLinearJobKey" + job.key}
+                        onClick={(e) => {
                     e.preventDefault();
                     handleLinearJobDelete(job.key, linearJobDataState, setLinearJobDataState);
                 }} >
@@ -136,7 +227,7 @@ function DynamicChartTest({linearJobDataState, setLinearJobDataState}) {
 }
 
 //TODO Hide submit button for two seconds after click.
-function handleLinearSubmit(linearJobDataState, setLinearJobDataState){
+function handleLinearJobSubmission(linearJobDataState, setLinearJobDataState){
     let jobData = undefined;
     let jobTitle = document.querySelector('#linearJobTitle').value;
     let incomeCeiling = document.querySelector('#incomeCeiling').value;
@@ -144,10 +235,11 @@ function handleLinearSubmit(linearJobDataState, setLinearJobDataState){
     let yearToIncomeCeiling = document.querySelector('#yearToIncomeCeiling').value;
     let yearIncomeBegins = document.querySelector('#yearIncomeBegins').value;
 
-    jobData = checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearToIncomeCeiling, yearIncomeBegins);
+    jobData = checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearToIncomeCeiling,
+        yearIncomeBegins);
 
     if (jobData[0].pass === true) {
-        jobData = updateLinearData(linearJobDataState, setLinearJobDataState, jobData);
+        jobData = runCalculationsOnLinearData(linearJobDataState, setLinearJobDataState, jobData);
         jobData = updateJobDataState(jobData, linearJobDataState, setLinearJobDataState);
     }
 }
@@ -156,13 +248,16 @@ function handleLinearSubmit(linearJobDataState, setLinearJobDataState){
 function handleLinearJobDelete(key, linearJobDataState, setLinearJobDataState){
     let arrayToBeReturned = [];
     arrayToBeReturned = [...linearJobDataState]
+    //cc(linearJobDataState)
+    //cc(arrayToBeReturned);
     let keyPositionInArray = arrayToBeReturned.findIndex(o => o.key === key);
     arrayToBeReturned.splice(keyPositionInArray, 1);
     setLinearJobDataState(arrayToBeReturned);
 }
 
 
-export function checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearToIncomeCeiling, yearIncomeBegins){
+export function checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearToIncomeCeiling,
+                                yearIncomeBegins){
     let jobData = {};
     let jobDataToBeReturned = [];
 
@@ -223,7 +318,7 @@ export function checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearTo
 }
 
 
-function updateLinearData(linearJobDataState, setLinearJobDataState, jobData){
+function runCalculationsOnLinearData(linearJobDataState, setLinearJobDataState, jobData){
     let jobDataToBeReturned = new JobDataHandler(jobData).findLinear();
     return jobDataToBeReturned;
 }
@@ -262,7 +357,7 @@ function Career() {
               linearJobDataState = {linearJobDataState}
               setLinearJobDataState = {setLinearJobDataState}
            />
-          <steppedIncomeForms
+          <SteppedIncomeForms
               steppedJobDataState = {steppedJobDataState}
               setSteppedJobDataState = {setSteppedJobDataState}
           />
