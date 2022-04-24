@@ -24,15 +24,14 @@ export function DonutChart({jobsData}) {
 }
 
 
-export function BarChart({linearIncome}) {
-//cc(linearIncome.incomeInGraphYearsNumberOfSteps)
+export function LinearBarChart({job}) {
 
     return (
         <div /*key={linearIncome.key}*/> {/*TODO Does not render key*/}
             <Chart
                 series = {[
                 {
-                    data: linearIncome.incomeInGraphYearsNumberOfSteps
+                    data: job.incomeInGraphYearsNumberOfSteps
                 }
                 ]}
                 type="bar"
@@ -42,7 +41,37 @@ export function BarChart({linearIncome}) {
                         '#00aa00', '#880000', '#880000',
                     ],
                     xaxis: {
-                        categories: linearIncome.yearsNumbered
+                        categories: job.yearsNumbered
+                        ,
+
+                    }
+                }}
+            />
+        </div>
+    );
+}
+
+
+export function SteppedBarChart({job}) {
+
+    cc(job)
+
+    return (
+        <div /*key={linearIncome.key}/*/> {/*TODO Does not render key*/}
+            <Chart
+                series = {[
+                    {
+                        data: job.salaryAmounts
+                    }
+                ]}
+                type="bar"
+                height={430}
+                options = {{
+                    colors: [
+                        '#00aa00', '#880000', '#880000',
+                    ],
+                    xaxis: {
+                        categories: job.yearsNumbered
                         ,
 
                     }

@@ -1,6 +1,6 @@
 import JobDataHandler from "./libs/jobdatahandler";
 import React from "react";
-import {BarChart} from "./graphs/IncomeGraphs";
+import {LinearBarChart, SteppedBarChart} from "./graphs/IncomeGraphs";
 import {useState} from "react";
 import {list} from "postcss";
 
@@ -75,16 +75,6 @@ function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDat
     );
 }
 
-/*
-var onAddLinearJobButtonClick = {
-    jobType: "linear",
-}
-
-var onAddSteppedJobButtonClick = {
-    jobType: "stepped",
-}
-*/
-
 function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
     let formType = "linearincome";
 
@@ -113,6 +103,7 @@ function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
 }
 
 function SteppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
+
     let steppedIncomeFormKey = 0;
     let initialIncomeFormState = [{ key: steppedIncomeFormKey }];
     const [steppedIncomeFormState, setSteppedIncomeFormState] = useState(initialIncomeFormState);
@@ -139,7 +130,7 @@ function SteppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
                     Delete income change
                 </button>
                 <br />
-                <button type={"click"} id={"submitLinearJob"} onClick={(e) => {
+                <button type={"click"} id={"submitSteppedJob"} onClick={(e) => {
                     e.preventDefault(); handleSteppedJobSubmission(steppedJobDataState,
                         setSteppedJobDataState) }}>
                     Submit
@@ -199,11 +190,11 @@ function ListJobIncomeForms({steppedIncomeFormState}){
     )
 }
 
-function DynamicChartTest({linearJobDataState, setLinearJobDataState}) {
+function LinearGraph({linearJobDataState, setLinearJobDataState}) {
     if (linearJobDataState.length !== 0) {
         const linearIncomeBarGraph = linearJobDataState.map((job) => (
             <div id="linearJob" className={"linearJobKey" + job.key } key={job.key}>
-                <BarChart linearIncome={job}/>
+                <LinearBarChart job={job}/>
                 <button type={"click"} className={"deleteLinearJobKey" + job.key}
                         onClick={(e) => {
                     e.preventDefault();
@@ -217,6 +208,30 @@ function DynamicChartTest({linearJobDataState, setLinearJobDataState}) {
         return (
             <>
              {(linearJobDataState.length !== 0) && linearIncomeBarGraph}
+            </>
+        );
+    }
+}
+
+function SteppedGraph({steppedJobDataState, setSteppedJobDataState}){
+
+    if (steppedJobDataState.length !== 0) {
+        const steppedIncomeBarGraph = steppedJobDataState.map((job) => (
+            <div className={"steppedJobBarGraph steppedJobKey" + job.key } key={job.key}>
+                <SteppedBarChart job={job}/>
+                <button type={"click"} className={"deleteSteppedJobKey" + job.key}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            //handleSteppedJobDelete(job.key, steppedJobDataState, setSteppedJobDataState);
+                        }} >
+                    Delete Row {job.key}
+                </button>
+            </div>
+        ));
+
+        return (
+            <>
+                {(steppedJobDataState.length !== 0) && steppedIncomeBarGraph}
             </>
         );
     }
@@ -239,10 +254,10 @@ function handleSteppedJobSubmission(steppedJobDataState, setSteppedJobDataState)
     });
 
     jobData = checkSteppedData(jobTitle, salaryAmounts, salaryYears);
-
     if (jobData[0].pass === true) {
+
         jobData = runCalculationsOnSteppedData(steppedJobDataState, setSteppedJobDataState, jobData);
-        //jobData = updateJobDataState(jobData, steppedJobDataState, setSteppedJobDataState);
+        updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDataState);
     }
 }
 
@@ -263,7 +278,7 @@ function handleLinearJobSubmission(linearJobDataState, setLinearJobDataState){
 
     if (jobData[0].pass === true) {
         jobData = runCalculationsOnLinearData(linearJobDataState, setLinearJobDataState, jobData);
-        jobData = updateJobDataState(jobData, linearJobDataState, setLinearJobDataState);
+        updateLinearJobDataState(jobData, linearJobDataState, setLinearJobDataState);
     }
 }
 
@@ -271,8 +286,6 @@ function handleLinearJobSubmission(linearJobDataState, setLinearJobDataState){
 function handleLinearJobDelete(key, linearJobDataState, setLinearJobDataState){
     let arrayToBeReturned = [];
     arrayToBeReturned = [...linearJobDataState]
-    //cc(linearJobDataState)
-    //cc(arrayToBeReturned);
     let keyPositionInArray = arrayToBeReturned.findIndex(o => o.key === key);
     arrayToBeReturned.splice(keyPositionInArray, 1);
     setLinearJobDataState(arrayToBeReturned);
@@ -382,10 +395,9 @@ export function checkSteppedData(jobTitle, salaryAmounts, salaryYears){
     }
 
     jobData.pass = true;
-    jobData.key = linearKey;
+    jobData.key = steppedKey++;
     jobDataToBeReturned.push(jobData);
     jobData = {};
-    steppedKey++;
     return jobDataToBeReturned;
     //TODO Split this into check and set
 }
@@ -398,11 +410,11 @@ function runCalculationsOnLinearData(linearJobDataState, setLinearJobDataState, 
 
 function runCalculationsOnSteppedData(linearJobDataState, setLinearJobDataState, jobData){
     let jobDataToBeReturned = new JobDataHandler(jobData).findStepped();
-    //return jobDataToBeReturned;
+    return jobDataToBeReturned;
 }
 
 
-function updateJobDataState(jobData, jobDataState, setJobDataState){
+function updateLinearJobDataState(jobData, jobDataState, setJobDataState){
     let extantJobs = [...jobDataState];
 
     if (jobDataState.length === 0){
@@ -410,6 +422,17 @@ function updateJobDataState(jobData, jobDataState, setJobDataState){
     } else {
         let combinedJobs = [...extantJobs, ...jobData];
         setJobDataState(combinedJobs);
+    }
+}
+
+function updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDataState){
+    let extantJobs = [...steppedJobDataState];
+
+    if (steppedJobDataState.length === 0){
+        setSteppedJobDataState(jobData);
+    } else {
+        let combinedJobs = [...extantJobs, ...jobData];
+        setSteppedJobDataState(combinedJobs);
     }
 }
 
@@ -431,7 +454,7 @@ function Career() {
               setSteppedJobDataState = {setSteppedJobDataState}
           />
           <br />
-          <DynamicChartTest
+          <LinearGraph
               linearJobDataState = {linearJobDataState}
               setLinearJobDataState = {setLinearJobDataState}
            />
@@ -439,7 +462,10 @@ function Career() {
               steppedJobDataState = {steppedJobDataState}
               setSteppedJobDataState = {setSteppedJobDataState}
           />
-
+          <SteppedGraph
+              steppedJobDataState = {steppedJobDataState}
+              setSteppedJobDataState = {setSteppedJobDataState}
+          />
       </>
     );
 }

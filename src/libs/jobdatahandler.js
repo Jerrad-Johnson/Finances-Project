@@ -30,6 +30,7 @@ class JobDataHandler {
         jobs = this.addArrayOfNumberedYears(jobs);
         jobs = this.createSteppedSumArrayWithGraphYearsNumberOfSteps(jobs);
         jobs = this.sumSteppedJobIncome(jobs);
+        //this.cc(jobs)
         return(jobs);
     }
 
@@ -94,7 +95,8 @@ class JobDataHandler {
            }
         });
 
-        return (jobs[0].sum = +sum);
+        jobs[0].sum = +sum;
+        return jobs;
     }
 
     findLinearIncomeJobs() {
