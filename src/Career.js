@@ -35,7 +35,7 @@ function CreateSteppedJobIncomeForm({id}){
 
     return(
         <>
-            <input type={"text"} id={"incomeSteppedJob"}></input> Income from this year
+            <input type={"text"} className={"incomeSteppedJob"}></input> Income from this year
             onward: &nbsp;
             <CreateOptionForms
                 id = {id}
@@ -50,10 +50,10 @@ function CreateOptionForms({formTitle, id, key}) {
     const optionElements = numberOfYearsToGraph.map((year) =>
             ( <option value={year} key={year}></option> )
     );
-
+    // TODO Remove ID
     return (
         <>
-                <select className={"text-slate-500"} id={id} key={key}>
+                <select className={"text-slate-500 "+ id} id={id} key={key}>
                     {optionElements}
                 </select>
             <label> {formTitle} </label><br />
@@ -115,9 +115,7 @@ function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
 function SteppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
     let steppedIncomeFormKey = 0;
     let initialIncomeFormState = [{ key: steppedIncomeFormKey }];
-
     const [steppedIncomeFormState, setSteppedIncomeFormState] = useState(initialIncomeFormState);
-
 
     return (
         <>
@@ -135,14 +133,14 @@ function SteppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
                     Add income change
                 </button> &nbsp;
 
-                <button type={"click"} id={"addSteppedIncome"} onClick={(e) => {
+                <button type={"click"} id={"deleteSteppedIncome"} onClick={(e) => {
                     e.preventDefault(); removeSteppedIncomeField(steppedIncomeFormState,
                         setSteppedIncomeFormState) }}>
                     Delete income change
                 </button>
                 <br />
                 <button type={"click"} id={"submitLinearJob"} onClick={(e) => {
-                    e.preventDefault(); handleLinearJobSubmission(steppedJobDataState,
+                    e.preventDefault(); handleSteppedJobSubmission(steppedJobDataState,
                         setSteppedJobDataState) }}>
                     Submit
                 </button>
@@ -179,9 +177,7 @@ function removeSteppedIncomeField(steppedIncomeFormState, setSteppedIncomeFormSt
 
     let arrToBeReturned = [...steppedIncomeFormState];
     let whichEntryToRemove = arrToBeReturned.length -1;
-    cc(whichEntryToRemove)
     arrToBeReturned.splice(whichEntryToRemove, 1);
-    cc(arrToBeReturned)
     setSteppedIncomeFormState(arrToBeReturned);
 }
 
@@ -191,7 +187,7 @@ function ListJobIncomeForms({steppedIncomeFormState}){
     let printToDom = steppedIncomeFormState.map(entry => {
         return(
             <CreateSteppedJobIncomeForm
-                id={"yearThiSteppedIncomeBegins"}
+                id={"yearThisSteppedIncomeBegins"}
             />
         )
     });
@@ -226,6 +222,31 @@ function DynamicChartTest({linearJobDataState, setLinearJobDataState}) {
     }
 }
 
+function handleSteppedJobSubmission(steppedJobDataState, setSteppedJobDataState){
+    let jobData = undefined;
+    let jobTitle = document.querySelector('#steppedJobTitle').value;
+    let salaryAmountsNodes = document.querySelectorAll('.incomeSteppedJob');
+    let salaryAmounts = [];
+    let salaryYearsNodes = document.querySelectorAll('.yearThisSteppedIncomeBegins');
+    let salaryYears = [];
+
+    salaryAmountsNodes.forEach(e => {
+        salaryAmounts.push(e.value);
+    });
+
+    salaryYearsNodes.forEach(e => {
+        salaryYears.push(e.value);
+    });
+
+    jobData = checkSteppedData(jobTitle, salaryAmounts, salaryYears);
+
+    if (jobData[0].pass === true) {
+        jobData = runCalculationsOnSteppedData(steppedJobDataState, setSteppedJobDataState, jobData);
+        //jobData = updateJobDataState(jobData, steppedJobDataState, setSteppedJobDataState);
+    }
+}
+
+
 //TODO Hide submit button for two seconds after click.
 function handleLinearJobSubmission(linearJobDataState, setLinearJobDataState){
     let jobData = undefined;
@@ -237,6 +258,8 @@ function handleLinearJobSubmission(linearJobDataState, setLinearJobDataState){
 
     jobData = checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearToIncomeCeiling,
         yearIncomeBegins);
+
+
 
     if (jobData[0].pass === true) {
         jobData = runCalculationsOnLinearData(linearJobDataState, setLinearJobDataState, jobData);
@@ -318,9 +341,64 @@ export function checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearTo
 }
 
 
+export function checkSteppedData(jobTitle, salaryAmounts, salaryYears){
+    let jobData = {
+        salaryAmounts: [],
+        salaryYears: [],
+        jobTitle: '',
+        };
+    let jobDataToBeReturned = [];
+
+    try {
+        if ((jobTitle !== undefined) && (jobTitle !== '')){
+            jobData.jobTitle = jobTitle;
+        } else {
+            throw new Error("Job Title not set.");
+        }
+
+        for (let i = 0; i < salaryAmounts.length; i++) {
+            if (isNumeric(salaryAmounts[i])) {
+                jobData.salaryAmounts.push(+salaryAmounts[i]);
+            } else {
+                throw new Error("Ceiling Income NaN.");
+            }
+        }
+
+        for (let i = 0; i < salaryYears.length; i++) {
+            if ((i >= 1) && (+salaryYears[i] <= +salaryYears[i -1])){
+                throw new Error("Year in field " +i+ " is less than or equal to the year in the previous field.");
+            } else if (isNumeric(salaryYears[i])) {
+                jobData.salaryYears.push(+salaryYears[i]);
+            } else {
+                throw new Error("Starting income NaN.");
+            }
+        }
+    } catch (err) {
+        let returnObject = {}
+        //returnObject.pass = false;
+        returnObject.fn = (() => { handleError(err.message) });
+        return returnObject;
+//      return (() => { handleError(err.message)});
+    }
+
+    jobData.pass = true;
+    jobData.key = linearKey;
+    jobDataToBeReturned.push(jobData);
+    jobData = {};
+    steppedKey++;
+    return jobDataToBeReturned;
+    //TODO Split this into check and set
+}
+
+
 function runCalculationsOnLinearData(linearJobDataState, setLinearJobDataState, jobData){
     let jobDataToBeReturned = new JobDataHandler(jobData).findLinear();
     return jobDataToBeReturned;
+}
+
+function runCalculationsOnSteppedData(linearJobDataState, setLinearJobDataState, jobData){
+    //let jobDataToBeReturned = new JobDataHandler(jobData).findStepped();
+    //return jobDataToBeReturned;
 }
 
 

@@ -35,13 +35,23 @@ describe("Career page checks", () => {
        cy.get("#yearIncomeBegins").select("2");
        cy.get("#submitLinearJob").click();
        cy.get(".linearJobKey0").should("exist");
-       cy.wait(1000);
+       cy.wait(500);
    });
 
    it("Deletes the previously-created linear job.", () => {
         cy.get(".deleteLinearJobKey0").click();
-        cy.wait(1000);
+        cy.wait(500);
         cy.get(".linearJobKey0").should("not.exist");
    });
+
+   it("Creates and deletes income form(s) for stepped-income jobs.", () => {
+       cy.get("#addSteppedIncome").should("exist");
+       cy.get("#addSteppedIncome").click();
+       cy.get(".incomeSteppedJob").should('have.length', 2);
+       cy.wait(300)
+       cy.get("#deleteSteppedIncome").should("exist");
+       cy.get("#deleteSteppedIncome").click();
+       cy.get(".incomeSteppedJob").should('have.length', 1);
+   })
 });
 
