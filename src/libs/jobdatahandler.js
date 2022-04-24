@@ -18,7 +18,7 @@ class JobDataHandler {
 
     beginLinear(jobs){
         jobs = this.calculateLinearIncomeIncreaseEachYear(jobs);
-        jobs = this.createIncomeArrayWithGraphYearsNumberOfSteps(jobs);
+        jobs = this.createLinearIncomeArrayWithGraphYearsNumberOfSteps(jobs);
         jobs = this.sumIncomeFromLinearJob(jobs);
         jobs = this.addArrayOfNumberedYears(jobs);
         jobs = this.sumIncomeFromLinearJobByYear(jobs);
@@ -26,7 +26,75 @@ class JobDataHandler {
     }
 
     beginStepped(jobs){
+        jobs = this.calculateSteppedIncomeIncreaseEachYear(jobs);
+        jobs = this.addArrayOfNumberedYears(jobs);
+        jobs = this.createSteppedSumArrayWithGraphYearsNumberOfSteps(jobs);
+        jobs = this.sumSteppedJobIncome(jobs);
         return(jobs);
+    }
+
+    findSteppedIncomeJobs() {
+        let steppedIncomeJobs = [];
+
+        this.jobsData.forEach(job => {
+            if (job.jobTitle) {
+                steppedIncomeJobs.push(job);
+            }
+        });
+
+        if (steppedIncomeJobs.length >= 1) {
+            return steppedIncomeJobs;
+        }
+    }
+    //TODO combine ^ into single loop logic
+
+    calculateSteppedIncomeIncreaseEachYear(jobs){
+        let salaryAmounts = [];
+
+        jobs.forEach(job => {
+            for (let i = 0; i < job.salaryYears[0] -1; i++){
+                salaryAmounts.push(0);
+            }
+        });
+
+        jobs.forEach(job => {
+            for (let i = 0; i < job.salaryYears.length; i++) {
+                for (let j = job.salaryYears[i] -1; j <= this.graphMaxNumberOfYears -1; j++) {
+                    salaryAmounts[j] = job.salaryAmounts[i];
+                }
+            }
+        });
+
+        jobs[0].salaryAmounts = salaryAmounts;
+        return jobs;
+    }
+
+    createSteppedSumArrayWithGraphYearsNumberOfSteps(jobs){
+        let salarySumByYear = [];
+
+        jobs.forEach(job => {
+
+            salarySumByYear[0] = job.salaryAmounts[0];
+
+           for (let i = 1; i < this.graphMaxNumberOfYears ; i++) {
+               salarySumByYear[i] = +salarySumByYear[i -1] + +job.salaryAmounts[i];
+           }
+        });
+
+        jobs[0].salarySumByYear = salarySumByYear;
+        return jobs;
+    }
+
+    sumSteppedJobIncome(jobs){
+        let sum = 0;
+
+        jobs.forEach(job => {
+           for (let i = 0; i < this.graphMaxNumberOfYears; i++) {
+               sum = sum + job.salaryAmounts[i];
+           }
+        });
+
+        return (jobs[0].sum = +sum);
     }
 
     findLinearIncomeJobs() {
@@ -43,23 +111,7 @@ class JobDataHandler {
         }
     }
 
-    findSteppedIncomeJobs() {
-        let steppedIncomeJobs = [];
-
-        this.jobsData.forEach(job => {
-            if (job.yearsOfExperienceAtEachStep) {
-                steppedIncomeJobs.push(job);
-            }
-        });
-
-        if (steppedIncomeJobs.length >= 1){
-            return steppedIncomeJobs;
-        }
-    }
-
-    //TODO combine ^ into single loop logic
-
-    calculateLinearIncomeIncreaseEachYear(jobs) {
+    calculateLinearIncomeIncreaseEachYear(jobs){
         let incomeIncreaseOverCareer;
         let jobsToBeReturned = [];
 
@@ -81,7 +133,8 @@ class JobDataHandler {
     }
 
 
-    createIncomeArrayWithGraphYearsNumberOfSteps(jobs) {
+
+    createLinearIncomeArrayWithGraphYearsNumberOfSteps(jobs){
         let incomeInGraphYearsNumberOfSteps = [];
         let runningTotalSalary = 0 ;
         let jobsToBeReturned = [];

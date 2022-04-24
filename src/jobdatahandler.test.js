@@ -13,13 +13,13 @@ test('Checks linear data', () => {
     expect(y).toBeUndefined();
 });
 
-test('Checks stepped data', () => {
+/*test('Checks stepped data', () => {
     let x = new JobDataHandler(jobsData).findStepped();
     expect(x).toBeDefined();
 
     let y = new JobDataHandler(jobsDataWithLinearEntry).findStepped();
     expect(y).toBeUndefined();
-});
+});*/
 
 
 test('Calculates salary raise per year from a linear-income job.', () => {

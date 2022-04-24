@@ -397,7 +397,7 @@ function runCalculationsOnLinearData(linearJobDataState, setLinearJobDataState, 
 }
 
 function runCalculationsOnSteppedData(linearJobDataState, setLinearJobDataState, jobData){
-    //let jobDataToBeReturned = new JobDataHandler(jobData).findStepped();
+    let jobDataToBeReturned = new JobDataHandler(jobData).findStepped();
     //return jobDataToBeReturned;
 }
 
