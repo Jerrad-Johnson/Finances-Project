@@ -87,8 +87,8 @@ test(`Creation of array with number of steps (years) in graph, each step showing
         yearToIncomeCeiling: 14,
         incomeIncreasePerYear: 7.14,
     }]
-    let x = new JobDataHandler().createIncomeArrayWithGraphYearsNumberOfSteps(jobsDataWithLinearEntry);
-    let y = new JobDataHandler().createIncomeArrayWithGraphYearsNumberOfSteps(job1DataForGraphingSteps);
+    let x = new JobDataHandler().createLinearIncomeArrayWithGraphYearsNumberOfSteps(jobsDataWithLinearEntry);
+    let y = new JobDataHandler().createLinearIncomeArrayWithGraphYearsNumberOfSteps(job1DataForGraphingSteps);
     let graphYears = new JobDataHandler().graphMaxNumberOfYears;
 
 

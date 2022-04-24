@@ -1,16 +1,5 @@
-// Career.spec.js created with Cypress
-//
-// Start writing your Cypress tests below!
-// If you're unfamiliar with how Cypress works,
-// check out the link below and learn how to write your first test:
-// https://on.cypress.io/writing-first-test
-
-
-
 describe("Career page checks", () => {
-    /*beforeEach(() => {
-
-    });*/
+    /*beforeEach(() => { });*/
 
     it("Page rendered", () => {
         cy.visit("/");
@@ -51,9 +40,24 @@ describe("Career page checks", () => {
        cy.wait(300)
        cy.get("#deleteSteppedIncome").should("exist");
        cy.get("#deleteSteppedIncome").click();
-       cy.get(".incomeSteppedJob").should('have.length', 1);
-   })
+   });
+
+   it("Creates a stepped-income job and then deletes it.", () => {
+       cy.get("#addSteppedIncome").click();
+       cy.get("#addSteppedIncome").click();
+       cy.get("#steppedJobTitle").type("Salesman")
+       cy.get(".incomeSteppedJob").should('have.length', 3);
+       cy.get(".incomeSteppedJob").eq(0).type("50000");
+       cy.get(".incomeSteppedJob").eq(1).type("60000");
+       cy.get(".incomeSteppedJob").eq(2).type("95000");
+       cy.get("form select.yearThisSteppedIncomeBegins").eq(0).select("1");
+       cy.get("form select.yearThisSteppedIncomeBegins").eq(1).select("3");
+       cy.get("form select.yearThisSteppedIncomeBegins").eq(2).select("8");
+       cy.get("#submitSteppedJob").click();
+       cy.get(".steppedJobKey0").should("exist");
+       cy.wait(1000);
+       cy.get(".deleteSteppedJobKey0").click();
+       cy.get(".steppedJobKey0").should("not.exist");
+   });
 });
 
-
-//TODO Add error checking for stepped job submissions.
