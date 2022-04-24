@@ -198,7 +198,7 @@ function LinearGraph({linearJobDataState, setLinearJobDataState}) {
                 <button type={"click"} className={"deleteLinearJobKey" + job.key}
                         onClick={(e) => {
                     e.preventDefault();
-                    handleLinearJobDelete(job.key, linearJobDataState, setLinearJobDataState);
+                    handleJobDelete(job.key, linearJobDataState, setLinearJobDataState);
                 }} >
                     Delete Row {job.key}
                 </button>
@@ -222,7 +222,7 @@ function SteppedGraph({steppedJobDataState, setSteppedJobDataState}){
                 <button type={"click"} className={"deleteSteppedJobKey" + job.key}
                         onClick={(e) => {
                             e.preventDefault();
-                            //handleSteppedJobDelete(job.key, steppedJobDataState, setSteppedJobDataState);
+                            handleJobDelete(job.key, steppedJobDataState, setSteppedJobDataState);
                         }} >
                     Delete Row {job.key}
                 </button>
@@ -283,14 +283,13 @@ function handleLinearJobSubmission(linearJobDataState, setLinearJobDataState){
 }
 
 //TODO Add delete confirmation.
-function handleLinearJobDelete(key, linearJobDataState, setLinearJobDataState){
+function handleJobDelete(key, jobDataState, setJobDataState){
     let arrayToBeReturned = [];
-    arrayToBeReturned = [...linearJobDataState]
+    arrayToBeReturned = [...jobDataState]
     let keyPositionInArray = arrayToBeReturned.findIndex(o => o.key === key);
     arrayToBeReturned.splice(keyPositionInArray, 1);
-    setLinearJobDataState(arrayToBeReturned);
+    setJobDataState(arrayToBeReturned);
 }
-
 
 export function checkLinearData(jobTitle, incomeCeiling, incomeImmediate, yearToIncomeCeiling,
                                 yearIncomeBegins){
