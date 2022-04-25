@@ -1,7 +1,9 @@
 import JobDataHandler from "./libs/jobdatahandler";
 import React from "react";
-import {LinearBarChart, SteppedBarChart} from "./graphs/IncomeGraphs";
+import {LinearBarChart, LinearSumBarChart, SteppedBarChart, SteppedSumBarChart} from "./graphs/IncomeGraphs";
 import {useState} from "react";
+import LinearJobComponent from "./components/LinearJobComponent";
+
 import {list} from "postcss";
 
 var cc = console.log;
@@ -70,6 +72,10 @@ function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDat
             <LinearIncomeForms
                 linearJobDataState = {linearJobDataState}
                 setLinearJobDataState = {setLinearJobDataState}
+            /> <br />
+            <SteppedIncomeForms
+                steppedJobDataState = {steppedJobDataState}
+                setSteppedJobDataState = {setSteppedJobDataState}
             />
         </div>
     );
@@ -191,10 +197,13 @@ function ListJobIncomeForms({steppedIncomeFormState}){
 }
 
 function LinearGraph({linearJobDataState, setLinearJobDataState}) {
+    cc(linearJobDataState)
     if (linearJobDataState.length !== 0) {
         const linearIncomeBarGraph = linearJobDataState.map((job) => (
             <div id="linearJob" className={"linearJobKey" + job.key } key={job.key}>
+                    Job title: {job.jobTitle} <br />
                 <LinearBarChart job={job}/>
+                <LinearSumBarChart job={job}/>
                 <button type={"click"} className={"deleteLinearJobKey" + job.key}
                         onClick={(e) => {
                     e.preventDefault();
@@ -218,7 +227,9 @@ function SteppedGraph({steppedJobDataState, setSteppedJobDataState}){
     if (steppedJobDataState.length !== 0) {
         const steppedIncomeBarGraph = steppedJobDataState.map((job) => (
             <div className={"steppedJobBarGraph steppedJobKey" + job.key } key={job.key}>
+                    Job title: {job.jobTitle} <br />
                 <SteppedBarChart job={job}/>
+                <SteppedSumBarChart job={job}/>
                 <button type={"click"} className={"deleteSteppedJobKey" + job.key}
                         onClick={(e) => {
                             e.preventDefault();
@@ -457,14 +468,13 @@ function Career() {
               linearJobDataState = {linearJobDataState}
               setLinearJobDataState = {setLinearJobDataState}
            />
-          <SteppedIncomeForms
-              steppedJobDataState = {steppedJobDataState}
-              setSteppedJobDataState = {setSteppedJobDataState}
-          />
+
           <SteppedGraph
               steppedJobDataState = {steppedJobDataState}
               setSteppedJobDataState = {setSteppedJobDataState}
           />
+
+
       </>
     );
 }

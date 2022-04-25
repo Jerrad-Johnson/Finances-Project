@@ -1,25 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import Career from "./Career";
 import JobDataHandler from "./libs/jobdatahandler";
 
 
-
-
-test('Checks linear data', () => {
+test('Linear data end-to-end test', () => {
     let x = new JobDataHandler(jobsData).findLinearIncomeJobs();
     expect(x).toBeDefined();
 
     let y = new JobDataHandler(jobsDataWithSteppedEntry).findLinearIncomeJobs();
     expect(y).toBeUndefined();
 });
-
-/*test('Checks stepped data', () => {
-    let x = new JobDataHandler(jobsData).findStepped();
-    expect(x).toBeDefined();
-
-    let y = new JobDataHandler(jobsDataWithLinearEntry).findStepped();
-    expect(y).toBeUndefined();
-});*/
 
 
 test('Calculates salary raise per year from a linear-income job.', () => {
@@ -159,6 +148,14 @@ test("Add an array of named years (as a string) for printing to graphs.", () => 
 });
 
 
+test('Stepped data end-to-end test', () => {
+    let x = new JobDataHandler(steppedJobData).findStepped();
+    expect(x).toBeDefined();
+//    expect((x[0].yearsNumbered.length).tobe(15));
+});
+
+
+
 var jobsData = [{
     yearsOfExperienceAtEachStep:
         [0, 4, 5, 8],
@@ -186,4 +183,10 @@ var jobsDataWithSteppedEntry = [{
         [60000, 120000, 150000, 300000],
 }];
 
+var steppedJobData =[{
+    salaryYears: [2, 5, 8],
+    salaryAmounts: [50000, 80000, 85000],
+    jobTitle: "Salesman",
+    key: 0,
+}];
 

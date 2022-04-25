@@ -2,6 +2,7 @@ import Chart from "react-apexcharts";
 import React from "react";
 
 let cc = console.log;
+let chartHeight = 300;
 
 export function DonutChart({jobsData}) {
 
@@ -35,7 +36,34 @@ export function LinearBarChart({job}) {
                 }
                 ]}
                 type="bar"
-                height={430}
+                height={chartHeight}
+                options = {{
+                    colors: [
+                        '#00aa00', '#880000', '#880000',
+                    ],
+                    xaxis: {
+                        categories: job.yearsNumbered
+                        ,
+
+                    }
+                }}
+            />
+        </div>
+    );
+}
+
+export function LinearSumBarChart({job}) {
+
+    return (
+        <div /*key={linearIncome.key}*/> {/*TODO Does not render key*/}
+            <Chart
+                series = {[
+                    {
+                        data: job.sumIncomeByYear
+                    }
+                ]}
+                type="bar"
+                height={chartHeight}
                 options = {{
                     colors: [
                         '#00aa00', '#880000', '#880000',
@@ -54,8 +82,6 @@ export function LinearBarChart({job}) {
 
 export function SteppedBarChart({job}) {
 
-    cc(job)
-
     return (
         <div /*key={linearIncome.key}/*/> {/*TODO Does not render key*/}
             <Chart
@@ -65,7 +91,7 @@ export function SteppedBarChart({job}) {
                     }
                 ]}
                 type="bar"
-                height={430}
+                height={chartHeight}
                 options = {{
                     colors: [
                         '#00aa00', '#880000', '#880000',
@@ -80,3 +106,31 @@ export function SteppedBarChart({job}) {
         </div>
     );
 }
+
+export function SteppedSumBarChart({job}) {
+
+    return (
+        <div /*key={linearIncome.key}/*/> {/*TODO Does not render key*/}
+            <Chart
+                series = {[
+                    {
+                        data: job.salarySumByYear
+                    }
+                ]}
+                type="bar"
+                height={chartHeight}
+                options = {{
+                    colors: [
+                        '#00aa00', '#880000', '#880000',
+                    ],
+                    xaxis: {
+                        categories: job.yearsNumbered
+                        ,
+
+                    }
+                }}
+            />
+        </div>
+    );
+}
+

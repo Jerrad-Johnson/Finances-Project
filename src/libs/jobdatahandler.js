@@ -12,7 +12,7 @@ class JobDataHandler {
     }
 
     findStepped(){
-        let steppedJobs = this.findSteppedIncomeJobs(this.jobsData);
+        let steppedJobs = this.findSteppedIncomeJobs();
         return (this.beginStepped(steppedJobs));
     }
 
