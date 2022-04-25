@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import JobDataHandler from "./libs/jobdatahandler";
+import JobDataHandler from "./jobdatahandler";
 
 
 test('Linear data end-to-end test', () => {

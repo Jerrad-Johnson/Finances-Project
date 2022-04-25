@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import JobDataHandler from "../libs/jobdatahandler";
-import {handleJobDelete, handleError, isNumeric, createArrayWithNumberOfYearsToGraph} from "./jobssharedfunctions";
+import {handleJobDelete, isNumeric} from "./jobssharedfunctions";
 import {SteppedBarChart, SteppedSumBarChart} from "../graphs/IncomeGraphs";
 import {CreateSteppedJobIncomeForm} from "../Career";
 
@@ -9,7 +9,9 @@ var steppedKey = 0;
 let lengthOfGraphInYears = new JobDataHandler();
 lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
 
-
+function handleError(message){
+    throw new Error(message)
+}
 
 export function ListJobIncomeForms({steppedIncomeFormState}){
 
@@ -58,8 +60,6 @@ export function removeSteppedIncomeField(steppedIncomeFormState, setSteppedIncom
     arrToBeReturned.splice(whichEntryToRemove, 1);
     setSteppedIncomeFormState(arrToBeReturned);
 }
-
-
 
 
 export function handleSteppedJobSubmission(steppedJobDataState, setSteppedJobDataState){
@@ -133,7 +133,6 @@ export function checkSteppedData(jobTitle, salaryAmounts, salaryYears){
     return jobDataToBeReturned;
     //TODO Split this into check and set
 }
-
 
 function runCalculationsOnSteppedData(linearJobDataState, setLinearJobDataState, jobData){
     let jobDataToBeReturned = new JobDataHandler(jobData).findStepped();

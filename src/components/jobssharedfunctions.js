@@ -12,9 +12,7 @@ export function handleJobDelete(key, jobDataState, setJobDataState){
     setJobDataState(arrayToBeReturned);
 }
 
-export function handleError(message){
-    throw new Error(message)
-}
+
 
 export function createArrayWithNumberOfYearsToGraph() {
     let numberOfYearsToGraph = [];
