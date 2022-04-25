@@ -24,7 +24,7 @@ describe("Career page checks", () => {
        cy.get("#yearIncomeBegins").select("2");
        cy.get("#submitLinearJob").click();
        cy.get(".linearJobKey0").should("exist");
-       cy.wait(500);
+       cy.wait(1500);
    });
 
    it("Deletes the previously-created linear job.", () => {

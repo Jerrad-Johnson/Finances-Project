@@ -156,8 +156,6 @@ function Career() {
               steppedJobDataState = {steppedJobDataState}
               setSteppedJobDataState = {setSteppedJobDataState}
           />
-
-
       </>
     );
 }

@@ -36,14 +36,9 @@ export function handleLinearJobSubmission(linearJobDataState, setLinearJobDataSt
 export function setLinearJobData(jobTitle, incomeCeiling, incomeImmediate, yearToIncomeCeiling,
                               yearIncomeBegins){
     let jobDataToBeReturned = [];
-    incomeCeiling = +incomeCeiling
-    incomeImmediate = +incomeImmediate;
-    yearIncomeBegins = +yearIncomeBegins;
-    yearToIncomeCeiling = +yearToIncomeCeiling;
-
     jobDataToBeReturned.jobTitle = jobTitle;
-    jobDataToBeReturned.incomeCeiling = incomeCeiling;
-    jobDataToBeReturned.incomeImmediate = incomeImmediate;
+    jobDataToBeReturned.incomeCeiling = +incomeCeiling
+    jobDataToBeReturned.incomeImmediate = +incomeImmediate;
     jobDataToBeReturned.yearToIncomeCeiling = --yearToIncomeCeiling;
     jobDataToBeReturned.yearIncomeBegins = --yearIncomeBegins;
 
@@ -124,6 +119,5 @@ function LinearGraph({linearJobDataState, setLinearJobDataState}) {
         );
     }
 }
-
 
 export default LinearGraph;
