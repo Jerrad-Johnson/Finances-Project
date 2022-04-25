@@ -1,126 +1,23 @@
 import React, {useState} from "react";
 import JobDataHandler from "../libs/jobdatahandler";
-//import {LinearBarChart, LinearSumBarChart} from "../graphs/IncomeGraphs";
 import {handleJobDelete, handleError, isNumeric, createArrayWithNumberOfYearsToGraph} from "./jobssharedfunctions";
 import {SteppedBarChart, SteppedSumBarChart} from "../graphs/IncomeGraphs";
 import {CreateSteppedJobIncomeForm} from "../Career";
 
-let cc = console.log;
+//let cc = console.log;
 var steppedKey = 0;
 let lengthOfGraphInYears = new JobDataHandler();
 lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
 
 
-function SteppedGraph({steppedJobDataState, setSteppedJobDataState}){
 
-    if (steppedJobDataState.length !== 0) {
-        const steppedIncomeBarGraph = steppedJobDataState.map((job) => (
-            <div className={"steppedJobBarGraph steppedJobKey" + job.key } key={job.key}>
-                Job title: {job.jobTitle} <br />
-                <SteppedBarChart job={job}/>
-                <SteppedSumBarChart job={job}/>
-                <button type={"click"} className={"deleteSteppedJobKey" + job.key}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            handleJobDelete(job.key, steppedJobDataState, setSteppedJobDataState);
-                        }} >
-                    Delete Row {job.key}
-                </button>
-            </div>
-        ));
-
-        return (
-            <>
-                {(steppedJobDataState.length !== 0) && steppedIncomeBarGraph}
-            </>
-        );
-    }
-}
-
-export function SteppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
-
-    let steppedIncomeFormKey = 0;
-    let initialIncomeFormState = [{key: steppedIncomeFormKey}];
-    const [steppedIncomeFormState, setSteppedIncomeFormState] = useState(initialIncomeFormState);
-
-    return (
-        <>
-            <form>
-                <input type={"text"} id={"steppedJobTitle"}></input> Job Title <br/>
-
-                <ListJobIncomeForms
-                    steppedIncomeFormState={steppedIncomeFormState}
-                />
-
-                <button type={"click"} id={"addSteppedIncome"} onClick={(e) => {
-                    e.preventDefault();
-                    steppedIncomeFormKey = steppedIncomeFormKey + 1;
-                    addSteppedIncomeField(steppedIncomeFormState,
-                        setSteppedIncomeFormState, steppedIncomeFormKey)
-                }}>
-                    Add income change
-                </button>
-                &nbsp;
-
-                <button type={"click"} id={"deleteSteppedIncome"} onClick={(e) => {
-                    e.preventDefault();
-                    removeSteppedIncomeField(steppedIncomeFormState,
-                        setSteppedIncomeFormState)
-                }}>
-                    Delete income change
-                </button>
-                <br/>
-                <button type={"click"} id={"submitSteppedJob"} onClick={(e) => {
-                    e.preventDefault();
-                    handleSteppedJobSubmission(steppedJobDataState,
-                        setSteppedJobDataState)
-                }}>
-                    Submit
-                </button>
-
-            </form>
-        </>
-    )
-}
-
-function addSteppedIncomeField(steppedIncomeFormState, setSteppedIncomeFormState,
-                               steppedIncomeFormKey){
-    try {
-        if (steppedIncomeFormState.length >= lengthOfGraphInYears) {
-            throw new Error("There are as many fields as years; you cannot add more.")
-        }
-    } catch (err) {
-        handleError(err.message);
-        return;
-    }
-
-
-    let arrayToBeReturned = [...steppedIncomeFormState];
-    let dataToAppend = [{
-        key: steppedIncomeFormKey
-    }];
-    arrayToBeReturned = [...arrayToBeReturned, ...dataToAppend];
-    setSteppedIncomeFormState(arrayToBeReturned);
-}
-
-function removeSteppedIncomeField(steppedIncomeFormState, setSteppedIncomeFormState){
-    if (steppedIncomeFormState <= 1){
-        return;
-    }
-
-    let arrToBeReturned = [...steppedIncomeFormState];
-    let whichEntryToRemove = arrToBeReturned.length -1;
-    arrToBeReturned.splice(whichEntryToRemove, 1);
-    setSteppedIncomeFormState(arrToBeReturned);
-}
-
-
-function ListJobIncomeForms({steppedIncomeFormState}){
+export function ListJobIncomeForms({steppedIncomeFormState}){
 
     let printToDom = steppedIncomeFormState.map(entry => {
         return(
             <CreateSteppedJobIncomeForm
-                id={"yearThisSteppedIncomeBegins"}
+                id = {"yearThisSteppedIncomeBegins"}
+                key = {"steppedforms"}
             />
         )
     });
@@ -132,8 +29,40 @@ function ListJobIncomeForms({steppedIncomeFormState}){
     )
 }
 
+export function addSteppedIncomeField(steppedIncomeFormState, setSteppedIncomeFormState,
+                               steppedIncomeFormKey){
+    try {
+        if (steppedIncomeFormState.length >= lengthOfGraphInYears) {
+            throw new Error("There are as many fields as years; you cannot add more.")
+        }
+    } catch (err) {
+        handleError(err.message);
+        return;
+    }
 
-function handleSteppedJobSubmission(steppedJobDataState, setSteppedJobDataState){
+    let arrayToBeReturned = [...steppedIncomeFormState];
+    let dataToAppend = [{
+        key: steppedIncomeFormKey
+    }];
+    arrayToBeReturned = [...arrayToBeReturned, ...dataToAppend];
+    setSteppedIncomeFormState(arrayToBeReturned);
+}
+
+export function removeSteppedIncomeField(steppedIncomeFormState, setSteppedIncomeFormState){
+    if (steppedIncomeFormState <= 1){
+        return;
+    }
+
+    let arrToBeReturned = [...steppedIncomeFormState];
+    let whichEntryToRemove = arrToBeReturned.length -1;
+    arrToBeReturned.splice(whichEntryToRemove, 1);
+    setSteppedIncomeFormState(arrToBeReturned);
+}
+
+
+
+
+export function handleSteppedJobSubmission(steppedJobDataState, setSteppedJobDataState){
     let jobData = undefined;
     let jobTitle = document.querySelector('#steppedJobTitle').value;
     let salaryAmountsNodes = document.querySelectorAll('.incomeSteppedJob');
@@ -156,8 +85,6 @@ function handleSteppedJobSubmission(steppedJobDataState, setSteppedJobDataState)
         updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDataState);
     }
 }
-
-
 
 export function checkSteppedData(jobTitle, salaryAmounts, salaryYears){
     let jobData = {
@@ -224,6 +151,31 @@ function updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDa
     }
 }
 
+function SteppedGraph({steppedJobDataState, setSteppedJobDataState}){
+
+    if (steppedJobDataState.length !== 0) {
+        const steppedIncomeBarGraph = steppedJobDataState.map((job) => (
+            <div className={"steppedJobBarGraph steppedJobKey" + job.key } key={job.key}>
+                Job title: {job.jobTitle} <br />
+                <SteppedBarChart job={job}/>
+                <SteppedSumBarChart job={job}/>
+                <button type={"click"} className={"deleteSteppedJobKey" + job.key}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleJobDelete(job.key, steppedJobDataState, setSteppedJobDataState);
+                        }} >
+                    Delete Row {job.key}
+                </button>
+            </div>
+        ));
+
+        return (
+            <>
+                {(steppedJobDataState.length !== 0) && steppedIncomeBarGraph}
+            </>
+        );
+    }
+}
 
 function SteppedJobComponent({steppedJobDataState, setSteppedJobDataState}) {
     return (

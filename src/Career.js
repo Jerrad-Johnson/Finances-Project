@@ -2,13 +2,15 @@ import React from "react";
 import {useState} from "react";
 import LinearJobComponent, {handleLinearJobSubmission} from "./components/LinearJobComponent";
 import {createArrayWithNumberOfYearsToGraph} from "./components/jobssharedfunctions";
-import SteppedJobComponent, {SteppedIncomeForms} from "./components/SteppedJobComponent";
+import SteppedJobComponent, {ListJobIncomeForms, addSteppedIncomeField, removeSteppedIncomeField, handleSteppedJobSubmission} from "./components/SteppedJobComponent";
 
 //TODO Display job title in graph
 //TODO Create a Youtube video demonstrating this app.
 //TODO Make formcontainer show as a pseudo-popup.
 
-var cc = console.log;
+let cc = console.log;
+var steppedIncomeFormKey = 0;
+export var jobListIncomeFormKey = 200;
 
 function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDataState,
                            setSteppedJobDataState}) {
@@ -26,36 +28,6 @@ function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDat
         </div>
     );
 }
-
-export function CreateSteppedJobIncomeForm({id}){
-
-    return(
-        <>
-            <input type={"text"} className={"incomeSteppedJob"}></input> Income from this year
-            onward: &nbsp;
-            <CreateOptionForms
-                id = {id}
-            />
-        </>
-    )
-}
-
-function CreateOptionForms({formTitle, id, key}) {
-
-    const numberOfYearsToGraph = createArrayWithNumberOfYearsToGraph();
-    const optionElements = numberOfYearsToGraph.map((year) =>
-        ( <option value={year} key={year}></option> )
-    );
-    // TODO Remove ID
-    return (
-        <>
-            <select className={"text-slate-500 "+ id} id={id} key={key}>
-                {optionElements}
-            </select>
-            <label> {formTitle} </label><br />
-        </>
-    );
-} //TODO Turn into class; will be reused
 
 
 function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
@@ -85,6 +57,81 @@ function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
     );
 }
 
+function SteppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
+    let initialIncomeFormState = [{key: steppedIncomeFormKey}];
+    const [steppedIncomeFormState, setSteppedIncomeFormState] = useState(initialIncomeFormState);
+
+    return (
+        <>
+            <form>
+                <input type={"text"} id={"steppedJobTitle"}></input> Job Title <br/>
+
+                <ListJobIncomeForms
+                    steppedIncomeFormState={steppedIncomeFormState}
+                />
+
+                <button type={"click"} id={"addSteppedIncome"} onClick={(e) => {
+                    e.preventDefault();
+                    steppedIncomeFormKey = steppedIncomeFormKey + 1;
+                    jobListIncomeFormKey = steppedIncomeFormKey +90010;
+                    addSteppedIncomeField(steppedIncomeFormState,
+                        setSteppedIncomeFormState, steppedIncomeFormKey)
+                }}>
+                    Add income change
+                </button>
+                &nbsp;
+
+                <button type={"click"} id={"deleteSteppedIncome"} onClick={(e) => {
+                    e.preventDefault();
+                    removeSteppedIncomeField(steppedIncomeFormState,
+                        setSteppedIncomeFormState)
+                }}>
+                    Delete income change
+                </button>
+                <br/>
+                <button type={"click"} id={"submitSteppedJob"} onClick={(e) => {
+                    e.preventDefault();
+                    handleSteppedJobSubmission(steppedJobDataState,
+                        setSteppedJobDataState)
+                }}>
+                    Submit
+                </button>
+
+            </form>
+        </>
+    )
+}
+
+export function CreateSteppedJobIncomeForm({id}){
+    return(
+        <>
+            <input type={"text"} className={"incomeSteppedJob"}></input> Income from this year
+            onward: &nbsp;
+            <CreateOptionForms
+                id = {id}
+            />
+        </>
+    )
+}
+
+function CreateOptionForms({formTitle, id, steppedIncomeFormKey}) {
+    const numberOfYearsToGraph = createArrayWithNumberOfYearsToGraph();
+    const optionElements = numberOfYearsToGraph.map((year) =>
+        ( <option value={year} key={year}></option> )
+    );
+
+    // TODO Remove ID
+    return (
+        <>
+            <select className={"text-slate-500 "+ id} id={id} key={steppedIncomeFormKey}>
+                {optionElements}
+            </select>
+            <label> {formTitle} </label><br />
+        </>
+    );
+}
+
+
 function Career() {
     const [linearJobDataState, setLinearJobDataState] = useState([]);
     const [steppedJobDataState, setSteppedJobDataState] = useState([]);
@@ -104,10 +151,6 @@ function Career() {
               linearJobDataState = {linearJobDataState}
               setLinearJobDataState = {setLinearJobDataState}
           />
-          {/*<LinearGraph
-              linearJobDataState = {linearJobDataState}
-              setLinearJobDataState = {setLinearJobDataState}
-           />*/}
 
           <SteppedJobComponent
               steppedJobDataState = {steppedJobDataState}

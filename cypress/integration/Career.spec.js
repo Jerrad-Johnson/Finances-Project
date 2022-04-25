@@ -39,6 +39,7 @@ describe("Career page checks", () => {
        cy.get(".incomeSteppedJob").should('have.length', 2);
        cy.wait(300)
        cy.get("#deleteSteppedIncome").should("exist");
+       cy.wait(300)
        cy.get("#deleteSteppedIncome").click();
    });
 

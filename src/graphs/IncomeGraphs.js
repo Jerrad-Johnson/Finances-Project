@@ -1,7 +1,7 @@
 import Chart from "react-apexcharts";
 import React from "react";
 
-let cc = console.log;
+//let cc = console.log;
 let chartHeight = 300;
 
 export function DonutChart({jobsData}) {
