@@ -4,7 +4,7 @@ import JobDataHandler from "../libs/jobdatahandler";
 import {LinearBarChart, LinearSumBarChart} from "../graphs/IncomeGraphs";
 import {handleJobDelete, isNumeric} from "./jobssharedfunctions";
 
-let cc = console.log;
+//let cc = console.log;
 var linearKey = 0;
 let lengthOfGraphInYears = new JobDataHandler();
 lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
@@ -23,17 +23,11 @@ export function handleLinearJobSubmission(linearJobDataState, setLinearJobDataSt
 
 export function setLinearJobData(){
     let jobDataToBeReturned = [];
-    let jobTitle = document.querySelector('#linearJobTitle').value;
-    let incomeCeiling = document.querySelector('#incomeCeiling').value;
-    let incomeImmediate = document.querySelector('#incomeImmediate').value;
-    let yearToIncomeCeiling = document.querySelector('#yearToIncomeCeiling').value;
-    let yearIncomeBegins = document.querySelector('#yearIncomeBegins').value;
-
-    jobDataToBeReturned.jobTitle = jobTitle;
-    jobDataToBeReturned.incomeCeiling = +incomeCeiling
-    jobDataToBeReturned.incomeImmediate = +incomeImmediate;
-    jobDataToBeReturned.yearToIncomeCeiling = --yearToIncomeCeiling;
-    jobDataToBeReturned.yearIncomeBegins = --yearIncomeBegins;
+    jobDataToBeReturned.yearToIncomeCeiling = document.querySelector('#yearToIncomeCeiling').value -1;
+    jobDataToBeReturned.yearIncomeBegins = document.querySelector('#yearIncomeBegins').value -1;
+    jobDataToBeReturned.jobTitle = document.querySelector('#linearJobTitle').value;
+    jobDataToBeReturned.incomeCeiling = document.querySelector('#incomeCeiling').value;
+    jobDataToBeReturned.incomeImmediate = document.querySelector('#incomeImmediate').value;
 
     return jobDataToBeReturned;
 }
@@ -55,7 +49,6 @@ export function checkLinearJobData(jobData){
         } else if (jobData.yearIncomeBegins >= jobData.yearToIncomeCeiling) {
             throw new Error("Beginning income year is later than or equal to ceiling income year.");
         }
-
         //TODO Add catch somewhere
 
     jobData.pass = true;
