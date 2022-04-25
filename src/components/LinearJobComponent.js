@@ -125,16 +125,5 @@ function LinearGraph({linearJobDataState, setLinearJobDataState}) {
     }
 }
 
-function LinearJobComponent({linearJobDataState, setLinearJobDataState}) {
 
-    return (
-        <>
-            <LinearGraph
-                linearJobDataState = {linearJobDataState}
-                setLinearJobDataState = {setLinearJobDataState}
-            />
-        </>
-    );
-}
-
-export default LinearJobComponent;
+export default LinearGraph;

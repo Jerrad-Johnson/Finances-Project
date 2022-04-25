@@ -1,6 +1,6 @@
 import React from "react";
 import {useState} from "react";
-import LinearJobComponent, {handleLinearJobSubmission} from "./components/LinearJobComponent";
+import LinearGraph, {handleLinearJobSubmission} from "./components/LinearJobComponent";
 import {createArrayWithNumberOfYearsToGraph} from "./components/jobssharedfunctions";
 import SteppedJobComponent, {ListJobIncomeForms, addSteppedIncomeField, removeSteppedIncomeField, handleSteppedJobSubmission} from "./components/SteppedJobComponent";
 
@@ -147,7 +147,7 @@ function Career() {
           />
           <br />
 
-          <LinearJobComponent
+          <LinearGraph
               linearJobDataState = {linearJobDataState}
               setLinearJobDataState = {setLinearJobDataState}
           />
