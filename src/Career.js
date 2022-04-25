@@ -2,7 +2,7 @@ import React from "react";
 import {useState} from "react";
 import LinearGraph, {handleLinearJobSubmission} from "./components/LinearJobComponent";
 import {createArrayWithNumberOfYearsToGraph} from "./components/jobssharedfunctions";
-import SteppedJobComponent, {ListJobIncomeForms, addSteppedIncomeField, removeSteppedIncomeField, handleSteppedJobSubmission} from "./components/SteppedJobComponent";
+import SteppedGraph, {ListJobIncomeForms, addSteppedIncomeField, removeSteppedIncomeField, handleSteppedJobSubmission} from "./components/SteppedJobComponent";
 
 //TODO Display job title in graph
 //TODO Create a Youtube video demonstrating this app.
@@ -152,7 +152,7 @@ function Career() {
               setLinearJobDataState = {setLinearJobDataState}
           />
 
-          <SteppedJobComponent
+          <SteppedGraph
               steppedJobDataState = {steppedJobDataState}
               setSteppedJobDataState = {setSteppedJobDataState}
           />
