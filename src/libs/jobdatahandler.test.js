@@ -10,7 +10,6 @@ test('Linear data end-to-end test', () => {
     expect(y).toBeUndefined();
 });
 
-
 test('Calculates salary raise per year from a linear-income job.', () => {
     let x = new JobDataHandler().calculateLinearIncomeIncreaseEachYear(jobsDataWithLinearEntry);
 
@@ -66,7 +65,6 @@ test('Calculates salary raise per year from a linear-income job.', () => {
 
 });
 
-
 test(`Creation of array with number of steps (years) in graph, each step showing the user's salary for that year.`, () => {
     let incomeSteps = [100, 107, 114, 121, 129, 136, 143, 150, 157, 164, 171, 179, 186, 193, 200]
     let job1DataForGraphingSteps = [{
@@ -79,10 +77,6 @@ test(`Creation of array with number of steps (years) in graph, each step showing
     let x = new JobDataHandler().createLinearIncomeArrayWithGraphYearsNumberOfSteps(jobsDataWithLinearEntry);
     let y = new JobDataHandler().createLinearIncomeArrayWithGraphYearsNumberOfSteps(job1DataForGraphingSteps);
     let graphYears = new JobDataHandler().graphMaxNumberOfYears;
-
-
-
-
 
     x.forEach(job => {
         expect(job.incomeInGraphYearsNumberOfSteps).toBeDefined();
@@ -109,8 +103,6 @@ test("Returns the sum of the user's income over the years", () => {
     let x = new JobDataHandler().sumIncomeFromLinearJob(job);
     expect(x[0].linearIncomeSum).toEqual(2250);
 });
-
-
 
 test("Returns the sum of the user's income over the years", () => {
     let job = [{
@@ -147,14 +139,11 @@ test("Add an array of named years (as a string) for printing to graphs.", () => 
     }
 });
 
-
 test('Stepped data end-to-end test', () => {
     let x = new JobDataHandler(steppedJobData).findStepped();
     expect(x).toBeDefined();
 //    expect((x[0].yearsNumbered.length).tobe(15));
 });
-
-
 
 var jobsData = [{
     yearsOfExperienceAtEachStep:

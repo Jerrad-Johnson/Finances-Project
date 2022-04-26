@@ -4,7 +4,7 @@ import JobDataHandler from "../libs/jobdatahandler";
 import {LinearBarChart, LinearSumBarChart} from "../graphs/IncomeGraphs";
 import {handleJobDelete, isNumeric} from "./jobssharedfunctions";
 
-//let cc = console.log;
+let cc = console.log;
 var linearKey = 0;
 let lengthOfGraphInYears = new JobDataHandler();
 lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
@@ -23,11 +23,11 @@ export function handleLinearJobSubmission(linearJobDataState, setLinearJobDataSt
 
 export function setLinearJobData(){
     let jobDataToBeReturned = [];
-    jobDataToBeReturned.yearToIncomeCeiling = document.querySelector('#yearToIncomeCeiling').value -1;
-    jobDataToBeReturned.yearIncomeBegins = document.querySelector('#yearIncomeBegins').value -1;
+    jobDataToBeReturned.yearToIncomeCeiling = +document.querySelector('#yearToIncomeCeiling').value -1;
+    jobDataToBeReturned.yearIncomeBegins = +document.querySelector('#yearIncomeBegins').value -1;
     jobDataToBeReturned.jobTitle = document.querySelector('#linearJobTitle').value;
-    jobDataToBeReturned.incomeCeiling = document.querySelector('#incomeCeiling').value;
-    jobDataToBeReturned.incomeImmediate = document.querySelector('#incomeImmediate').value;
+    jobDataToBeReturned.incomeCeiling = +document.querySelector('#incomeCeiling').value;
+    jobDataToBeReturned.incomeImmediate = +document.querySelector('#incomeImmediate').value;
 
     return jobDataToBeReturned;
 }
@@ -46,7 +46,7 @@ export function checkLinearJobData(jobData){
             throw new Error("Year to income ceiling not set.");
         } else if (!isNumeric(jobData.yearIncomeBegins)) {
             throw new Error("Year to beginning of income not set.");
-        } else if (jobData.yearIncomeBegins >= jobData.yearToIncomeCeiling) {
+        } else if (+jobData.yearIncomeBegins >= +jobData.yearToIncomeCeiling) {
             throw new Error("Beginning income year is later than or equal to ceiling income year.");
         }
         //TODO Add catch somewhere
@@ -60,7 +60,7 @@ export function checkLinearJobData(jobData){
     //TODO Allow user to skip Starting Income field
 }
 
-function runCalculationsOnLinearData(jobData){
+export function runCalculationsOnLinearData(jobData){
     let jobDataToBeReturned = new JobDataHandler(jobData).findLinear();
     return jobDataToBeReturned;
 }
