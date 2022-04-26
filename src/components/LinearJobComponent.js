@@ -4,10 +4,8 @@ import JobDataHandler from "../libs/jobdatahandler";
 import {LinearBarChart, LinearSumBarChart} from "../graphs/IncomeGraphs";
 import {handleJobDelete, isNumeric} from "./jobssharedfunctions";
 
-let cc = console.log;
+//let cc = console.log;
 var linearKey = 0;
-let lengthOfGraphInYears = new JobDataHandler();
-lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
 
 export function handleLinearJobSubmission(linearJobDataState, setLinearJobDataState){
     let jobData = undefined;
@@ -21,7 +19,7 @@ export function handleLinearJobSubmission(linearJobDataState, setLinearJobDataSt
     }
 }
 
-export function setLinearJobData(){
+function setLinearJobData(){
     let jobDataToBeReturned = [];
     jobDataToBeReturned.yearToIncomeCeiling = +document.querySelector('#yearToIncomeCeiling').value -1;
     jobDataToBeReturned.yearIncomeBegins = +document.querySelector('#yearIncomeBegins').value -1;

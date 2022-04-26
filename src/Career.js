@@ -8,7 +8,7 @@ import SteppedGraph, {ListJobIncomeForms, addSteppedIncomeField, removeSteppedIn
 //TODO Create a Youtube video demonstrating this app.
 //TODO Make formcontainer show as a pseudo-popup.
 
-let cc = console.log;
+//let cc = console.log;
 var steppedIncomeFormKey = 0;
 export var jobListIncomeFormKey = 200;
 
@@ -31,7 +31,6 @@ function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDat
 
 
 function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
-    let formType = "linearincome";
 
     return (
         <>

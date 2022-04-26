@@ -12,8 +12,6 @@ export function handleJobDelete(key, jobDataState, setJobDataState){
     setJobDataState(arrayToBeReturned);
 }
 
-
-
 export function createArrayWithNumberOfYearsToGraph() {
     let numberOfYearsToGraph = [];
     let yearsToBeReturned = [];
@@ -29,3 +27,6 @@ export function createArrayWithNumberOfYearsToGraph() {
 export function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
+
+
+
