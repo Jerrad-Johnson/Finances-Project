@@ -5,16 +5,16 @@ test("Good in, Good out -- error checks from checkLinearJobData", () => {
         jobTitle: "Wal-Mart",
         incomeCeiling: 200,
         incomeImmediate: 100,
-        yearToIncomeCeiling: 7,
-        yearIncomeBegins: 1,
+        yearToIncomeCeiling: 7 -1, // LinearJobComponent decrements by 1
+        yearIncomeBegins: 1 -1,
     };
     let x = checkLinearJobData(jobData);
 
     expect(x[0].jobTitle).toBe("Wal-Mart");
     expect(x[0].incomeCeiling).toBe(+200);
     expect(x[0].incomeImmediate).toBe(+100);
-    expect(x[0].yearToIncomeCeiling).toBe(+7);
-    expect(x[0].yearIncomeBegins).toBe(+1);
+    expect(x[0].yearToIncomeCeiling).toBe(+6);
+    expect(x[0].yearIncomeBegins).toBe(+0);
 });
 
 test("Test error checks in checkLinearData.", () => {
@@ -23,8 +23,8 @@ test("Test error checks in checkLinearData.", () => {
         jobTitle: "Wal-Mart",
         incomeCeiling: 200,
         incomeImmediate: 100,
-        yearToIncomeCeiling: 7,
-        yearIncomeBegins: 1,
+        yearToIncomeCeiling: 7 -1,
+        yearIncomeBegins: 1 -1,
     };
 
     expect(() => {

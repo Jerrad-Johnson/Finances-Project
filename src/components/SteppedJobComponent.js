@@ -59,13 +59,12 @@ export function handleSteppedJobSubmission(steppedJobDataState, setSteppedJobDat
     jobData = checkSteppedData(jobData);
 
     if (jobData[0].pass === true) {
-        jobData = runCalculationsOnSteppedData(steppedJobDataState, setSteppedJobDataState, jobData);
+        jobData = runCalculationsOnSteppedData(jobData);
         updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDataState);
     }
 }
 
 export function setSteppedData(){
-
     let jobDataToBeReturned = [];
     jobDataToBeReturned.jobTitle = document.querySelector('#steppedJobTitle').value;
     let salaryAmountsNodes = document.querySelectorAll('.incomeSteppedJob');
@@ -85,25 +84,23 @@ export function setSteppedData(){
 }
 
 export function checkSteppedData(jobData){
-let jobDataToBeReturned = [];
+    let jobDataToBeReturned = [];
 
-        if ((jobData.jobTitle === undefined) || (jobData.jobTitle === '')) {
-            throw new Error("Job Title not set.");
-        }
+    if ((jobData.jobTitle === undefined) || (jobData.jobTitle === '')) {
+        throw new Error("Job Title not set.");
+    }
 
-        for (let i = 0; i < jobData.salaryAmounts.length; i++) {
-            if (!isNumeric(jobData.salaryAmounts[i])) {
-                throw new Error("Ceiling Income NaN.");
-            }
+    for (let i = 0; i < jobData.salaryAmounts.length; i++) {
+        if (!isNumeric(jobData.salaryAmounts[i])) {
+            throw new Error("Salary fields must be filled, and contain only numbers.");
         }
+    }
 
-        for (let i = 0; i < jobData.salaryYears.length; i++) {
-            if ((i >= 1) && (+jobData.salaryYears[i] <= +jobData.salaryYears[i -1])){
-                throw new Error("Year in field " +i+ " is less than or equal to the year in the previous field.");
-            } else if (!isNumeric(jobData.salaryYears[i])){
-                throw new Error("Starting income NaN.");
-            }
+    for (let i = 0; i < jobData.salaryYears.length; i++) {
+        if ((i >= 1) && (+jobData.salaryYears[i] <= +jobData.salaryYears[i -1])){
+            throw new Error("Year in field " +i+ " is less than or equal to the year in the previous field.");
         }
+    }
      //TODO Add catch somewhere
 
     jobData.pass = true;
@@ -114,8 +111,9 @@ let jobDataToBeReturned = [];
     //TODO Split this into check and set
 }
 
-function runCalculationsOnSteppedData(linearJobDataState, setLinearJobDataState, jobData){
+export function runCalculationsOnSteppedData(jobData){
     let jobDataToBeReturned = new JobDataHandler(jobData).findStepped();
+
     return jobDataToBeReturned;
 }
 
