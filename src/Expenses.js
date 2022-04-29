@@ -1,13 +1,26 @@
 import {useState} from "react";
+import {createArrayWithNumberOfYearsToGraph} from "./components/jobssharedfunctions";
 
+var fieldsStateKey = 0;
 let cc = console.log;
+let lengthOfGraphInYears = createArrayWithNumberOfYearsToGraph();
+
 function ExpensesContainer(){
-    let fieldsStateKey = 0;
+
     const [expenseFieldsState, setExpenseFieldsState] = useState([fieldsStateKey]);
 
     return (
         <>
             <ExpenseForms
+                expenseFieldsState = {expenseFieldsState}
+            />
+            <span className={"mb-2 block"}></span>
+            <DeleteFieldButton
+                expenseFieldsState = {expenseFieldsState}
+                setExpenseFieldState = {setExpenseFieldsState}
+            />
+            &nbsp;
+            <AddFieldButton
                 expenseFieldsState = {expenseFieldsState}
                 setExpenseFieldState = {setExpenseFieldsState}
                 fieldsStateKey = {fieldsStateKey}
@@ -17,33 +30,70 @@ function ExpensesContainer(){
 }
 
 
-function ExpenseForms({expenseFieldsState, setExpenseFieldState, fieldsStateKey}){
-    cc(expenseFieldsState)
-    let expenseForms = expenseFieldsState.map(entry => {
+function ExpenseForms({expenseFieldsState}){
+    let printFormsToDom = expenseFieldsState.map(entry => {
         return (
-            <>
-                <input type="text" className={"inputField text-black"} key={fieldsStateKey} defaultValue={""}></input>
-            </>
+            <div key={entry}>
+                <input type="text" className={"inputField text-black"} defaultValue={""}></input>
+            </div>
        );
     });
 
     return (
         <>
             <form>
-                {expenseForms}
+                {printFormsToDom}
             </form>
         </>
     );
 }
 
+function DeleteFieldButton({expenseFieldsState, setExpenseFieldState}){
 
+    return(
+        <>
+            <button onClick={(e) => {
+                e.preventDefault();
+                deleteField(expenseFieldsState, setExpenseFieldState);
+            }}>Delete Entry</button>
+        </>
+    );
+}
+
+function deleteField(expenseFieldsState, setExpenseFieldState){
+    let newFieldCount = [...expenseFieldsState];
+    newFieldCount.pop();
+
+    setExpenseFieldState(newFieldCount);
+}
+
+function AddFieldButton({expenseFieldsState, setExpenseFieldState}){
+
+    return(
+        <>
+            <button onClick={(e) => {
+                e.preventDefault();
+                addField(expenseFieldsState, setExpenseFieldState);
+            }}>Add Entry</button>
+        </>
+    );
+}
+
+function addField(expenseFieldsState, setExpenseFieldState){
+    let newFieldCount = [...expenseFieldsState];
+    fieldsStateKey++
+    cc(fieldsStateKey)
+
+    newFieldCount.push(fieldsStateKey);
+    setExpenseFieldState(newFieldCount);
+}
 
 function Expenses(){
 
     return(
         <>
           <br/>
-            <span className="inputHeader"> Type of Expense(s) </span>
+            <span className="inputHeader mb-1 block"> Type of Expense(s) </span>
             <ExpensesContainer />
         </>
     );
