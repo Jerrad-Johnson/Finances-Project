@@ -13,22 +13,20 @@ class ExpenseDataHandler{
         sheet.numberOfEntries = sheet.amount.length;
         sheet = this.convertMonthlyExpenseToYearly(sheet);
         sheet = this.entryYearRange(sheet);
-        sheet = this.addArrayOfNumberedYears(sheet);
+        sheet = this.addArrayOfNumberedYearsForGraph(sheet);
+        sheet = this.runningSumEachEntry(sheet);
+        sheet = this.finalSumEachEntry(sheet);
 
-
-        //for (let i = 0; i < length; i++){
-        //}
-        this.entryYearRange(sheet);
-
-
-        //this.cc(sheet)
         return sheet;
     }
 
     convertMonthlyExpenseToYearly(sheet){
+        sheet.calculatedAmount = [];
         for (let i = 0; i < sheet.numberOfEntries; i++){
             if (sheet.frequency[i] == 'mo'){
-                this.cc(5);
+                sheet.calculatedAmount[i] = sheet.amount[i] * 12;
+            } else {
+                sheet.calculatedAmount[i] = sheet.amount[i];
             }
         }
 
@@ -50,7 +48,7 @@ class ExpenseDataHandler{
         return sheet;
     }
 
-    addArrayOfNumberedYears(sheet){
+    addArrayOfNumberedYearsForGraph(sheet){
         sheet.yearsNumbered = [];
 
             for (let i = 0; i <= (this.graphMaxNumberOfYears - 1); i++){
@@ -60,8 +58,32 @@ class ExpenseDataHandler{
         return sheet;
     }
 
-}
+    runningSumEachEntry(sheet){
+        sheet.runningSumsByYear = []
+        let placeholder = [];
 
+        for (let i = 0; i < sheet.numberOfEntries; i++) {
+            for (let j = 0; j < sheet.yearRangeForEachEntry[i].length; j++) {
+                j > 0 ? placeholder.push(sheet.calculatedAmount[i] + +placeholder[j - 1]) : placeholder.push(sheet.calculatedAmount[i])
+            }
+            sheet.runningSumsByYear.push(placeholder);
+            placeholder = [];
+        }
+
+        return sheet;
+    }
+
+    finalSumEachEntry(sheet) {
+        sheet.finalSums = [];
+        let sum = 0;
+
+        for (let i = 0; i < sheet.numberOfEntries; i++) {
+            sheet.finalSums.push(sheet.runningSumsByYear[i].at(-1));
+        }
+
+        return sheet;
+    }
+}
 
 
 export default ExpenseDataHandler;
