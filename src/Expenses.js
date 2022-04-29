@@ -50,11 +50,11 @@ function ExpenseForms({expenseFieldsState}){
             <div key={entry}>
                 <input type="text" className={"inputField label text-black mb-2 ml-2 w-40"} defaultValue={""}></input>
                 <span className={"ml-2"}> Label</span>
-                <input type="text" className={"inputField expenses text-black mb-2 ml-2 w-14"} defaultValue={""}></input>
+                <input type="text" className={"inputField expenses payment text-black mb-2 ml-2 w-14"} defaultValue={""}></input>
                 <span className={"ml-2"}>Amount</span>
-                <select className={"beginYear ml-2 text-black"}>
-                    <option value={"month"}>Monthly</option>
-                    <option value={"year"}>Yearly</option>
+                <select className={"frequency ml-2 text-black"}>
+                    <option value={"mo"}>Monthly</option>
+                    <option value={"yr"}>Yearly</option>
                 </select>
                 <br />
                 <select className={"beginYear ml-2 text-black"}>{optionElements}</select>
@@ -114,16 +114,6 @@ function addField(expenseFieldsState, setExpenseFieldState){
     setExpenseFieldState(newFieldCount);
 }
 
-function SubmitButton(){
-
-    return (
-        <button onClick={(e) => {
-            e.preventDefault();
-            //submitDataFn();
-        }}>Submit</button>
-    );
-}
-
 function ResetFieldsButton({expenseFieldsState, setExpenseFieldsState}){
 
     return(
@@ -137,6 +127,50 @@ function ResetFieldsButton({expenseFieldsState, setExpenseFieldsState}){
 function resetAllFields(expenseFieldsState, setExpenseFieldsState){
     let x = [fieldsStateKey++];
     setExpenseFieldsState(x);
+}
+
+function SubmitButton(){
+
+    return (
+        <button onClick={(e) => {
+            e.preventDefault();
+            handleExpensesSubmission();
+        }}>Submit</button>
+    );
+}
+
+function handleExpensesSubmission(){
+    let expenseTitle = document.querySelector(".jobtitle");
+    let beginYears = document.querySelectorAll(".beginYear");
+    let endYears = document.querySelectorAll(".endYear");
+    let paymentFrequency = document.querySelectorAll(".frequency");
+    let paymentAmount = document.querySelectorAll(".payment");
+    let expenseLabel = document.querySelectorAll(".label");
+    let expenseData = {
+        expenseSheetTitle: [expenseTitle.value],
+        beginYears: [],
+        endYears: [],
+        frequency: [],
+        amount: [],
+        label: [],
+    };
+
+    beginYears.forEach(e => {
+        expenseData.beginYears.push(+e.value)
+    });
+    endYears.forEach(e => {
+        expenseData.endYears.push(+e.value)
+    });
+    paymentFrequency.forEach(e => {
+        expenseData.frequency.push(e.value)
+    });
+    paymentAmount.forEach(e => {
+        expenseData.amount.push(+e.value)
+    });
+    expenseLabel.forEach(e => {
+        expenseData.label.push(e.value)
+    });
+    cc(expenseData);
 }
 
 function Expenses(){
