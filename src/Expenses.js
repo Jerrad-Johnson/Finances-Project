@@ -1,9 +1,9 @@
 import {useState} from "react";
 import {createArrayWithNumberOfYearsToGraph} from "./components/jobssharedfunctions";
+import ExpenseDataHandler from "./libs/expensedatahandler";
 
 var fieldsStateKey = 0;
 let cc = console.log;
-
 
 function ExpensesContainer(){
 
@@ -140,6 +140,11 @@ function SubmitButton(){
 }
 
 function handleExpensesSubmission(){
+    let expenseData = getExpenseDataFromFields();
+    //let expenseData = runCalculationsOnExpenseData(expenseData);
+}
+
+function getExpenseDataFromFields(){
     let expenseTitle = document.querySelector(".jobtitle");
     let beginYears = document.querySelectorAll(".beginYear");
     let endYears = document.querySelectorAll(".endYear");
@@ -170,7 +175,7 @@ function handleExpensesSubmission(){
     expenseLabel.forEach(e => {
         expenseData.label.push(e.value)
     });
-    cc(expenseData);
+    return expenseData;
 }
 
 function Expenses(){
