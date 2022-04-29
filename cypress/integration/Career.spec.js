@@ -1,6 +1,6 @@
 describe("Career page checks", () => {
     it("Page rendered", () => {
-        cy.visit("/");
+        cy.visit("/Career.js");
         cy.get("body").should("exist");
     });
 
