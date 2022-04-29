@@ -141,7 +141,8 @@ function SubmitButton(){
 
 function handleExpensesSubmission(){
     let expenseData = getExpenseDataFromFields();
-    //let expenseData = runCalculationsOnExpenseData(expenseData);
+    expenseData = runCalculationsOnExpenseData(expenseData);
+    cc(expenseData);
 }
 
 function getExpenseDataFromFields(){
@@ -176,6 +177,11 @@ function getExpenseDataFromFields(){
         expenseData.label.push(e.value)
     });
     return expenseData;
+}
+
+function runCalculationsOnExpenseData(expenseData){
+    let dataToBeReturned = new ExpenseDataHandler(expenseData);
+    return dataToBeReturned.beginCalculations();
 }
 
 function Expenses(){

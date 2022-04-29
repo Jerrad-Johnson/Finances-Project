@@ -1,4 +1,3 @@
-import jobdatahandler from "./jobdatahandler";
 import Jobdatahandler from "./jobdatahandler";
 
 class ExpenseDataHandler{
@@ -9,7 +8,12 @@ class ExpenseDataHandler{
         this.graphMaxNumberOfYears = this.graphMaxNumberOfYears.graphMaxNumberOfYears;
     }
 
+    beginCalculations(){
+        return this.expenseData;
+    }
+
 }
+
 
 
 export default ExpenseDataHandler;
