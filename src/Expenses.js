@@ -25,6 +25,12 @@ function ExpensesContainer(){
                 setExpenseFieldState = {setExpenseFieldsState}
                 fieldsStateKey = {fieldsStateKey}
             />
+            <br />
+            <SubmitButton />
+            <ResetFieldsButton
+                expenseFieldsState = {expenseFieldsState}
+                setExpenseFieldsState = {setExpenseFieldsState}
+            />
         </>
     );
 }
@@ -35,7 +41,7 @@ function ExpenseForms({expenseFieldsState}){
 
     let optionElements = lengthOfGraphInYears.map(entry => {
        return(
-         <option value={entry}>{entry}</option>
+         <option value={entry} key={entry}>{entry}</option>
        );
     });
 
@@ -47,10 +53,9 @@ function ExpenseForms({expenseFieldsState}){
                 <input type="text" className={"inputField expenses text-black mb-2 ml-2 w-14"} defaultValue={""}></input>
                 <span className={"ml-2"}>Amount</span>
                 <select className={"beginYear ml-2 text-black"}>
-                    <option value={"month"}>M</option>
-                    <option value={"year"}>Y</option>
+                    <option value={"month"}>Monthly</option>
+                    <option value={"year"}>Yearly</option>
                 </select>
-                <span className={"ml-2"}>M/Y?</span>
                 <br />
                 <select className={"beginYear ml-2 text-black"}>{optionElements}</select>
                 <select className={"endYear ml-2 text-black mb-10"} >{optionElements}</select>
@@ -107,6 +112,31 @@ function addField(expenseFieldsState, setExpenseFieldState){
 
     newFieldCount.push(fieldsStateKey);
     setExpenseFieldState(newFieldCount);
+}
+
+function SubmitButton(){
+
+    return (
+        <button onClick={(e) => {
+            e.preventDefault();
+            //submitDataFn();
+        }}>Submit</button>
+    );
+}
+
+function ResetFieldsButton({expenseFieldsState, setExpenseFieldsState}){
+
+    return(
+        <button className={"ml-4"} onClick={(e) => {
+           e.preventDefault();
+           resetAllFields(expenseFieldsState, setExpenseFieldsState);
+        }}>Reset</button>
+    );
+}
+
+function resetAllFields(expenseFieldsState, setExpenseFieldsState){
+    let x = [fieldsStateKey++];
+    setExpenseFieldsState(x);
 }
 
 function Expenses(){
