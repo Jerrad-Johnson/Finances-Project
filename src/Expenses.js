@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {createArrayWithNumberOfYearsToGraph} from "./components/jobssharedfunctions";
 import ExpenseDataHandler from "./libs/expensedatahandler";
+import {TestChart} from "./graphs/ExpenseGraphs";
 
 var fieldsStateKey = 0;
 let cc = console.log;
@@ -8,6 +9,7 @@ let cc = console.log;
 function ExpensesContainer(){
 
     const [expenseFieldsState, setExpenseFieldsState] = useState([fieldsStateKey]);
+    const [expensesState, setExpensesState] = useState([]);
 
     return (
         <>
@@ -26,10 +28,16 @@ function ExpensesContainer(){
                 fieldsStateKey = {fieldsStateKey}
             />
             <br />
-            <SubmitButton />
+            <SubmitButton
+                expensesState = {expensesState}
+                setExpensesState = {setExpensesState}
+            />
             <ResetFieldsButton
                 expenseFieldsState = {expenseFieldsState}
                 setExpenseFieldsState = {setExpenseFieldsState}
+            />
+            <ExpenseBarGraph
+                expensesState = {expensesState}
             />
         </>
     );
@@ -129,20 +137,29 @@ function resetAllFields(expenseFieldsState, setExpenseFieldsState){
     setExpenseFieldsState(x);
 }
 
-function SubmitButton(){
+
+
+
+
+
+
+function SubmitButton({expensesState, setExpensesState}){
 
     return (
         <button onClick={(e) => {
             e.preventDefault();
-            handleExpensesSubmission();
+            handleExpensesSubmission(expensesState, setExpensesState);
         }}>Submit</button>
     );
 }
 
-function handleExpensesSubmission(){
+function handleExpensesSubmission(expensesState, setExpensesState){
     let expenseData = getExpenseDataFromFields();
+    // error check fn
     expenseData = runCalculationsOnExpenseData(expenseData);
-    cc(expenseData);
+    updateExpensesState(expenseData, expensesState, setExpensesState);
+    //ExpenseBarGraph(expensesState);
+
 }
 
 function getExpenseDataFromFields(){
@@ -184,6 +201,36 @@ function runCalculationsOnExpenseData(expenseData){
     return dataToBeReturned.beginCalculations();
 }
 
+function updateExpensesState(expenseData, expensesState, setExpensesState){
+    let combinedExpenseSheets;
+    if (expensesState.length !== 0){
+        combinedExpenseSheets = [...[expenseData], ...expensesState];
+        setExpensesState(combinedExpenseSheets);
+        return true;
+    } else {
+        setExpensesState([expenseData]);
+        return true;
+    }
+    return null;
+
+}
+
+function ExpenseBarGraph({expensesState}){
+
+    let printToDom = expensesState.map(e => {
+       return (
+               <span>hi</span>
+       );
+    });
+
+    cc(printToDom)
+    return (
+        <>
+            {printToDom}
+        </>
+    );
+}
+
 function Expenses(){
 
     return(
@@ -191,6 +238,7 @@ function Expenses(){
           <br/>
             {/*<span className="inputHeader mb-1 block"> Type of Expense(s) </span>*/}
             <ExpensesContainer />
+            <TestChart />
         </>
     );
 }
