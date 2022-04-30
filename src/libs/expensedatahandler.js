@@ -12,10 +12,13 @@ class ExpenseDataHandler{
         let sheet = this.expenseData;
         sheet.numberOfEntries = sheet.amount.length;
         sheet = this.convertMonthlyExpenseToYearly(sheet);
-        sheet = this.entryYearRange(sheet);
+        //sheet = this.entryYearRange(sheet);
         sheet = this.addArrayOfNumberedYearsForGraph(sheet);
         sheet = this.runningSumEachEntry(sheet);
         sheet = this.finalSumEachEntry(sheet);
+        //this.cc(sheet)
+        sheet = this.createRunningSumObjectForGraph(sheet);
+        //this.cc(sheet)
 
         return sheet;
     }
@@ -62,12 +65,19 @@ class ExpenseDataHandler{
         sheet.runningSumsByYear = []
         let placeholder = [];
 
-        for (let i = 0; i < sheet.numberOfEntries; i++) {
-            for (let j = 0; j < sheet.yearRangeForEachEntry[i].length; j++) {
-                j > 0 ? placeholder.push(sheet.calculatedAmount[i] + +placeholder[j - 1]) : placeholder.push(sheet.calculatedAmount[i])
+
+        for (let i = 0; i < sheet.numberOfEntries; i++){
+            for (let j = 0; j < this.graphMaxNumberOfYears; j++){
+                if ((j+1) < sheet.beginYears[i]){
+                    placeholder.push(0);
+                } else if ((j+1) < sheet.endYears[i]) {
+                    j > 0 ? placeholder.push(sheet.calculatedAmount[i] + +placeholder[j - 1]) : placeholder.push(sheet.calculatedAmount[i]);
+                } else {
+                    placeholder.push(placeholder[j - 1]);
+                }
             }
-            sheet.runningSumsByYear.push(placeholder);
-            placeholder = [];
+                sheet.runningSumsByYear.push(placeholder);
+                placeholder = [];
         }
 
         return sheet;
@@ -82,6 +92,24 @@ class ExpenseDataHandler{
         }
 
         return sheet;
+    }
+
+    createRunningSumObjectForGraph(sheet){
+        let placeholder = [];
+        let x = [];
+
+        for (let i = 0; i < sheet.numberOfEntries; i++){
+            x = {};
+            x.name = sheet.label[i];
+            x.runningSumsByYear = [];
+            for (let j = 0; j < this.graphMaxNumberOfYears; j++){
+                x.runningSumsByYear.push(sheet.runningSumsByYear[i][j]);
+            }
+                placeholder[i] = x;
+        }
+
+            this.cc(placeholder)
+
     }
 }
 

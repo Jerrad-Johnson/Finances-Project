@@ -223,7 +223,7 @@ function ExpenseBarGraph({expensesState}){
        );
     });
 
-    cc(printToDom)
+    //cc(printToDom)
     return (
         <>
             {printToDom}
