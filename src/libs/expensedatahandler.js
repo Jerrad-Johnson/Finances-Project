@@ -6,6 +6,7 @@ class ExpenseDataHandler{
         this.cc = console.log;
         this.graphMaxNumberOfYears = new Jobdatahandler();
         this.graphMaxNumberOfYears = this.graphMaxNumberOfYears.graphMaxNumberOfYears;
+        this.key = 0;
     }
 
     beginCalculations(){
@@ -16,10 +17,11 @@ class ExpenseDataHandler{
         sheet = this.addArrayOfNumberedYearsForGraph(sheet);
         sheet = this.runningSumEachEntry(sheet);
         sheet = this.finalSumEachEntry(sheet);
-        //this.cc(sheet)
         sheet = this.createRunningSumObjectForGraph(sheet);
-        //this.cc(sheet)
-
+        sheet = this.createSumObjectForGraph(sheet);
+        sheet = this.createYearsForSumEachEntry(sheet);
+        //sheet = this.addKeyToSheet(sheet);
+        this.cc(sheet)
         return sheet;
     }
 
@@ -70,7 +72,7 @@ class ExpenseDataHandler{
             for (let j = 0; j < this.graphMaxNumberOfYears; j++){
                 if ((j+1) < sheet.beginYears[i]){
                     placeholder.push(0);
-                } else if ((j+1) < sheet.endYears[i]) {
+                } else if ((j) < sheet.endYears[i]) {
                     j > 0 ? placeholder.push(sheet.calculatedAmount[i] + +placeholder[j - 1]) : placeholder.push(sheet.calculatedAmount[i]);
                 } else {
                     placeholder.push(placeholder[j - 1]);
@@ -94,9 +96,10 @@ class ExpenseDataHandler{
         return sheet;
     }
 
+
     createRunningSumObjectForGraph(sheet){
-        let placeholder = [];
         let x = [];
+        sheet.graphRunningSumObject = {}
 
         for (let i = 0; i < sheet.numberOfEntries; i++){
             x = {};
@@ -105,12 +108,42 @@ class ExpenseDataHandler{
             for (let j = 0; j < this.graphMaxNumberOfYears; j++){
                 x.runningSumsByYear.push(sheet.runningSumsByYear[i][j]);
             }
-                placeholder[i] = x;
+            sheet.graphRunningSumObject[i] = x;
+        }
+        return sheet;
+    }
+
+    createSumObjectForGraph(sheet){
+        sheet.graphSumObject = []
+
+        for (let i = 0; i < sheet.numberOfEntries; i++){
+            sheet.graphSumObject[i] = {};
+            sheet.graphSumObject[i].name = ""
+            sheet.graphSumObject[i].name = sheet.label[i];
         }
 
-            this.cc(placeholder)
+        return sheet;
+    }
 
+    createYearsForSumEachEntry(sheet){
+        let x = {};
+
+        for (let i = 0; i < sheet.numberOfEntries; i++){
+            x.sumByYear = []
+            for (let j = 0; j < this.graphMaxNumberOfYears; j++) {
+                if ((j + 1) < sheet.beginYears[i]) {
+                    x.sumByYear.push(0);
+                } else if ((j+1) > sheet.endYears[i]) {
+                    x.sumByYear.push(0);
+                } else {
+                    x.sumByYear.push(sheet.amount[i]);
+                }
+            }
+            sheet.graphSumObject[i].sumByYear = x.sumByYear;
+        }
+        return sheet;
     }
 }
+
 
 export default ExpenseDataHandler;
