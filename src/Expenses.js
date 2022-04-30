@@ -4,7 +4,9 @@ import ExpenseDataHandler from "./libs/expensedatahandler";
 import {TestChart} from "./graphs/ExpenseGraphs";
 
 var fieldsStateKey = 0;
+var expenseSheetKey = 0; //TODO This needs to be set by server once users can log in
 let cc = console.log;
+
 
 function ExpensesContainer(){
 
@@ -157,6 +159,8 @@ function handleExpensesSubmission(expensesState, setExpensesState){
     let expenseData = getExpenseDataFromFields();
     // error check fn
     expenseData = runCalculationsOnExpenseData(expenseData);
+    expenseData = addKeyToSheet(expenseData);
+    cc(expenseData)
     updateExpensesState(expenseData, expensesState, setExpensesState);
     //ExpenseBarGraph(expensesState);
 
@@ -199,6 +203,12 @@ function getExpenseDataFromFields(){
 function runCalculationsOnExpenseData(expenseData){
     let dataToBeReturned = new ExpenseDataHandler(expenseData);
     return dataToBeReturned.beginCalculations();
+}
+
+function addKeyToSheet(expenseData){
+    expenseData.key = expenseSheetKey;
+    expenseSheetKey++;
+    return expenseData;
 }
 
 function updateExpensesState(expenseData, expensesState, setExpensesState){

@@ -20,8 +20,6 @@ class ExpenseDataHandler{
         sheet = this.createRunningSumObjectForGraph(sheet);
         sheet = this.createSumObjectForGraph(sheet);
         sheet = this.createYearsForSumEachEntry(sheet);
-        //sheet = this.addKeyToSheet(sheet);
-        this.cc(sheet)
         return sheet;
     }
 
