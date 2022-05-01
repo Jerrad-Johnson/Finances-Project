@@ -6,8 +6,6 @@ let chartHeight = 300;
 
 export function ExpenseSumDonutChart({expenseSheet}) {
 
-    console.log(expenseSheet.label)
-
     return (
         <>
             <Chart

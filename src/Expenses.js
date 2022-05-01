@@ -253,10 +253,10 @@ function ExpenseBarGraph({expensesState, setExpensesState}){
                    expenseSheet = {expenseSheet}
                />
                <br />
-               <button onClick={((e) => {
+               <button className={"deleteSheet"} onClick={((e) => {
                     e.preventDefault();
                     deleteSelectedSheet(expenseSheet.key, expensesState, setExpensesState);
-               })}>Delete Row</button>
+               })}>Delete Sheet {expenseSheet.key}</button>
 
            </>
        );
@@ -274,7 +274,6 @@ function Expenses(){
     return(
         <>
           <br/>
-            {/*<span className="inputHeader mb-1 block"> Type of Expense(s) </span>*/}
             <ExpensesContainer />
         </>
     );

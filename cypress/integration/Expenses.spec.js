@@ -69,6 +69,12 @@ describe("Tests the expenses page", () => {
         cy.get(".apexcharts-canvas").eq(2).should("exist");
     });
 
+    it("Deletes the graph and checks that it's gone.", () => {
+        cy.wait(1200);
+        cy.get(".deleteSheet").click();
+        cy.get(".apexcharts-canvas").should("not.exist");
+    });
+
     it("Resets the forms and checks that the extra expense inputs are deleted.", () => {
         cy.get(".reset").click();
         cy.get(".label").eq(1).should("not.exist");
