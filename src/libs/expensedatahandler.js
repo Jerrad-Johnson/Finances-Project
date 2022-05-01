@@ -146,19 +146,21 @@ class ExpenseDataHandler{
     }
 
     finalSumPerExpense(sheet){
-        sheet.sumEachExpense = [];
+        sheet.graphSumEachExpense = {};
         let x = {};
+        x.data = [];
 
         for (let i = 0; i < sheet.numberOfEntries; i++){
-            x.data = sheet.calculatedAmount[i];
             x.name = sheet.label[i];
-            sheet.sumEachExpense[i] = x;
-            x = {}
+            x.data[i] = sheet.calculatedAmount[i];
+            sheet.graphSumEachExpense[i] = x;
+            x.data = [];
+            x.name = "";
+
         }
 
         return sheet;
     }
 }
-
 
 export default ExpenseDataHandler;

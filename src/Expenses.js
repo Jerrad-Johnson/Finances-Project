@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {createArrayWithNumberOfYearsToGraph} from "./components/jobssharedfunctions";
 import ExpenseDataHandler from "./libs/expensedatahandler";
-import {ExpenseRunningSumChart, ExpenseSumChart} from "./graphs/ExpenseGraphs";
+import {ExpenseRunningSumBarChart, ExpenseSumBarChart, ExpenseSumDonutChart} from "./graphs/ExpenseGraphs";
 
 var fieldsStateKey = 0;
 var expenseSheetKey = 0; //TODO This needs to be set by server once users can log in
@@ -230,11 +230,14 @@ function ExpenseBarGraph({expensesState}){
     let printToDom = expensesState.map(expenseSheet => {
        return (
            <>
-               <ExpenseSumChart
+               <ExpenseSumBarChart
                    expenseSheet = {expenseSheet}
                />
-               <ExpenseRunningSumChart
+               <ExpenseRunningSumBarChart
                     expenseSheet = {expenseSheet}
+               />
+               <ExpenseSumDonutChart
+                   expenseSheet = {expenseSheet}
                />
            </>
        );

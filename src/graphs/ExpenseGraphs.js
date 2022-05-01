@@ -4,18 +4,22 @@ import React from "react";
 //let cc = console.log;
 let chartHeight = 300;
 
-export function DonutChart({sheetData}) {
+export function ExpenseSumDonutChart({expenseSheet}) {
+
+    console.log(expenseSheet.label)
 
     return (
         <>
             <Chart
-                series={[5, 500, 5]}
+                series={expenseSheet.calculatedAmount}
                 type="donut"
                 height={430}
                 options = {{
+
                     colors: [
                         '#00aa00', '#880000', '#880000',
                     ],
+                    labels: expenseSheet.label,
                 }}
             />
         </>
@@ -23,7 +27,7 @@ export function DonutChart({sheetData}) {
 }
 
 
-export function ExpenseSumChart({expenseSheet}) {
+export function ExpenseSumBarChart({expenseSheet}) {
 
 /*
     delete expenseSheet.amount;
@@ -66,7 +70,7 @@ export function ExpenseSumChart({expenseSheet}) {
 }
 
 
-export function ExpenseRunningSumChart({expenseSheet}) {
+export function ExpenseRunningSumBarChart({expenseSheet}) {
 
 /*    delete expenseSheet.amount;
     delete expenseSheet.beginYears;
