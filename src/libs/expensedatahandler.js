@@ -19,6 +19,8 @@ class ExpenseDataHandler {
         sheet = this.createRunningSumObjectForGraph(sheet);
         sheet = this.createSumObjectForGraph(sheet);
         sheet = this.createYearsForSumEachEntry(sheet);
+        sheet = this.finalSumPerExpense(sheet);
+        this.cc(sheet);
         return sheet;
     }
 
@@ -125,6 +127,22 @@ class ExpenseDataHandler {
         }
         return sheet;
     }
+
+    finalSumPerExpense(sheet){
+        sheet.graphSumEachExpenseObjectForDonut = [];
+
+        let x = {};
+
+        for (let i = 0; i < sheet.numberOfEntries; i++){
+            x.data = [];
+            x.data[i] = (sheet.calculatedAmount[i] * (sheet.endYears - sheet.beginYears +1));
+            x.name = [];
+            x.name[i] = sheet.label[i];
+        }
+        sheet.graphSumEachExpenseObjectForDonut[0] = x;
+        return sheet;
+    }
 }
+
 
 export default ExpenseDataHandler;

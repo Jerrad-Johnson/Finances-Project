@@ -11,7 +11,7 @@ export function ExpenseSumDonutChart({expenseSheet}) {
     return (
         <>
             <Chart
-                series={expenseSheet.calculatedAmount}
+                series={expenseSheet.graphSumEachExpenseObjectForDonut[0].data}
                 type="donut"
                 height={430}
                 options = {{
@@ -28,9 +28,7 @@ export function ExpenseSumDonutChart({expenseSheet}) {
 
 
 export function ExpenseSumBarChart({expenseSheet}) {
-
-/*
-    delete expenseSheet.amount;
+/*  delete expenseSheet.amount;
     delete expenseSheet.beginYears;
     delete expenseSheet.endYears;
     delete expenseSheet.calculatedAmount;
@@ -39,11 +37,11 @@ export function ExpenseSumBarChart({expenseSheet}) {
     delete expenseSheet.label;
     delete expenseSheet.numberOfEntries;
     delete expenseSheet.runningSumsByYear;
-    delete expenseSheet.finalSums;
-*/
+    delete expenseSheet.finalSums; */
+
 
     return (
-        <div /*key={linearIncome.key}*/> {/*TODO Does not render key*/}
+        <div>
             <Chart
                 series = {expenseSheet.graphSumObject}
                 type = "bar"
@@ -72,7 +70,7 @@ export function ExpenseSumBarChart({expenseSheet}) {
 
 export function ExpenseRunningSumBarChart({expenseSheet}) {
 
-/*    delete expenseSheet.amount;
+/*  delete expenseSheet.amount;
     delete expenseSheet.beginYears;
     delete expenseSheet.endYears;
     delete expenseSheet.calculatedAmount;
@@ -81,10 +79,10 @@ export function ExpenseRunningSumBarChart({expenseSheet}) {
     delete expenseSheet.label;
     delete expenseSheet.numberOfEntries;
     delete expenseSheet.runningSumsByYear;
-    delete expenseSheet.finalSums;*/
+    delete expenseSheet.finalSums; */
 
     return (
-        <div /*key={linearIncome.key}*/> {/*TODO Does not render key*/}
+        <div>
             <Chart
                 series = {expenseSheet.graphRunningSumObject}
                 type="bar"
