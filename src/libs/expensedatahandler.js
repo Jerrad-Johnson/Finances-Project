@@ -20,6 +20,7 @@ class ExpenseDataHandler{
         sheet = this.createRunningSumObjectForGraph(sheet);
         sheet = this.createSumObjectForGraph(sheet);
         sheet = this.createYearsForSumEachEntry(sheet);
+        this.cc(sheet);
         return sheet;
     }
 
@@ -97,14 +98,14 @@ class ExpenseDataHandler{
 
     createRunningSumObjectForGraph(sheet){
         let x = [];
-        sheet.graphRunningSumObject = {}
+        sheet.graphRunningSumObject = []
 
         for (let i = 0; i < sheet.numberOfEntries; i++){
             x = {};
             x.name = sheet.label[i];
-            x.runningSumsByYear = [];
+            x.data = [];
             for (let j = 0; j < this.graphMaxNumberOfYears; j++){
-                x.runningSumsByYear.push(sheet.runningSumsByYear[i][j]);
+                x.data.push(sheet.runningSumsByYear[i][j]);
             }
             sheet.graphRunningSumObject[i] = x;
         }
@@ -137,7 +138,7 @@ class ExpenseDataHandler{
                     x.sumByYear.push(sheet.amount[i]);
                 }
             }
-            sheet.graphSumObject[i].sumByYear = x.sumByYear;
+            sheet.graphSumObject[i].data = x.sumByYear;
         }
         return sheet;
     }

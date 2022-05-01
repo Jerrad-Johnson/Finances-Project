@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {createArrayWithNumberOfYearsToGraph} from "./components/jobssharedfunctions";
 import ExpenseDataHandler from "./libs/expensedatahandler";
-import {TestChart} from "./graphs/ExpenseGraphs";
+import {ExpenseRunningSumChart, TestChart} from "./graphs/ExpenseGraphs";
 
 var fieldsStateKey = 0;
 var expenseSheetKey = 0; //TODO This needs to be set by server once users can log in
@@ -160,7 +160,7 @@ function handleExpensesSubmission(expensesState, setExpensesState){
     // error check fn
     expenseData = runCalculationsOnExpenseData(expenseData);
     expenseData = addKeyToSheet(expenseData);
-    cc(expenseData)
+    //cc(expenseData)
     updateExpensesState(expenseData, expensesState, setExpensesState);
     //ExpenseBarGraph(expensesState);
 
@@ -227,13 +227,14 @@ function updateExpensesState(expenseData, expensesState, setExpensesState){
 
 function ExpenseBarGraph({expensesState}){
 
-    let printToDom = expensesState.map(e => {
+    let printToDom = expensesState.map(expenseSheet => {
        return (
-               <span>hi</span>
+            <ExpenseRunningSumChart
+                expenseSheet = {expenseSheet}
+            />
        );
     });
 
-    //cc(printToDom)
     return (
         <>
             {printToDom}
@@ -248,7 +249,6 @@ function Expenses(){
           <br/>
             {/*<span className="inputHeader mb-1 block"> Type of Expense(s) </span>*/}
             <ExpensesContainer />
-            <TestChart />
         </>
     );
 }

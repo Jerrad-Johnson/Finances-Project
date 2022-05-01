@@ -4,9 +4,7 @@ import React from "react";
 //let cc = console.log;
 let chartHeight = 300;
 
-export function DonutChart({jobsData}) {
-
-    //cc(jobsData)
+export function DonutChart({sheetData}) {
 
     return (
         <>
@@ -25,24 +23,25 @@ export function DonutChart({jobsData}) {
 }
 
 
-export function TestChart({job}) {
+export function TestChart({expenseSheet}) {
 
-    let testArr = [[1, 2, 3, 4, 5, 6, 6, 7, 8, 8], [1, 2, 3, 4, 5, 6, 6, 7, 8, 8], [1, 2, 3, 4, 5, 6, 6, 7, 8, 8]]
-    let testArr2 = [2, 5, 5, 5, 2]
-    let testArr3 = [{
-            name: "idk",
-            data: [200, 100, 500],
-        }, {
-            name: "idk2",
-            data: [100, 200, 300],
-        }];
+    delete expenseSheet.amount;
+    delete expenseSheet.beginYears;
+    delete expenseSheet.endYears;
+    delete expenseSheet.calculatedAmount;
+    delete expenseSheet.endYears;
+    delete expenseSheet.frequency;
+    delete expenseSheet.label;
+    delete expenseSheet.numberOfEntries;
+    delete expenseSheet.runningSumsByYear;
+    delete expenseSheet.finalSums;
 
-    console.log(testArr3);
+    //console.log(testArr3);
 
     return (
         <div /*key={linearIncome.key}*/> {/*TODO Does not render key*/}
             <Chart
-                series = {testArr3}
+                series = {expenseSheet.graphSumObject}
                 type="bar"
                 height={chartHeight}
                 options = {{
@@ -57,40 +56,52 @@ export function TestChart({job}) {
                     chart: {
                         stacked: true,
                     },
-                    /*xaxis: {
-                        //categories: job.yearsNumbered
-                    }*/
+                    xaxis: {
+                        categories: expenseSheet.yearsNumbered
+                    }
                 }}
             />
         </div>
     );
 }
 
-export function LinearSumBarChart({job}) {
+
+export function ExpenseRunningSumChart({expenseSheet}) {
+
+    delete expenseSheet.amount;
+    delete expenseSheet.beginYears;
+    delete expenseSheet.endYears;
+    delete expenseSheet.calculatedAmount;
+    delete expenseSheet.endYears;
+    delete expenseSheet.frequency;
+    delete expenseSheet.label;
+    delete expenseSheet.numberOfEntries;
+    delete expenseSheet.runningSumsByYear;
+    delete expenseSheet.finalSums;
 
     return (
         <div /*key={linearIncome.key}*/> {/*TODO Does not render key*/}
             <Chart
-                series = {[
-                    {
-                        data: job.sumIncomeByYear
-                    }
-                ]}
+                series = {expenseSheet.graphRunningSumObject}
                 type="bar"
                 height={chartHeight}
                 options = {{
+                    /*                    plotOptions: {
+                                            bar: {
+                                                horizontal: true,
+                                            }
+                                        },*/
                     colors: [
                         '#00aa00', '#880000', '#880000',
                     ],
+                    chart: {
+                        stacked: true,
+                    },
                     xaxis: {
-                        categories: job.yearsNumbered
-                        ,
-
+                        categories: expenseSheet.yearsNumbered
                     }
                 }}
             />
         </div>
     );
 }
-
-
