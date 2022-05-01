@@ -19,7 +19,7 @@ export function ExpenseSumDonutChart({expenseSheet}) {
                     colors: [
                         '#00aa00', '#880000', '#880000',
                     ],
-                    labels: expenseSheet.label,
+                    labels: expenseSheet.graphSumEachExpenseObjectForDonut[0].name,
                 }}
             />
         </>

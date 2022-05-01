@@ -132,13 +132,14 @@ class ExpenseDataHandler {
         sheet.graphSumEachExpenseObjectForDonut = [];
 
         let x = {};
+        x.name = [];
+        x.data = [];
 
         for (let i = 0; i < sheet.numberOfEntries; i++){
-            x.data = [];
-            x.data[i] = (sheet.calculatedAmount[i] * (sheet.endYears - sheet.beginYears +1));
-            x.name = [];
+            x.data[i] = (sheet.calculatedAmount[i] * (sheet.endYears[i] - sheet.beginYears[i] +1));
             x.name[i] = sheet.label[i];
         }
+
         sheet.graphSumEachExpenseObjectForDonut[0] = x;
         return sheet;
     }

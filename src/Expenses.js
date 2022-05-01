@@ -40,6 +40,7 @@ function ExpensesContainer(){
             />
             <ExpenseBarGraph
                 expensesState = {expensesState}
+                setExpensesState = {setExpensesState}
             />
         </>
     );
@@ -77,7 +78,7 @@ function ExpenseForms({expenseFieldsState}){
     return (
         <>
             <form>
-                <input type="text" className={"inputField jobtitle text-black mb-5 ml-2"} defaultValue={""}></input>
+                <input type="text" className={"inputField expenseTitle text-black mb-5 ml-2"} defaultValue={""}></input>
                 <span className={"ml-2"}>Title</span>
                 {printFormsToDom}
             </form>
@@ -89,7 +90,8 @@ function DeleteFieldButton({expenseFieldsState, setExpenseFieldState}){
 
     return(
         <>
-            <button onClick={(e) => {
+            <button className={"delete-entry-field"} onClick={(e) => {
+
                 e.preventDefault();
                 deleteField(expenseFieldsState, setExpenseFieldState);
             }}>Delete Entry</button>
@@ -108,7 +110,7 @@ function AddFieldButton({expenseFieldsState, setExpenseFieldState}){
 
     return(
         <>
-            <button onClick={(e) => {
+            <button className={"add-entry-field"} onClick={(e) => {
                 e.preventDefault();
                 addField(expenseFieldsState, setExpenseFieldState);
             }}>Add Entry</button>
@@ -125,9 +127,10 @@ function addField(expenseFieldsState, setExpenseFieldState){
 }
 
 function ResetFieldsButton({expenseFieldsState, setExpenseFieldsState}){
+    //TODO This should also set the values of existing fields to zero.
 
     return(
-        <button className={"ml-4"} onClick={(e) => {
+        <button className={"reset ml-4"} onClick={(e) => {
            e.preventDefault();
            resetAllFields(expenseFieldsState, setExpenseFieldsState);
         }}>Reset</button>
@@ -148,7 +151,7 @@ function resetAllFields(expenseFieldsState, setExpenseFieldsState){
 function SubmitButton({expensesState, setExpensesState}){
 
     return (
-        <button onClick={(e) => {
+        <button className={"submit"} onClick={(e) => {
             e.preventDefault();
             handleExpensesSubmission(expensesState, setExpensesState);
         }}>Submit</button>
@@ -167,7 +170,7 @@ function handleExpensesSubmission(expensesState, setExpensesState){
 }
 
 function getExpenseDataFromFields(){
-    let expenseTitle = document.querySelector(".jobtitle");
+    let expenseTitle = document.querySelector(".expenseTitle");
     let beginYears = document.querySelectorAll(".beginYear");
     let endYears = document.querySelectorAll(".endYear");
     let paymentFrequency = document.querySelectorAll(".frequency");
@@ -225,7 +228,17 @@ function updateExpensesState(expenseData, expensesState, setExpensesState){
 
 }
 
-function ExpenseBarGraph({expensesState}){
+function deleteSelectedSheet(key, expensesState, setExpensesState){
+    let combinedExpenseSheets = [];
+    combinedExpenseSheets = [...expensesState];
+
+    let keyPositionInArray = combinedExpenseSheets.findIndex(o => o.key === key);
+    combinedExpenseSheets.splice(keyPositionInArray, 1);
+
+    setExpensesState(combinedExpenseSheets);
+}
+
+function ExpenseBarGraph({expensesState, setExpensesState}){
 
     let printToDom = expensesState.map(expenseSheet => {
        return (
@@ -239,6 +252,12 @@ function ExpenseBarGraph({expensesState}){
                <ExpenseSumDonutChart
                    expenseSheet = {expenseSheet}
                />
+               <br />
+               <button onClick={((e) => {
+                    e.preventDefault();
+                    deleteSelectedSheet(expenseSheet.key, expensesState, setExpensesState);
+               })}>Delete Row</button>
+
            </>
        );
     });
