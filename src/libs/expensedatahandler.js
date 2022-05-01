@@ -26,7 +26,7 @@ class ExpenseDataHandler {
     convertMonthlyExpenseToYearly(sheet) {
         sheet.calculatedAmount = [];
         for (let i = 0; i < sheet.numberOfEntries; i++) {
-            if (sheet.frequency[i] == 'mo') {
+            if (sheet.frequency[i] === 'mo') {
                 sheet.calculatedAmount[i] = sheet.amount[i] * 12;
             } else {
                 sheet.calculatedAmount[i] = sheet.amount[i];
@@ -70,7 +70,6 @@ class ExpenseDataHandler {
 
     finalSumEachEntry(sheet) {
         sheet.finalSums = [];
-        let sum = 0;
 
         for (let i = 0; i < sheet.numberOfEntries; i++) {
             sheet.finalSums.push(sheet.runningSumsByYear[i].at(-1));
