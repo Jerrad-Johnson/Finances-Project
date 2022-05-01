@@ -23,8 +23,9 @@ export function DonutChart({sheetData}) {
 }
 
 
-export function TestChart({expenseSheet}) {
+export function ExpenseSumChart({expenseSheet}) {
 
+/*
     delete expenseSheet.amount;
     delete expenseSheet.beginYears;
     delete expenseSheet.endYears;
@@ -35,15 +36,14 @@ export function TestChart({expenseSheet}) {
     delete expenseSheet.numberOfEntries;
     delete expenseSheet.runningSumsByYear;
     delete expenseSheet.finalSums;
-
-    //console.log(testArr3);
+*/
 
     return (
         <div /*key={linearIncome.key}*/> {/*TODO Does not render key*/}
             <Chart
                 series = {expenseSheet.graphSumObject}
-                type="bar"
-                height={chartHeight}
+                type = "bar"
+                height = {chartHeight}
                 options = {{
 /*                    plotOptions: {
                         bar: {
@@ -68,7 +68,7 @@ export function TestChart({expenseSheet}) {
 
 export function ExpenseRunningSumChart({expenseSheet}) {
 
-    delete expenseSheet.amount;
+/*    delete expenseSheet.amount;
     delete expenseSheet.beginYears;
     delete expenseSheet.endYears;
     delete expenseSheet.calculatedAmount;
@@ -77,7 +77,7 @@ export function ExpenseRunningSumChart({expenseSheet}) {
     delete expenseSheet.label;
     delete expenseSheet.numberOfEntries;
     delete expenseSheet.runningSumsByYear;
-    delete expenseSheet.finalSums;
+    delete expenseSheet.finalSums;*/
 
     return (
         <div /*key={linearIncome.key}*/> {/*TODO Does not render key*/}

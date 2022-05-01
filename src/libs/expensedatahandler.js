@@ -20,7 +20,9 @@ class ExpenseDataHandler{
         sheet = this.createRunningSumObjectForGraph(sheet);
         sheet = this.createSumObjectForGraph(sheet);
         sheet = this.createYearsForSumEachEntry(sheet);
+        sheet = this.finalSumPerExpense(sheet);
         this.cc(sheet);
+
         return sheet;
     }
 
@@ -135,11 +137,57 @@ class ExpenseDataHandler{
                 } else if ((j+1) > sheet.endYears[i]) {
                     x.sumByYear.push(0);
                 } else {
-                    x.sumByYear.push(sheet.amount[i]);
+                    x.sumByYear.push(sheet.calculatedAmount[i]);
                 }
             }
             sheet.graphSumObject[i].data = x.sumByYear;
         }
+        return sheet;
+    }
+
+    finalSumPerExpense(sheet){
+        sheet.sumEachExpense = [];
+        //let x = {}
+        //let placeholder = {};
+        let x = {};
+
+        for (let i = 0; i < sheet.numberOfEntries; i++){
+            x.data = sheet.calculatedAmount[i];
+            x.name = sheet.label[i];
+            sheet.sumEachExpense[i] = x;
+            x = {}
+        }
+
+        this.cc(sheet);
+/*
+        for (let i = 0; i < sheet.numberOfEntries; i++){
+            sheet.sumEachExpense[i].data = [];
+            sheet.sumEachExpense[i].data = sheet.calculatedAmount[i];
+            //sheet.sumEachExpense[i].name = sheet.label[i];
+        }*/
+
+        //this.cc(sheet);
+
+
+
+/*        for (let i = 0; i < sheet.numberOfEntries; i++){
+            x.data = [];
+            x.name = [];
+                for (let j = 0; j < this.graphMaxNumberOfYears; j++) {
+                    if ((j + 1) < sheet.beginYears[i]) {
+                    } else if ((j+1) > sheet.endYears[i]) {
+                    } else if (x.data[i] == undefined) {
+                        x.data[i] = 0;
+                        x.data[i] = +sheet.amount[i];
+                    } else {
+                        x.data[i] = +x.data[i] + +sheet.amount[i];
+                    }
+                }
+            x.name = sheet.label[i];
+            sheet.sumEachExpense[i] = Object.assign({}, x);
+            this.cc(sheet)
+        }
+        */
         return sheet;
     }
 }
