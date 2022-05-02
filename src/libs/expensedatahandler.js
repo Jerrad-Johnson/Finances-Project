@@ -23,7 +23,7 @@ class ExpenseDataHandler {
         return sheet;
     }
 
-    convertMonthlyExpenseToYearly(sheet) {
+    convertMonthlyExpenseToYearly(sheet) { //TODO Rename function or refactor
         sheet.calculatedAmount = [];
         for (let i = 0; i < sheet.numberOfEntries; i++) {
             if (sheet.frequency[i] === 'mo') {
@@ -49,7 +49,6 @@ class ExpenseDataHandler {
     runningSumEachEntry(sheet) {
         sheet.runningSumsByYear = []
         let placeholder = [];
-
 
         for (let i = 0; i < sheet.numberOfEntries; i++) {
             for (let j = 0; j < this.graphMaxNumberOfYears; j++) {

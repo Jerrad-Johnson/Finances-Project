@@ -2,6 +2,8 @@ import {useState} from "react";
 import {ExpenseRunningSumBarChart, ExpenseSumBarChart, ExpenseSumDonutChart} from "./graphs/ExpenseGraphs";
 import {SubmitButton, DeleteSheetButton} from "./components/ExpensesGraphs";
 import {DeleteFieldButton, ExpenseForms, AddFieldButton, ResetFieldsButton} from "./components/ExpensesForms";
+
+export var expenseGraphContainerKey = 0;
 //let cc = console.log;
 
 function Expenses(){
@@ -33,7 +35,7 @@ function Expenses(){
                 expenseFieldsState = {expenseFieldsState}
                 setExpenseFieldsState = {setExpenseFieldsState}
             />
-            <ExpenseBarGraph
+            <ExpenseGraphs
                 expensesState = {expensesState}
                 setExpensesState = {setExpensesState}
             />
@@ -42,16 +44,16 @@ function Expenses(){
 }
 
 
-function ExpenseBarGraph({expensesState, setExpensesState}){
+function ExpenseGraphs({expensesState, setExpensesState}){
 
     let printToDom = expensesState.map(expenseSheet => {
        return (
-           <>
+           <div key={expenseGraphContainerKey}>
                <ExpenseSumBarChart
                    expenseSheet = {expenseSheet}
                />
                <ExpenseRunningSumBarChart
-                    expenseSheet = {expenseSheet}
+                   expenseSheet = {expenseSheet}
                />
                <ExpenseSumDonutChart
                    expenseSheet = {expenseSheet}
@@ -61,9 +63,8 @@ function ExpenseBarGraph({expensesState, setExpensesState}){
                    expensesState = {expensesState}
                    setExpensesState = {setExpensesState}
                />
+           </div>
 
-
-           </>
        );
     });
 

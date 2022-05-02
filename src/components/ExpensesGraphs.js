@@ -1,12 +1,17 @@
 import ExpenseDataHandler from "../libs/expensedatahandler";
+import {expenseGraphContainerKey} from "../Expenses";
+
 var expenseSheetKey = 0;
 
+
 export function SubmitButton({expensesState, setExpensesState}){
+
 
     return (
         <button className={"submit"} onClick={(e) => {
             e.preventDefault();
             handleExpensesSubmission(expensesState, setExpensesState);
+            expenseGraphContainerKey++;
         }}>Submit</button>
     );
 }

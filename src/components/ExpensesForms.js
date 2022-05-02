@@ -45,7 +45,6 @@ export function DeleteFieldButton({expenseFieldsState, setExpenseFieldState}){
     return(
         <>
             <button className={"delete-entry-field"} onClick={(e) => {
-
                 e.preventDefault();
                 deleteField(expenseFieldsState, setExpenseFieldState);
             }}>Delete Entry</button>
