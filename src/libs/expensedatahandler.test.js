@@ -76,7 +76,6 @@ test('Check createSumObjectForGraph', () => {
    }];
 
    expect(getKey(expensehandler.createSumObjectForGraph(sheet), "graphSumObject")).toEqual(expected);
-
 });
 
 test("Check createYearsForSumEachEntry", () => {

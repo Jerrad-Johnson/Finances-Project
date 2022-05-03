@@ -142,5 +142,4 @@ class ExpenseDataHandler {
     }
 }
 
-
 export default ExpenseDataHandler;

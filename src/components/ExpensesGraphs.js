@@ -1,8 +1,9 @@
 import ExpenseDataHandler from "../libs/expensedatahandler";
 import {expenseGraphContainerKey} from "../Expenses";
+import {isNumeric} from "./jobssharedfunctions";
 
 var expenseSheetKey = 0;
-
+let cc = console.log;
 
 export function SubmitButton({expensesState, setExpensesState}){
 
@@ -11,20 +12,34 @@ export function SubmitButton({expensesState, setExpensesState}){
         <button className={"submit"} onClick={(e) => {
             e.preventDefault();
             handleExpensesSubmission(expensesState, setExpensesState);
-            expenseGraphContainerKey++;
+            //expenseGraphContainerKey++; //TODO Fix this
         }}>Submit</button>
     );
 }
 
 function handleExpensesSubmission(expensesState, setExpensesState){
-    let expenseData = getExpenseDataFromFields();
-    // error check fn
-    expenseData = runCalculationsOnExpenseData(expenseData);
-    expenseData = addKeyToSheet(expenseData);
-    updateExpensesState(expenseData, expensesState, setExpensesState);
+
+    try {
+        let expenseData = getExpenseDataFromFields();
+
+        if (expenseData.pass == true) {
+            expenseData = checkSubmissionData(expenseData);
+        }
+
+        if (expenseData.pass == true) {
+            expenseData = runCalculationsOnExpenseData(expenseData);
+        }
+
+        expenseData = addKeyToSheet(expenseData);
+        updateExpensesState(expenseData, expensesState, setExpensesState);
+    } catch (err) {
+        console.log(err);
+        return;
+    }
 }
 
 function getExpenseDataFromFields(){
+    //TODO Error checking
     let expenseTitle = document.querySelector(".expenseTitle");
     let beginYears = document.querySelectorAll(".beginYear");
     let endYears = document.querySelectorAll(".endYear");
@@ -53,8 +68,37 @@ function getExpenseDataFromFields(){
         expenseData.amount.push(+e.value)
     });
     expenseLabel.forEach(e => {
-        expenseData.label.push(e.value)
+        if (e.value === (undefined || "")){
+            throw new Error("Please enter a label for every expense.");
+            expenseData.pass = false;
+        } else {
+            expenseData.label.push(e.value)
+        }
     });
+
+    expenseData.pass = true;
+    return expenseData;
+}
+
+function checkSubmissionData(expenseData){
+    let length = expenseData.beginYears.length;
+
+    if (expenseData.expenseSheetTitle == (undefined || '')){
+        throw new Error("Please enter a title.");
+        expenseData.pass = false;
+    }
+
+    for (let i = 0; i < length; i++){
+        if (expenseData.beginYears[i] > expenseData.endYears[i]) {
+            throw new Error("End year must be later than or the same year as the begin year.");
+            expenseData.pass = false;
+        }
+        if (!isNumeric(expenseData.amount[i])){
+            throw new Error("Please enter a number in every expense amount/value field.");
+            expenseData.pass = false;
+        }
+    }
+
     return expenseData;
 }
 
@@ -71,6 +115,7 @@ function addKeyToSheet(expenseData){
 
 function updateExpensesState(expenseData, expensesState, setExpensesState){
     let combinedExpenseSheets;
+
     if (expensesState.length !== 0){
         combinedExpenseSheets = [...[expenseData], ...expensesState];
         setExpensesState(combinedExpenseSheets);
