@@ -70,7 +70,6 @@ function getExpenseDataFromFields(){
     expenseLabel.forEach(e => {
         if (e.value === (undefined || "")){
             throw new Error("Please enter a label for every expense.");
-            expenseData.pass = false;
         } else {
             expenseData.label.push(e.value)
         }
@@ -80,22 +79,20 @@ function getExpenseDataFromFields(){
     return expenseData;
 }
 
-function checkSubmissionData(expenseData){
+export function checkSubmissionData(expenseData){
     let length = expenseData.beginYears.length;
 
     if (expenseData.expenseSheetTitle == (undefined || '')){
-        throw new Error("Please enter a title.");
         expenseData.pass = false;
+        throw new Error("Please enter a title.");
     }
 
     for (let i = 0; i < length; i++){
         if (expenseData.beginYears[i] > expenseData.endYears[i]) {
             throw new Error("End year must be later than or the same year as the begin year.");
-            expenseData.pass = false;
         }
         if (!isNumeric(expenseData.amount[i])){
             throw new Error("Please enter a number in every expense amount/value field.");
-            expenseData.pass = false;
         }
     }
 
@@ -107,7 +104,7 @@ function runCalculationsOnExpenseData(expenseData){
     return dataToBeReturned.beginCalculations();
 }
 
-function addKeyToSheet(expenseData){
+export function addKeyToSheet(expenseData){
     expenseData.key = expenseSheetKey;
     expenseSheetKey++;
     return expenseData;
