@@ -1,5 +1,8 @@
+import {useState} from "react";
 import Investmentdatahandler from "./libs/investmentdatahandler";
 import {createArrayWithNumberOfYearsToGraph} from "./components/jobssharedfunctions";
+
+let cc = console.log;
 
 function Investments(){
     return (
@@ -9,35 +12,51 @@ function Investments(){
     );
 }
 
-var formLength = [0];
-
 export function FormContainer(){
+    let [formLengthState, setFormLengthState] = useState([0]);
+    let [investmentsState, setInvestmentsState] = useState();
+
     return (
         <div id="formcontainer">
             <form>
                 <br />
-                <input type="text" className={"inputfield investmentstitle"}/> Title
+                Note that the graphed values do not include adjustment for inflation or taxes and are correct only as relative values, but are highly inaccurate as absolute values. The appropriate adjustments will be made on the final page.
                 <br />
                 <br />
-                <InvestmentForms />
+                <input type="text" className={"inputfield investmentstitle ml-2"}/> Title
+                <br />
+                <br />
+                <InvestmentForms
+                    formLengthState = {formLengthState}
+                />
+                <AddInvestmentFieldButton
+                    formLengthState = {formLengthState}
+                    setFormLengthState = {setFormLengthState}
+                />
+                &nbsp;
+                <DeleteInvestmentFieldButton
+                    formLengthState = {formLengthState}
+                    setFormLengthState = {setFormLengthState}
+                />
             </form>
         </div>
     );
 }
 
-function InvestmentForms(){
+function InvestmentForms({formLengthState}){
     let lengthOfGraphInYears = createArrayWithNumberOfYearsToGraph();
 
-    let optionElements = lengthOfGraphInYears.map(entry => {
-        return(
-            <option value={entry} key={entry}>{entry}</option>
-        );
-    });
+    let optionElements = getOptionElements(lengthOfGraphInYears);
+    let optionElementsForReinvesting = getOptionElementsForReinvesting(lengthOfGraphInYears);
 
-        let printToDom = formLength.map((e, index) => {
+        let printToDom = formLengthState.map((e, index) => {
         return (
-            <>
-                <input type="text" className={"inputfield amount"}></input>
+            <div key={index}>
+                <hr />
+                <br />
+                <input type="text" className={"inputfield amount mb-8 ml-2"}></input> Label for This Investment
+
+                <br />
 
                 <select className={"yearBegin ml-2 text-black"}>
                     {optionElements}
@@ -48,15 +67,17 @@ function InvestmentForms(){
                 </select> Withdraw
 
                 <select className={"yearCeaseReinvesting ml-2 text-black"}>
-                    {optionElements}
+                    {optionElementsForReinvesting}
                 </select> Cease Reinvesting
 
                 <br />
 
-                <input type="text" className={"inputfield percentreturn w-8"}></input>Percent Return &nbsp;
-                <input type="text" className={"inputfield percentpull w-8"}></input>Percent Pull
+                <input type="text" className={"inputfield percentreturn w-8 ml-2"}></input>&nbsp; Expected Percent Return &nbsp;
+                <input type="text" className={"inputfield percentpull w-8"}></input>&nbsp; Percent Pull Each Year (from return)
+                <br />
+                <br />
 
-            </>
+            </div>
         );
     });
 
@@ -65,6 +86,66 @@ function InvestmentForms(){
             {printToDom}
         </>
     );
+}
+
+function getOptionElements(lengthOfGraphInYears){
+    let optionElements = lengthOfGraphInYears.map(entry => {
+        return(
+            <option value={entry} key={entry}>{entry}</option>
+        );
+    });
+
+    return optionElements;
+}
+
+function getOptionElementsForReinvesting(lengthOfGraphInYears){
+    let optionElementsForReinvesting = []
+
+    lengthOfGraphInYears.forEach((e) => {
+        optionElementsForReinvesting.push(e);
+    });
+    optionElementsForReinvesting = ["Never", ...optionElementsForReinvesting];
+
+    optionElementsForReinvesting = optionElementsForReinvesting.map(entry => {
+        return(
+            <option value={entry} key={entry}>{entry}</option>
+        );
+    });
+
+    return optionElementsForReinvesting;
+}
+
+function AddInvestmentFieldButton({formLengthState, setFormLengthState}){
+
+    return (
+        <button onClick={(e) => {
+           e.preventDefault();
+           addInvestmentField(formLengthState, setFormLengthState);
+        }}>Add Field</button>
+    );
+}
+
+function addInvestmentField(formLengthState, setFormLengthState){
+    let newFormLength = [...formLengthState];
+    newFormLength.push(newFormLength.length);
+
+    setFormLengthState(newFormLength);
+}
+
+function DeleteInvestmentFieldButton({formLengthState, setFormLengthState}){
+    return (
+        <button onClick={(e) => {
+            e.preventDefault();
+            deleteInvestmentField(formLengthState, setFormLengthState);
+        }}>Delete Field</button>
+    );
+}
+
+function deleteInvestmentField(formLengthState, setFormLengthState){
+    let newFormLength = [...formLengthState];
+    newFormLength.pop();
+
+    setFormLengthState(newFormLength);
 }
 
 export default Investments;
