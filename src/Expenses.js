@@ -3,8 +3,11 @@ import {ExpenseRunningSumBarChart, ExpenseSumBarChart, ExpenseSumDonutChart} fro
 import {SubmitButton, DeleteSheetButton} from "./components/ExpensesGraphs";
 import {DeleteFieldButton, ExpenseForms, AddFieldButton, ResetFieldsButton} from "./components/ExpensesForms";
 
-export var expenseGraphContainerKey = 0;
-//let cc = console.log;
+let expenseSheetKey = 0;
+
+function incrementExpenseSheetKey(){
+    expenseSheetKey++;
+}
 
 function Expenses(){
 
@@ -46,9 +49,9 @@ function Expenses(){
 
 function ExpenseGraphs({expensesState, setExpensesState}){
 
-    let printToDom = expensesState.map(expenseSheet => {
+    let printToDom = expensesState.map((expenseSheet, index) => {
        return (
-           <div key={expenseGraphContainerKey}>
+           <div key={index}>
                <ExpenseSumBarChart
                    expenseSheet = {expenseSheet}
                />

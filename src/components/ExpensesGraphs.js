@@ -1,23 +1,20 @@
 import ExpenseDataHandler from "../libs/expensedatahandler";
-import {expenseGraphContainerKey} from "../Expenses";
 import {isNumeric} from "./jobssharedfunctions";
 
-var expenseSheetKey = 0;
-let cc = console.log;
+let sheetObjectKey = 0;
 
 export function SubmitButton({expensesState, setExpensesState}){
-
-
     return (
         <button className={"submit"} onClick={(e) => {
             e.preventDefault();
+
             handleExpensesSubmission(expensesState, setExpensesState);
-            //expenseGraphContainerKey++; //TODO Fix this
+            sheetObjectKey++;
         }}>Submit</button>
     );
 }
 
-function handleExpensesSubmission(expensesState, setExpensesState){
+export function handleExpensesSubmission(expensesState, setExpensesState){
 
     try {
         let expenseData = getExpenseDataFromFields();
@@ -105,8 +102,7 @@ function runCalculationsOnExpenseData(expenseData){
 }
 
 export function addKeyToSheet(expenseData){
-    expenseData.key = expenseSheetKey;
-    expenseSheetKey++;
+    expenseData.key = sheetObjectKey;
     return expenseData;
 }
 
