@@ -47,7 +47,7 @@ function InvestmentForms({formLengthState}){
     let lengthOfGraphInYears = createArrayWithNumberOfYearsToGraph();
 
     let optionElements = getOptionElements(lengthOfGraphInYears);
-    let optionElementsForReinvesting = getOptionElementsForReinvesting(lengthOfGraphInYears);
+    let optionElementsIncludingNever = getOptionElementsForReinvesting(lengthOfGraphInYears);
 
         let printToDom = formLengthState.map((e, index) => {
         return (
@@ -55,6 +55,13 @@ function InvestmentForms({formLengthState}){
                 <hr />
                 <br />
                 <input type="text" className={"inputfield amount mb-8 ml-2"}></input> Label for This Investment
+                &nbsp;
+                <select className={"presetinvestment + e"}>
+                    <option></option>
+                    <option>TBA</option>
+                    {/*TODO Map options*/}
+                </select> Choose Preset Values
+
 
                 <br />
 
@@ -63,11 +70,11 @@ function InvestmentForms({formLengthState}){
                 </select> Invest
 
                 <select className={"yearWithdraw ml-2 text-black mb-10"}>
-                    {optionElements}
+                    {optionElementsIncludingNever}
                 </select> Withdraw
 
                 <select className={"yearCeaseReinvesting ml-2 text-black"}>
-                    {optionElementsForReinvesting}
+                    {optionElementsIncludingNever}
                 </select> Cease Reinvesting
 
                 <br />
@@ -99,20 +106,20 @@ function getOptionElements(lengthOfGraphInYears){
 }
 
 function getOptionElementsForReinvesting(lengthOfGraphInYears){
-    let optionElementsForReinvesting = []
+    let optionElementsIncludingNever = []
 
     lengthOfGraphInYears.forEach((e) => {
-        optionElementsForReinvesting.push(e);
+        optionElementsIncludingNever.push(e);
     });
-    optionElementsForReinvesting = ["Never", ...optionElementsForReinvesting];
+    optionElementsIncludingNever = ["Never", ...optionElementsIncludingNever];
 
-    optionElementsForReinvesting = optionElementsForReinvesting.map(entry => {
+    optionElementsIncludingNever = optionElementsIncludingNever.map(entry => {
         return(
             <option value={entry} key={entry}>{entry}</option>
         );
     });
 
-    return optionElementsForReinvesting;
+    return optionElementsIncludingNever;
 }
 
 function AddInvestmentFieldButton({formLengthState, setFormLengthState}){
@@ -147,5 +154,8 @@ function deleteInvestmentField(formLengthState, setFormLengthState){
 
     setFormLengthState(newFormLength);
 }
+
+
+
 
 export default Investments;
