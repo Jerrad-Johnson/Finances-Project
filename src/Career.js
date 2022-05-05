@@ -34,9 +34,13 @@ function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
 
     return (
         <>
+            <br />
+            Linear-progression Job
+            <br />
+
             <form>
-                <input type={"text"} id={"linearJobTitle"}></input> Job Title <br />
-                <input type={"text"} id={"incomeImmediate"}></input> Starting income
+                <input type={"text"} id={"linearJobTitle"} className={"mb-5 mt-5"}></input> Job Title <br />
+                <input type={"text"} id={"incomeImmediate"} className={"mb-5"}></input> Starting income
                 <CreateOptionForms
                     formTitle={"Year income begins"}
                     id={"yearIncomeBegins"}
@@ -62,8 +66,12 @@ function SteppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
 
     return (
         <>
+            <hr className={"mb-5"}/>
+            Stepped-progression job
+            <br />
+            <br />
             <form>
-                <input type={"text"} id={"steppedJobTitle"}></input> Job Title <br/>
+                <input type={"text"} id={"steppedJobTitle"} className={"mb-5"}></input> Job Title <br/>
 
                 <ListJobIncomeForms
                     steppedIncomeFormState={steppedIncomeFormState}
@@ -116,7 +124,7 @@ export function CreateSteppedJobIncomeForm({id}){
 function CreateOptionForms({formTitle, id, steppedIncomeFormKey}) {
     const numberOfYearsToGraph = createArrayWithNumberOfYearsToGraph();
     const optionElements = numberOfYearsToGraph.map((year) =>
-        ( <option value={year} key={year}></option> )
+        ( <option value={year} key={year}>{year}</option> )
     );
 
     // TODO Remove ID
