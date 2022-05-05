@@ -13,6 +13,7 @@ class InvestmentDataHandler {
         this.calculateReturnPercentageAfterPullPercentage(this.investmentData);
         this.calculatePercentageReinvested(this.investmentData);
         this.createArraysOfPercentagesByYear(this.investmentData);
+        this.calculateCorrectEntriesToReinvestmentYears(this.investmentData);
         this.calculateReturn(this.investmentData);
         return this.investmentData;
     }
@@ -45,6 +46,43 @@ class InvestmentDataHandler {
         return investmentData;
     }
 
+    calculateCorrectEntriesToReinvestmentYears(investmentData){
+        /*let ceaseReinvestingYear = undefined;
+        let withdrawInvestmentYear = undefined;
+
+        if (investmentData.yearsCeaseReinvesting !== "Never"
+        && investmentData.yearsWithdraw !== "Never"){
+            ceaseReinvesting = investmentData.
+        }*/
+
+        let firstStop = [];
+
+        for (let i = 0; i < this.length; i++){
+            if (investmentData.yearsCeaseReinvesting[i] !== "Never"
+            && investmentData.yearsWithdraw[i] !== "Never"){
+                firstStop[i] = investmentData.yearsCeaseReinvesting[i];
+            } else {
+                firstStop[i] = investmentData.yearsCeaseReinvesting[i];
+            }
+
+        }
+
+        /*
+
+
+        for (let i = 0; i < this.length; i++){
+            let firstStop = this.graphMaxNumberOfYears;
+
+
+
+            if (){
+
+            }
+
+            for (let j = investmentData.yearsBegin[i]; j < firstStop; j++)
+
+            }*/
+    }
 
 
     calculateReturn(investmentData){
