@@ -41,11 +41,13 @@ function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
             <form>
                 <input type={"text"} id={"linearJobTitle"} className={"mb-5 mt-5"}></input> Job Title <br />
                 <input type={"text"} id={"incomeImmediate"} className={"mb-5"}></input> Starting income
+                &nbsp;
                 <CreateOptionForms
                     formTitle={"Year income begins"}
                     id={"yearIncomeBegins"}
                 />
                 <input type={"text"} id={"incomeCeiling"}></input> Ceiling income
+                &nbsp;
                 <CreateOptionForms
                     formTitle={"Year to income ceiling"}
                     id={"yearToIncomeCeiling"}

@@ -16,6 +16,7 @@ function Expenses(){
 
     return (
         <>
+            <br />
             <ExpenseForms
                 expenseFieldsState = {expenseFieldsState}
             />
