@@ -38,6 +38,10 @@ export function FormContainer(){
                     formLengthState = {formLengthState}
                     setFormLengthState = {setFormLengthState}
                 />
+                <SubmitButton
+                    investmentsState = {investmentsState}
+                    setInvestmentsState = {setInvestmentsState}
+                />
             </form>
         </div>
     );
@@ -155,7 +159,26 @@ function deleteInvestmentField(formLengthState, setFormLengthState){
     setFormLengthState(newFormLength);
 }
 
+function SubmitButton({investmentsState, setInvestmentsState}){
 
+    return (
+      <>
+          <br />
+          <button className={"submitinvestment"} onClick={(e) => {
+            e.preventDefault();
+            handleSubmission(investmentsState, setInvestmentsState);
+          }}>Submit</button>
+      </>
+    );
+}
+
+function handleSubmission(investmentsState, setInvestmentsState){
+    getInvestmentDataFromFields();
+}
+
+function getInvestmentDataFromFields(){
+
+}
 
 
 export default Investments;
