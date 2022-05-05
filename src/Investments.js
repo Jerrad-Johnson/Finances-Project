@@ -1,6 +1,6 @@
 import {useState} from "react";
 import Investmentdatahandler from "./libs/investmentdatahandler";
-import {createArrayWithNumberOfYearsToGraph} from "./components/jobssharedfunctions";
+import {createArrayWithNumberOfYearsToGraph, isNumeric} from "./components/jobssharedfunctions";
 
 let cc = console.log;
 
@@ -175,7 +175,11 @@ function SubmitButton({investmentsState, setInvestmentsState}){
 }
 
 function handleSubmission(investmentsState, setInvestmentsState){
-    getInvestmentDataFromFields();
+    let investmentData = getInvestmentDataFromFields();
+    investmentData = checkInvestmentData(investmentData);
+    cc(investmentData)
+    investmentData = runCalculationsOnInvestmentData(investmentData);
+    //updateInvestmentData(investmentData);
 }
 
 function getInvestmentDataFromFields(){
@@ -229,6 +233,73 @@ function getInvestmentDataFromFields(){
 
     return investmentData;
 }
+
+function checkInvestmentData(investmentData){
+
+    let length = investmentData.labels.length;
+
+    if (investmentData.title == '' || undefined){
+        throw new Error("Please enter a title.");
+    }
+
+    for (let i = 0; i < length; i++){
+        if (investmentData.labels[i] == '' || undefined){
+            throw new Error("Please enter a label for every investment.");
+            return;
+        }
+    }
+
+    for (let i = 0; i < length; i++){
+        if (investmentData.amounts[i] == '' || undefined) {
+            throw new Error("Please enter an amount to invest in every investment field.");
+        } else if (!isNumeric(investmentData.amounts[i])) {
+            throw new Error("Please use only numbers in the amount field.");
+            return;
+        }
+    }
+
+    for (let i = 0; i < length; i++){
+        if (investmentData.yearsBegin[i] >= investmentData.yearsWithdraw[i]){
+            throw new Error("Please do not withdraw your money until at least one year after investing it.");
+            return;
+        } else if (investmentData.yearsBegin[i] >= investmentData.yearsCeaseReinvesting[i]) {
+            throw new Error("Please do not stop reinvesting your money until at least one year after investing it.");
+            return;
+        }
+
+        if (investmentData.yearsWithdraw[i] !== "Never") {
+            if (investmentData.yearsWithdraw[i] <= investmentData.yearsCeaseReinvesting[i]) {
+                throw new Error("Please do not withdraw your money before you stop reinvesting it.");
+                return;
+            }
+        }
+    }
+
+    for (let i = 0; i < length; i++){
+        if (!isNumeric(investmentData.percentReturn)){
+            throw new Error("Please enter a number in the percent return field.");
+            return;
+        }
+    }
+
+    for (let i = 0; i < length; i++){
+        if (!isNumeric(investmentData.percentToPull)){
+            throw new Error("Please enter a number in the percent-to-pull field.");
+            return;
+        }
+    }
+
+    return investmentData;
+}
+
+function runCalculationsOnInvestmentData(){
+
+}
+
+function updateInvestmentData(){
+
+}
+
 
 
 export default Investments;
