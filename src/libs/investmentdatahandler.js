@@ -5,7 +5,8 @@ class InvestmentDataHandler {
     }
 
     beginCalculations(){
-        //this.investmentData =
+
+        return this.investmentData;
     }
 
 

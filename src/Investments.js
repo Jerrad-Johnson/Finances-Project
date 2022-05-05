@@ -177,8 +177,8 @@ function SubmitButton({investmentsState, setInvestmentsState}){
 function handleSubmission(investmentsState, setInvestmentsState){
     let investmentData = getInvestmentDataFromFields();
     investmentData = checkInvestmentData(investmentData);
-    cc(investmentData)
     investmentData = runCalculationsOnInvestmentData(investmentData);
+    cc(investmentData)
     //updateInvestmentData(investmentData);
 }
 
@@ -208,11 +208,11 @@ function getInvestmentDataFromFields(){
     });
 
     amounts.forEach((e) => {
-        investmentData.amounts.push(e.value);
+        investmentData.amounts.push(+e.value);
     });
 
     yearsBegin.forEach((e) => {
-        investmentData.yearsBegin.push(e.value);
+        investmentData.yearsBegin.push(+e.value);
     });
 
     yearsWithdraw.forEach((e) => {
@@ -224,11 +224,11 @@ function getInvestmentDataFromFields(){
     });
 
     percentReturn.forEach((e) => {
-        investmentData.percentReturn.push(e.value);
+        investmentData.percentReturn.push(+e.value);
     });
 
     percentToPull.forEach((e) => {
-        investmentData.percentToPull.push(e.value);
+        investmentData.percentToPull.push(+e.value);
     });
 
     return investmentData;
@@ -268,7 +268,8 @@ function checkInvestmentData(investmentData){
         }
 
         if (investmentData.yearsWithdraw[i] !== "Never") {
-            if (investmentData.yearsWithdraw[i] <= investmentData.yearsCeaseReinvesting[i]) {
+            if (investmentData.yearsWithdraw[i] <= investmentData.yearsCeaseReinvesting[i]
+            && investmentData.yearsCeaseReinvesting[i] != "Never") {
                 throw new Error("Please do not withdraw your money before you stop reinvesting it.");
                 return;
             }
@@ -276,14 +277,14 @@ function checkInvestmentData(investmentData){
     }
 
     for (let i = 0; i < length; i++){
-        if (!isNumeric(investmentData.percentReturn)){
+        if (!isNumeric(investmentData.percentReturn[i])){
             throw new Error("Please enter a number in the percent return field.");
             return;
         }
     }
 
     for (let i = 0; i < length; i++){
-        if (!isNumeric(investmentData.percentToPull)){
+        if (!isNumeric(investmentData.percentToPull[i])){
             throw new Error("Please enter a number in the percent-to-pull field.");
             return;
         }
@@ -292,8 +293,10 @@ function checkInvestmentData(investmentData){
     return investmentData;
 }
 
-function runCalculationsOnInvestmentData(){
-
+function runCalculationsOnInvestmentData(investmentData){
+    let calculator = new Investmentdatahandler(investmentData);
+    investmentData = calculator.beginCalculations();
+    return investmentData;
 }
 
 function updateInvestmentData(){
