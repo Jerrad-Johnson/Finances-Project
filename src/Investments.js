@@ -58,7 +58,9 @@ function InvestmentForms({formLengthState}){
             <div key={index}>
                 <hr />
                 <br />
-                <input type="text" className={"inputfield amount mb-8 ml-2"}></input> Label for This Investment
+                <input type="text" className={"inputfield label mb-8 ml-2"}></input> Label for This Investment
+                <br />
+                <input type="text" className={"inputfield amount mb-8 ml-2 w-20"}></input> Amount to Invest
                 &nbsp;
                 <select className={"presetinvestment + e"}>
                     <option></option>
@@ -177,7 +179,55 @@ function handleSubmission(investmentsState, setInvestmentsState){
 }
 
 function getInvestmentDataFromFields(){
+    let title = document.querySelector(".investmentstitle");
+    let labels = document.querySelectorAll(".label");
+    let amounts = document.querySelectorAll(".amount");
+    let yearsBegin = document.querySelectorAll(".yearBegin");
+    let yearsWithdraw = document.querySelectorAll(".yearWithdraw");
+    let yearsCeaseReinvesting = document.querySelectorAll(".yearCeaseReinvesting");
+    let percentReturn = document.querySelectorAll(".percentreturn");
+    let percentToPull = document.querySelectorAll(".percentpull");
 
+    let investmentData = {
+        title: title.value,
+        labels: [],
+        amounts: [],
+        yearsBegin: [],
+        yearsWithdraw: [],
+        yearsCeaseReinvesting: [],
+        percentReturn: [],
+        percentToPull: [],
+    };
+
+    labels.forEach((e) => {
+        investmentData.labels.push(e.value);
+    });
+
+    amounts.forEach((e) => {
+        investmentData.amounts.push(e.value);
+    });
+
+    yearsBegin.forEach((e) => {
+        investmentData.yearsBegin.push(e.value);
+    });
+
+    yearsWithdraw.forEach((e) => {
+        investmentData.yearsWithdraw.push(e.value);
+    });
+
+    yearsCeaseReinvesting.forEach((e) => {
+        investmentData.yearsCeaseReinvesting.push(e.value);
+    });
+
+    percentReturn.forEach((e) => {
+        investmentData.percentReturn.push(e.value);
+    });
+
+    percentToPull.forEach((e) => {
+        investmentData.percentToPull.push(e.value);
+    });
+
+    return investmentData;
 }
 
 
