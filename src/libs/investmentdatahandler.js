@@ -6,12 +6,14 @@ class InvestmentDataHandler {
         this.investmentData = investmentData;
         this.graphMaxNumberOfYears = new jobdatahandler().graphMaxNumberOfYears;
         this.cc = console.log;
+        this.length = this.investmentData.labels.length;
     }
 
     beginCalculations(){
-        this.calculateReturnPercentageAfterPullPercentage(this.investmentData)
-        this.calculatePercentageReinvested(this.investmentData)
-        this.calculateReturn(this.investmentData)
+        this.calculateReturnPercentageAfterPullPercentage(this.investmentData);
+        this.calculatePercentageReinvested(this.investmentData);
+        this.createArraysOfPercentagesByYear(this.investmentData);
+        this.calculateReturn(this.investmentData);
         return this.investmentData;
     }
 
@@ -31,8 +33,21 @@ class InvestmentDataHandler {
         return investmentData;
     }
 
-    calculateReturn(investmentData){
+    createArraysOfPercentagesByYear(investmentData){
+        investmentData.arrayReinvestPercentagesByYear = [];
+        investmentData.arrayPullPercentagesByYear = [];;
 
+        for (let i = 0; i < this.length; i++){
+            investmentData.arrayPullPercentagesByYear[i] = Array(this.graphMaxNumberOfYears);
+            investmentData.arrayReinvestPercentagesByYear[i] = Array(this.graphMaxNumberOfYears);
+        }
+
+        return investmentData;
+    }
+
+
+
+    calculateReturn(investmentData){
 
         return investmentData;
     }
