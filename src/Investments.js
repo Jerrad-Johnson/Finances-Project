@@ -287,6 +287,9 @@ function checkInvestmentData(investmentData){
         if (!isNumeric(investmentData.percentToPull[i])){
             throw new Error("Please enter a number in the percent-to-pull field.");
             return;
+        } else if (isNumeric(investmentData.percentToPull[i]) && investmentData.percentToPull[i] > 100){
+            throw new Error("Percent to pull cannot be greater than 100.");
+            return;
         }
     }
 
