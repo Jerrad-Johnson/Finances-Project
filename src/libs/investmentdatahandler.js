@@ -20,17 +20,25 @@ class InvestmentDataHandler {
 
 
     calculateReturnPercentageAfterPullPercentage(investmentData){
-        investmentData.percentagePulled = 0;
+        investmentData.percentagePulled = [];
 
-        if (investmentData.percentToPull != 0){
-            investmentData.percentagePulled = investmentData.percentReturn * (investmentData.percentToPull * .01);
+        for (let i = 0; i < this.length; i++) {
+            if (investmentData.percentToPull[i] !== 0) {
+                investmentData.percentagePulled[i] = investmentData.percentReturn[i] * (investmentData.percentToPull[i] * .01);
+            } else {
+                investmentData.percentagePulled[i] = 0;
+            }
         }
 
         return investmentData;
     }
 
     calculatePercentageReinvested(investmentData){
-        investmentData.percentageReinvested = investmentData.percentReturn - investmentData.percentagePulled;
+        investmentData.percentageReinvested = [];
+
+        for (let i = 0; i < this.length; i++){
+            investmentData.percentageReinvested[i] = investmentData.percentReturn[i] - investmentData.percentagePulled[i];
+        }
         return investmentData;
     }
 

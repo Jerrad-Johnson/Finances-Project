@@ -179,7 +179,7 @@ function handleSubmission(investmentsState, setInvestmentsState){
     investmentData = castInvestmentData(investmentData);
     investmentData = checkInvestmentData(investmentData);
     investmentData = runCalculationsOnInvestmentData(investmentData);
-    //cc(investmentData)
+    cc(investmentData)
     //updateInvestmentData(investmentData);
 }
 
