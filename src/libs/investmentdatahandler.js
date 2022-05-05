@@ -47,21 +47,19 @@ class InvestmentDataHandler {
     }
 
     calculateCorrectEntriesToReinvestmentYears(investmentData){
-        let results = [];
-
-        this.cc(investmentData)
+        let withdrawOrReinvest = [];
 
         for (let i = 0; i < this.length; i++){
             if (investmentData.yearsCeaseReinvesting[i] === "Never" && investmentData.yearsWithdraw[i] === "Never"){
-                results[i] = "Neither";
+                withdrawOrReinvest[i] = "Neither";
             } else if (investmentData.yearsWithdraw[i] === "Never"){
-                results[i] = "Reinvest"
+                withdrawOrReinvest[i] = "Reinvest"
             } else if (investmentData.yearsCeaseReinvesting[i] === "Never"){
-                results[i] = "Withdraw"
+                withdrawOrReinvest[i] = "Withdraw"
             }
         }
 
-        this.cc(results);
+        investmentData.withdrawOrReinvest = withdrawOrReinvest;
 
         return investmentData;
     }

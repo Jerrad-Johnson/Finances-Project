@@ -296,8 +296,11 @@ function checkInvestmentData(investmentData){
     }
 
     for (let i = 0; i < length; i++){
-        if (!isNumeric(investmentData.percentReturn[i])){
+        if (!isNumeric(investmentData.percentReturn[i]) || investmentData.percentReturn[i] === ''){
             throw new Error("Please enter a number in the percent return field.");
+            return;
+        } else if (investmentData.percentReturn[i] === 0){
+            throw new Error("Please enter a number greater than 0 in the expected return percentage field.");
             return;
         }
     }
