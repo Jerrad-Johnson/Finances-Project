@@ -47,41 +47,23 @@ class InvestmentDataHandler {
     }
 
     calculateCorrectEntriesToReinvestmentYears(investmentData){
-        /*let ceaseReinvestingYear = undefined;
-        let withdrawInvestmentYear = undefined;
+        let results = [];
 
-        if (investmentData.yearsCeaseReinvesting !== "Never"
-        && investmentData.yearsWithdraw !== "Never"){
-            ceaseReinvesting = investmentData.
-        }*/
-
-        let firstStop = [];
+        this.cc(investmentData)
 
         for (let i = 0; i < this.length; i++){
-            if (investmentData.yearsCeaseReinvesting[i] !== "Never"
-            && investmentData.yearsWithdraw[i] !== "Never"){
-                firstStop[i] = investmentData.yearsCeaseReinvesting[i];
-            } else {
-                firstStop[i] = investmentData.yearsCeaseReinvesting[i];
+            if (investmentData.yearsCeaseReinvesting[i] === "Never" && investmentData.yearsWithdraw[i] === "Never"){
+                results[i] = "Neither";
+            } else if (investmentData.yearsWithdraw[i] === "Never"){
+                results[i] = "Reinvest"
+            } else if (investmentData.yearsCeaseReinvesting[i] === "Never"){
+                results[i] = "Withdraw"
             }
-
         }
 
-        /*
+        this.cc(results);
 
-
-        for (let i = 0; i < this.length; i++){
-            let firstStop = this.graphMaxNumberOfYears;
-
-
-
-            if (){
-
-            }
-
-            for (let j = investmentData.yearsBegin[i]; j < firstStop; j++)
-
-            }*/
+        return investmentData;
     }
 
 

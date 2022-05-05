@@ -176,9 +176,10 @@ function SubmitButton({investmentsState, setInvestmentsState}){
 
 function handleSubmission(investmentsState, setInvestmentsState){
     let investmentData = getInvestmentDataFromFields();
+    investmentData = castInvestmentData(investmentData);
     investmentData = checkInvestmentData(investmentData);
     investmentData = runCalculationsOnInvestmentData(investmentData);
-    cc(investmentData)
+    //cc(investmentData)
     //updateInvestmentData(investmentData);
 }
 
@@ -234,8 +235,24 @@ function getInvestmentDataFromFields(){
     return investmentData;
 }
 
-function checkInvestmentData(investmentData){
+function castInvestmentData(investmentData){
+    let length = investmentData.labels.length;
 
+    for (let i = 0; i < length; i++) {
+        if (investmentData.yearsWithdraw[i] !== "Never") {
+            investmentData.yearsWithdraw[i] = +investmentData.yearsWithdraw[i];
+        }
+
+        if (investmentData.yearsCeaseReinvesting[i] !== "Never") {
+            investmentData.yearsCeaseReinvesting[i] = +investmentData.yearsCeaseReinvesting[i];
+        }
+    }
+
+    return investmentData;
+}
+
+
+function checkInvestmentData(investmentData){
     let length = investmentData.labels.length;
 
     if (investmentData.title == '' || undefined){
@@ -268,8 +285,10 @@ function checkInvestmentData(investmentData){
         }
 
         if (investmentData.yearsWithdraw[i] !== "Never") {
-            if (investmentData.yearsWithdraw[i] <= investmentData.yearsCeaseReinvesting[i]
-            && investmentData.yearsCeaseReinvesting[i] != "Never") {
+            if ((investmentData.yearsWithdraw[i] < investmentData.yearsCeaseReinvesting[i])
+            && (investmentData.yearsCeaseReinvesting[i] !== "Never")) {
+
+                cc(investmentData.yearsWithdraw[i] + " " + investmentData.yearsCeaseReinvesting[i])
                 throw new Error("Please do not withdraw your money before you stop reinvesting it.");
                 return;
             }
