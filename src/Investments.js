@@ -323,12 +323,15 @@ function checkInvestmentData(investmentData){
         }
     }
 
-    for (let i = 0; i < length; i++){
-        if (!isNumeric(investmentData.additionalInvestment[i]) && investmentData.additionalInvestment[i] !== ''){
+    for (let i = 0; i < length; i++) {
+        if (!isNumeric(investmentData.additionalInvestment[i])) {
             throw new Error("Please only enter numbers in the additional investment field.");
             return;
-
-            //TODO Add year checks; cannot add addl money if within 1yr of begin
+        } else if ((investmentData.yearsBegin[i] >= investmentData.yearsWithdraw[i] - 1) && investmentData.additionalInvestment !== 0) {
+            throw new Error("You can input additional investments only if there's at least a two-year gap from the year of your first investment to the year that you withdraw your money.");
+            return;
+        } else if (investmentData.yearsBegin[i] >= 14 && investmentData.additionalInvestment[i] === 0) {
+            throw new Error("The year of your first investment must be before 14 if you'd like to have additional investments.");
         }
     }
 
