@@ -12,7 +12,7 @@ class InvestmentDataHandler {
     beginCalculations(){
         this.calculateReturnPercentageAfterPullPercentage(this.investmentData);
         this.calculatePercentageReinvested(this.investmentData);
-        this.createArraysOfPercentagesByYear(this.investmentData);
+        this.createArraysOfZero(this.investmentData);
         this.calculateCorrectArrayEntriesByYears(this.investmentData);
         return this.investmentData;
     }
@@ -41,16 +41,29 @@ class InvestmentDataHandler {
         return investmentData;
     }
 
-    createArraysOfPercentagesByYear(investmentData){
+    createArraysOfZero(investmentData){
         investmentData.arrayReinvestPercentagesByYear = [];
-        investmentData.arrayPullPercentagesByYear = [];;
+        investmentData.arrayPullPercentagesByYear = [];
+        investmentData.arrayRunningInvestmentValue = [];
+        investmentData.arrayPullValueByYear = [];
+        investmentData.arrayRunningPullSums = [];
+        investmentData.arrayRunningInvestmentIncrease = [];
+
 
         for (let i = 0; i < this.length; i++){
             investmentData.arrayPullPercentagesByYear[i] = []
             investmentData.arrayReinvestPercentagesByYear[i] = [];
+            investmentData.arrayRunningInvestmentValue[i] = [];
+            investmentData.arrayPullValueByYear[i] = [];
+            investmentData.arrayRunningPullSums[i] = [];
+            investmentData.arrayRunningInvestmentIncrease[i] = [];
             for (let j = 0; j < this.graphMaxNumberOfYears; j++) {
                 investmentData.arrayPullPercentagesByYear[i][j] = 0;
                 investmentData.arrayReinvestPercentagesByYear[i][j] = 0;
+                investmentData.arrayRunningInvestmentValue[i][j] = 0;
+                investmentData.arrayPullValueByYear[i][j] = 0;
+                investmentData.arrayRunningPullSums[i][j] = 0;
+                investmentData.arrayRunningInvestmentIncrease[i][j] = 0;
             }
         }
 
@@ -102,6 +115,8 @@ class InvestmentDataHandler {
 
         return investmentData;
     }
+
+
 
 }
 
