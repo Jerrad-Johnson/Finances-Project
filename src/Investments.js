@@ -58,9 +58,11 @@ function InvestmentForms({formLengthState}){
             <div key={index}>
                 <hr />
                 <br />
-                <input type="text" className={"inputfield label mb-8 ml-2"}></input> Label for This Investment
-                <br />
+                <input type="text" className={"inputfield label mb-8 ml-2 w-30"}></input> Label
+                &nbsp;
                 <input type="text" className={"inputfield amount mb-8 ml-2 w-20"}></input> Amount to Invest
+                <br />
+                <input type="text" className={"inputfield additionalinvestment mb-8 ml-2 w-20"}></input> Yearly Add'l Investment
                 &nbsp;
                 <select className={"presetinvestment + e"}>
                     <option></option>
@@ -92,7 +94,7 @@ function InvestmentForms({formLengthState}){
 
             </div>
         );
-    });
+    }); //TODO Limit "Invest" max year to graphMax -1
 
     return (
         <>
@@ -192,6 +194,7 @@ function getInvestmentDataFromFields(){
     let yearsCeaseReinvesting = document.querySelectorAll(".yearCeaseReinvesting");
     let percentReturn = document.querySelectorAll(".percentreturn");
     let percentToPull = document.querySelectorAll(".percentpull");
+    let additionalInvestment = document.querySelectorAll(".additionalinvestment");
 
     let investmentData = {
         title: title.value,
@@ -202,6 +205,7 @@ function getInvestmentDataFromFields(){
         yearsCeaseReinvesting: [],
         percentReturn: [],
         percentToPull: [],
+        additionalInvestment: [],
     };
 
     labels.forEach((e) => {
@@ -230,6 +234,10 @@ function getInvestmentDataFromFields(){
 
     percentToPull.forEach((e) => {
         investmentData.percentToPull.push(+e.value);
+    });
+
+    additionalInvestment.forEach((e) => {
+        investmentData.additionalInvestment.push(+e.value);
     });
 
     return investmentData;
@@ -312,6 +320,15 @@ function checkInvestmentData(investmentData){
         } else if (isNumeric(investmentData.percentToPull[i]) && investmentData.percentToPull[i] > 100){
             throw new Error("Percent to pull cannot be greater than 100.");
             return;
+        }
+    }
+
+    for (let i = 0; i < length; i++){
+        if (!isNumeric(investmentData.additionalInvestment[i]) && investmentData.additionalInvestment[i] !== ''){
+            throw new Error("Please only enter numbers in the additional investment field.");
+            return;
+
+            //TODO Add year checks; cannot add addl money if within 1yr of begin
         }
     }
 
