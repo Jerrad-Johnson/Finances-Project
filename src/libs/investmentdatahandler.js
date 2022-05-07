@@ -17,6 +17,7 @@ class InvestmentDataHandler {
         this.runningInvestmentValue(this.investmentData);
         this.investmentIncreaseByYear(this.investmentData);
         this.pullValueByYear(this.investmentData);
+        this.runningPullSum(this.investmentData);
         return this.investmentData;
     }
 
@@ -190,6 +191,18 @@ class InvestmentDataHandler {
         }
 
         return investmentData;
+    }
+
+    runningPullSum(investmentData){
+        for (let i = 0; i < this.length; i++) {
+            let sum = 0;
+            for (let j = 1; j < this.graphMaxNumberOfYears; j++) {
+                if (investmentData.arrayPullValueByYear[i][j] != 0){
+                    sum = sum + investmentData.arrayPullValueByYear[i][j];
+                    investmentData.arrayRunningPullSums[i][j] = sum;
+                }
+            }
+        }
     }
 
 }
