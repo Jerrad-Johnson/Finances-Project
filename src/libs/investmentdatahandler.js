@@ -15,6 +15,8 @@ class InvestmentDataHandler {
         this.createArraysOfZero(this.investmentData);
         this.calculateCorrectArrayEntriesByYears(this.investmentData);
         this.runningInvestmentValue(this.investmentData);
+        this.investmentIncreaseByYear(this.investmentData);
+        this.pullValueByYear(this.investmentData);
         return this.investmentData;
     }
 
@@ -48,7 +50,7 @@ class InvestmentDataHandler {
         investmentData.arrayRunningInvestmentValue = [];
         investmentData.arrayPullValueByYear = [];
         investmentData.arrayRunningPullSums = [];
-        investmentData.arrayRunningInvestmentIncrease = [];
+        investmentData.arrayInvestmentIncreaseByYear = [];
 
 
         for (let i = 0; i < this.length; i++){
@@ -57,14 +59,14 @@ class InvestmentDataHandler {
             investmentData.arrayRunningInvestmentValue[i] = [];
             investmentData.arrayPullValueByYear[i] = [];
             investmentData.arrayRunningPullSums[i] = [];
-            investmentData.arrayRunningInvestmentIncrease[i] = [];
+            investmentData.arrayInvestmentIncreaseByYear[i] = [];
             for (let j = 0; j < this.graphMaxNumberOfYears; j++) {
                 investmentData.arrayPullPercentagesByYear[i][j] = 0;
                 investmentData.arrayReinvestPercentagesByYear[i][j] = 0;
                 investmentData.arrayRunningInvestmentValue[i][j] = 0;
                 investmentData.arrayPullValueByYear[i][j] = 0;
                 investmentData.arrayRunningPullSums[i][j] = 0;
-                investmentData.arrayRunningInvestmentIncrease[i][j] = 0;
+                investmentData.arrayInvestmentIncreaseByYear[i][j] = 0;
             }
         }
 
@@ -162,10 +164,29 @@ class InvestmentDataHandler {
             }
         }
 
+
         return investmentData;
     }
 
+    investmentIncreaseByYear(investmentData){
+        for (let i = 0; i < this.length; i++){
+            for (let j = 1; j < this.graphMaxNumberOfYears; j++){
+                let x = investmentData.arrayRunningInvestmentValue[i][j] - investmentData.arrayRunningInvestmentValue[i][j-1];
 
+                if (x >= 0) {
+                    investmentData.arrayInvestmentIncreaseByYear[i][j] = x;
+                }
+            }
+        }
+
+        return investmentData;
+    }
+
+    pullValueByYear(investmentData){
+
+
+        return investmentData;
+    }
 
 }
 
