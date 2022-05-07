@@ -18,6 +18,7 @@ class InvestmentDataHandler {
         this.investmentIncreaseByYear(this.investmentData);
         this.pullValueByYear(this.investmentData);
         this.runningPullSum(this.investmentData);
+        this.withdrawlValue(this.investmentData);
         return this.investmentData;
     }
 
@@ -52,7 +53,6 @@ class InvestmentDataHandler {
         investmentData.arrayPullValueByYear = [];
         investmentData.arrayRunningPullSums = [];
         investmentData.arrayInvestmentIncreaseByYear = [];
-
 
         for (let i = 0; i < this.length; i++){
             investmentData.arrayPullPercentagesByYear[i] = []
@@ -89,8 +89,6 @@ class InvestmentDataHandler {
             }
         }
 
-
-
         investmentData.withdrawOrReinvest = withdrawOrReinvest;
 
         for (let i = 0; i < this.length; i++){
@@ -125,7 +123,6 @@ class InvestmentDataHandler {
     }
 
     runningInvestmentValue(investmentData){
-
         for (let i = 0; i < this.length; i++) {
             if (investmentData.withdrawOrReinvest[i] == "Neither") {
                 for (let j = investmentData.yearsBegin[i]; j < this.graphMaxNumberOfYears; j++) {
@@ -155,7 +152,7 @@ class InvestmentDataHandler {
                 }
             } else if (investmentData.withdrawOrReinvest[i] == "Withdraw") {
                 for (let j = investmentData.yearsBegin[i]; j < this.graphMaxNumberOfYears; j++) {
-                    if (j < investmentData.yearsWithdraw) {
+                    if (j < investmentData.yearsWithdraw[i]) {
                         investmentData.arrayRunningInvestmentValue[i][j] = (investmentData.arrayRunningInvestmentValue[i][j - 1]
                             * (investmentData.percentageReinvested[i] / 100)) + investmentData.arrayRunningInvestmentValue[i][j - 1];
                     } else {
@@ -164,7 +161,6 @@ class InvestmentDataHandler {
                 }
             }
         }
-
 
         return investmentData;
     }
@@ -205,6 +201,27 @@ class InvestmentDataHandler {
         }
     }
 
+    withdrawlValue(investmentData){
+        investmentData.withdrawlValue = [];
+        let greatest = 0;
+
+
+        for (let i = 0; i < this.length; i++) {
+            if (investmentData.withdrawOrReinvest[i] === "Withdraw"){
+                for (let j = this.graphMaxNumberOfYears; j > 0; j--){
+                    if (greatest < investmentData.arrayRunningInvestmentValue[i][j]){
+                        greatest = investmentData.arrayRunningInvestmentValue[i][j]
+                    }
+                }
+                investmentData.withdrawlValue[i] = +greatest;
+                greatest = 0;
+            }
+        }
+
+        return investmentData;
+    }
+
+    //TODO Show withdrawl as income.
 }
 
 export default InvestmentDataHandler;
