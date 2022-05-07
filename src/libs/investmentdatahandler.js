@@ -183,7 +183,11 @@ class InvestmentDataHandler {
     }
 
     pullValueByYear(investmentData){
-
+        for (let i = 0; i < this.length; i++) {
+            for (let j = 1; j < this.graphMaxNumberOfYears; j++) {
+                investmentData.arrayPullValueByYear[i][j] = investmentData.arrayRunningInvestmentValue[i][j] * (investmentData.arrayPullPercentagesByYear[i][j] / 100);
+            }
+        }
 
         return investmentData;
     }
