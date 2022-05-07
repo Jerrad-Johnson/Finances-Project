@@ -14,6 +14,7 @@ class InvestmentDataHandler {
         this.calculatePercentageReinvested(this.investmentData);
         this.createArraysOfZero(this.investmentData);
         this.calculateCorrectArrayEntriesByYears(this.investmentData);
+        this.runningInvestmentValue(this.investmentData);
         return this.investmentData;
     }
 
@@ -79,15 +80,19 @@ class InvestmentDataHandler {
             } else if (investmentData.yearsWithdraw[i] !== "Never" && investmentData.yearsCeaseReinvesting[i] !== "Never"){
                 withdrawOrReinvest[i] = "Both";
             } else if (investmentData.yearsWithdraw[i] === "Never"){
-                withdrawOrReinvest[i] = "Reinvest";
+                withdrawOrReinvest[i] = "CeaseReinvest";
             } else if (investmentData.yearsCeaseReinvesting[i] === "Never"){
                 withdrawOrReinvest[i] = "Withdraw";
             }
         }
 
+
+
         investmentData.withdrawOrReinvest = withdrawOrReinvest;
 
         for (let i = 0; i < this.length; i++){
+            investmentData.arrayRunningInvestmentValue[i][investmentData.yearsBegin[i]-1] = +investmentData.amounts[i];
+
             if (investmentData.withdrawOrReinvest[i] == "Neither") {
                 for (let j = investmentData.yearsBegin[i]; j < this.graphMaxNumberOfYears; j++) {
                     investmentData.arrayReinvestPercentagesByYear[i][j] = investmentData.percentageReinvested[i];
@@ -100,7 +105,7 @@ class InvestmentDataHandler {
                         investmentData.arrayPullPercentagesByYear[i][k] = investmentData.percentagePulled[i];
                     }
                 }
-            } else if (investmentData.withdrawOrReinvest[i] == "Reinvest") {
+            } else if (investmentData.withdrawOrReinvest[i] == "CeaseReinvest") {
                 for (let j = investmentData.yearsBegin[i]; j < investmentData.yearsCeaseReinvesting[i]; j++){
                     investmentData.arrayReinvestPercentagesByYear[i][j] = investmentData.percentageReinvested[i];
                     investmentData.arrayPullPercentagesByYear[i][j] = investmentData.percentagePulled[i];
@@ -109,6 +114,50 @@ class InvestmentDataHandler {
                 for (let j = investmentData.yearsBegin[i]; j < investmentData.yearsWithdraw[i]; j++) {
                     investmentData.arrayReinvestPercentagesByYear[i][j] = investmentData.percentageReinvested[i];
                     investmentData.arrayPullPercentagesByYear[i][j] = investmentData.percentagePulled[i];
+                }
+            }
+        }
+
+        return investmentData;
+    }
+
+    runningInvestmentValue(investmentData){
+
+        for (let i = 0; i < this.length; i++) {
+            if (investmentData.withdrawOrReinvest[i] == "Neither") {
+                for (let j = investmentData.yearsBegin[i]; j < this.graphMaxNumberOfYears; j++) {
+                    investmentData.arrayRunningInvestmentValue[i][j] = (investmentData.arrayRunningInvestmentValue[i][j - 1]
+                        * (investmentData.percentageReinvested[i] / 100)) + investmentData.arrayRunningInvestmentValue[i][j - 1];
+                }
+            } else if (investmentData.withdrawOrReinvest[i] == "Both") {
+                for (let j = investmentData.yearsBegin[i]; j < investmentData.yearsCeaseReinvesting[i]; j++) {
+                    investmentData.arrayRunningInvestmentValue[i][j] = (investmentData.arrayRunningInvestmentValue[i][j - 1]
+                        * (investmentData.percentageReinvested[i] / 100)) + investmentData.arrayRunningInvestmentValue[i][j - 1];
+                }
+                for (let k = investmentData.yearsCeaseReinvesting[i]; k < this.graphMaxNumberOfYears; k++) {
+                    if (k < investmentData.yearsWithdraw[i]){
+                        investmentData.arrayRunningInvestmentValue[i][k] = (investmentData.arrayRunningInvestmentValue[i][k-1]);
+                    } else {
+                        investmentData.arrayRunningInvestmentValue[i][k] = 0;
+                    }
+                }
+            } else if (investmentData.withdrawOrReinvest[i] == "CeaseReinvest") {
+                for (let j = investmentData.yearsBegin[i]; j < this.graphMaxNumberOfYears; j++) {
+                    if (j < investmentData.yearsCeaseReinvesting[i]) {
+                        investmentData.arrayRunningInvestmentValue[i][j] = (investmentData.arrayRunningInvestmentValue[i][j - 1]
+                            * (investmentData.percentageReinvested[i] / 100)) + investmentData.arrayRunningInvestmentValue[i][j - 1];
+                    } else {
+                        investmentData.arrayRunningInvestmentValue[i][j] = (investmentData.arrayRunningInvestmentValue[i][j - 1]);
+                    }
+                }
+            } else if (investmentData.withdrawOrReinvest[i] == "Withdraw") {
+                for (let j = investmentData.yearsBegin[i]; j < this.graphMaxNumberOfYears; j++) {
+                    if (j < investmentData.yearsWithdraw) {
+                        investmentData.arrayRunningInvestmentValue[i][j] = (investmentData.arrayRunningInvestmentValue[i][j - 1]
+                            * (investmentData.percentageReinvested[i] / 100)) + investmentData.arrayRunningInvestmentValue[i][j - 1];
+                    } else {
+                        investmentData.arrayRunningInvestmentValue[i][j] = (investmentData.arrayRunningInvestmentValue[i][j - 1] = 0);
+                    }
                 }
             }
         }
