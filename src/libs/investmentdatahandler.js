@@ -151,13 +151,15 @@ class InvestmentDataHandler {
                     }
                 }
             } else if (investmentData.withdrawOrReinvest[i] == "Withdraw") {
+
                 for (let j = investmentData.yearsBegin[i]; j < this.graphMaxNumberOfYears; j++) {
                     if (j < investmentData.yearsWithdraw[i]) {
                         investmentData.arrayRunningInvestmentValue[i][j] = (investmentData.arrayRunningInvestmentValue[i][j - 1]
                             * (investmentData.percentageReinvested[i] / 100)) + investmentData.arrayRunningInvestmentValue[i][j - 1];
                     } else {
-                        investmentData.arrayRunningInvestmentValue[i][j] = (investmentData.arrayRunningInvestmentValue[i][j - 1] = 0);
+                        investmentData.arrayRunningInvestmentValue[i][j] = 0;
                     }
+
                 }
             }
         }
@@ -203,18 +205,10 @@ class InvestmentDataHandler {
 
     withdrawlValue(investmentData){
         investmentData.withdrawlValue = [];
-        let greatest = 0;
-
 
         for (let i = 0; i < this.length; i++) {
             if (investmentData.withdrawOrReinvest[i] === "Withdraw"){
-                for (let j = this.graphMaxNumberOfYears; j > 0; j--){
-                    if (greatest < investmentData.arrayRunningInvestmentValue[i][j]){
-                        greatest = investmentData.arrayRunningInvestmentValue[i][j]
-                    }
-                }
-                investmentData.withdrawlValue[i] = +greatest;
-                greatest = 0;
+                investmentData.withdrawlValue[i] = investmentData.arrayRunningInvestmentValue[i][investmentData.yearsWithdraw[i] -1];
             }
         }
 
