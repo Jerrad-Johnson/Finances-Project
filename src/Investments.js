@@ -1,6 +1,7 @@
 import {useState} from "react";
 import Investmentdatahandler from "./libs/investmentdatahandler";
 import {createArrayWithNumberOfYearsToGraph, isNumeric} from "./components/jobssharedfunctions";
+import {InvestmentRunningValueBarChart} from "./graphs/InvestmentGraphs";
 
 let cc = console.log;
 
@@ -14,7 +15,7 @@ function Investments(){
 
 export function FormContainer(){
     let [formLengthState, setFormLengthState] = useState([0]);
-    let [investmentsState, setInvestmentsState] = useState();
+    let [investmentsState, setInvestmentsState] = useState([]);
 
     return (
         <div id="formcontainer">
@@ -42,6 +43,10 @@ export function FormContainer(){
                     investmentsState = {investmentsState}
                     setInvestmentsState = {setInvestmentsState}
                 />
+                <InvestmentGraph
+                    investmentsState = {investmentsState}
+                />
+
             </form>
         </div>
     );
@@ -102,6 +107,32 @@ function InvestmentForms({formLengthState}){
         </>
     );
 }
+
+function InvestmentGraph({investmentsState}){
+
+    let printToDom = [];
+
+    printToDom = investmentsState.map((e, key) => {
+            return (
+                <>
+                    <InvestmentRunningValueBarChart
+                        key = {key}
+                        investmentSheet = {e}
+                    />
+                </>
+            );
+        });
+
+    cc(printToDom)
+
+
+    return  (
+        <>
+            {printToDom}
+        </>
+    );
+}
+
 
 function getOptionElements(lengthOfGraphInYears){
     let optionElements = lengthOfGraphInYears.map(entry => {
