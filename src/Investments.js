@@ -181,8 +181,7 @@ function handleSubmission(investmentsState, setInvestmentsState){
     investmentData = castInvestmentData(investmentData);
     investmentData = checkInvestmentData(investmentData);
     investmentData = runCalculationsOnInvestmentData(investmentData);
-    cc(investmentData)
-    //updateInvestmentData(investmentData);
+    addInvestment(investmentData, investmentsState, setInvestmentsState);
 }
 
 function getInvestmentDataFromFields(){
@@ -344,9 +343,18 @@ function runCalculationsOnInvestmentData(investmentData){
     return investmentData;
 }
 
-function updateInvestmentData(){
+function addInvestment(investmentData, investmentsState, setInvestmentsState){
+    let newState = [];
+    investmentData = [investmentData];
 
+    if (investmentsState !== undefined) {
+        newState = [...investmentData, ...investmentsState];
+    }
+
+    setInvestmentsState(newState);
 }
+
+
 
 
 
