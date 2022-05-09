@@ -269,22 +269,26 @@ class InvestmentDataHandler {
    }
 
    roundArrayNumbers(investmentData){
-       investmentData.arrayAdditionalInvestment[0] = applyRounding(investmentData.arrayAdditionalInvestment[0]);
-       investmentData.arrayInvestmentIncreaseByYear[0] = applyRounding(investmentData.arrayInvestmentIncreaseByYear[0]);
-       investmentData.arrayPullValueByYear[0] = applyRounding(investmentData.arrayPullValueByYear[0]);
-       investmentData.arrayRunningPullSums[0] = applyRounding(investmentData.arrayRunningPullSums[0]);
-       investmentData.arrayRunningInvestmentValue[0] = applyRounding(investmentData.arrayRunningInvestmentValue[0]);
 
-        function applyRounding(arr){
+       investmentData.arrayAdditionalInvestment = applyRounding(investmentData.arrayAdditionalInvestment);
+       investmentData.arrayInvestmentIncreaseByYear = applyRounding(investmentData.arrayInvestmentIncreaseByYear);
+       investmentData.arrayPullValueByYear = applyRounding(investmentData.arrayPullValueByYear);
+       investmentData.arrayRunningInvestmentValue = applyRounding(investmentData.arrayRunningInvestmentValue);
+       investmentData.arrayRunningPullSums = applyRounding(investmentData.arrayRunningPullSums);
 
-            for (let i = 0; i < arr.length; i++){
-                arr[i] = Math.round(arr[i]);
-            }
+       investmentData.arrayRunningInvestmentValue = applyRounding(investmentData.arrayRunningInvestmentValue);
 
-            return arr;
-        }
 
-        this.cc(investmentData)
+
+       function applyRounding(arr){
+           for (let i = 0; i < arr.length; i++){
+               for (let j = 0; j < arr[i].length; j++){
+                   arr[i][j] = Math.round(arr[i][j]);
+               }
+           }
+           return arr;
+       }
+
         return investmentData;
    }
 }

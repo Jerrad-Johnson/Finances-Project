@@ -100,6 +100,7 @@ function InvestmentForms({formLengthState}){
             </div>
         );
     }); //TODO Limit "Invest" max year to graphMax -1
+    //TODO Add useEffect for "from Return"
 
     return (
         <>

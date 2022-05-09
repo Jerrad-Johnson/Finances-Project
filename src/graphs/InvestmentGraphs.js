@@ -22,16 +22,18 @@ export function InvestmentRunningValueBarChart({investmentSheet}) {
 
     return (
         <div>
+            <br />
+            Running Investment Value
             <Chart
                 series = {dataConverted}
                 type = "bar"
                 height = {chartHeight}
                 options = {{
-                    /*                    plotOptions: {
-                                            bar: {
-                                                horizontal: true,
-                                            }
-                                        },*/
+                /*plotOptions: {
+                    bar: {
+                        horizontal: true,
+                    }
+                },*/
                     colors: [
                         '#00aa00', '#880000', '#880000',
                     ],
