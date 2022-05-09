@@ -135,16 +135,24 @@ class InvestmentDataHandler {
                     for (let l = investmentData.yearsCeaseReinvesting[i]; l < investmentData.yearsWithdraw[i]; l++){
                         investmentData.arrayPullPercentagesByYear[i][l] = investmentData.percentReturn[i];
                     }
-
                 }
             } else if (investmentData.withdrawOrReinvest[i] == "CeaseReinvest") {
                 for (let j = investmentData.yearsBegin[i]; j < investmentData.yearsCeaseReinvesting[i]; j++){
                     investmentData.arrayReinvestPercentagesByYear[i][j] = investmentData.percentageReinvested[i];
                     investmentData.arrayPullPercentagesByYear[i][j] = investmentData.percentagePulled[i];
+                    this.cc(j)
+                }
+                for (let l = investmentData.yearsCeaseReinvesting[i]; l < investmentData.yearsWithdraw[i]; l++){
+                    investmentData.arrayPullPercentagesByYear[i][l] = investmentData.percentReturn[i];
                 }
 /*                for (let k = investmentData.yearsCeaseReinvesting[i]; k < investmentData.yearsWithdraw[i]; k++){
                     investmentData.arrayPullPercentagesByYear
                 }*/ //TODO Ensure that later in the script, Pull Percentage goes to 100 between reinvest and withdrawl periods.
+
+
+
+
+
             } else if (investmentData.withdrawOrReinvest[i] == "Withdraw") {
                 for (let j = investmentData.yearsBegin[i]; j < investmentData.yearsWithdraw[i]; j++) {
                     investmentData.arrayReinvestPercentagesByYear[i][j] = investmentData.percentageReinvested[i];
