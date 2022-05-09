@@ -16,7 +16,7 @@ class InvestmentDataHandler {
         this.createArraysOfZero(this.investmentData);
         this.addArrayOfNumberedYears(this.investmentData);
         this.withdrawOrReinvest(this.investmentData);
-        this.calculateCorrectArrayEntriesByYears(this.investmentData);
+        this.calculateValuesAcrossTheYears(this.investmentData);
         this.createArraysAdditionalInvestmentValues(this.investmentData);
         this.runningInvestmentValue(this.investmentData);
         this.investmentIncreaseByYear(this.investmentData);
@@ -116,7 +116,7 @@ class InvestmentDataHandler {
         return investmentData;
     }
 
-    calculateCorrectArrayEntriesByYears(investmentData){
+    calculateValuesAcrossTheYears(investmentData){
         for (let i = 0; i < this.length; i++){
             investmentData.arrayRunningInvestmentValue[i][investmentData.yearsBegin[i]-1] = +investmentData.amounts[i];
 
