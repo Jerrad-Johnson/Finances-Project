@@ -37,6 +37,7 @@ export function ExpenseSumBarChart({expenseSheet}) {
     delete expenseSheet.runningSumsByYear;
     delete expenseSheet.finalSums; */
 
+    console.log(expenseSheet.graphSumObject)
 
     return (
         <div>

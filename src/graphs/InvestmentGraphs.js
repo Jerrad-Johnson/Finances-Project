@@ -4,28 +4,42 @@ import React from "react";
 let chartHeight = 350;
 let cc = console.log
 
-export function InvestmentRunningValueBarChart({investmentSheet}) {
-    let sheet = {};
-    sheet.data = investmentSheet.arrayRunningInvestmentValue;
-    sheet.categories = investmentSheet.yearsNumbered;
+function makeDataStackedChartCompatible(labels, dataArray){
+    let returnSheet = [];
 
+    for (let i = 0; i < labels.length; i++){
+        returnSheet[i] = {
+            data: dataArray[i],
+            name: labels[i],
+        }
+    }
+
+    return returnSheet;
+}
+
+export function InvestmentRunningValueBarChart({investmentSheet}) {
+    let dataConverted = makeDataStackedChartCompatible(investmentSheet.labels, investmentSheet.arrayRunningInvestmentValue);
 
     return (
         <div>
             <Chart
-                series = {[
-                    {
-                        data: sheet.data[0]
-                    }
-                ]}
-                type="bar"
-                height={chartHeight}
+                series = {dataConverted}
+                type = "bar"
+                height = {chartHeight}
                 options = {{
+                    /*                    plotOptions: {
+                                            bar: {
+                                                horizontal: true,
+                                            }
+                                        },*/
                     colors: [
                         '#00aa00', '#880000', '#880000',
                     ],
+                    chart: {
+                        stacked: true,
+                    },
                     xaxis: {
-                        categories: sheet.categories,
+                        categories: investmentSheet.yearsNumbered
                     }
                 }}
             />
