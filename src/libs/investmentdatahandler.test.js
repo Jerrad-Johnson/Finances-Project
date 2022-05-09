@@ -195,19 +195,35 @@ test("calculateValuesAcrossTheYears -- CeaseReinvest Cases", () => {
         "arrayPullPercentagesByYear")).toEqual(expectedReturn);
 });
 
-/*
-
 test("calculateValuesAcrossTheYears -- Withdraw Cases", () => {
-
     investmentData.arrayReinvestPercentagesByYear = resetArr();
     investmentData.arrayPullPercentagesByYear = resetArr();
     investmentData.withdrawOrReinvest = ["Withdraw", "Withdraw"];
+    investmentData.percentagePulled = [0, 5];
+    investmentData.yearsBegin = [1, 8];
+    investmentData.yearsWithdraw = [7, 15];
+    investmentData.yearsCeaseReinvesting = ["Never", "Never"];
     investmentData.percentageReinvested = [100, 5];
-    investmentData.yearsBegin = [1, 6];
-    investmentData.yearsWithdraw = [5, 15];
     let expectedReturn = [
-        [0, 100, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5]
+        [0, 100, 100, 100, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5]
     ];
+
+    expect(getKey(x.calculateValuesAcrossTheYears(investmentData),
+        "arrayReinvestPercentagesByYear")).toEqual(expectedReturn);
+
+    investmentData.arrayReinvestPercentagesByYear = resetArr();
+    investmentData.arrayPullPercentagesByYear = resetArr();
+    investmentData.yearsBegin = [1, 8];
+    investmentData.yearsWithdraw = [7, 15];
+    investmentData.percentageReinvested = [100, 5];
+    investmentData.percentagePulled = [0, 5];
+
+    expectedReturn = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5]
+    ];
+
+    expect(getKey(x.calculateValuesAcrossTheYears(investmentData),
+        "arrayPullPercentagesByYear")).toEqual(expectedReturn);
 });
-*/
