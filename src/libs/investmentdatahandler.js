@@ -133,7 +133,7 @@ class InvestmentDataHandler {
                     }
                 }
             } else if (investmentData.withdrawOrReinvest[i] == "CeaseReinvest") {
-                for (let j = investmentData.yearsBegin[i]; j < investmentData.yearsCeaseReinvesting[i]; j++){
+                for (let j = investmentData.yearsBegin[i]; j < investmentData.yearsCeaseReinvesting[i] -1; j++){
                     investmentData.arrayReinvestPercentagesByYear[i][j] = investmentData.percentageReinvested[i];
                     investmentData.arrayPullPercentagesByYear[i][j] = investmentData.percentagePulled[i];
                 }
@@ -144,7 +144,7 @@ class InvestmentDataHandler {
                 }
             }
         }
-
+        //this.cc(investmentData)
         return investmentData;
     }
 

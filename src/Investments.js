@@ -316,8 +316,8 @@ function checkInvestmentData(investmentData){
         if (investmentData.yearsBegin[i] >= investmentData.yearsWithdraw[i]){
             throw new Error("Please do not withdraw your money until at least one year after investing it.");
             return;
-        } else if (investmentData.yearsBegin[i] >= investmentData.yearsCeaseReinvesting[i]) {
-            throw new Error("Please do not stop reinvesting your money until at least one year after investing it.");
+        } else if (investmentData.yearsBegin[i] >= investmentData.yearsCeaseReinvesting[i] -1) {
+            throw new Error("Please do not stop reinvesting your money until at least two years after investing it.");
             return;
         }
 
