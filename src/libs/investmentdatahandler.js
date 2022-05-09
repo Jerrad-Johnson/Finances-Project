@@ -15,6 +15,7 @@ class InvestmentDataHandler {
         this.calculatePercentageReinvested(this.investmentData);
         this.createArraysOfZero(this.investmentData);
         this.addArrayOfNumberedYears(this.investmentData);
+        this.withdrawOrReinvest(this.investmentData);
         this.calculateCorrectArrayEntriesByYears(this.investmentData);
         this.createArraysAdditionalInvestmentValues(this.investmentData);
         this.runningInvestmentValue(this.investmentData);
@@ -96,7 +97,7 @@ class InvestmentDataHandler {
         return investmentData;
     }
 
-    calculateCorrectArrayEntriesByYears(investmentData){
+    withdrawOrReinvest(investmentData){
         let withdrawOrReinvest = [];
 
         for (let i = 0; i < this.length; i++){
@@ -112,7 +113,10 @@ class InvestmentDataHandler {
         }
 
         investmentData.withdrawOrReinvest = withdrawOrReinvest;
+        return investmentData;
+    }
 
+    calculateCorrectArrayEntriesByYears(investmentData){
         for (let i = 0; i < this.length; i++){
             investmentData.arrayRunningInvestmentValue[i][investmentData.yearsBegin[i]-1] = +investmentData.amounts[i];
 

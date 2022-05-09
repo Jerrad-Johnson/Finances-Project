@@ -91,7 +91,13 @@ test("addArrayOfNumberedYears", () => {
         .toEqual(expectedReturn);
 });
 
-test("calculateCorrectArrayEntriesByYears", () => {
+test("withdrawOrReinvest", () => {
+    investmentData.yearsCeaseReinvesting = ["Never", "Never"];
+    investmentData.yearsWithdraw = ["Never", undefined];
+    let expectedReturn = ["Neither", "Withdraw"];
+
+    expect(getKey(x.withdrawOrReinvest(investmentData), "withdrawOrReinvest")).toEqual(expectedReturn);
+
 
 });
 
