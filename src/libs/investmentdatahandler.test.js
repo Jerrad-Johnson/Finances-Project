@@ -105,7 +105,27 @@ test("withdrawOrReinvest", () => {
 
     expect(getKey(x.withdrawOrReinvest(investmentData), "withdrawOrReinvest"))
         .toEqual(expectedReturn);
-
 });
 
+test("calculateValuesAcrossTheYears", () => {
+    investmentData.withdrawOrReinvest = ["Neither", "Neither"];
+    investmentData.yearsBegin = [1, 14];
+    investmentData.percentageReinvested = [100, 5];
+    investmentData.percentagePulled = [0, 5];
+    investmentData.amounts = [500, 500];
+    let expectedReturn = [
+        [0, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5]
+    ];
 
+    expect(getKey(x.calculateValuesAcrossTheYears(investmentData),
+        "arrayReinvestPercentagesByYear")).toEqual(expectedReturn);
+
+    expectedReturn = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5]
+    ];
+
+    expect(getKey(x.calculateValuesAcrossTheYears(investmentData),
+        "arrayPullPercentagesByYear")).toEqual(expectedReturn);
+});
