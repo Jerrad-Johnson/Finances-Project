@@ -1,6 +1,7 @@
 import ExpenseDataHandler from "./expensedatahandler";
 import {getArrayAsString, getKey} from "../utilities/jest-supplements";
 
+
 var expensehandler = new ExpenseDataHandler();
 var sheet = {
     amount: [50, 1200, 800, 1500, 2000],

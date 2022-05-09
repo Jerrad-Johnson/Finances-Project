@@ -11,7 +11,7 @@ class InvestmentDataHandler {
     }
 
     beginCalculations(){
-        this.calculateReturnPercentageAfterPullPercentage(this.investmentData);
+        this.calculatePercentagePulled(this.investmentData);
         this.calculatePercentageReinvested(this.investmentData);
         this.createArraysOfZero(this.investmentData);
         this.addArrayOfNumberedYears(this.investmentData);
@@ -28,12 +28,13 @@ class InvestmentDataHandler {
     }
 
 
-    calculateReturnPercentageAfterPullPercentage(investmentData){
+    calculatePercentagePulled(investmentData){
         investmentData.percentagePulled = [];
 
         for (let i = 0; i < this.length; i++) {
             if (investmentData.percentToPull[i] !== 0) {
-                investmentData.percentagePulled[i] = investmentData.percentReturn[i] * (investmentData.percentToPull[i] * .01);
+                investmentData.percentagePulled[i] = investmentData.percentReturn[i]
+                    * (investmentData.percentToPull[i] * .01);
             } else {
                 investmentData.percentagePulled[i] = 0;
             }
@@ -46,7 +47,8 @@ class InvestmentDataHandler {
         investmentData.percentageReinvested = [];
 
         for (let i = 0; i < this.length; i++){
-            investmentData.percentageReinvested[i] = investmentData.percentReturn[i] - investmentData.percentagePulled[i];
+            investmentData.percentageReinvested[i] = investmentData.percentReturn[i]
+                - investmentData.percentagePulled[i];
         }
         return investmentData;
     }
@@ -275,10 +277,7 @@ class InvestmentDataHandler {
        investmentData.arrayPullValueByYear = applyRounding(investmentData.arrayPullValueByYear);
        investmentData.arrayRunningInvestmentValue = applyRounding(investmentData.arrayRunningInvestmentValue);
        investmentData.arrayRunningPullSums = applyRounding(investmentData.arrayRunningPullSums);
-
        investmentData.arrayRunningInvestmentValue = applyRounding(investmentData.arrayRunningInvestmentValue);
-
-
 
        function applyRounding(arr){
            for (let i = 0; i < arr.length; i++){

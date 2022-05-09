@@ -115,12 +115,12 @@ function InvestmentGraph({investmentsState}){
 
     printToDom = investmentsState.map((e, key) => {
             return (
-                <>
+                <div key={key}>
                     <InvestmentRunningValueBarChart
                         key = {key}
                         investmentSheet = {e}
                     />
-                </>
+                </div>
             );
         });
 
