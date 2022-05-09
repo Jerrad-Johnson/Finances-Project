@@ -93,11 +93,18 @@ test("addArrayOfNumberedYears", () => {
 
 test("withdrawOrReinvest", () => {
     investmentData.yearsCeaseReinvesting = ["Never", "Never"];
-    investmentData.yearsWithdraw = ["Never", undefined];
+    investmentData.yearsWithdraw = ["Never", 5];
     let expectedReturn = ["Neither", "Withdraw"];
 
-    expect(getKey(x.withdrawOrReinvest(investmentData), "withdrawOrReinvest")).toEqual(expectedReturn);
+    expect(getKey(x.withdrawOrReinvest(investmentData), "withdrawOrReinvest"))
+        .toEqual(expectedReturn);
 
+    investmentData.yearsCeaseReinvesting = [3, 13];
+    investmentData.yearsWithdraw = [5, "Never"];
+    expectedReturn = ["Both", "CeaseReinvest"];
+
+    expect(getKey(x.withdrawOrReinvest(investmentData), "withdrawOrReinvest"))
+        .toEqual(expectedReturn);
 
 });
 
