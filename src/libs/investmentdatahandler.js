@@ -126,9 +126,9 @@ class InvestmentDataHandler {
                     investmentData.arrayPullPercentagesByYear[i][j] = investmentData.percentagePulled[i];
                 }
             } else if (investmentData.withdrawOrReinvest[i] == "Both") {
-                for (let j = investmentData.yearsBegin[i]; j < investmentData.yearsWithdraw[i]; j++) {
+                for (let j = investmentData.yearsBegin[i]; j < investmentData.yearsCeaseReinvesting[i] -1; j++) {
                     investmentData.arrayReinvestPercentagesByYear[i][j] = investmentData.percentageReinvested[i];
-                    for (let k = investmentData.yearsBegin[i]; k < investmentData.yearsCeaseReinvesting[i]; k++) {
+                    for (let k = investmentData.yearsBegin[i]; k < investmentData.yearsWithdraw[i]; k++) {
                         investmentData.arrayPullPercentagesByYear[i][k] = investmentData.percentagePulled[i];
                     }
                 }

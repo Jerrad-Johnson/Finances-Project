@@ -1,4 +1,4 @@
-import {getArrayAsString, getKey} from "../utilities/jest-supplements";
+import {getArrayAsString, getKey, resetArr} from "../utilities/jest-supplements";
 import investmentdatahandler from "./investmentdatahandler";
 
 var investmentData = {};
@@ -108,6 +108,7 @@ test("withdrawOrReinvest", () => {
 });
 
 test("calculateValuesAcrossTheYears", () => {
+    investmentData.arrayRunningInvestmentValue = resetArr();
     investmentData.withdrawOrReinvest = ["Neither", "Neither"];
     investmentData.yearsBegin = [1, 14];
     investmentData.percentageReinvested = [100, 5];
@@ -128,4 +129,26 @@ test("calculateValuesAcrossTheYears", () => {
 
     expect(getKey(x.calculateValuesAcrossTheYears(investmentData),
         "arrayPullPercentagesByYear")).toEqual(expectedReturn);
+
+    investmentData.arrayReinvestPercentagesByYear = resetArr()
+    investmentData.arrayPullPercentagesByYear = resetArr();
+    investmentData.percentageReinvested = [100, 5];
+    investmentData.percentagePulled = [0, 5];
+    investmentData.withdrawOrReinvest = ["Both", "Both"];
+    investmentData.yearsBegin = [1, 10];
+    investmentData.yearsCeaseReinvesting = [3, 14];
+    investmentData.yearsWithdraw = [5, 15];
+    investmentData.amounts = [500, 500];
+    expectedReturn = [
+        [0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 0]
+    ];
+
+    console.log(getKey(x.calculateValuesAcrossTheYears(investmentData),
+        "arrayReinvestPercentagesByYear"));
+
+
+/*
+    expect(getKey(x.calculateValuesAcrossTheYears(investmentData),
+        "arrayReinvestPercentagesByYear")).toEqual(expectedReturn);*/
 });
