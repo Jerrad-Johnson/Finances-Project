@@ -1,6 +1,6 @@
 import Jobdatahandler from "./jobdatahandler";
 
-class ExpenseDataHandler {
+export class ExpenseDataHandler {
     constructor(expenseData) {
         this.expenseData = expenseData;
         this.cc = console.log;

@@ -123,9 +123,6 @@ function InvestmentGraph({investmentsState}){
             );
         });
 
-    cc(printToDom)
-
-
     return  (
         <>
             {printToDom}
@@ -213,6 +210,7 @@ function handleSubmission(investmentsState, setInvestmentsState){
     investmentData = checkInvestmentData(investmentData);
     investmentData = runCalculationsOnInvestmentData(investmentData);
     addInvestment(investmentData, investmentsState, setInvestmentsState);
+    //cc(investmentData);
 }
 
 function getInvestmentDataFromFields(){
@@ -326,7 +324,7 @@ function checkInvestmentData(investmentData){
             if ((investmentData.yearsWithdraw[i] < investmentData.yearsCeaseReinvesting[i])
             && (investmentData.yearsCeaseReinvesting[i] !== "Never")) {
 
-                cc(investmentData.yearsWithdraw[i] + " " + investmentData.yearsCeaseReinvesting[i])
+//                cc(investmentData.yearsWithdraw[i] + " " + investmentData.yearsCeaseReinvesting[i])
                 throw new Error("Please do not withdraw your money before you stop reinvesting it.");
                 return;
             }

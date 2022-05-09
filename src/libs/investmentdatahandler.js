@@ -7,12 +7,14 @@ class InvestmentDataHandler {
         this.graphMaxNumberOfYears = new jobdatahandler().graphMaxNumberOfYears;
         this.cc = console.log;
         this.length = this.investmentData.labels.length;
+
     }
 
     beginCalculations(){
         this.calculateReturnPercentageAfterPullPercentage(this.investmentData);
         this.calculatePercentageReinvested(this.investmentData);
         this.createArraysOfZero(this.investmentData);
+        this.addArrayOfNumberedYears(this.investmentData);
         this.calculateCorrectArrayEntriesByYears(this.investmentData);
         this.createArraysAdditionalInvestmentValues(this.investmentData);
         this.runningInvestmentValue(this.investmentData);
@@ -21,6 +23,7 @@ class InvestmentDataHandler {
         this.runningPullSum(this.investmentData);
         this.withdrawlValue(this.investmentData);
         this.updateArrayForWithdrawl(this.investmentData)
+        this.roundArrayNumbers(this.investmentData)
         return this.investmentData;
     }
 
@@ -76,6 +79,16 @@ class InvestmentDataHandler {
                 investmentData.arrayInvestmentIncreaseByYear[i][j] = 0;
                 investmentData.arrayAdditionalInvestment[i][j] = 0;
             }
+        }
+
+        return investmentData;
+    }
+
+    addArrayOfNumberedYears(investmentData){
+        investmentData.yearsNumbered = [];
+
+        for (let i = 0; i <= (this.graphMaxNumberOfYears - 1); i++) {
+            investmentData.yearsNumbered[i] = "Year " + (i + 1);
         }
 
         return investmentData;
@@ -174,7 +187,7 @@ class InvestmentDataHandler {
                     if (j < investmentData.yearsCeaseReinvesting[i]) {
                         investmentData.arrayRunningInvestmentValue[i][j] = (investmentData.arrayRunningInvestmentValue[i][j - 1]
                             * (investmentData.percentageReinvested[i] / 100)) + investmentData.arrayRunningInvestmentValue[i][j - 1];
-                        this.cc(investmentData.arrayAdditionalInvestment[i][j])
+                        //this.cc(investmentData.arrayAdditionalInvestment[i][j])
                         investmentData.arrayRunningInvestmentValue[i][j] += investmentData.arrayAdditionalInvestment[i][j];
                     } else {
                         investmentData.arrayRunningInvestmentValue[i][j] = (investmentData.arrayRunningInvestmentValue[i][j - 1]);
@@ -254,8 +267,27 @@ class InvestmentDataHandler {
 
         return investmentData;
    }
-}
 
+   roundArrayNumbers(investmentData){
+       investmentData.arrayAdditionalInvestment[0] = applyRounding(investmentData.arrayAdditionalInvestment[0]);
+       investmentData.arrayInvestmentIncreaseByYear[0] = applyRounding(investmentData.arrayInvestmentIncreaseByYear[0]);
+       investmentData.arrayPullValueByYear[0] = applyRounding(investmentData.arrayPullValueByYear[0]);
+       investmentData.arrayRunningPullSums[0] = applyRounding(investmentData.arrayRunningPullSums[0]);
+       investmentData.arrayRunningInvestmentValue[0] = applyRounding(investmentData.arrayRunningInvestmentValue[0]);
+
+        function applyRounding(arr){
+
+            for (let i = 0; i < arr.length; i++){
+                arr[i] = Math.round(arr[i]);
+            }
+
+            return arr;
+        }
+
+        this.cc(investmentData)
+        return investmentData;
+   }
+}
 
     //TODO Add array of running Add'l investment that I can use as an expense point.
 export default InvestmentDataHandler;
