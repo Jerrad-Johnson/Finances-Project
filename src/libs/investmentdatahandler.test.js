@@ -232,10 +232,7 @@ test("createArraysAdditionalInvestmentValues case Neither", () => {
     investmentData.withdrawOrReinvest = ["Neither", "Neither"];
     investmentData.yearsBegin = [1, 8];
     investmentData.additionalInvestment = [500, 1000]
-    investmentData.arrayAdditionalInvestment = [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ];
+    investmentData.arrayAdditionalInvestment = resetArr();
 
     let expectedReturn = [
         [0, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500],
@@ -274,4 +271,66 @@ test("createArraysAdditionalInvestmentValues case Withdraw", () => {
 
     expect(getKey(x.createArraysAdditionalInvestmentValues(investmentData),
         "arrayAdditionalInvestment")).toEqual(expectedReturn);
+});
+
+test("runningInvestmentValue case Neither", () => {
+    investmentData.withdrawOrReinvest = ["Neither", "Neither"];
+    investmentData.yearsBegin = [1, 8];
+    investmentData.yearsCeaseReinvesting = ["Never", "Never"];
+    investmentData.yearsWithdraw = ["Never", "Never"];
+    investmentData.percentageReinvested = [10, 5];
+    investmentData.amounts = [1000, 500];
+    investmentData.arrayRunningInvestmentValue = [
+        [1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 500, 0, 0, 0, 0, 0, 0, 0],
+    ];
+    investmentData.additionalInvestment = [500, 1000]
+    investmentData.arrayAdditionalInvestment = [
+        [0, 500, 500, 500, 500, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1000, 1000, 1000, 1000, 1000, 1000, 0]
+    ];
+    let expectedReturn = [
+        [1000, 1600, 2260, 2986, 3785, 4663, 5129, 5642, 6207, 6827, 7510, 8261, 9087, 9996, 10995],
+        [0, 0, 0, 0, 0, 0, 0, 500, 1525, 2601, 3731, 4918, 6164, 7472, 7846],
+    ];
+// NOTE: This additional investment array was artificial; the calculator would not return these values.
+// They would have continued to the end of the array.
+    expect(getKey(x.roundArrayNumbers(x.runningInvestmentValue(investmentData)),
+        "arrayRunningInvestmentValue")).toEqual(expectedReturn);
+});
+
+test("runningInvestmentValue case Both", () => {
+    investmentData.withdrawOrReinvest = ["Both", "Both"];
+    investmentData.yearsBegin = [1, 6];
+    investmentData.yearsCeaseReinvesting = [6, 11];
+    investmentData.yearsWithdraw = [11, 15];
+    investmentData.percentageReinvested = [10, 5];
+    investmentData.amounts = [1000, 500];
+    investmentData.arrayRunningInvestmentValue = [
+        [1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
+    investmentData.additionalInvestment = [500, 1000]
+    investmentData.arrayAdditionalInvestment = [
+        [0, 500, 500, 500, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1000, 1000, 1000, 1000, 0, 0, 0, 0, 0]
+    ];
+    let expectedReturn = [
+        [1000, 1600, 2260, 2986, 3785, 4163, 4163, 4163, 4163, 4163, 4163, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 500, 1525, 2601, 3731, 4918, 5164, 5164, 5164, 5164, 5164],
+    ];
+
+
+    expect(getKey(x.roundArrayNumbers(x.runningInvestmentValue(investmentData)),
+        "arrayRunningInvestmentValue")).toEqual(expectedReturn);
+});
+
+test("runningInvestmentValue case CeaseReinvest", () => {
+
+    /*cc(getKey(x.roundArrayNumbers(x.runningInvestmentValue(investmentData)),
+        "arrayRunningInvestmentValue"))*/
+});
+
+test("runningInvestmentValue case Withdraw", () => {
+
 });
