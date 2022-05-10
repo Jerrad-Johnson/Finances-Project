@@ -234,7 +234,7 @@ class InvestmentDataHandler {
         return investmentData;
     }
 
-    createArraysForPullSums(investmentData){
+    createArraysSansSameYearAdlInvestment(investmentData){ // Note: Created these by mistake and currently unused. But may be useful for some graphs.
         for (let i = 0; i < this.length; i++){
             investmentData.arrayRunningInvestmentValueMinusSameYearAdlInvestment[i][investmentData.yearsBegin[i] -1]
                 = +investmentData.amounts[i];
