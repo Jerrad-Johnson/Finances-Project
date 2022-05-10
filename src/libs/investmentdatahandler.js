@@ -117,7 +117,6 @@ class InvestmentDataHandler {
     }
 
     calculateValuesAcrossTheYears(investmentData){
-
         for (let i = 0; i < this.length; i++){
             investmentData.arrayRunningInvestmentValue[i][investmentData.yearsBegin[i]-1] = +investmentData.amounts[i];
 
@@ -140,7 +139,6 @@ class InvestmentDataHandler {
                 for (let j = investmentData.yearsBegin[i]; j < investmentData.yearsCeaseReinvesting[i]; j++){
                     investmentData.arrayReinvestPercentagesByYear[i][j] = investmentData.percentageReinvested[i];
                     investmentData.arrayPullPercentagesByYear[i][j] = investmentData.percentagePulled[i];
-                    this.cc(j)
                 }
                 for (let l = investmentData.yearsCeaseReinvesting[i]; l < investmentData.yearsWithdraw[i]; l++){
                     investmentData.arrayPullPercentagesByYear[i][l] = investmentData.percentReturn[i];
@@ -158,11 +156,16 @@ class InvestmentDataHandler {
     createArraysAdditionalInvestmentValues(investmentData){
         for (let i = 0; i < this.length; i++) {
             if (investmentData.additionalInvestment[i] !== 0){
-                if (investmentData.withdrawOrReinvest[i] == "Neither" || investmentData.withdrawOrReinvest[i] == "CeaseReinvest"){
+                if (investmentData.withdrawOrReinvest[i] == "Neither") {
                     for (let j = investmentData.yearsBegin[i]; j < this.graphMaxNumberOfYears; j++) {
                         investmentData.arrayAdditionalInvestment[i][j] = investmentData.additionalInvestment[i];
                     }
-                } else if (investmentData.withdrawOrReinvest[i] === "Withdraw" || investmentData.withdrawOrReinvest[i] === "Both"){
+                } else if (investmentData.withdrawOrReinvest[i] == "CeaseReinvest"
+                            || investmentData.withdrawOrReinvest[i] === "Both"){
+                    for (let j = investmentData.yearsBegin[i]; j < investmentData.yearsCeaseReinvesting[i] -1; j++) {
+                        investmentData.arrayAdditionalInvestment[i][j] = investmentData.additionalInvestment[i];
+                    }
+                } else if (investmentData.withdrawOrReinvest[i] === "Withdraw"){
                     for (let j = investmentData.yearsBegin[i]; j < investmentData.yearsWithdraw[i] -1; j++) {
                         investmentData.arrayAdditionalInvestment[i][j] = investmentData.additionalInvestment[i];
                     }

@@ -227,3 +227,51 @@ test("calculateValuesAcrossTheYears -- Withdraw Cases", () => {
     expect(getKey(x.calculateValuesAcrossTheYears(investmentData),
         "arrayPullPercentagesByYear")).toEqual(expectedReturn);
 });
+
+test("createArraysAdditionalInvestmentValues case Neither", () => {
+    investmentData.withdrawOrReinvest = ["Neither", "Neither"];
+    investmentData.yearsBegin = [1, 8];
+    investmentData.additionalInvestment = [500, 1000]
+    investmentData.arrayAdditionalInvestment = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
+
+    let expectedReturn = [
+        [0, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+    ];
+
+    expect(getKey(x.createArraysAdditionalInvestmentValues(investmentData),
+        "arrayAdditionalInvestment")).toEqual(expectedReturn);
+});
+
+test("createArraysAdditionalInvestmentValues cases CeaseReinvest and Both", () => {
+    investmentData.withdrawOrReinvest = ["CeaseReinvest", "Both"];
+    investmentData.yearsBegin = [1, 8];
+    investmentData.yearsCeaseReinvesting = [5, 12];
+    investmentData.additionalInvestment = [500, 1000]
+    investmentData.arrayAdditionalInvestment = resetArr();
+    let expectedReturn = [
+        [0, 500, 500, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1000, 1000, 1000, 0, 0, 0, 0]
+    ];
+
+    expect(getKey(x.createArraysAdditionalInvestmentValues(investmentData),
+        "arrayAdditionalInvestment")).toEqual(expectedReturn);
+});
+
+test("createArraysAdditionalInvestmentValues case Withdraw", () => {
+    investmentData.withdrawOrReinvest = ["Withdraw", "Withdraw"];
+    investmentData.yearsBegin = [1, 8];
+    investmentData.yearsWithdraw = [7, 15];
+    investmentData.additionalInvestment = [500, 1000]
+    investmentData.arrayAdditionalInvestment = resetArr();
+    let expectedReturn = [
+        [0, 500, 500, 500, 500, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1000, 1000, 1000, 1000, 1000, 1000, 0]
+    ];
+
+    expect(getKey(x.createArraysAdditionalInvestmentValues(investmentData),
+        "arrayAdditionalInvestment")).toEqual(expectedReturn);
+});
