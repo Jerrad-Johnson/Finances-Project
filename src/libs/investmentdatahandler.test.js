@@ -461,6 +461,58 @@ test("updateArrayForWithdrawl", () => {
         "arrayRunningInvestmentValue")).toEqual(expectedReturn);
 });
 
+test("roundArrayNumbers", () => {
+    investmentData.arrayAdditionalInvestment = [
+        [5.4, 5.7, 2.2, 2.8, 5.5, 10.222, 15.555, 19.01, 20.01, 25, 2, 0, 15.5, 27, 100.5555252],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    investmentData.arrayInvestmentIncreaseByYear = [
+        [5.4, 5.7, 2.2, 2.8, 5.5, 10.222, 15.555, 19.01, 20.01, 25, 2, 0, 15.5, 27, 100.5555252],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    investmentData.arrayPullValueByYear = [
+        [5.4, 5.7, 2.2, 2.8, 5.5, 10.222, 15.555, 19.01, 20.01, 25, 2, 0, 15.5, 27, 100.5555252],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    investmentData.arrayRunningInvestmentValue = [
+        [5.4, 5.7, 2.2, 2.8, 5.5, 10.222, 15.555, 19.01, 20.01, 25, 2, 0, 15.5, 27, 100.5555252],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    investmentData.arrayRunningPullSums = [
+        [5.4, 5.7, 2.2, 2.8, 5.5, 10.222, 15.555, 19.01, 20.01, 25, 2, 0, 15.5, 27, 100.5555252],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    investmentData.arrayRunningInvestmentValue = [
+        [5.4, 5.7, 2.2, 2.8, 5.5, 10.222, 15.555, 19.01, 20.01, 25, 2, 0, 15.5, 27, 100.5555252],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    investmentData.withdrawlValue = [144.2223, 9001.115555];
+    let expectedReturn = [
+        [5, 6, 2, 3, 6, 10, 16, 19, 20, 25, 2, 0, 16, 27, 101],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
 
-    /*cc(getKey(x.roundArrayNumbers(x.pullValueByYear(investmentData)),
-        "arrayPullValueByYear"));*/
+    expect(getKey(x.roundArrayNumbers(investmentData),
+        "arrayAdditionalInvestment")).toEqual(expectedReturn);
+
+    expect(getKey(x.roundArrayNumbers(investmentData),
+        "arrayInvestmentIncreaseByYear")).toEqual(expectedReturn);
+
+    expect(getKey(x.roundArrayNumbers(investmentData),
+        "arrayPullValueByYear")).toEqual(expectedReturn);
+
+    expect(getKey(x.roundArrayNumbers(investmentData),
+        "arrayRunningInvestmentValue")).toEqual(expectedReturn);
+
+    expect(getKey(x.roundArrayNumbers(investmentData),
+        "arrayRunningPullSums")).toEqual(expectedReturn);
+
+    expect(getKey(x.roundArrayNumbers(investmentData),
+        "arrayRunningInvestmentValue")).toEqual(expectedReturn);
+
+    expectedReturn = [144, 9001];
+
+    expect(getKey(x.roundArrayNumbers(investmentData),
+        "withdrawlValue")).toEqual(expectedReturn);
+});
+
