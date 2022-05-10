@@ -28,7 +28,7 @@ export function getOptionElementsForReinvesting(lengthOfGraphInYears){
 export function AddInvestmentFieldButton({formLengthState, setFormLengthState}){
 
     return (
-        <button onClick={(e) => {
+        <button className={"addInvestmentFields"} onClick={(e) => {
             e.preventDefault();
             addInvestmentField(formLengthState, setFormLengthState);
         }}>Add Field</button>
