@@ -326,11 +326,51 @@ test("runningInvestmentValue case Both", () => {
 });
 
 test("runningInvestmentValue case CeaseReinvest", () => {
+    investmentData.withdrawOrReinvest = ["CeaseReinvest", "CeaseReinvest"];
+    investmentData.yearsBegin = [1, 6];
+    investmentData.yearsCeaseReinvesting = [6, 11];
+    investmentData.yearsWithdraw = ["Never", "Never"];
+    investmentData.percentageReinvested = [10, 5];
+    investmentData.amounts = [1000, 500];
+    investmentData.arrayRunningInvestmentValue = [
+        [1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
+    investmentData.additionalInvestment = [500, 1000]
+    investmentData.arrayAdditionalInvestment = [
+        [0, 500, 500, 500, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1000, 1000, 1000, 1000, 0, 0, 0, 0, 0]
+    ];
+    let expectedReturn = [
+        [1000, 1600, 2260, 2986, 3785, 4163, 4163, 4163, 4163, 4163, 4163, 4163, 4163, 4163, 4163],
+        [0, 0, 0, 0, 0, 500, 1525, 2601, 3731, 4918, 5164, 5164, 5164, 5164, 5164],
+    ];
 
-    /*cc(getKey(x.roundArrayNumbers(x.runningInvestmentValue(investmentData)),
-        "arrayRunningInvestmentValue"))*/
+    expect(getKey(x.roundArrayNumbers(x.runningInvestmentValue(investmentData)),
+        "arrayRunningInvestmentValue")).toEqual(expectedReturn);
 });
 
 test("runningInvestmentValue case Withdraw", () => {
+    investmentData.withdrawOrReinvest = ["Withdraw", "Withdraw"];
+    investmentData.yearsBegin = [1, 6];
+    investmentData.yearsCeaseReinvesting = ["Never", "Never"];
+    investmentData.yearsWithdraw = [6, 11];
+    investmentData.percentageReinvested = [10, 5];
+    investmentData.amounts = [1000, 500];
+    investmentData.arrayRunningInvestmentValue = [
+        [1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
+    investmentData.additionalInvestment = [500, 1000]
+    investmentData.arrayAdditionalInvestment = [
+        [0, 500, 500, 500, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1000, 1000, 1000, 1000, 0, 0, 0, 0, 0]
+    ];
+    let expectedReturn = [
+        [1000, 1600, 2260, 2986, 3785, 4163, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 500, 1525, 2601, 3731, 4918, 5164, 0, 0, 0, 0],
+    ];
 
+    expect(getKey(x.roundArrayNumbers(x.runningInvestmentValue(investmentData)),
+        "arrayRunningInvestmentValue")).toEqual(expectedReturn);
 });
