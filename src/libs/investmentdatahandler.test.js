@@ -130,7 +130,6 @@ test("calculateValuesAcrossTheYears -- Neither Cases", () => {
 
     expect(getKey(x.calculateValuesAcrossTheYears(investmentData),
         "arrayPullPercentagesByYear")).toEqual(expectedReturn);
-
 });
 
 test("calculateValuesAcrossTheYears -- Both Cases", () => {
@@ -320,13 +319,8 @@ test("runningInvestmentValue -- case Both", () => {
         [0, 0, 0, 0, 0, 500, 1525, 2601, 3731, 4918, 5164, 5164, 5164, 5164, 5164],
     ]; // These final non-zero values get chopped in the method updateArrayForWithdrawl. Consider refactoring and nixing updateArrayForWithdrawl.
 
-cc(getKey(x.roundArrayNumbers(x.runningInvestmentValue(investmentData)),
-    "arrayRunningInvestmentValue"));
-
-/*    expect(getKey(x.roundArrayNumbers(x.runningInvestmentValue(investmentData)),
+    expect(getKey(x.roundArrayNumbers(x.runningInvestmentValue(investmentData)),
         "arrayRunningInvestmentValue")).toEqual(expectedReturn);
-
- */
 });
 
 test("runningInvestmentValue -- case CeaseReinvest", () => {
@@ -515,4 +509,3 @@ test("roundArrayNumbers", () => {
     expect(getKey(x.roundArrayNumbers(investmentData),
         "withdrawlValue")).toEqual(expectedReturn);
 });
-

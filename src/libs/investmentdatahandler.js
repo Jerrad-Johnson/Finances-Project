@@ -202,8 +202,8 @@ class InvestmentDataHandler {
                     if (k < investmentData.yearsWithdraw[i]){
                         investmentData.arrayRunningInvestmentValue[i][k] = (investmentData.arrayRunningInvestmentValue[i][k-1]);
                         investmentData.arrayRunningInvestmentValue[i][k] += investmentData.arrayAdditionalInvestment[i][k];
-                    } else {
-                        investmentData.arrayRunningInvestmentValue[i][k] = 0;
+                    } else { /* // This isn't reached if withdraw year is 15. Could fix, but currently using updateArrayForWithdrawl instead
+                        investmentData.arrayRunningInvestmentValue[i][k] = 0;*/
                     }
                 }
             } else if (investmentData.withdrawOrReinvest[i] == "CeaseReinvest") {
@@ -223,8 +223,8 @@ class InvestmentDataHandler {
                         investmentData.arrayRunningInvestmentValue[i][j] = (investmentData.arrayRunningInvestmentValue[i][j - 1]
                             * (investmentData.percentageReinvested[i] / 100)) + investmentData.arrayRunningInvestmentValue[i][j - 1];
                         investmentData.arrayRunningInvestmentValue[i][j] += investmentData.arrayAdditionalInvestment[i][j];
-                    } else {
-                        investmentData.arrayRunningInvestmentValue[i][j] = 0;
+                    } else { /* // This isn't reached if withdraw year is 15. Could fix, but currently using updateArrayForWithdrawl instead
+                        investmentData.arrayRunningInvestmentValue[i][j] = 0;*/
                     }
 
                 }
