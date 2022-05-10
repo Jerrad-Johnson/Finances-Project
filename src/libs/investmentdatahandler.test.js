@@ -228,7 +228,7 @@ test("calculateValuesAcrossTheYears -- Withdraw Cases", () => {
         "arrayPullPercentagesByYear")).toEqual(expectedReturn);
 });
 
-test("createArraysAdditionalInvestmentValues case Neither", () => {
+test("createArraysAdditionalInvestmentValues -- case Neither", () => {
     investmentData.withdrawOrReinvest = ["Neither", "Neither"];
     investmentData.yearsBegin = [1, 8];
     investmentData.additionalInvestment = [500, 1000]
@@ -243,7 +243,7 @@ test("createArraysAdditionalInvestmentValues case Neither", () => {
         "arrayAdditionalInvestment")).toEqual(expectedReturn);
 });
 
-test("createArraysAdditionalInvestmentValues cases CeaseReinvest and Both", () => {
+test("createArraysAdditionalInvestmentValues -- cases CeaseReinvest and Both", () => {
     investmentData.withdrawOrReinvest = ["CeaseReinvest", "Both"];
     investmentData.yearsBegin = [1, 8];
     investmentData.yearsCeaseReinvesting = [5, 12];
@@ -258,7 +258,7 @@ test("createArraysAdditionalInvestmentValues cases CeaseReinvest and Both", () =
         "arrayAdditionalInvestment")).toEqual(expectedReturn);
 });
 
-test("createArraysAdditionalInvestmentValues case Withdraw", () => {
+test("createArraysAdditionalInvestmentValues -- case Withdraw", () => {
     investmentData.withdrawOrReinvest = ["Withdraw", "Withdraw"];
     investmentData.yearsBegin = [1, 8];
     investmentData.yearsWithdraw = [7, 15];
@@ -273,7 +273,7 @@ test("createArraysAdditionalInvestmentValues case Withdraw", () => {
         "arrayAdditionalInvestment")).toEqual(expectedReturn);
 });
 
-test("runningInvestmentValue case Neither", () => {
+test("runningInvestmentValue -- case Neither", () => {
     investmentData.withdrawOrReinvest = ["Neither", "Neither"];
     investmentData.yearsBegin = [1, 8];
     investmentData.yearsCeaseReinvesting = ["Never", "Never"];
@@ -299,7 +299,7 @@ test("runningInvestmentValue case Neither", () => {
         "arrayRunningInvestmentValue")).toEqual(expectedReturn);
 });
 
-test("runningInvestmentValue case Both", () => {
+test("runningInvestmentValue -- case Both", () => {
     investmentData.withdrawOrReinvest = ["Both", "Both"];
     investmentData.yearsBegin = [1, 6];
     investmentData.yearsCeaseReinvesting = [6, 11];
@@ -325,7 +325,7 @@ test("runningInvestmentValue case Both", () => {
         "arrayRunningInvestmentValue")).toEqual(expectedReturn);
 });
 
-test("runningInvestmentValue case CeaseReinvest", () => {
+test("runningInvestmentValue -- case CeaseReinvest", () => {
     investmentData.withdrawOrReinvest = ["CeaseReinvest", "CeaseReinvest"];
     investmentData.yearsBegin = [1, 6];
     investmentData.yearsCeaseReinvesting = [6, 11];
@@ -350,7 +350,7 @@ test("runningInvestmentValue case CeaseReinvest", () => {
         "arrayRunningInvestmentValue")).toEqual(expectedReturn);
 });
 
-test("runningInvestmentValue case Withdraw", () => {
+test("runningInvestmentValue -- case Withdraw", () => {
     investmentData.withdrawOrReinvest = ["Withdraw", "Withdraw"];
     investmentData.yearsBegin = [1, 6];
     investmentData.yearsCeaseReinvesting = ["Never", "Never"];
@@ -387,15 +387,34 @@ test("investmentIncreaseByYear", () => {
         [0, 0, 0, 0, 0, 0, 1025, 1076, 1130, 1187, 246, 0, 0, 0, 0]
     ];
 
-
     expect(getKey(x.roundArrayNumbers(x.investmentIncreaseByYear(investmentData)),
         "arrayInvestmentIncreaseByYear")).toEqual(expectedReturn);
 });
 
 
 test("pullValueByYear", () => {
+    investmentData.yearsBegin = [1, 6];
+    investmentData.arrayRunningInvestmentValue = [
+        [1000, 1600, 2260, 2986, 3785, 4163, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 500, 1525, 2601, 3731, 4918, 5164, 0, 0, 0, 0],
+    ];
+    investmentData.arrayPullPercentagesByYear = [
+        [0, 10, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 0, 0, 0, 0]
+    ];
+    let expectedReturn = [
+        [0, 160, 226, 299, 379, 416, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 76, 130, 187, 246, 258, 0, 0, 0, 0]
+    ];
 
-    cc(getKey(x.roundArrayNumbers(x.investmentIncreaseByYear(investmentData)),
-        "arrayInvestmentIncreaseByYear"))
-
+    expect(getKey(x.roundArrayNumbers(x.pullValueByYear(investmentData)),
+        "arrayPullValueByYear")).toEqual(expectedReturn);
 });
+
+test("runningPullSum", () => {
+
+    cc(getKey(x.roundArrayNumbers(x.pullValueByYear(investmentData)),
+        "arrayPullValueByYear"));
+});
+
+//TODO Test createArrayForPullSums
