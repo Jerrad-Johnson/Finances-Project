@@ -19,7 +19,7 @@ class InvestmentDataHandler {
         this.calculateValuesAcrossTheYears(this.investmentData);
         this.createArraysAdditionalInvestmentValues(this.investmentData);
         this.runningInvestmentValue(this.investmentData);
-        this.createArraysForPullSums(this.investmentData);
+        //this.createArraysSansSameYearAdlInvestment(this.investmentData);
         this.investmentIncreaseByYear(this.investmentData);
         this.pullValueByYear(this.investmentData);
         this.runningPullSum(this.investmentData);
@@ -296,6 +296,7 @@ class InvestmentDataHandler {
                 }
             }
         }
+        return investmentData;
     }
 
     withdrawlValue(investmentData){
@@ -336,7 +337,7 @@ class InvestmentDataHandler {
            return arr;
        }
 
-        return investmentData;
+       return investmentData;
    }
 }
 

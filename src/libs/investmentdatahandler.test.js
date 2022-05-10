@@ -413,8 +413,25 @@ test("pullValueByYear", () => {
 
 test("runningPullSum", () => {
 
-    cc(getKey(x.roundArrayNumbers(x.pullValueByYear(investmentData)),
-        "arrayPullValueByYear"));
+    investmentData.arrayPullValueByYear = [
+        [0, 10, 12, 15, 20, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 10, 50, 55, 70, 75, 80, 85, 90, 100, 120]
+    ];
+
+    let expectedReturn = [
+        [0, 10, 22, 37, 57, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 10, 60, 115, 185, 260, 340, 425, 515, 615, 735]
+    ];
+
+    expect(getKey(x.roundArrayNumbers(x.runningPullSum(investmentData)),
+        "arrayRunningPullSums")).toEqual(expectedReturn);
+
 });
 
-//TODO Test createArrayForPullSums
+test("withdrawlValue", () => {
+
+
+});
+
+    /*cc(getKey(x.roundArrayNumbers(x.pullValueByYear(investmentData)),
+        "arrayPullValueByYear"));*/
