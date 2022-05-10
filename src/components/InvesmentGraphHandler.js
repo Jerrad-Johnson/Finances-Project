@@ -1,26 +1,26 @@
 import {isNumeric} from "./jobssharedfunctions";
 import Investmentdatahandler from "../libs/investmentdatahandler";
+let cc = console.log;
 
-export function SubmitButton({investmentsState, setInvestmentsState}){
+export function SubmitButton({investmentsState, setInvestmentsState, graphKey, setGraphKey}){
 
     return (
         <>
             <br />
             <button className={"submitinvestment"} onClick={(e) => {
                 e.preventDefault();
-                handleSubmission(investmentsState, setInvestmentsState);
+                handleSubmission(investmentsState, setInvestmentsState, graphKey, setGraphKey);
             }}>Submit</button>
         </>
     );
 }
 
-function handleSubmission(investmentsState, setInvestmentsState){
+function handleSubmission(investmentsState, setInvestmentsState, graphKey, setGraphKey){
     let investmentData = getInvestmentDataFromFields();
     investmentData = castInvestmentData(investmentData);
     investmentData = checkInvestmentData(investmentData);
     investmentData = runCalculationsOnInvestmentData(investmentData);
-    addInvestment(investmentData, investmentsState, setInvestmentsState);
-    //cc(investmentData);
+    addInvestment(investmentData, investmentsState, setInvestmentsState, graphKey, setGraphKey);
 }
 
 function getInvestmentDataFromFields(){
@@ -133,8 +133,6 @@ function checkInvestmentData(investmentData){
         if (investmentData.yearsWithdraw[i] !== "Never") {
             if ((investmentData.yearsWithdraw[i] < investmentData.yearsCeaseReinvesting[i])
                 && (investmentData.yearsCeaseReinvesting[i] !== "Never")) {
-
-//                cc(investmentData.yearsWithdraw[i] + " " + investmentData.yearsCeaseReinvesting[i])
                 throw new Error("Please do not withdraw your money before you stop reinvesting it.");
                 return;
             }
@@ -182,7 +180,10 @@ function runCalculationsOnInvestmentData(investmentData){
     return investmentData;
 }
 
-function addInvestment(investmentData, investmentsState, setInvestmentsState){
+function addInvestment(investmentData, investmentsState, setInvestmentsState, graphKey, setGraphKey){
+    investmentData.key = graphKey;
+    setGraphKey(graphKey+1);
+
     let newState = [];
     investmentData = [investmentData];
 
@@ -192,3 +193,22 @@ function addInvestment(investmentData, investmentsState, setInvestmentsState){
 
     setInvestmentsState(newState);
 }
+
+/*
+export function DeleteButton({staticKey, investmentsState, setInvestmentsState, graphKey}){
+
+
+
+    return (
+      <>
+          <button type={"submit"} key={staticKey} onClick={(e) => {
+              e.preventDefault();
+              deleteThisGraph(investmentsState, setInvestmentsState)
+          }}
+          >Delete this entry.</button>
+      </>
+    );
+
+}
+*/
+

@@ -1,28 +1,34 @@
 import {useState} from "react";
 import {createArrayWithNumberOfYearsToGraph, isNumeric} from "./components/jobssharedfunctions";
 import {InvestmentRunningValueBarChart} from "./graphs/InvestmentGraphs";
-import {SubmitButton} from "./components/InvesmentGraphHandler";
+import {SubmitButton, DeleteThisGraph, DeleteButton} from "./components/InvesmentGraphHandler";
 import {getOptionElements, getOptionElementsForReinvesting, AddInvestmentFieldButton, DeleteInvestmentFieldButton} from "./components/InvestmentForms";
 
 let cc = console.log;
 
 function Investments(){
     let [investmentsState, setInvestmentsState] = useState([]);
+    let [graphKey, setGraphKey] = useState(0);
 
     return (
       <div id={"investmentcontainer"}>
         <FormContainer
             investmentsState = {investmentsState}
             setInvestmentsState = {setInvestmentsState}
+            graphKey = {graphKey}
+            setGraphKey = {setGraphKey}
+
         />
         <InvestmentGraph
             investmentsState = {investmentsState}
+            setInvestmentsState = {setInvestmentsState}
+            graphKey = {graphKey}
         />
       </div>
     );
 }
 
-export function FormContainer({investmentsState, setInvestmentsState}){
+export function FormContainer({investmentsState, setInvestmentsState, graphKey, setGraphKey}){
     let [formLengthState, setFormLengthState] = useState([0]);
 
     return (
@@ -50,6 +56,8 @@ export function FormContainer({investmentsState, setInvestmentsState}){
                 <SubmitButton
                     investmentsState = {investmentsState}
                     setInvestmentsState = {setInvestmentsState}
+                    graphKey = {graphKey}
+                    setGraphKey = {setGraphKey}
                 />
             </form>
         </div>
@@ -114,8 +122,7 @@ function InvestmentForms({formLengthState}){
     );
 }
 
-function InvestmentGraph({investmentsState}){
-
+function InvestmentGraph({investmentsState, setInvestmentsState, graphKey}){
     let printToDom = [];
 
     printToDom = investmentsState.map((e, key) => {
@@ -125,6 +132,12 @@ function InvestmentGraph({investmentsState}){
                         key = {key}
                         investmentSheet = {e}
                     />
+                    <button type={"submit"} key={graphKey} onClick={(f) => {
+                        f.preventDefault();
+                        deleteThisGraph(investmentsState, setInvestmentsState, e.key)
+                    }}
+                    >Delete row {e.key}.</button>
+
                 </div>
             );
         });
@@ -134,6 +147,13 @@ function InvestmentGraph({investmentsState}){
             {printToDom}
         </>
     );
+}
+
+function deleteThisGraph(investmentsState, setInvestmentsState, key){
+    let newState = [...investmentsState];
+    let keyPositionInArray = newState.findIndex(o => o.key === key);
+    newState.splice(keyPositionInArray, 1);
+    setInvestmentsState(newState);
 }
 
 
