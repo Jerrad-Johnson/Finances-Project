@@ -199,7 +199,7 @@ class InvestmentDataHandler {
                         investmentData.arrayRunningInvestmentValue[i][j] += investmentData.arrayAdditionalInvestment[i][j];
                 }
                 for (let k = investmentData.yearsCeaseReinvesting[i]; k < this.graphMaxNumberOfYears; k++) {
-                    if (k < investmentData.yearsWithdraw[i] -1){ // Case "withdraw" does not need this -1, and I have no idea why. Without it here, year 15 doesn't go to value 0 when chosen as the year to withdraw.
+                    if (k < investmentData.yearsWithdraw[i]){
                         investmentData.arrayRunningInvestmentValue[i][k] = (investmentData.arrayRunningInvestmentValue[i][k-1]);
                         investmentData.arrayRunningInvestmentValue[i][k] += investmentData.arrayAdditionalInvestment[i][k];
                     } else {
@@ -310,8 +310,8 @@ class InvestmentDataHandler {
 
    updateArrayForWithdrawl(investmentData){
         for (let i = 0; i < this.length; i++){
-            if (investmentData.withdrawOrReinvest[i] === "Withdraw"){
-                investmentData.arrayRunningInvestmentValue[i][investmentData.yearsWithdraw[i] -1] = 0;
+            if (investmentData.withdrawOrReinvest[i] === "Withdraw" || "Both"){
+                investmentData.arrayRunningInvestmentValue[i][investmentData.yearsWithdraw[i] -1] = 0; // TODO This seems related to the bug in runningInvestmentValue
             }
         }
 
