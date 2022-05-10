@@ -2,7 +2,7 @@ import {useState} from "react";
 import {createArrayWithNumberOfYearsToGraph, isNumeric} from "./components/jobssharedfunctions";
 import {InvestmentRunningValueBarChart} from "./graphs/InvestmentGraphs";
 import {SubmitButton} from "./components/InvesmentGraphHandler";
-import {getOptionElements, getOptionElementsForReinvesting, AddInvestmentFieldButton, DeleteInvestmentFieldButton} from "./components/ExpenserForms";
+import {getOptionElements, getOptionElementsForReinvesting, AddInvestmentFieldButton, DeleteInvestmentFieldButton} from "./components/ExpenseForms";
 
 let cc = console.log;
 
