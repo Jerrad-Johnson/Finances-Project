@@ -376,6 +376,7 @@ test("runningInvestmentValue case Withdraw", () => {
 });
 
 test("investmentIncreaseByYear", () => {
+    investmentData.yearsBegin = [1, 6];
     investmentData.arrayRunningInvestmentValue = [
         [1000, 1600, 2260, 2986, 3785, 4163, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 500, 1525, 2601, 3731, 4918, 5164, 0, 0, 0, 0],
@@ -383,8 +384,18 @@ test("investmentIncreaseByYear", () => {
 
     let expectedReturn = [
         [0, 600, 660, 726, 799, 378, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 0, 0, 0, 1025, 1076, 1130, 1187, 246, 0, 0, 0, 0]
     ];
 
-        //arrayInvestmentIncreaseByYear
+
+    expect(getKey(x.roundArrayNumbers(x.investmentIncreaseByYear(investmentData)),
+        "arrayInvestmentIncreaseByYear")).toEqual(expectedReturn);
+});
+
+
+test("pullValueByYear", () => {
+
+    cc(getKey(x.roundArrayNumbers(x.investmentIncreaseByYear(investmentData)),
+        "arrayInvestmentIncreaseByYear"))
+
 });
