@@ -1,3 +1,5 @@
+let cc = console.log;
+
 export function getOptionElements(lengthOfGraphInYears){
     let optionElements = lengthOfGraphInYears.map(entry => {
         return(
@@ -25,35 +27,39 @@ export function getOptionElementsForReinvesting(lengthOfGraphInYears){
     return optionElementsIncludingNever;
 }
 
-export function AddInvestmentFieldButton({formLengthState, setFormLengthState}){
+export function AddInvestmentFieldButton({formLengthState, setFormLengthState, formKey, setFormKey}){
 
     return (
         <button className={"addInvestmentFields"} onClick={(e) => {
             e.preventDefault();
-            addInvestmentField(formLengthState, setFormLengthState);
+            addInvestmentField(formLengthState, setFormLengthState, formKey, setFormKey);
         }}>Add Field</button>
     );
 }
 
-function addInvestmentField(formLengthState, setFormLengthState){
+function addInvestmentField(formLengthState, setFormLengthState, formKey, setFormkey){
+    let newForm = {
+        formIndex: formKey,
+    }
+    setFormkey(formKey +1);
     let newFormLength = [...formLengthState];
-    newFormLength.push(newFormLength.length);
-
+    newFormLength.unshift(newForm);
     setFormLengthState(newFormLength);
 }
 
-export function DeleteInvestmentFieldButton({formLengthState, setFormLengthState}){
+export function DeleteInvestmentFieldButton({formLengthState, setFormLengthState, index}){
+
     return (
-        <button onClick={(e) => {
+        <button className={"removeInvestmentField"} onClick={(e) => {
             e.preventDefault();
-            deleteInvestmentField(formLengthState, setFormLengthState);
-        }}>Delete Field</button>
+            deleteInvestmentField(formLengthState, setFormLengthState, index);
+        }}>Delete Field {index}</button>
     );
 }
 
-function deleteInvestmentField(formLengthState, setFormLengthState){
+function deleteInvestmentField(formLengthState, setFormLengthState, index){
     let newFormLength = [...formLengthState];
-    newFormLength.pop();
-
+    
+    newFormLength = newFormLength.filter(e => e.formIndex !== index);
     setFormLengthState(newFormLength);
 }

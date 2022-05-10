@@ -4,6 +4,10 @@ describe("Tests the investment page", () => {
     });
 
     it("Adds and deletes fields", () => {
+        cy.get(".addInvestmentFields").click();
+        cy.get(".addInvestmentFields").click();
+        cy.get(".investmentForms").eq(2).should("exist");
+        //cy.get(".removeInvestmentField").click();
 
     });
 });

@@ -29,10 +29,13 @@ function Investments(){
 }
 
 export function FormContainer({investmentsState, setInvestmentsState, graphKey, setGraphKey}){
-    let [formLengthState, setFormLengthState] = useState([0]);
+    let [formKey, setFormKey] = useState(1);
+    let [formLengthState, setFormLengthState] = useState([{
+        formIndex: 0,
+    }]);
 
     return (
-        <div id="formcontainer">
+        <div id="formContainer">
             <form>
                 <br />
                 Note that the graphed values do not include adjustment for inflation or taxes and are correct only as relative values, but are highly inaccurate as absolute values. The appropriate adjustments will be made on the final page.
@@ -43,16 +46,17 @@ export function FormContainer({investmentsState, setInvestmentsState, graphKey, 
                 <br />
                 <InvestmentForms
                     formLengthState = {formLengthState}
+                    setFormLengthState = {setFormLengthState}
+                    formKey = {formKey}
+                    setFormKey= {setFormKey}
                 />
                 <AddInvestmentFieldButton
                     formLengthState = {formLengthState}
                     setFormLengthState = {setFormLengthState}
+                    formKey = {formKey}
+                    setFormKey = {setFormKey}
                 />
                 &nbsp;
-                <DeleteInvestmentFieldButton
-                    formLengthState = {formLengthState}
-                    setFormLengthState = {setFormLengthState}
-                />
                 <SubmitButton
                     investmentsState = {investmentsState}
                     setInvestmentsState = {setInvestmentsState}
@@ -64,7 +68,7 @@ export function FormContainer({investmentsState, setInvestmentsState, graphKey, 
     );
 }
 
-function InvestmentForms({formLengthState}){
+function InvestmentForms({formLengthState, setFormLengthState, formKey, setFormKey}){
     let lengthOfGraphInYears = createArrayWithNumberOfYearsToGraph();
 
     let optionElements = getOptionElements(lengthOfGraphInYears);
@@ -72,7 +76,7 @@ function InvestmentForms({formLengthState}){
 
         let printToDom = formLengthState.map((e, index) => {
         return (
-            <div key={index}>
+            <div key={e.formIndex} className={"investmentForms"}>
                 <hr />
                 <br />
                 <input type="text" className={"inputfield label mb-8 ml-2 w-30"}></input> Label
@@ -108,6 +112,12 @@ function InvestmentForms({formLengthState}){
                 <input type="text" className={"inputfield percentpull w-8"}></input>&nbsp; Percent Pull Each Year (from return)
                 <br />
                 <br />
+
+                <DeleteInvestmentFieldButton
+                    formLengthState = {formLengthState}
+                    setFormLengthState = {setFormLengthState}
+                    index = {e.formIndex}
+                />
 
             </div>
         );
