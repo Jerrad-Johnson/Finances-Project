@@ -199,7 +199,7 @@ class InvestmentDataHandler {
                         investmentData.arrayRunningInvestmentValue[i][j] += investmentData.arrayAdditionalInvestment[i][j];
                 }
                 for (let k = investmentData.yearsCeaseReinvesting[i]; k < this.graphMaxNumberOfYears; k++) {
-                    if (k < investmentData.yearsWithdraw[i]){
+                    if (k < investmentData.yearsWithdraw[i] -1){ // Case "withdraw" does not need this -1, and I have no idea why. Without it here, year 15 doesn't go to value 0 when chosen as the year to withdraw.
                         investmentData.arrayRunningInvestmentValue[i][k] = (investmentData.arrayRunningInvestmentValue[i][k-1]);
                         investmentData.arrayRunningInvestmentValue[i][k] += investmentData.arrayAdditionalInvestment[i][k];
                     } else {
@@ -211,7 +211,6 @@ class InvestmentDataHandler {
                     if (j < investmentData.yearsCeaseReinvesting[i]) {
                         investmentData.arrayRunningInvestmentValue[i][j] = (investmentData.arrayRunningInvestmentValue[i][j - 1]
                             * (investmentData.percentageReinvested[i] / 100)) + investmentData.arrayRunningInvestmentValue[i][j - 1];
-                        //this.cc(investmentData.arrayAdditionalInvestment[i][j])
                         investmentData.arrayRunningInvestmentValue[i][j] += investmentData.arrayAdditionalInvestment[i][j];
                     } else {
                         investmentData.arrayRunningInvestmentValue[i][j] = (investmentData.arrayRunningInvestmentValue[i][j - 1]);
@@ -301,11 +300,11 @@ class InvestmentDataHandler {
 
     withdrawlValue(investmentData){
         for (let i = 0; i < this.length; i++) {
-            if (investmentData.withdrawOrReinvest[i] === "Withdraw"){
-                investmentData.withdrawlValue[i] = investmentData.arrayRunningInvestmentValue[i][investmentData.yearsWithdraw[i] -1];
+            if (investmentData.withdrawOrReinvest[i] === "Withdraw" || investmentData.withdrawOrReinvest[i] === "Both"){
+                investmentData.withdrawlValue[i] =
+                    investmentData.arrayRunningInvestmentValue[i][investmentData.yearsWithdraw[i] -1];
             }
         }
-
         return investmentData;
     }
 
@@ -320,15 +319,22 @@ class InvestmentDataHandler {
    }
 
    roundArrayNumbers(investmentData){
+       investmentData.arrayAdditionalInvestment = applyRoundingTwoDepthArray(investmentData.arrayAdditionalInvestment);
+       investmentData.arrayInvestmentIncreaseByYear = applyRoundingTwoDepthArray(investmentData.arrayInvestmentIncreaseByYear);
+       investmentData.arrayPullValueByYear = applyRoundingTwoDepthArray(investmentData.arrayPullValueByYear);
+       investmentData.arrayRunningInvestmentValue = applyRoundingTwoDepthArray(investmentData.arrayRunningInvestmentValue);
+       investmentData.arrayRunningPullSums = applyRoundingTwoDepthArray(investmentData.arrayRunningPullSums);
+       investmentData.arrayRunningInvestmentValue = applyRoundingTwoDepthArray(investmentData.arrayRunningInvestmentValue);
+       investmentData.withdrawlValue = applyRoundingSingleDepthArray(investmentData.withdrawlValue);
 
-       investmentData.arrayAdditionalInvestment = applyRounding(investmentData.arrayAdditionalInvestment);
-       investmentData.arrayInvestmentIncreaseByYear = applyRounding(investmentData.arrayInvestmentIncreaseByYear);
-       investmentData.arrayPullValueByYear = applyRounding(investmentData.arrayPullValueByYear);
-       investmentData.arrayRunningInvestmentValue = applyRounding(investmentData.arrayRunningInvestmentValue);
-       investmentData.arrayRunningPullSums = applyRounding(investmentData.arrayRunningPullSums);
-       investmentData.arrayRunningInvestmentValue = applyRounding(investmentData.arrayRunningInvestmentValue);
+       function applyRoundingSingleDepthArray(arr){
+           for (let i = 0; i < arr.length; i++) {
+               arr[i] = Math.round(arr[i]);
+           }
+           return arr;
+       }
 
-       function applyRounding(arr){
+       function applyRoundingTwoDepthArray(arr){
            for (let i = 0; i < arr.length; i++){
                for (let j = 0; j < arr[i].length; j++){
                    arr[i][j] = Math.round(arr[i][j]);
