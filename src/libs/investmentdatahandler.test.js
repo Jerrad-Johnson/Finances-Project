@@ -374,3 +374,17 @@ test("runningInvestmentValue case Withdraw", () => {
     expect(getKey(x.roundArrayNumbers(x.runningInvestmentValue(investmentData)),
         "arrayRunningInvestmentValue")).toEqual(expectedReturn);
 });
+
+test("investmentIncreaseByYear", () => {
+    investmentData.arrayRunningInvestmentValue = [
+        [1000, 1600, 2260, 2986, 3785, 4163, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 500, 1525, 2601, 3731, 4918, 5164, 0, 0, 0, 0],
+    ];
+
+    let expectedReturn = [
+        [0, 600, 660, 726, 799, 378, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+
+        //arrayInvestmentIncreaseByYear
+});
