@@ -43,7 +43,7 @@ function addInvestmentField(formLengthState, setFormLengthState, formKey, setFor
     }
     setFormkey(formKey +1);
     let newFormLength = [...formLengthState];
-    newFormLength.unshift(newForm);
+    newFormLength.push(newForm);
     setFormLengthState(newFormLength);
 }
 
@@ -59,7 +59,7 @@ export function DeleteInvestmentFieldButton({formLengthState, setFormLengthState
 
 function deleteInvestmentField(formLengthState, setFormLengthState, index){
     let newFormLength = [...formLengthState];
-    
+
     newFormLength = newFormLength.filter(e => e.formIndex !== index);
     setFormLengthState(newFormLength);
 }
