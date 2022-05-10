@@ -229,9 +229,6 @@ class InvestmentDataHandler {
 
     investmentIncreaseByYear(investmentData){
         for (let i = 0; i < this.length; i++){
-            /*investmentData.arrayInvestmentIncreaseByYear[i][investmentData.yearsBegin[i]] =
-                investmentData.arrayRunningInvestmentValue[i][investmentData.yearsBegin[i]]*/
-
             for (let j = investmentData.yearsBegin[i]; j < this.graphMaxNumberOfYears; j++){
                 let x = investmentData.arrayRunningInvestmentValue[i][j] - investmentData.arrayRunningInvestmentValue[i][j-1];
 
@@ -239,7 +236,6 @@ class InvestmentDataHandler {
                     investmentData.arrayInvestmentIncreaseByYear[i][j] = x;
                 }
             }
-            this.cc(investmentData.arrayInvestmentIncreaseByYear)
         }
 
         return investmentData;
