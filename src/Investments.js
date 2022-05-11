@@ -142,7 +142,7 @@ function InvestmentGraph({investmentsState, setInvestmentsState, graphKey}){
                         key = {key}
                         investmentSheet = {e}
                     />
-                    <button type={"submit"} key={graphKey} onClick={(f) => {
+                    <button className={"submitInvestments"} type={"submit"} key={graphKey} onClick={(f) => {
                         f.preventDefault();
                         deleteThisGraph(investmentsState, setInvestmentsState, e.key)
                     }}

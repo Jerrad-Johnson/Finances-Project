@@ -24,7 +24,7 @@ class InvestmentDataHandler {
         this.pullValueByYear(this.investmentData);
         this.runningPullSum(this.investmentData);
         this.withdrawlValue(this.investmentData);
-        this.updateArrayForWithdrawl(this.investmentData)
+        //this.updateArrayForWithdrawl(this.investmentData)
         this.roundArrayNumbers(this.investmentData)
         return this.investmentData;
     }
