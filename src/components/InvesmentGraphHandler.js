@@ -98,7 +98,7 @@ function castInvestmentData(investmentData){
 }
 
 
-function checkInvestmentData(investmentData){
+export function checkInvestmentData(investmentData){
     let length = investmentData.labels.length;
 
     if (investmentData.title == '' || undefined){
@@ -193,22 +193,3 @@ function addInvestment(investmentData, investmentsState, setInvestmentsState, gr
 
     setInvestmentsState(newState);
 }
-
-/*
-export function DeleteButton({staticKey, investmentsState, setInvestmentsState, graphKey}){
-
-
-
-    return (
-      <>
-          <button type={"submit"} key={staticKey} onClick={(e) => {
-              e.preventDefault();
-              deleteThisGraph(investmentsState, setInvestmentsState)
-          }}
-          >Delete this entry.</button>
-      </>
-    );
-
-}
-*/
-
