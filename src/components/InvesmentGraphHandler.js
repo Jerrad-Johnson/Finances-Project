@@ -151,7 +151,7 @@ export function checkInvestmentData(investmentData){
 
     for (let i = 0; i < length; i++){
         if (!isNumeric(investmentData.percentToPull[i])){
-            throw new Error("Please enter a number in the percent-to-pull field.");
+            throw new Error("Please only enter numbers in the percent-to-pull field, or leave it blank.");
             return;
         } else if (isNumeric(investmentData.percentToPull[i]) && investmentData.percentToPull[i] > 100){
             throw new Error("Percent to pull cannot be greater than 100.");
@@ -166,7 +166,7 @@ export function checkInvestmentData(investmentData){
         } else if ((investmentData.yearsBegin[i] >= investmentData.yearsWithdraw[i] - 1) && investmentData.additionalInvestment !== 0) {
             throw new Error("You can input additional investments only if there's at least a two-year gap from the year of your first investment to the year that you withdraw your money.");
             return;
-        } else if (investmentData.yearsBegin[i] >= 14 && investmentData.additionalInvestment[i] === 0) {
+        } else if (investmentData.yearsBegin[i] >= 14 && investmentData.additionalInvestment[i] !== 0) {
             throw new Error("The year of your first investment must be before 14 if you'd like to have additional investments.");
         }
     }
