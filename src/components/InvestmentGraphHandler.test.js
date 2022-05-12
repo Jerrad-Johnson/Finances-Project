@@ -1,5 +1,5 @@
 import {checkInvestmentData} from "./InvesmentGraphHandler";
-let cc = console.log;
+//let cc = console.log;
 
 test("Error Handling", () => {
     let investmentData = {
@@ -99,7 +99,6 @@ test("Error Handling", () => {
     expect(() => {
         checkInvestmentData(investmentData);
     }).toThrow("You can input additional investments only if there's at least a two-year gap from the year of your first investment to the year that you withdraw your money.");
-
 
     investmentData.additionalInvestment = [500, 500];
     investmentData.yearsBegin = [14, 5];
