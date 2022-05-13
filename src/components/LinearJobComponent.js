@@ -63,13 +63,23 @@ export function runCalculationsOnLinearData(jobData){
     return jobDataToBeReturned;
 }
 
-function updateLinearJobDataState(jobData, jobDataState, setJobDataState){
+function updateLinearJobDataState(jobData, jobDataState, setJobDataState) {
+    let newJobData = {};
+
+    jobData.forEach((e) => { // Correcting data format error; converts from [[k:v]] to {k:v}
+        for (const [k, v] of Object.entries(e)) {
+            newJobData[k] = v;
+        }
+    });
+    let cc = console.log
+    cc(newJobData)
+
     let extantJobs = [...jobDataState];
 
-    if (jobDataState.length === 0){
-        setJobDataState(jobData);
+    if (jobDataState.length === 0) {
+        setJobDataState([newJobData]);
     } else {
-        let combinedJobs = [...extantJobs, ...jobData];
+        let combinedJobs = [...extantJobs, newJobData];
         setJobDataState(combinedJobs);
     }
 }

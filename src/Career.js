@@ -142,16 +142,8 @@ function CreateOptionForms({formTitle, id, steppedIncomeFormKey}) {
 
 
 function Career() {
-    // const [steppedJobDataState, setSteppedJobDataState] = useState([]);
-    // JSON.parse(localStorage.getItem("steppedJob")) || 5
-
-    const [linearJobDataState, setLinearJobDataState] = useState([]);
-    const [steppedJobDataState, setSteppedJobDataState] = useState([]);
-
-    //cc(steppedJobDataState)
-    //let x = JSON.stringify(steppedJobDataState)
-    //cc(steppedJobDataState) //cc = console.log
-    //cc(x)
+    const [linearJobDataState, setLinearJobDataState] = useLocalStorage("linearjob", localStorage.getItem("linearjob") || []);
+    const [steppedJobDataState, setSteppedJobDataState] = useLocalStorage("steppedjob", localStorage.getItem("steppedjob") || []);
 
     return (
       <>
