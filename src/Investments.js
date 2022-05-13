@@ -3,12 +3,13 @@ import {createArrayWithNumberOfYearsToGraph, isNumeric} from "./components/jobss
 import {InvestmentRunningValueBarChart} from "./graphs/InvestmentGraphs";
 import {SubmitButton, DeleteThisGraph, DeleteButton} from "./components/InvesmentGraphHandler";
 import {getOptionElements, getOptionElementsForReinvesting, AddInvestmentFieldButton, DeleteInvestmentFieldButton} from "./components/InvestmentForms";
+import {useLocalStorage} from "./hooks/useLocalStorage";
 
 let cc = console.log;
 
 function Investments(){
-    let [investmentsState, setInvestmentsState] = useState([]);
-    let [graphKey, setGraphKey] = useState(0);
+    let [investmentsState, setInvestmentsState] = useLocalStorage("investmentdata", localStorage.getItem("investmentdata") || []);
+    let [graphKey, setGraphKey] = useLocalStorage("investmentgraphkey", localStorage.getItem("investmentgraphkey") || 0);
 
     return (
       <div id={"investmentcontainer"}>

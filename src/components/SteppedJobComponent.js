@@ -137,15 +137,12 @@ function updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDa
         setSteppedJobDataState(combinedJobs);
     }
 
-    cc(steppedJobDataState)
-
     /* From react chat:
     setSteppedJobDataState((prevSteppedJobData) =>
         prevSteppedJobData.length === 0
             ? jobData
             : prevSteppedJobData.concat(jobData)
     );*/
-//        localStorage.setItem("steppedJob", JSON.stringify(steppedJobDataState));
 }
 
 function SteppedGraph({steppedJobDataState, setSteppedJobDataState}){
