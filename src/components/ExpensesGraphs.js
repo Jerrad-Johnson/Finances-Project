@@ -2,6 +2,7 @@ import ExpenseDataHandler from "../libs/expensedatahandler";
 import {isNumeric} from "./jobssharedfunctions";
 
 let sheetObjectKey = 0;
+let cc = console.log;
 
 export function SubmitButton({expensesState, setExpensesState}){
     return (
@@ -109,6 +110,7 @@ export function addKeyToSheet(expenseData){
 function updateExpensesState(expenseData, expensesState, setExpensesState){
     let combinedExpenseSheets;
 
+    cc(expenseData)
     if (expensesState.length !== 0){
         combinedExpenseSheets = [...[expenseData], ...expensesState];
         setExpensesState(combinedExpenseSheets);

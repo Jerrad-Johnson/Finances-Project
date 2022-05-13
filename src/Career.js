@@ -1,14 +1,14 @@
-import React from "react";
-import {useState} from "react";
+import React, {useContext, useState} from "react";
 import LinearGraph, {handleLinearJobSubmission} from "./components/LinearJobComponent";
 import {createArrayWithNumberOfYearsToGraph} from "./components/jobssharedfunctions";
 import SteppedGraph, {ListJobIncomeForms, addSteppedIncomeField, removeSteppedIncomeField, handleSteppedJobSubmission} from "./components/SteppedJobComponent";
+import {useLocalStorage} from "./hooks/useLocalStorage";
 
 //TODO Display job title in graph
 //TODO Create a Youtube video demonstrating this app.
 //TODO Make formcontainer show as a pseudo-popup.
 
-//let cc = console.log;
+let cc = console.log;
 var steppedIncomeFormKey = 0;
 export var jobListIncomeFormKey = 200;
 
@@ -142,9 +142,16 @@ function CreateOptionForms({formTitle, id, steppedIncomeFormKey}) {
 
 
 function Career() {
+    // const [steppedJobDataState, setSteppedJobDataState] = useState([]);
+    // JSON.parse(localStorage.getItem("steppedJob")) || 5
+
     const [linearJobDataState, setLinearJobDataState] = useState([]);
     const [steppedJobDataState, setSteppedJobDataState] = useState([]);
 
+    //cc(steppedJobDataState)
+    //let x = JSON.stringify(steppedJobDataState)
+    //cc(steppedJobDataState) //cc = console.log
+    //cc(x)
 
     return (
       <>

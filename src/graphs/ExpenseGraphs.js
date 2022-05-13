@@ -37,8 +37,6 @@ export function ExpenseSumBarChart({expenseSheet}) {
     delete expenseSheet.runningSumsByYear;
     delete expenseSheet.finalSums; */
 
-    console.log(expenseSheet.graphSumObject)
-
     return (
         <div>
             <Chart
@@ -46,7 +44,7 @@ export function ExpenseSumBarChart({expenseSheet}) {
                 type = "bar"
                 height = {chartHeight}
                 options = {{
-/*                    plotOptions: {
+                    /*plotOptions: {
                         bar: {
                             horizontal: true,
                         }

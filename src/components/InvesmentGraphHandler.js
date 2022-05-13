@@ -181,6 +181,7 @@ function runCalculationsOnInvestmentData(investmentData){
 }
 
 function addInvestment(investmentData, investmentsState, setInvestmentsState, graphKey, setGraphKey){
+    cc(investmentData);
     investmentData.key = graphKey;
     setGraphKey(graphKey+1);
 

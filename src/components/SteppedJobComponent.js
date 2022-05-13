@@ -4,7 +4,7 @@ import {handleJobDelete, isNumeric} from "./jobssharedfunctions";
 import {SteppedBarChart, SteppedSumBarChart} from "../graphs/IncomeGraphs";
 import {CreateSteppedJobIncomeForm} from "../Career";
 
-//let cc = console.log;
+let cc = console.log;
 var steppedKey = 0;
 let lengthOfGraphInYears = new JobDataHandler();
 lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
@@ -118,14 +118,34 @@ export function runCalculationsOnSteppedData(jobData){
 }
 
 function updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDataState){
+
+    let newJobData = {};
+
+    jobData.forEach((e) => { // Correcting data format error; converts from [[k:v]] to {k:v}
+        for(const [k, v] of Object.entries(e)){
+            newJobData[k] = v;
+        }
+    });
+
+
     let extantJobs = [...steppedJobDataState];
 
     if (steppedJobDataState.length === 0){
-        setSteppedJobDataState(jobData);
+        setSteppedJobDataState([newJobData]);
     } else {
-        let combinedJobs = [...extantJobs, ...jobData];
+        let combinedJobs = [...extantJobs, newJobData];
         setSteppedJobDataState(combinedJobs);
     }
+
+    cc(steppedJobDataState)
+
+    /* From react chat:
+    setSteppedJobDataState((prevSteppedJobData) =>
+        prevSteppedJobData.length === 0
+            ? jobData
+            : prevSteppedJobData.concat(jobData)
+    );*/
+//        localStorage.setItem("steppedJob", JSON.stringify(steppedJobDataState));
 }
 
 function SteppedGraph({steppedJobDataState, setSteppedJobDataState}){
