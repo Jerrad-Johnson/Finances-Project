@@ -1,4 +1,29 @@
+let cc = console.log
+
 function Login(){
+
+    fetch('', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            name: 'User'
+        })
+    }).then(res => {
+        cc(res)
+        //return res.json();
+    })//.then(data => console.log(data));
+
+/*    fetch('http://192.168.0.120:80/php/setupTables.php', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            name: 'User'
+        })
+    }).then(res => {
+        return res.json();
+    }).then(data => console.log(data));*/
+
     return (
       <div>
           <br />
