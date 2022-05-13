@@ -8,8 +8,8 @@ import {useLocalStorage} from "./hooks/useLocalStorage";
 let cc = console.log;
 
 function Investments(){
-    let [investmentsState, setInvestmentsState] = useLocalStorage("investmentdata", localStorage.getItem("investmentdata") || []);
-    let [graphKey, setGraphKey] = useLocalStorage("investmentgraphkey", localStorage.getItem("investmentgraphkey") || 0);
+    let [investmentsState, setInvestmentsState] = useLocalStorage("investmentdata", localStorage.getItem("investmentdata") ?? []);
+    let [graphKey, setGraphKey] = useLocalStorage("investmentgraphkey", localStorage.getItem("investmentgraphkey") ?? 0);
 
     return (
       <div id={"investmentcontainer"}>

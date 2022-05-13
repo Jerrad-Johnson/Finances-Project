@@ -13,7 +13,7 @@ function incrementExpenseSheetKey(){
 function Expenses(){
 
     const [expenseFieldsState, setExpenseFieldsState] = useState([0]);
-    const [expensesState, setExpensesState] = useLocalStorage("expensedata", localStorage.getItem("expensedata") || []);
+    const [expensesState, setExpensesState] = useLocalStorage("expensedata", localStorage.getItem("expensedata") ?? []);
 
     return (
         <>
