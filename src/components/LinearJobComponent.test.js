@@ -86,7 +86,7 @@ test("Check for data match after running calculations.", () => {
         incomeIncreasePerYear: 7.14,
         title: "Wal-Mart",
         key: 0,
-        linearIncomeSum: 2250,
+        sum: 2250,
         sumIncomeByYear: [100, 207, 321, 442, 571, 707, 850, 1000, 1157, 1321, 1492, 1671, 1857, 2050, 2250],
         yearIncomeBegins: 0,
         yearToIncomeCeiling: 14,

@@ -11,7 +11,6 @@ function sortFinancialData(financialData){
     return financialData;
 }
 
-
 function SelectOptions({financialData}){
 
     let printToDom = financialData.map((entry, index) => {
@@ -29,7 +28,7 @@ function SelectOptions({financialData}){
 
 
 function IncomeSum({incomeData}){
-    //cc(incomeData)
+    cc(incomeData)
 
     return(
       <>

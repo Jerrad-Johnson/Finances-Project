@@ -166,17 +166,17 @@ class JobDataHandler {
     }
 
     sumIncomeFromLinearJob(jobs){
-        let sum = 0;
+        let countSum = 0;
         let jobsToBeReturned = [];
 
         jobs.forEach(job => {
             for (let i = 0; i < this.graphMaxNumberOfYears; i++){
-                sum = sum + job.incomeInGraphYearsNumberOfSteps[i];
+                countSum = countSum + job.incomeInGraphYearsNumberOfSteps[i];
             }
 
-            job.linearIncomeSum = sum;
+            job.sum = countSum;
             jobsToBeReturned.push(job);
-            sum = 0;
+            countSum = 0;
         });
 
         return jobsToBeReturned;

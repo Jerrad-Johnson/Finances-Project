@@ -101,7 +101,7 @@ test("Returns the sum of the user's income over the years", () => {
     }]
 
     let x = new JobDataHandler().sumIncomeFromLinearJob(job);
-    expect(x[0].linearIncomeSum).toEqual(2250);
+    expect(x[0].sum).toEqual(2250);
 });
 
 test("Returns the sum of the user's income over the years", () => {
