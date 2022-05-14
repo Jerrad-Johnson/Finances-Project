@@ -1,12 +1,25 @@
+import {useEffect, useState} from "react";
 let cc = console.log
 
+function sortFinancialData(financialData){
+    financialData.sort((a, b) => {
+        let x = a.title.toLowerCase();
+        let y = b.title.toLowerCase();
+        return (x > y ? 1 : -1);
+    });
+
+    return financialData;
+}
+
+
 function SelectOptions({financialData}){
-    let printToDom = financialData.map((e, index) => {
+
+    let printToDom = financialData.map((entry, index) => {
         return(
-           <option key={index}>{e.title}</option>
+           <option key={index}>{entry.title}</option>
         );
     });
-    
+
     return(
         <>
             {printToDom}
@@ -14,20 +27,38 @@ function SelectOptions({financialData}){
     );
 }
 
+
+function IncomeSum({incomeData}){
+    //cc(incomeData)
+
+    return(
+      <>
+      </>
+    );
+}
+
 function Evaluate(){
     let linearJob = JSON.parse(localStorage.getItem("linearjob"));
     let steppedJob = JSON.parse(localStorage.getItem("steppedjob"));
-    let investmentData = JSON.parse(localStorage.getItem("investmentdata"));
-    let expenseData = JSON.parse(localStorage.getItem("expensedata"));
-    let incomeData = [...linearJob, ...steppedJob];
+    let investmentData = sortFinancialData(JSON.parse(localStorage.getItem("investmentdata")));
+    let expenseData = sortFinancialData(JSON.parse(localStorage.getItem("expensedata")));
+    let incomeData = sortFinancialData([...linearJob, ...steppedJob]);
 
-    cc(incomeData)
+    let [incomeOptionState, setIncomeOptionState] = useState(incomeData[0].title ?? []);
+    let [expenseOptionState, setExpenseOptionState] = useState(expenseData[0].title ?? []);
+    let [investmentOptionState, setInvestmentOptionState] = useState(investmentData[0].title ?? []);
 
     return (
         <div className={"container"}>
+            <button onClick={(e) => {
+                e.preventDefault();
+                cc(incomeOptionState)
+            }}>Log</button>
             <br />
             <form>
-                <select className={"text-black"}>
+                <select className={"text-black"} onChange={(event) => {
+                    setIncomeOptionState(event.target.value);
+                }}>
                     <SelectOptions
                         financialData = {incomeData}
                     />
@@ -47,16 +78,20 @@ function Evaluate(){
                     />
                 </select>&nbsp;
                 Investments&nbsp;
+
                 <br />
                 <br />
                 <select className={"text-black"}>
                     <option>4</option>
                 </select>&nbsp;
                 Graph Type&nbsp;
+
             </form>
             <br />
             <br />
-            <span>Sums</span>
+            <IncomeSum
+                incomeData = {incomeData}
+            />
             <br />
             <span>Income $, Expenses $, Investment Value $</span>
             <br />
