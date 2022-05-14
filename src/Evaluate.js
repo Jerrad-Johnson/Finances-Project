@@ -73,6 +73,13 @@ function PrintSum({title, financialData, typeOfFinancialData, valueKeyToFind = "
 
 }*/
 
+function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOptionState, graphOptionState,
+                              incomeData, expenseData, investmentData}){
+
+
+
+}
+
 function Evaluate(){
     let linearJob = JSON.parse(localStorage.getItem("linearjob"));
     let steppedJob = JSON.parse(localStorage.getItem("steppedjob"));
@@ -164,7 +171,15 @@ function Evaluate(){
             <span>Difference $</span>
             <br />
             <br />
-            <span>Graph Here</span>
+            <EvaluationGraphs
+                incomeOptionState = {incomeOptionState}
+                expenseOptionState = {expenseOptionState}
+                investmentOptionState = {investmentOptionState}
+                graphOptionState = {graphOptionState}
+                incomeData = {incomeData}
+                expenseData = {expenseData}
+                investmentData = {investmentData}
+            />
 
 
         </div>
