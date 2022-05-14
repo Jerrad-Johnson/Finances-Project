@@ -27,24 +27,29 @@ function Evaluate(){
         <div className={"container"}>
             <br />
             <form>
-                <select>
+                <select className={"text-black"}>
                     <SelectOptions
                         financialData = {incomeData}
                     />
-                </select>
+                </select> &nbsp;
                 Income &nbsp;
 
-                <select>
-                    <option>2</option>
+                <select className={"text-black"}>
+                    <SelectOptions
+                        financialData = {expenseData}
+                    />
                 </select>&nbsp;
                 Expenses&nbsp;
-                <select>
-                    <option>3</option>
+
+                <select className={"text-black"}>
+                    <SelectOptions
+                        financialData = {investmentData}
+                    />
                 </select>&nbsp;
                 Investments&nbsp;
                 <br />
                 <br />
-                <select>
+                <select className={"text-black"}>
                     <option>4</option>
                 </select>&nbsp;
                 Graph Type&nbsp;
