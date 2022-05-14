@@ -66,7 +66,7 @@ export function handleSteppedJobSubmission(steppedJobDataState, setSteppedJobDat
 
 function setSteppedData(){
     let jobDataToBeReturned = [];
-    jobDataToBeReturned.jobTitle = document.querySelector('#steppedJobTitle').value;
+    jobDataToBeReturned.title = document.querySelector('#steppedJobTitle').value;
     let salaryAmountsNodes = document.querySelectorAll('.incomeSteppedJob');
     let salaryYearsNodes = document.querySelectorAll('.yearThisSteppedIncomeBegins');
     jobDataToBeReturned.salaryAmounts = [];
@@ -86,7 +86,7 @@ function setSteppedData(){
 export function checkSteppedData(jobData){
     let jobDataToBeReturned = [];
 
-    if ((jobData.jobTitle === undefined) || (jobData.jobTitle === '')) {
+    if ((jobData.title === undefined) || (jobData.title === '')) {
         throw new Error("Job Title not set.");
     }
 

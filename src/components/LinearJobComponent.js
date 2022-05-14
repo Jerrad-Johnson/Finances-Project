@@ -23,7 +23,7 @@ function setLinearJobData(){
     let jobDataToBeReturned = [];
     jobDataToBeReturned.yearToIncomeCeiling = +document.querySelector('#yearToIncomeCeiling').value -1;
     jobDataToBeReturned.yearIncomeBegins = +document.querySelector('#yearIncomeBegins').value -1;
-    jobDataToBeReturned.jobTitle = document.querySelector('#linearJobTitle').value;
+    jobDataToBeReturned.title = document.querySelector('#linearJobTitle').value;
     jobDataToBeReturned.incomeCeiling = +document.querySelector('#incomeCeiling').value;
     jobDataToBeReturned.incomeImmediate = +document.querySelector('#incomeImmediate').value;
 
@@ -34,7 +34,7 @@ export function checkLinearJobData(jobData){
 
     let jobDataToBeReturned = [];
 
-        if ((jobData.jobTitle === undefined) || (jobData.jobTitle === '')){ //TODO Should be !==
+        if ((jobData.title === undefined) || (jobData.title === '')){ //TODO Should be !==
             throw new Error("Job Title not set.");
         } else if (!isNumeric(jobData.incomeCeiling)) {
             throw new Error("Ceiling Income NaN.");

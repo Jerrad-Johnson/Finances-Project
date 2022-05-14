@@ -38,7 +38,7 @@ class JobDataHandler {
         let steppedIncomeJobs = [];
 
         this.jobsData.forEach(job => {
-            if (job.jobTitle) {
+            if (job.title) {
                 steppedIncomeJobs.push(job);
             }
         });
