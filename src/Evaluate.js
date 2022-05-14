@@ -56,7 +56,7 @@ function Evaluate(){
         <div className={"container"}>
             <button onClick={(e) => {
                 e.preventDefault();
-                cc(investmentOptionState)
+                cc(expenseData)
             }}>Log</button>
             <br />
 
@@ -101,7 +101,12 @@ function Evaluate(){
             <PrintSum
                 title = {incomeOptionState}
                 financialData= {incomeData}
-            />
+            /> Income
+            <br />
+            <PrintSum
+                title = {expenseOptionState}
+                financialData= {expenseData}
+            /> Expenses
             <br />
             <span>Income $, Expenses $, Investment Value $</span>
             <br />

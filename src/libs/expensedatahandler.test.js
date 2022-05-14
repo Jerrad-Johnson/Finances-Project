@@ -39,7 +39,7 @@ test("Check runningSumEachEntry", () => {
 
 test("Check finalSumEachEntry", () => {
    let expected = [3000, 18000, 57600, 198000, 4000];
-   expect(getKey(expensehandler.finalSumEachEntry(sheet), "finalSums")).toEqual(expected);
+   expect(getKey(expensehandler.finalSumEachEntry(sheet), "sum")).toEqual(expected);
 });
 
 test('Check createRunningSumObjectForGraph', () => {

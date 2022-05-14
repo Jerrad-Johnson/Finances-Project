@@ -68,10 +68,10 @@ export class ExpenseDataHandler {
     }
 
     finalSumEachEntry(sheet) {
-        sheet.finalSums = [];
+        sheet.sum = [];
 
         for (let i = 0; i < sheet.numberOfEntries; i++) {
-            sheet.finalSums.push(sheet.runningSumsByYear[i].at(-1));
+            sheet.sum.push(sheet.runningSumsByYear[i].at(-1));
         }
 
         return sheet;
