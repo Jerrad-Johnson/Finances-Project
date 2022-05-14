@@ -26,20 +26,52 @@ function SelectOptions({financialData}){
     );
 }
 
+function GraphOptions(){
+    return (
+        <>
+            <option>Yearly Sum</option>
+            <option>Running Sum</option>
+        </>
+    );
+}
 
-function PrintSum({title, financialData}){
+
+function PrintSum({title, financialData, typeOfFinancialData, valueKeyToFind = "sum"}){
     let getCurrentEntry = financialData.filter((e) => {
        return e.title == title;
     });
 
-    let sum = getCurrentEntry[0].sum;
+    let sum = getCurrentEntry[0][valueKeyToFind];
 
     return(
-      <>
+      <span className={"sum" + typeOfFinancialData}>
           {sum}
-      </>
+      </span>
     );
 }
+
+/*function onChangeFinancialSheet(setCombinedFinancialSheetsState, incomeOptionState, expenseOptionState,
+                                investmentOptionState, incomeData, expenseData, investmentData){
+
+    let incomeSheet = incomeData.filter((e) => {
+        return e.title == incomeOptionState;
+    });
+
+    let expenseSheet = expenseData.filter((e) => {
+        return e.title == expenseOptionState;
+    });
+
+    let investmentSheet = investmentData.filter((e) => {
+        return e.title == investmentOptionState;
+    });
+
+    let combinedFinancialSheets = [incomeSheet, expenseSheet, investmentSheet];
+
+    getSingle
+
+    setCombinedFinancialSheetsState(combinedFinancialSheets);
+
+}*/
 
 function Evaluate(){
     let linearJob = JSON.parse(localStorage.getItem("linearjob"));
@@ -47,22 +79,33 @@ function Evaluate(){
     let investmentData = sortFinancialData(JSON.parse(localStorage.getItem("investmentdata")));
     let expenseData = sortFinancialData(JSON.parse(localStorage.getItem("expensedata")));
     let incomeData = sortFinancialData([...linearJob, ...steppedJob]);
+    //cc(investmentData)
+    /*let initialCombinedFinancialSheetState = [
+        investmentData[0], expenseData[0], incomeData[0]
+    ];*/
+
+
+    //cc(initialCombinedFinancialSheetState)
 
     let [incomeOptionState, setIncomeOptionState] = useState(incomeData[0].title ?? []);
     let [expenseOptionState, setExpenseOptionState] = useState(expenseData[0].title ?? []);
     let [investmentOptionState, setInvestmentOptionState] = useState(investmentData[0].title ?? []);
+    let [graphOptionState, setGraphOptionState] = useState("Yearly Sum");
+    //let [combinedFinancialSheetsState, setCombinedFinancialSheetsState] = useState(initialCombinedFinancialSheetState);
 
     return (
         <div className={"container"}>
             <button onClick={(e) => {
                 e.preventDefault();
-                cc(expenseData)
+                cc(graphOptionState);
             }}>Log</button>
             <br />
 
             <form>
                 <select className={"text-black"} onChange={(event) => {
                     setIncomeOptionState(event.target.value);
+                    /*onChangeFinancialSheet(setCombinedFinancialSheetsState, incomeOptionState, expenseOptionState,
+                        investmentOptionState, incomeData, expenseData, investmentData);*/
                 }}>
                     <SelectOptions
                         financialData = {incomeData}
@@ -72,6 +115,8 @@ function Evaluate(){
 
                 <select className={"text-black"} onChange={(event) => {
                     setExpenseOptionState(event.target.value);
+                   /* onChangeFinancialSheet(setCombinedFinancialSheetsState, incomeOptionState, expenseOptionState,
+                        investmentOptionState, incomeData, expenseData, investmentData);*/
                 }}>
                     <SelectOptions
                         financialData = {expenseData}
@@ -81,6 +126,8 @@ function Evaluate(){
 
                 <select className={"text-black"} onChange={(event) => {
                     setInvestmentOptionState(event.target.value);
+                    /*onChangeFinancialSheet(setCombinedFinancialSheetsState, incomeOptionState, expenseOptionState,
+                        investmentOptionState, incomeData, expenseData, investmentData);*/
                 }}>
                     <SelectOptions
                         financialData = {investmentData}
@@ -90,8 +137,10 @@ function Evaluate(){
 
                 <br />
                 <br />
-                <select className={"text-black"}>
-                    <option>4</option>
+                <select className={"text-black"} onChange={(event) => {
+                    setGraphOptionState(event.target.value);
+                }}>
+                    <GraphOptions />
                 </select>&nbsp;
                 Graph Type&nbsp;
 
@@ -100,12 +149,14 @@ function Evaluate(){
             <br />
             <PrintSum
                 title = {incomeOptionState}
-                financialData= {incomeData}
+                financialData = {incomeData}
+                typeOfFinancialData = {"income"}
             /> Income
             <br />
             <PrintSum
                 title = {expenseOptionState}
-                financialData= {expenseData}
+                financialData = {expenseData}
+                typeOfFinancialData = {"expense"}
             /> Expenses
             <br />
             <span>Income $, Expenses $, Investment Value $</span>
