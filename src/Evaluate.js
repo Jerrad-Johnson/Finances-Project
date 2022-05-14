@@ -52,9 +52,10 @@ function Evaluate(){
         <div className={"container"}>
             <button onClick={(e) => {
                 e.preventDefault();
-                cc(incomeOptionState)
+                cc(investmentOptionState)
             }}>Log</button>
             <br />
+
             <form>
                 <select className={"text-black"} onChange={(event) => {
                     setIncomeOptionState(event.target.value);
@@ -65,14 +66,18 @@ function Evaluate(){
                 </select> &nbsp;
                 Income &nbsp;
 
-                <select className={"text-black"}>
+                <select className={"text-black"} onChange={(event) => {
+                    setExpenseOptionState(event.target.value);
+                }}>
                     <SelectOptions
                         financialData = {expenseData}
                     />
                 </select>&nbsp;
                 Expenses&nbsp;
 
-                <select className={"text-black"}>
+                <select className={"text-black"} onChange={(event) => {
+                    setInvestmentOptionState(event.target.value);
+                }}>
                     <SelectOptions
                         financialData = {investmentData}
                     />
