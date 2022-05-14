@@ -27,11 +27,16 @@ function SelectOptions({financialData}){
 }
 
 
-function IncomeSum({incomeData}){
-    cc(incomeData)
+function PrintSum({title, financialData}){
+    let getCurrentEntry = financialData.filter((e) => {
+       return e.title == title;
+    });
+
+    let sum = getCurrentEntry[0].sum;
 
     return(
       <>
+          {sum}
       </>
     );
 }
@@ -93,8 +98,9 @@ function Evaluate(){
             </form>
             <br />
             <br />
-            <IncomeSum
-                incomeData = {incomeData}
+            <PrintSum
+                title = {incomeOptionState}
+                financialData= {incomeData}
             />
             <br />
             <span>Income $, Expenses $, Investment Value $</span>
