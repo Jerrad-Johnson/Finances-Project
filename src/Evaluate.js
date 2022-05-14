@@ -12,6 +12,13 @@ function sortFinancialData(financialData){
 }
 
 function SelectOptions({financialData}){
+    if (!financialData[0]) {
+        return (
+            <>
+                <option>No Data</option>
+            </>
+        );
+    }
 
     let printToDom = financialData.map((entry, index) => {
         return(
