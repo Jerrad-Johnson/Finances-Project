@@ -2,13 +2,13 @@ import { render, screen } from '@testing-library/react';
 import {runCalculationsOnSteppedData, checkSteppedData} from "./SteppedJobComponent";
 
 let jobData = {
-    jobTitle: "Wally",
+    title: "Wally",
     salaryYears: [2, 5],
     salaryAmounts: [50000, 100000],
 };
 
 let checkedJobData = [{
-    jobTitle: "Wally",
+    title: "Wally",
     key: 0,
     salaryYears: [2, 5],
     salaryAmounts: [50000, 100000],
@@ -21,12 +21,12 @@ test("Good in, Good out -- error checks for checkSteppedJobData", () => {
 
 test("Error checks in checkSteppedJobData", () => {
     expect(() => {
-        jobData.jobTitle = '';
+        jobData.title = '';
         checkSteppedData(jobData);
     }).toThrow("Job Title not set.");
 
     expect(() => {
-        jobData.jobTitle = "Wally";
+        jobData.title = "Wally";
         jobData.salaryAmounts = [5, "lol"];
         checkSteppedData(jobData);
     }).toThrow("Salary fields must be filled, and contain only numbers.");
@@ -43,7 +43,7 @@ test("Error checks in checkSteppedJobData", () => {
 
 test("Good in, Good out; runCalculationsOnCheckedData", () => {
     let jobDataReturned = [{
-        jobTitle: "Wally",
+        title: "Wally",
         key: 0,
         pass: true,
         salaryAmounts: [0, 50000, 50000, 50000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000],

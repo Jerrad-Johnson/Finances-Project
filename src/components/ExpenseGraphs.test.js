@@ -8,12 +8,11 @@ var expenseData = {
 };
 
 test("Check title, begin vs. end year ranges, and amounts entered.", () => {
-
     expect(() => {
-        expenseData.expenseSheetTitle = '';
+        expenseData.title = '';
         checkSubmissionData(expenseData);
     }).toThrow("Please enter a title.");
-    expenseData.expenseSheetTitle = "Coder"
+    expenseData.title = "Coder"
 
     expect(() => {
        expenseData.beginYears = [15, 15];

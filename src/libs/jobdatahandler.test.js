@@ -175,7 +175,7 @@ var jobsDataWithSteppedEntry = [{
 var steppedJobData =[{
     salaryYears: [2, 5, 8],
     salaryAmounts: [50000, 80000, 85000],
-    jobTitle: "Salesman",
+    title: "Salesman",
     key: 0,
 }];
 

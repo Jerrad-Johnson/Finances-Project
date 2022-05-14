@@ -2,7 +2,7 @@ import {runCalculationsOnLinearData, checkLinearJobData} from "./LinearJobCompon
 
 test("Good in, Good out -- error checks from checkLinearJobData", () => {
     let jobData = {
-        jobTitle: "Wal-Mart",
+        title: "Wal-Mart",
         incomeCeiling: 200,
         incomeImmediate: 100,
         yearToIncomeCeiling: 7 -1, // LinearJobComponent decrements by 1
@@ -10,7 +10,7 @@ test("Good in, Good out -- error checks from checkLinearJobData", () => {
     };
     let x = checkLinearJobData(jobData);
 
-    expect(x[0].jobTitle).toBe("Wal-Mart");
+    expect(x[0].title).toBe("Wal-Mart");
     expect(x[0].incomeCeiling).toBe(+200);
     expect(x[0].incomeImmediate).toBe(+100);
     expect(x[0].yearToIncomeCeiling).toBe(+6);
@@ -20,7 +20,7 @@ test("Good in, Good out -- error checks from checkLinearJobData", () => {
 test("Test error checks in checkLinearData.", () => {
 
     let jobDataErrorChecks = {
-        jobTitle: "Wal-Mart",
+        title: "Wal-Mart",
         incomeCeiling: 200,
         incomeImmediate: 100,
         yearToIncomeCeiling: 7 -1,
@@ -28,12 +28,12 @@ test("Test error checks in checkLinearData.", () => {
     };
 
     expect(() => {
-        jobDataErrorChecks.jobTitle = '';
+        jobDataErrorChecks.title = '';
         checkLinearJobData(jobDataErrorChecks)
     }).toThrow("Job Title not set.");
 
     expect(() => {
-        jobDataErrorChecks.jobTitle = 'Wal-Mart';
+        jobDataErrorChecks.title = 'Wal-Mart';
         jobDataErrorChecks.incomeImmediate = "";
         checkLinearJobData(jobDataErrorChecks);
     }).toThrow("Starting income NaN.");
@@ -71,7 +71,7 @@ test("Test error checks in checkLinearData.", () => {
 
 test("Check for data match after running calculations.", () => {
     let jobData = [{
-        jobTitle: "Wal-Mart",
+        title: "Wal-Mart",
         incomeCeiling: 200,
         incomeImmediate: 100,
         yearToIncomeCeiling: 14,
@@ -84,7 +84,7 @@ test("Check for data match after running calculations.", () => {
         incomeImmediate: 100,
         incomeInGraphYearsNumberOfSteps: [100, 107, 114, 121, 129, 136, 143, 150, 157, 164, 171, 179, 186, 193, 200],
         incomeIncreasePerYear: 7.14,
-        jobTitle: "Wal-Mart",
+        title: "Wal-Mart",
         key: 0,
         linearIncomeSum: 2250,
         sumIncomeByYear: [100, 207, 321, 442, 571, 707, 850, 1000, 1157, 1321, 1492, 1671, 1857, 2050, 2250],

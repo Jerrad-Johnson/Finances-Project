@@ -45,7 +45,7 @@ function getExpenseDataFromFields(){
     let paymentAmount = document.querySelectorAll(".payment");
     let expenseLabel = document.querySelectorAll(".label");
     let expenseData = {
-        expenseSheetTitle: [expenseTitle.value],
+        title: expenseTitle.value,
         beginYears: [],
         endYears: [],
         frequency: [],
@@ -80,7 +80,7 @@ function getExpenseDataFromFields(){
 export function checkSubmissionData(expenseData){
     let length = expenseData.beginYears.length;
 
-    if (expenseData.expenseSheetTitle == (undefined || '')){
+    if (expenseData.title == (undefined || '')){
         expenseData.pass = false;
         throw new Error("Please enter a title.");
     }
