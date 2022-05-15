@@ -1,4 +1,5 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
+import Chart from "react-apexcharts";
 let cc = console.log
 
 function sortFinancialData(financialData){
@@ -59,26 +60,97 @@ function PrintSum({title, financialData, typeOfFinancialData, valueKeyToFind = "
     );
 }
 
-
 function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOptionState, graphOptionState,
                               incomeData, expenseData, investmentData}){
 
+    incomeData = findCurrentFinancialSheets(incomeData, incomeOptionState);
+    expenseData = findCurrentFinancialSheets(expenseData, expenseOptionState);
+    investmentData = findCurrentFinancialSheets(investmentData, investmentOptionState);
 
+    if (incomeData[0]){ incomeData = incomeData[0] }
+    if (expenseData[0]) { expenseData = expenseData[0] }
+    if (investmentData[0]) { investmentData = investmentData[0] }
 
+    let findLength = findNumberOfSheetTypesInvolved(incomeOptionState, expenseOptionState, investmentOptionState);
+
+    /*let graphData = combineData(incomeData, expenseData, investmentData, graphOptionState)
+
+    function combineData(incomeData, expenseData, investmentData, graphOptionState){
+
+        let yearlyTotals = [];
+        yearlyTotals.data = [];
+
+        if (incomeData.sumIncomeByYear) { yearlyTotals[0].data.push(incomeData.sumIncomeByYear); }
+        if (incomeData.sumIncomeByYear) { yearlyTotals.data.push(incomeData.sumIncomeByYear); }
+
+            cc (incomeData.sumIncomeByYear)
+        cc(yearlyTotals)
+
+        switch (graphOptionState){
+            case "":
+        }
+    }
+
+/*    let tempData = [{
+        data: [50, 50, 50], [50, 50, 50],
+    }];*/
+
+    //cc(expenseData.graphSumObject)
+
+    let x = [
+        {data: [123, 123, 123],
+        name: "daw"}
+    ];
+
+    //cc(x)
+
+    return (
+        <div>
+            <Chart
+                series = {x}
+                type = "bar"
+                height = "300"
+                options = {{
+
+                    colors: [
+                        '#00aa00', '#880000', '#880000',
+                    ],
+                    chart: {
+                        stacked: true,
+                    },
+                    xaxis: {
+                        categories: investmentData.yearsNumbered
+                    }
+                }}
+            />
+        </div>
+    );
+}
+
+function findCurrentFinancialSheets(sheets, current){
+    let toBeReturned = sheets.filter((sheet) => {
+        return sheet.title == current;
+    });
+
+    return toBeReturned;
 }
 
 function checkExistence(financialData){
     let toBeReturned;
 
-    if (financialData[0] !== undefined){
-        if(financialData[0].title !== undefined){
-            toBeReturned = financialData[0].title;
-        }
-    } else {
-        toBeReturned = [];
-    }
+    financialData[0]?.title ? toBeReturned = financialData[0].title : toBeReturned = "No Data";
 
     return toBeReturned;
+}
+
+function findNumberOfSheetTypesInvolved(incomeOptionState, expenseOptionState, investmentOptionState){
+    let x = [incomeOptionState, expenseOptionState, investmentOptionState];
+
+    x = x.filter((e) => {
+        return (e !== "No Data");
+    });
+
+    return x = x.length;
 }
 
 function Evaluate(){
@@ -97,7 +169,7 @@ function Evaluate(){
         <div className={"container"}>
             <button onClick={(e) => {
                 e.preventDefault();
-                cc(graphOptionState);
+                cc(expenseOptionState);
             }}>Log</button>
             <br />
 
@@ -121,7 +193,7 @@ function Evaluate(){
                 Expenses&nbsp;
 
                 <select className={"text-black"} onChange={(event) => {
-                    /*setInvestmentOptionState(event.target.value);*/
+                    setInvestmentOptionState(event.target.value);
                 }}>
                     <SelectOptions
                         financialData = {investmentData}
@@ -161,7 +233,7 @@ function Evaluate(){
             <EvaluationGraphs
                 incomeOptionState = {incomeOptionState}
                 expenseOptionState = {expenseOptionState}
-                /*investmentOptionState = {investmentOptionState}*/
+                investmentOptionState = {investmentOptionState}
                 graphOptionState = {graphOptionState}
                 incomeData = {incomeData}
                 expenseData = {expenseData}
