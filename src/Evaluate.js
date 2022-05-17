@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
 import Chart from "react-apexcharts";
+import jobdatahandler from "./libs/jobdatahandler";
 let cc = console.log
+var length = new jobdatahandler;
+length = length.graphMaxNumberOfYears;
 
 function sortFinancialData(financialData){
     financialData.sort((a, b) => {
@@ -37,7 +40,7 @@ function SelectOptions({financialData}){
 function GraphOptions(){
     return (
         <>
-            <option>Yearly Sum</option>
+            <option>Yearly In Pocket</option>
             <option>Running Sum</option>
         </>
     );
@@ -63,60 +66,32 @@ function PrintSum({title, financialData, typeOfFinancialData, valueKeyToFind = "
 function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOptionState, graphOptionState,
                               incomeData, expenseData, investmentData}){
 
+    let foundLength = findNumberOfSheetTypesInvolved(incomeOptionState, expenseOptionState, investmentOptionState);
+    //let chartDataArray = Array(foundLength); Useless ?
+
     incomeData = findCurrentFinancialSheets(incomeData, incomeOptionState);
     expenseData = findCurrentFinancialSheets(expenseData, expenseOptionState);
     investmentData = findCurrentFinancialSheets(investmentData, investmentOptionState);
 
-    if (incomeData[0]){ incomeData = incomeData[0] }
+    if (incomeData[0]) { incomeData = incomeData[0] }
     if (expenseData[0]) { expenseData = expenseData[0] }
     if (investmentData[0]) { investmentData = investmentData[0] }
 
-    let findLength = findNumberOfSheetTypesInvolved(incomeOptionState, expenseOptionState, investmentOptionState);
+    let graphData = combineData(incomeData, expenseData, investmentData, graphOptionState)
 
-    /*let graphData = combineData(incomeData, expenseData, investmentData, graphOptionState)
-
-    function combineData(incomeData, expenseData, investmentData, graphOptionState){
-
-        let yearlyTotals = [];
-        yearlyTotals.data = [];
-
-        if (incomeData.sumIncomeByYear) { yearlyTotals[0].data.push(incomeData.sumIncomeByYear); }
-        if (incomeData.sumIncomeByYear) { yearlyTotals.data.push(incomeData.sumIncomeByYear); }
-
-            cc (incomeData.sumIncomeByYear)
-        cc(yearlyTotals)
-
-        switch (graphOptionState){
-            case "":
-        }
-    }
-
-/*    let tempData = [{
-        data: [50, 50, 50], [50, 50, 50],
-    }];*/
-
-    //cc(expenseData.graphSumObject)
-
-    let x = [
-        {data: [123, 123, 123],
-        name: "daw"}
-    ];
-
-    //cc(x)
+    //TODO Get yearsNumbered directly.
 
     return (
         <div>
             <Chart
-                series = {x}
+                series = {graphData}
                 type = "bar"
                 height = "300"
                 options = {{
 
-                    colors: [
-                        '#00aa00', '#880000', '#880000',
-                    ],
+                    colors: graphData.colors,
                     chart: {
-                        stacked: true,
+                        stacked: false,
                     },
                     xaxis: {
                         categories: investmentData.yearsNumbered
@@ -125,6 +100,54 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
             />
         </div>
     );
+}
+
+function combineData(incomeData, expenseData, investmentData, graphOptionState, foundLength){
+    let x = [];
+    let y = {};
+    y.colors = [];
+    let color = [];
+
+    switch (graphOptionState){
+        case "Yearly In Pocket":
+            if (isObject(incomeData)){
+                y.data = incomeData.incomeInGraphYearsNumberOfSteps;
+                y.name = "Income"
+                y.colors = "#00ff00";
+                x.push(y);
+                y = {};
+                color = [];
+            }
+
+            if (isObject(investmentData)){
+                y.data = combineSinglePropertyArrays(investmentData.arrayPullValueByYear);
+                y.name = "Investment"
+                y.colors = "#00ff00";
+                x.push(y);
+                y = {};
+                color = [];
+            }
+
+            if (isObject(expenseData)){
+                y.data = combineMultiplePropertyArrays(expenseData.graphSumObject);
+                y.name = "Expense"
+                y.colors = "#ff0000";
+                x.push(y);
+                y = {};
+                color = [];
+            }
+            break;
+    }
+    return x;
+}
+
+
+function isObject(x){
+    if(typeof x === 'object' && !Array.isArray(x) && x !== null){
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function findCurrentFinancialSheets(sheets, current){
@@ -153,6 +176,39 @@ function findNumberOfSheetTypesInvolved(incomeOptionState, expenseOptionState, i
     return x = x.length;
 }
 
+function combineSinglePropertyArrays(financialDataProperty){
+    let x = [];
+
+    for (let j = 0; j < length; j++){
+        x[j] = 0;
+    }
+
+    for (let i = 0; i < financialDataProperty.length; i++) {
+        for (let j = 0; j < length; j++) {
+            x[j] = x[j] + financialDataProperty[i][j];
+        }
+    }
+
+    return x;
+}
+
+function combineMultiplePropertyArrays(financialDataProperties){
+    let x = [];
+
+    for (let j = 0; j < length; j++){
+        x[j] = 0;
+    }
+
+    for (let i = 0; i < financialDataProperties.length; i++) {
+
+        for (let j = 0; j < length; j++) {
+            x[j] = x[j] + financialDataProperties[i].data[j];
+        }
+    }
+
+    return x;
+}
+
 function Evaluate(){
     let linearJob = JSON.parse(localStorage.getItem("linearjob"));
     let steppedJob = JSON.parse(localStorage.getItem("steppedjob"));
@@ -163,13 +219,13 @@ function Evaluate(){
     let [incomeOptionState, setIncomeOptionState] = useState(checkExistence(incomeData));
     let [expenseOptionState, setExpenseOptionState] = useState(checkExistence(expenseData));
     let [investmentOptionState, setInvestmentOptionState] = useState(checkExistence(investmentData));
-    let [graphOptionState, setGraphOptionState] = useState("Yearly Sum");
+    let [graphOptionState, setGraphOptionState] = useState("Yearly In Pocket");
 
     return (
         <div className={"container"}>
             <button onClick={(e) => {
                 e.preventDefault();
-                cc(expenseOptionState);
+                cc(investmentData);
             }}>Log</button>
             <br />
 

@@ -19,8 +19,9 @@ class InvestmentDataHandler {
         this.calculateValuesAcrossTheYears(this.investmentData);
         this.createArraysAdditionalInvestmentValues(this.investmentData);
         this.runningInvestmentValue(this.investmentData);
-        //this.createArraysSansSameYearAdlInvestment(this.investmentData);
+        this.createArraysSansFirstYearAdlInvestment(this.investmentData);
         this.investmentIncreaseByYear(this.investmentData);
+        this.createArraySansAllYearAdlInvestment(this.investmentData);
         this.pullValueByYear(this.investmentData);
         this.runningPullSum(this.investmentData);
         this.withdrawlValue(this.investmentData);
@@ -60,7 +61,8 @@ class InvestmentDataHandler {
         investmentData.arrayPullPercentagesByYear = [];
         investmentData.arrayRunningInvestmentValue = [];
         investmentData.arrayRunningInvestmentValueMinusSameYearAdlInvestment = [];
-        investmentData.arrayInvestmentIncreaseByYearMinusSameYearAdlInvestment = []
+        investmentData.arrayInvestmentIncreaseByYearMinusFirstYearAdlInvestment = [];
+        investmentData.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment = [];
         investmentData.arrayPullValueByYear = [];
         investmentData.arrayRunningPullSums = [];
         investmentData.arrayInvestmentIncreaseByYear = [];
@@ -72,7 +74,8 @@ class InvestmentDataHandler {
             investmentData.arrayReinvestPercentagesByYear[i] = [];
             investmentData.arrayRunningInvestmentValue[i] = [];
             investmentData.arrayRunningInvestmentValueMinusSameYearAdlInvestment[i] = [];
-            investmentData.arrayInvestmentIncreaseByYearMinusSameYearAdlInvestment[i] = [];
+            investmentData.arrayInvestmentIncreaseByYearMinusFirstYearAdlInvestment[i] = [];
+            investmentData.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment[i] = [];
             investmentData.arrayPullValueByYear[i] = [];
             investmentData.arrayRunningPullSums[i] = [];
             investmentData.arrayInvestmentIncreaseByYear[i] = [];
@@ -83,7 +86,8 @@ class InvestmentDataHandler {
                 investmentData.arrayReinvestPercentagesByYear[i][j] = 0;
                 investmentData.arrayRunningInvestmentValue[i][j] = 0;
                 investmentData.arrayRunningInvestmentValueMinusSameYearAdlInvestment[i][j] = 0;
-                investmentData.arrayInvestmentIncreaseByYearMinusSameYearAdlInvestment[i][j] = 0;
+                investmentData.arrayInvestmentIncreaseByYearMinusFirstYearAdlInvestment[i][j] = 0;
+                investmentData.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment[i][j] = 0;
                 investmentData.arrayPullValueByYear[i][j] = 0;
                 investmentData.arrayRunningPullSums[i][j] = 0;
                 investmentData.arrayInvestmentIncreaseByYear[i][j] = 0;
@@ -233,7 +237,7 @@ class InvestmentDataHandler {
         return investmentData;
     }
 
-    createArraysSansSameYearAdlInvestment(investmentData){ // Note: Created these by mistake and currently unused. But may be useful for some graphs.
+    createArraysSansFirstYearAdlInvestment(investmentData){ // Note: Created these by mistake and currently unused. But may be useful for some graphs.
         for (let i = 0; i < this.length; i++){
             investmentData.arrayRunningInvestmentValueMinusSameYearAdlInvestment[i][investmentData.yearsBegin[i] -1]
                 = +investmentData.amounts[i];
@@ -250,15 +254,18 @@ class InvestmentDataHandler {
 
         for (let i = 0; i < this.length; i++) {
             for (let j = 1; j < this.graphMaxNumberOfYears; j++) {
-                investmentData.arrayInvestmentIncreaseByYearMinusSameYearAdlInvestment[i][j] =
+                /*let x =*/
+                investmentData.arrayInvestmentIncreaseByYearMinusFirstYearAdlInvestment[i][j] =
                     investmentData.arrayRunningInvestmentValueMinusSameYearAdlInvestment[i][j] -
-                    investmentData.arrayRunningInvestmentValueMinusSameYearAdlInvestment[i][j - 1];
+                    investmentData.arrayRunningInvestmentValueMinusSameYearAdlInvestment[i][j -1];
+                /*if (x > 0) {
+                    investmentData.arrayInvestmentIncreaseByYearMinusFirstYearAdlInvestment[i][j] = x;
+                }*/
             }
         }
 
         return investmentData;
     }
-
 
     investmentIncreaseByYear(investmentData){
         for (let i = 0; i < this.length; i++){
@@ -268,6 +275,19 @@ class InvestmentDataHandler {
                 if (x >= 0) {
                     investmentData.arrayInvestmentIncreaseByYear[i][j] = x;
                 }
+            }
+        }
+
+        return investmentData;
+    }
+
+    createArraySansAllYearAdlInvestment(investmentData){
+        for (let i = 0; i < this.length; i++){
+            for (let j = 0; j < this.graphMaxNumberOfYears; j++){
+                investmentData.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment[i][j] =
+                    investmentData.arrayInvestmentIncreaseByYear[i][j] -
+                    investmentData.arrayAdditionalInvestment[i][j];
+
             }
         }
 
@@ -326,6 +346,8 @@ class InvestmentDataHandler {
        investmentData.arrayRunningPullSums = applyRoundingTwoDepthArray(investmentData.arrayRunningPullSums);
        investmentData.arrayRunningInvestmentValue = applyRoundingTwoDepthArray(investmentData.arrayRunningInvestmentValue);
        investmentData.withdrawlValue = applyRoundingSingleDepthArray(investmentData.withdrawlValue);
+       investmentData.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment = applyRoundingTwoDepthArray(investmentData.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment);
+       investmentData.arrayInvestmentIncreaseByYearMinusFirstYearAdlInvestment = applyRoundingTwoDepthArray(investmentData.arrayInvestmentIncreaseByYearMinusFirstYearAdlInvestment);
 
        function applyRoundingSingleDepthArray(arr){
            for (let i = 0; i < arr.length; i++) {
