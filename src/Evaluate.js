@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Chart from "react-apexcharts";
 import jobdatahandler from "./libs/jobdatahandler";
+import CalculateTaxes from "./libs/Taxes";
 let cc = console.log
 var length = new jobdatahandler;
 length = length.graphMaxNumberOfYears;
@@ -120,7 +121,7 @@ function combineData(incomeData, expenseData, investmentData, graphOptionState, 
             }
 
             if (isObject(investmentData)){
-                y.data = combineSinglePropertyArrays(investmentData.arrayPullValueByYear);
+                y.data = combineSinglePropertyArrays(investmentData.arrayPullValueByYear); // TODO Add withdraw
                 y.name = "Investment"
                 y.colors = "#00ff00";
                 x.push(y);
@@ -129,7 +130,7 @@ function combineData(incomeData, expenseData, investmentData, graphOptionState, 
             }
 
             if (isObject(expenseData)){
-                y.data = combineMultiplePropertyArrays(expenseData.graphSumObject);
+                y.data = combineMultiplePropertyArrays(expenseData.graphSumObject); // TODO Add investment expense
                 y.name = "Expense"
                 y.colors = "#ff0000";
                 x.push(y);
