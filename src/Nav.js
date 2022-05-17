@@ -5,10 +5,10 @@ function Nav() {
     return(
       <>
            <nav>
-              <Link to={"/Career.js"}>Career</Link> &nbsp;
-              <Link to={"/Expenses.js"}>Expenses</Link> &nbsp;
-              <Link to={"/Investments.js"}>Investments</Link> &nbsp;
-              <Link to={"/Evaluate.js"}>Evaluate</Link>
+              <Link to={"/Career"}>Career</Link> &nbsp;
+              <Link to={"/Expenses"}>Expenses</Link> &nbsp;
+              <Link to={"/Investments"}>Investments</Link> &nbsp;
+              <Link to={"/Evaluate"}>Evaluate</Link>
           </nav>
       </>
     );

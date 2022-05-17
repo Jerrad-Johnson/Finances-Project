@@ -210,12 +210,12 @@ function combineMultiplePropertyArrays(financialDataProperties){
 }
 
 function Evaluate(){
+
     let linearJob = JSON.parse(localStorage.getItem("linearjob"));
     let steppedJob = JSON.parse(localStorage.getItem("steppedjob"));
     let investmentData = sortFinancialData(JSON.parse(localStorage.getItem("investmentdata"))) ?? [];
     let expenseData = sortFinancialData(JSON.parse(localStorage.getItem("expensedata")));
     let incomeData = sortFinancialData([...linearJob, ...steppedJob]);
-
     let [incomeOptionState, setIncomeOptionState] = useState(checkExistence(incomeData));
     let [expenseOptionState, setExpenseOptionState] = useState(checkExistence(expenseData));
     let [investmentOptionState, setInvestmentOptionState] = useState(checkExistence(investmentData));
