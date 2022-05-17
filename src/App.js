@@ -15,10 +15,10 @@ function App() {
               <BrowserRouter>
                 <Nav />
                   <Routes>
-                      <Route path="Career" element={<Career/>}></Route>
-                      <Route path="Expenses" element={<Expenses />}></Route>
-                      <Route path="Investments" element={<Investments />}></Route>
-                      <Route path="Evaluate" element={<Evaluate />}></Route>
+                      <Route path="/Career" element={<Career/>} />
+                      <Route path="/Expenses" element={<Expenses />} />
+                      <Route path="/Investments" element={<Investments />} />
+                      <Route path="/Evaluate" element={<Evaluate />} />
                   </Routes>
               </BrowserRouter>
       </header>

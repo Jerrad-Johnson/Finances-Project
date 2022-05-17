@@ -111,7 +111,7 @@ function combineData(incomeData, expenseData, investmentData, graphOptionState, 
     switch (graphOptionState){
         case "Yearly In Pocket":
             if (isObject(incomeData)){
-                y.data = incomeData.incomeInGraphYearsNumberOfSteps;
+                y.data = incomeData.incomeInGraphYearsNumberOfSteps ?? incomeData.salaryAmounts;
                 y.name = "Income"
                 y.colors = "#00ff00";
                 x.push(y);
@@ -214,8 +214,8 @@ function Evaluate(){
     let linearJob = JSON.parse(localStorage.getItem("linearjob"));
     let steppedJob = JSON.parse(localStorage.getItem("steppedjob"));
     let investmentData = sortFinancialData(JSON.parse(localStorage.getItem("investmentdata"))) ?? [];
-    let expenseData = sortFinancialData(JSON.parse(localStorage.getItem("expensedata")));
-    let incomeData = sortFinancialData([...linearJob, ...steppedJob]);
+    let expenseData = sortFinancialData(JSON.parse(localStorage.getItem("expensedata"))) ?? [];
+    let incomeData = sortFinancialData([...linearJob, ...steppedJob]) ?? [];
     let [incomeOptionState, setIncomeOptionState] = useState(checkExistence(incomeData));
     let [expenseOptionState, setExpenseOptionState] = useState(checkExistence(expenseData));
     let [investmentOptionState, setInvestmentOptionState] = useState(checkExistence(investmentData));
