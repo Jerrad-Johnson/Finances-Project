@@ -134,8 +134,6 @@ class JobDataHandler {
         return jobsToBeReturned;
     }
 
-
-
     createLinearIncomeArrayWithGraphYearsNumberOfSteps(jobs){
         let incomeInGraphYearsNumberOfSteps = [];
         let runningTotalSalary = 0 ;

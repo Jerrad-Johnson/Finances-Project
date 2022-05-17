@@ -6,6 +6,9 @@ let cc = console.log
 var length = new jobdatahandler;
 length = length.graphMaxNumberOfYears;
 
+const TaxCalculator = new CalculateTaxes();
+cc(TaxCalculator.federalCalculations());
+
 function sortFinancialData(financialData){
     financialData.sort((a, b) => {
         let x = a.title.toLowerCase();
