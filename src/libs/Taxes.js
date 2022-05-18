@@ -60,14 +60,15 @@ class CalculateTaxes {
         results.stateTaxSums = this.calculateStateTax(this.income.yearlySums, this.income.stateTaxPercentage);
         results.incomeAfterStateTaxes = this.calculateIncomeAfterStateTaxes(this.income.yearlySums, results.stateTaxSums);
         results.federallyTaxableIncomeAfterStandardDeduction = this.calculateTaxableAfterStandardDeduction(
-            results.incomeAfterStateTaxes, this.income.taxYear, this.brackets, this.income.filingStatus)
+                results.incomeAfterStateTaxes, this.income.taxYear, this.brackets, this.income.filingStatus)
+        results.differenceDueToStandardDeduction = this.calculateAmountTaxableIncomeLoweredViaStandardDeduction(
+                results.incomeAfterStateTaxes, results.federallyTaxableIncomeAfterStandardDeduction)
 
-        this.cc(results.federallyTaxableIncomeAfterStandardDeduction);
         /*results.ficaTaxSums = this.calculateFICA(this.income.yearlySums, this.income.taxYear, this.brackets,
             this.income.filingStatus);*/
 
         //results   = adjustForStandardDeduction
-        //this.cc(results);
+        this.cc(results);
     }
 
     calculateStateTax(income, stateTaxPercentage){
@@ -119,8 +120,13 @@ class CalculateTaxes {
         }
     }
 
-    calculateIncomeActuallyRemovedViaStandardDeduction(){
+    calculateAmountTaxableIncomeLoweredViaStandardDeduction(incomeAfterStateTaxes, incomeAfterDeduction){
+        let difference = [];
+        for (let i = 0; i < this.length; i++){
+            difference[i] = incomeAfterStateTaxes[i] - incomeAfterDeduction[i];
+        }
 
+        return difference;
     }
 
 /*    calculateFICA(income, taxYear, taxBrackets){
