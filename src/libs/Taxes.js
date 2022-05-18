@@ -115,8 +115,9 @@ class CalculateTaxes {
             "Single": "singleReturn",
             "Married - Joint Return": "marriedJointReturn",
             "Married - Separate Returns": "marriedSeparateReturns",
-            "Head of Household": "headOfHousehold"
+            "Head of Household": "headOfHousehold",
         };
+
         return currentYear.standardDeduction[mapStatusToDeduction[filingStatus]];
     }
 
@@ -133,14 +134,18 @@ class CalculateTaxes {
     calculateFICA(income, taxYear, taxBrackets, employmentType, filingStatus){
         let ficaCategory = this.getFicaCategoryBasedOnEmploymentType(employmentType);
         let ficaBracket = taxBrackets[taxYear][ficaCategory];
-        let medicareReverseCutoffPoint = this.getMedicareReverseCutoffPoint(
-            taxYear, taxBrackets, filingStatus);
-        let medicareReverseCutoffPercentage = this.getMedicareReverseCutoffPercentage(
-            taxYear, taxBrackets, employmentType, filingStatus);
+        let medicareReverseCutoffPoint = this.getMedicareReverseCutoffPoint(taxYear, taxBrackets, filingStatus);
+        let medicareReverseCutoffPercentage = this.getMedicareReverseCutoffPercentage(taxYear, taxBrackets, employmentType);
         let ficaTaxes = {};
-        ficaTaxes.medicare = [];
-        ficaTaxes.socSec = [];
+        ficaTaxes.medicare = this.getMedicareTaxSums(income, medicareReverseCutoffPoint,
+                                                        medicareReverseCutoffPercentage, ficaBracket);
 
+
+
+
+        //ficaTaxes.socSec = this.getSocSecTaxSums(income,);
+        //this.cc(ficaTaxes.medicare)
+        /*
         if (ficaCategory === "ficaW2"){
             for (let i = 0; i < this.length; i++) {
                 ficaTaxes.medicare[i] = income[i] * (ficaBracket.medicare.percent / 100);
@@ -155,10 +160,11 @@ class CalculateTaxes {
             }
         } else if (ficaCategory === "fica1099"){
             for (let i = 0; i < this.length; i++){
-                /*ficaTaxes.medicare[i] =
-                ficaTaxes.socSec[i] =*/
+                /!*ficaTaxes.medicare[i] =
+                ficaTaxes.socSec[i] =*!/
             }
         }
+*/
 
         return ficaTaxes
     }
@@ -181,25 +187,37 @@ class CalculateTaxes {
             "Single": "reverseCutoffSingleReturns",
             "Married - Joint Return": "reverseCutoffJointReturn",
             "Married - Separate Returns": "reverseCutoffSeparateReturns",
-            "Head of Household": "reverseCutoffHoh"
+            "Head of Household": "reverseCutoffHoh",
         };
 
         return currentYear.medicareCutoffs[mapStatusToDeduction[filingStatus]];
     }
 
-    getMedicareReverseCutoffPercentage(taxYear, taxBrackets, employmentType, filingStatus){
+    getMedicareReverseCutoffPercentage(taxYear, taxBrackets, employmentType){
         let currentYear = taxBrackets[taxYear];
 
-        if (employmentType === "Employee" && filingStatus === "Single") {
-
-        } else if (employmentType === "Employee" && filingStatus === "Married - Joint Return") {
-        } else if (employmentType === "Employee" && filingStatus === "Married - Separate Returns") {
-        } else if (employmentType === "Employee" && filingStatus === "Head of Household") {
-        } else if (employmentType === "Self-Employed" && filingStatus === "Single") {
-        } else if (employmentType === "Self-Employed" && filingStatus === "Married - Joint Return") {
-        } else if (employmentType === "Self-Employed" && filingStatus === "Married - Separate Returns") {
-        } else if (employmentType === "Self-Employed" && filingStatus === "Head of Household") {
+        let mapEmploymentToDeduction = {
+            "Employee": "ficaW2",
+            "Self-Employed": "fica1099",
         }
+
+        return currentYear[mapEmploymentToDeduction[employmentType]].medicare.percentageAfterReverseCutoff;
+    }
+
+    getMedicareTaxSums(income, medicareReverseCutoffPoint, medicareReverseCutoffPercentage, ficaBracket) {
+        let ficaTaxes = {};
+        ficaTaxes.medicare = [];
+
+        for (let i = 0; i < this.length; i++) {
+            if (income[i] < medicareReverseCutoffPoint) {
+                ficaTaxes.medicare[i] = income[i] * (ficaBracket.medicare.percent / 100);
+            } else {
+                ficaTaxes.medicare[i] = (medicareReverseCutoffPoint * (ficaBracket.medicare.percent / 100)) +
+                    (income[i] - medicareReverseCutoffPoint) * (medicareReverseCutoffPercentage / 100);
+            }
+        }
+
+        return ficaTaxes;
     }
 
 
