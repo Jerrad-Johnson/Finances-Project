@@ -8,7 +8,7 @@ class CalculateTaxes {
             400000, 700000, 1000000, 5000000];
         this.income.filingStatus = "Single";
             //"Single", "Married - Joint Return", "Married - Separate Returns", "Head of Household"
-        this.income.employmentType = 'Employee';
+        this.income.employmentType = 'Self-Employed';
             //["Employee", "Self-Employed"];
         this.income.stateTaxPercentage = 5
         this.income.taxYear = 22;
@@ -26,9 +26,16 @@ class CalculateTaxes {
                     headOfHousehold: 19400,
                     singleReturn: 12950,
                 },
+                medicareCutoffs: {
+                        reverseCutoffSingleReturns: 200000,
+                        reverseCutoffJointReturn: 250000,
+                        reverseCutoffHoh: 250000,
+                        reverseCutoffSeparateReturns: 125000,
+                },
                 ficaW2: {
                     medicare: {
                         percent: 1.45,
+                        percentageAfterReverseCutoff: 2.35,
                     },
                     socSec: {
                         percent: 6.2,
@@ -38,10 +45,7 @@ class CalculateTaxes {
                 fica1099: {
                     medicare: {
                         percent: 2.9,
-                        reverseCutoffMarriedJointReturn: 250000,
-                        reverseCutoffMarriedSeparateReturns: 125000,
-                        reverseCutoffSingleHohReturn: 200000,
-                        reverseCutoffPercent: 0.9,
+                        percentageAfterReverseCutoff: 3.8,
                     },
                     socSec: {
                         percent: 12.4,
@@ -61,13 +65,13 @@ class CalculateTaxes {
         results.stateTaxSums = this.calculateStateTax(this.income.yearlySums, this.income.stateTaxPercentage);
         results.incomeAfterStateTaxes = this.calculateIncomeAfterStateTaxes(this.income.yearlySums, results.stateTaxSums);
         results.federallyTaxableIncomeAfterStandardDeduction = this.calculateTaxableAfterStandardDeduction(
-                results.incomeAfterStateTaxes, this.income.taxYear, this.brackets, this.income.filingStatus)
+                results.incomeAfterStateTaxes, this.income.taxYear, this.brackets, this.income.filingStatus);
         results.differenceBecauseOfStandardDeduction = this.calculateAmountTaxableIncomeLoweredViaStandardDeduction(
-                results.incomeAfterStateTaxes, results.federallyTaxableIncomeAfterStandardDeduction)
+                results.incomeAfterStateTaxes, results.federallyTaxableIncomeAfterStandardDeduction);
         results.ficaTaxSums = this.calculateFICA(results.federallyTaxableIncomeAfterStandardDeduction, this.income.taxYear,
-                this.brackets, this.income.employmentType);
+                this.brackets, this.income.employmentType, this.income.filingStatus);
 
-        this.cc(results);
+//        this.cc(results);
     }
 
     calculateStateTax(income, stateTaxPercentage){
@@ -129,9 +133,13 @@ class CalculateTaxes {
         return difference;
     }
 
-    calculateFICA(income, taxYear, taxBrackets, employmentType){
+    calculateFICA(income, taxYear, taxBrackets, employmentType, filingStatus){
         let ficaCategory = this.getFicaCategoryBasedOnEmploymentType(employmentType);
         let ficaBracket = taxBrackets[taxYear][ficaCategory];
+        let medicareReverseCutoffPoint = this.getMedicareReverseCutoffPoint(
+            taxYear, taxBrackets, filingStatus);
+        let medicareReverseCutoffPercentage = this.getMedicareReverseCutoffPercentage(
+            taxYear, taxBrackets, employmentType, filingStatus);
         let ficaTaxes = {};
         ficaTaxes.medicare = [];
         ficaTaxes.socSec = [];
@@ -139,6 +147,9 @@ class CalculateTaxes {
         if (ficaCategory === "ficaW2"){
             for (let i = 0; i < this.length; i++) {
                 ficaTaxes.medicare[i] = income[i] * (ficaBracket.medicare.percent / 100);
+
+                //if (income[i] < )
+
                 if (income[i] < ficaBracket.socSec.cutoff) {
                     ficaTaxes.socSec[i] = income[i] * (ficaBracket.socSec.percent / 100);
                 } else {
@@ -165,6 +176,22 @@ class CalculateTaxes {
         }
 
         if (ficaCategory !== undefined) return ficaCategory;
+    }
+
+    getMedicareReverseCutoffPoint(taxYear, taxBrackets, filingStatus){
+        if (filingStatus === "Single"){
+            return taxBrackets[taxYear].medicareCutoffs.reverseCutoffSingleReturns;
+        } else if (filingStatus === 'Married - Joint Return'){
+            return taxBrackets[taxYear].medicareCutoffs.reverseCutoffJointReturn;
+        } else if (filingStatus === 'Married - Separate Returns'){
+            return taxBrackets[taxYear].medicareCutoffs.reverseCutoffSeparateReturns;
+        } else if (filingStatus === 'Head of Household') {
+            return taxBrackets[taxYear].medicareCutoffs.reverseCutoffHoh;
+        }
+    }
+
+    getMedicareReverseCutoffPercentage(taxYear, taxBrackets, employmentType, filingStatus){
+
     }
 
 
