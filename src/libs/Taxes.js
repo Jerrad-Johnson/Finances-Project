@@ -111,16 +111,13 @@ class CalculateTaxes {
 
     getDeductionAmountBasedOnFilingStatus(taxYear, taxBrackets, filingStatus){
         let currentYear = taxBrackets[taxYear];
-
-        if (filingStatus === 'Single'){
-            return currentYear.standardDeduction.singleReturn;
-        } else if (filingStatus === 'Married - Joint Return'){
-            return currentYear.standardDeduction.marriedJointReturn;
-        } else if (filingStatus === 'Married - Separate Returns'){
-            return currentYear.standardDeduction.marriedSeparateReturns;
-        } else if (filingStatus === 'Head of Household') {
-            return currentYear.standardDeduction.headOfHousehold;
-        }
+        let mapStatusToDeduction = {
+            "Single": "singleReturn",
+            "Married - Joint Return": "marriedJointReturn",
+            "Married - Separate Returns": "marriedSeparateReturns",
+            "Head of Household": "headOfHousehold"
+        };
+        return currentYear.standardDeduction[mapStatusToDeduction[filingStatus]];
     }
 
     calculateAmountTaxableIncomeLoweredViaStandardDeduction(incomeAfterStateTaxes, incomeAfterDeduction){
@@ -180,16 +177,14 @@ class CalculateTaxes {
 
     getMedicareReverseCutoffPoint(taxYear, taxBrackets, filingStatus){
         let currentYear = taxBrackets[taxYear];
+        let mapStatusToDeduction = {
+            "Single": "reverseCutoffSingleReturns",
+            "Married - Joint Return": "reverseCutoffJointReturn",
+            "Married - Separate Returns": "reverseCutoffSeparateReturns",
+            "Head of Household": "reverseCutoffHoh"
+        };
 
-        if (filingStatus === "Single"){
-            return currentYear.medicareCutoffs.reverseCutoffSingleReturns;
-        } else if (filingStatus === 'Married - Joint Return'){
-            return currentYear.medicareCutoffs.reverseCutoffJointReturn;
-        } else if (filingStatus === 'Married - Separate Returns'){
-            return currentYear.medicareCutoffs.reverseCutoffSeparateReturns;
-        } else if (filingStatus === 'Head of Household') {
-            return currentYear.medicareCutoffs.reverseCutoffHoh;
-        }
+        return currentYear.medicareCutoffs[mapStatusToDeduction[filingStatus]];
     }
 
     getMedicareReverseCutoffPercentage(taxYear, taxBrackets, employmentType, filingStatus){
