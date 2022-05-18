@@ -191,7 +191,16 @@ class CalculateTaxes {
     }
 
     getMedicareReverseCutoffPercentage(taxYear, taxBrackets, employmentType, filingStatus){
+        if (employmentType === "Employee" && filingStatus === "Single") {
 
+        } else if (employmentType === "Employee" && filingStatus === "Married - Joint Return") {
+        } else if (employmentType === "Employee" && filingStatus === "Married - Separate Returns") {
+        } else if (employmentType === "Employee" && filingStatus === "Head of Household") {
+        } else if (employmentType === "Self-Employed" && filingStatus === "Single") {
+        } else if (employmentType === "Self-Employed" && filingStatus === "Married - Joint Return") {
+        } else if (employmentType === "Self-Employed" && filingStatus === "Married - Separate Returns") {
+        } else if (employmentType === "Self-Employed" && filingStatus === "Head of Household") {
+        }
     }
 
 
