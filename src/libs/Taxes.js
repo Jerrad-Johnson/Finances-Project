@@ -8,7 +8,8 @@ class CalculateTaxes {
             400000, 700000, 1000000, 5000000];
         this.income.filingStatus = "Single";
             //"Single", "Married - Joint Return", "Married - Separate Returns", "Head of Household"
-        this.income.employmentType = ["Employee", "Business"];
+        this.income.employmentType = 'Self-Employed';
+            //["Employee", "Self-Employed"];
         this.income.stateTaxPercentage = 5
         this.income.taxYear = 22;
         this.income.taxYear = "y" + this.income.taxYear;
@@ -61,13 +62,11 @@ class CalculateTaxes {
         results.incomeAfterStateTaxes = this.calculateIncomeAfterStateTaxes(this.income.yearlySums, results.stateTaxSums);
         results.federallyTaxableIncomeAfterStandardDeduction = this.calculateTaxableAfterStandardDeduction(
                 results.incomeAfterStateTaxes, this.income.taxYear, this.brackets, this.income.filingStatus)
-        results.differenceDueToStandardDeduction = this.calculateAmountTaxableIncomeLoweredViaStandardDeduction(
+        results.differenceBecauseOfStandardDeduction = this.calculateAmountTaxableIncomeLoweredViaStandardDeduction(
                 results.incomeAfterStateTaxes, results.federallyTaxableIncomeAfterStandardDeduction)
+        results.ficaTaxSums = this.calculateFICA(results.federallyTaxableIncomeAfterStandardDeduction, this.income.taxYear,
+                this.brackets, this.income.employmentType);
 
-        /*results.ficaTaxSums = this.calculateFICA(this.income.yearlySums, this.income.taxYear, this.brackets,
-            this.income.filingStatus);*/
-
-        //results   = adjustForStandardDeduction
         this.cc(results);
     }
 
@@ -122,6 +121,7 @@ class CalculateTaxes {
 
     calculateAmountTaxableIncomeLoweredViaStandardDeduction(incomeAfterStateTaxes, incomeAfterDeduction){
         let difference = [];
+
         for (let i = 0; i < this.length; i++){
             difference[i] = incomeAfterStateTaxes[i] - incomeAfterDeduction[i];
         }
@@ -129,10 +129,25 @@ class CalculateTaxes {
         return difference;
     }
 
-/*    calculateFICA(income, taxYear, taxBrackets){
-        taxYear = "y" + taxYear; don't need
-        taxBrackets[taxYear].    these
-    }*/
+    calculateFICA(income, taxYear, taxBrackets, employmentType){
+        let currentYear = taxBrackets[taxYear];
+        let ficaCategory = this.getFicaCategoryBasedOnEmploymentType(employmentType);
+
+    }
+
+    getFicaCategoryBasedOnEmploymentType(employmentType){
+        let ficaCategory;
+
+        if (employmentType === 'Employee'){
+            ficaCategory = "ficaW2";
+        } else if (employmentType === 'Self-Employed'){
+            ficaCategory = "fica1099";
+        }
+
+        if (ficaCategory !== undefined) return ficaCategory;
+    }
+
+
 
 }
 
