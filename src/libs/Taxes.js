@@ -8,7 +8,7 @@ class CalculateTaxes {
             400000, 700000, 1000000, 5000000];
         this.income.filingStatus = "Single";
             //"Single", "Married - Joint Return", "Married - Separate Returns", "Head of Household"
-        this.income.employmentType = 'Self-Employed';
+        this.income.employmentType = 'Employee';
             //["Employee", "Self-Employed"];
         this.income.stateTaxPercentage = 5
         this.income.taxYear = 22;
@@ -130,9 +130,29 @@ class CalculateTaxes {
     }
 
     calculateFICA(income, taxYear, taxBrackets, employmentType){
-        let currentYear = taxBrackets[taxYear];
         let ficaCategory = this.getFicaCategoryBasedOnEmploymentType(employmentType);
+        let ficaBracket = taxBrackets[taxYear][ficaCategory];
+        let ficaTaxes = {};
+        ficaTaxes.medicare = [];
+        ficaTaxes.socSec = [];
 
+        if (ficaCategory === "ficaW2"){
+            for (let i = 0; i < this.length; i++) {
+                ficaTaxes.medicare[i] = income[i] * (ficaBracket.medicare.percent / 100);
+                if (income[i] < ficaBracket.socSec.cutoff) {
+                    ficaTaxes.socSec[i] = income[i] * (ficaBracket.socSec.percent / 100);
+                } else {
+                    ficaTaxes.socSec[i] = ficaBracket.socSec.cutoff * (ficaBracket.socSec.percent / 100);
+                }
+            }
+        } else if (ficaCategory === "fica1099"){
+            for (let i = 0; i < this.length; i++){
+                /*ficaTaxes.medicare[i] =
+                ficaTaxes.socSec[i] =*/
+            }
+        }
+
+        return ficaTaxes
     }
 
     getFicaCategoryBasedOnEmploymentType(employmentType){
