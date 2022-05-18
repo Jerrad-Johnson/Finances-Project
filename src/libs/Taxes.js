@@ -179,18 +179,22 @@ class CalculateTaxes {
     }
 
     getMedicareReverseCutoffPoint(taxYear, taxBrackets, filingStatus){
+        let currentYear = taxBrackets[taxYear];
+
         if (filingStatus === "Single"){
-            return taxBrackets[taxYear].medicareCutoffs.reverseCutoffSingleReturns;
+            return currentYear.medicareCutoffs.reverseCutoffSingleReturns;
         } else if (filingStatus === 'Married - Joint Return'){
-            return taxBrackets[taxYear].medicareCutoffs.reverseCutoffJointReturn;
+            return currentYear.medicareCutoffs.reverseCutoffJointReturn;
         } else if (filingStatus === 'Married - Separate Returns'){
-            return taxBrackets[taxYear].medicareCutoffs.reverseCutoffSeparateReturns;
+            return currentYear.medicareCutoffs.reverseCutoffSeparateReturns;
         } else if (filingStatus === 'Head of Household') {
-            return taxBrackets[taxYear].medicareCutoffs.reverseCutoffHoh;
+            return currentYear.medicareCutoffs.reverseCutoffHoh;
         }
     }
 
     getMedicareReverseCutoffPercentage(taxYear, taxBrackets, employmentType, filingStatus){
+        let currentYear = taxBrackets[taxYear];
+
         if (employmentType === "Employee" && filingStatus === "Single") {
 
         } else if (employmentType === "Employee" && filingStatus === "Married - Joint Return") {
