@@ -4,7 +4,7 @@ class CalculateTaxes {
     constructor(income){
         //this.income = income;
         this.income = {};
-        this.income.yearlySums = [35000, 45000, 60000, 80000, 10000, 120000, 150000, 180000, 200000, 200000, 250000,
+        this.income.yearlySums = [15000, 45000, 60000, 80000, 10000, 120000, 150000, 180000, 200000, 200000, 250000,
             400000, 700000, 1000000, 5000000];
         this.income.filingStatus = "Single";
             //"Single", "Married - Joint Return", "Married - Separate Returns", "Head of Household"
@@ -15,10 +15,10 @@ class CalculateTaxes {
         this.income.taxYear = "y" + this.income.taxYear;
         this.brackets = {
             y22: {
-                limitsSingleReturn: [0, 10275, 41755, 89075, 170050, 215950, 539900],
-                limitsMarriedJointReturn: [0, 20550, 83550, 178150, 340100, 431900, 647850],
-                limitsMarriedSeparateReturns: [0, 10275, 41775, 89075, 170050, 215950, 323925],
-                limitsHeadOfHouseholdReturn: [0, 14200, 54200, 86350, 164900, 209400, 523600],
+                limitsSingleReturn: [10275, 41755, 89075, 170050, 215950, 539900, "over"],
+                limitsMarriedJointReturn: [20550, 83550, 178150, 340100, 431900, 647850, "over"],
+                limitsMarriedSeparateReturns: [10275, 41775, 89075, 170050, 215950, 323925, "over"],
+                limitsHeadOfHouseholdReturn: [14200, 54200, 86350, 164900, 209400, 523600, "over"],
                 rates: [10, 12, 22, 24, 32, 35, 37],
                 standardDeduction: {
                     marriedJointReturn: 25900,
@@ -70,6 +70,8 @@ class CalculateTaxes {
                 results.incomeAfterStateTaxes, results.federallyTaxableIncomeAfterStandardDeduction);
         [results.ficaTaxSums, results.incomeAfterFica] = this.calculateFICA(results.federallyTaxableIncomeAfterStandardDeduction, this.income.taxYear,
                 this.brackets, this.income.employmentType, this.income.filingStatus);
+        [results.federalIncomeTax, results.incomeAfterFederalTaxes, results.effectiveTaxPercentages] = this.calculateFederalIncomeTax(this.income.taxYear, this.brackets,
+            results.incomeAfterFica, this.income.filingStatus, results.differenceBecauseOfStandardDeduction, this.income.yearlySums);
 
         this.cc(results);
     }
@@ -212,8 +214,7 @@ class CalculateTaxes {
         return sums;
     }
 
-    getTaxableIncomeAfterFICA(income, medicareTaxes, socSecTaxes){
-
+    getTaxableIncomeAfterFICA(income, medicareTaxes, socSecTaxes) {
         let sums = [];
 
         for (let i = 0; i < this.length; i++){
@@ -223,6 +224,104 @@ class CalculateTaxes {
         return sums;
     }
 
+    calculateFederalIncomeTax(taxYear, brackets, income, filingStatus, standardDeductionActualReduction, incomeBeforeAnyTaxes) {
+        let cutoffs = this.getBracketCutoffs(taxYear, brackets, filingStatus);
+        let percentages = brackets[taxYear].rates;
+        let federalTaxTotals = this.getSumOfTaxes(cutoffs, percentages, income);
+        let incomeAfterTaxes = this.getIncomeAfterTaxes(income, federalTaxTotals, brackets, taxYear, standardDeductionActualReduction);
+        let effectiveTaxPercentages = this.getEffectiveTaxPercentage(incomeAfterTaxes, incomeBeforeAnyTaxes);
+        return [federalTaxTotals, incomeAfterTaxes, effectiveTaxPercentages];
+    }
+
+    getBracketCutoffs(taxYear, brackets, filingStatus){
+        const mapFilingStatusToObject = {
+            "Single":"limitsSingleReturn",
+            "Married - Joint Return":"limitsMarriedJointReturn",
+            "Married - Separate Returns":"limitsMarriedSeparateReturns",
+            "Head of Household":"limitsHeadOfHouseholdReturn",
+        }
+
+        return brackets[taxYear][mapFilingStatusToObject[filingStatus]];
+    }
+
+    getSumOfTaxes(cutoffs, percentages, income){
+        let sums = [];
+
+        for (let i = 0 ; i < this.length; i++) {
+            if (income[i] > cutoffs[0]){
+                sums[i] = cutoffs[0] * (percentages[0] / 100);
+            } else {
+                sums[i] = income[i] * (percentages[0] / 100);
+                continue;
+            }
+
+            if (income[i] > cutoffs[1]){
+                sums[i] = (cutoffs[1] - cutoffs[0]) * (percentages[1] / 100) + sums[i];
+            } else {
+                sums[i] = (sums[i] + ((income[i] - cutoffs[0]) * (percentages[1] / 100)));
+                continue;
+            }
+
+            if (income[i] > cutoffs[2]){
+                sums[i] = (cutoffs[2] - cutoffs[1]) * (percentages[2] / 100) + sums[i];
+            } else {
+                sums[i] = (sums[i] + ((income[i] - cutoffs[1]) * (percentages[2] / 100)));
+                continue;
+            }
+
+            if (income[i] > cutoffs[3]){
+                sums[i] = (cutoffs[3] - cutoffs[2]) * (percentages[3] / 100) + sums[i];
+            } else {
+                sums[i] = (sums[i] + ((income[i] - cutoffs[2]) * (percentages[3] / 100)));
+                continue;
+            }
+
+            if (income[i] > cutoffs[4]){
+                sums[i] = (cutoffs[4] - cutoffs[3]) * (percentages[4] / 100) + sums[i];
+            } else {
+                sums[i] = (sums[i] + ((income[i] - cutoffs[3]) * (percentages[4] / 100)));
+                continue;
+            }
+
+            if (income[i] > cutoffs[5]){
+                sums[i] = (cutoffs[5] - cutoffs[4]) * (percentages[5] / 100) + sums[i];
+            } else {
+                sums[i] = (sums[i] + ((income[i] - cutoffs[4]) * (percentages[5] / 100)));
+                continue;
+            }
+
+            if (income[i] > cutoffs[5]){
+                sums[i] = (sums[i] + ((income[i] - cutoffs[5]) * (percentages[6] / 100)));
+            }
+        }
+
+        return sums;
+    }
+
+    getIncomeAfterTaxes(income, taxValues, brackets, taxYear, standardDeductionActualReduction){
+        let sums = [];
+
+        for (let i = 0; i < this.length; i++){
+            sums[i] = (income[i] + standardDeductionActualReduction[i]) - taxValues[i];
+        }
+
+        return sums;
+    }
+
+    getEffectiveTaxPercentage(incomeAfterTaxes, incomeBeforeAnyTaxes){
+        let sums = [];
+
+        for (let i = 0; i < this.length; i++) {
+            if (incomeAfterTaxes[i] !== 0) {
+                sums[i] = 100 - ((incomeAfterTaxes[i] / incomeBeforeAnyTaxes[i]) * 100);
+            } else {
+                sums[i] = 1;
+            }
+        }
+
+        this.cc(sums)
+        return sums;
+    }
 
 }
 
