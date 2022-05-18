@@ -59,8 +59,10 @@ class CalculateTaxes {
         let results = {};
         results.stateTaxSums = this.calculateStateTax(this.income.yearlySums, this.income.stateTaxPercentage);
         results.incomeAfterStateTaxes = this.calculateIncomeAfterStateTaxes(this.income.yearlySums, results.stateTaxSums);
-        results.federallyTaxableIncomeAfterStandardDeduction = this.calculateIncomeAfterStandardDeduction(
+        results.federallyTaxableIncomeAfterStandardDeduction = this.calculateTaxableAfterStandardDeduction(
             results.incomeAfterStateTaxes, this.income.taxYear, this.brackets, this.income.filingStatus)
+
+        this.cc(results.federallyTaxableIncomeAfterStandardDeduction);
         /*results.ficaTaxSums = this.calculateFICA(this.income.yearlySums, this.income.taxYear, this.brackets,
             this.income.filingStatus);*/
 
@@ -88,8 +90,19 @@ class CalculateTaxes {
         return toBeReturned;
     }
 
-    calculateIncomeAfterStandardDeduction(incomeAfterStateTaxes, taxYear, taxBrackets, filingStatus){
+    calculateTaxableAfterStandardDeduction(incomeAfterStateTaxes, taxYear, taxBrackets, filingStatus){
         let deductionAmount = this.getDeductionAmountBasedOnFilingStatus(taxYear, taxBrackets, filingStatus);
+        let calculated = [];
+
+        for (let i = 0; i < this.length; i++){
+            if (incomeAfterStateTaxes[i] - deductionAmount > 0){
+                calculated[i] = incomeAfterStateTaxes[i] - deductionAmount;
+            } else {
+                calculated[i] = 0;
+            }
+        }
+
+        return calculated;
     }
 
     getDeductionAmountBasedOnFilingStatus(taxYear, taxBrackets, filingStatus){
@@ -97,6 +110,12 @@ class CalculateTaxes {
 
         if (filingStatus === 'Single'){
             return currentYear.standardDeduction.singleReturn;
+        } else if (filingStatus === 'Married - Joint Return'){
+            return currentYear.standardDeduction.marriedJointReturn;
+        } else if (filingStatus === 'Married - Separate Returns'){
+            return currentYear.standardDeduction.marriedSeparateReturns;
+        } else if (filingStatus === 'Head of Household') {
+            return currentYear.standardDeduction.headOfHousehold;
         }
     }
 
