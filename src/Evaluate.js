@@ -7,7 +7,7 @@ var length = new jobdatahandler;
 length = length.graphMaxNumberOfYears;
 
 const TaxCalculator = new CalculateTaxes();
-cc(TaxCalculator.federalCalculations());
+TaxCalculator.federalCalculations();
 
 function sortFinancialData(financialData){
     financialData.sort((a, b) => {

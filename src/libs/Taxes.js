@@ -6,9 +6,12 @@ class CalculateTaxes {
         this.income = {};
         this.income.yearlySums = [35000, 45000, 60000, 80000, 10000, 120000, 150000, 180000, 200000, 200000, 250000,
             400000, 700000, 1000000, 5000000];
-        this.income.filingStatus = ["Single", "Married - Joint Return", "Married - Separate Returns", "Head of Household"];
+        this.income.filingStatus = "Single";
+            //"Single", "Married - Joint Return", "Married - Separate Returns", "Head of Household"
         this.income.employmentType = ["Employee", "Business"];
         this.income.stateTaxPercentage = 5
+        this.income.taxYear = 22;
+        this.income.taxYear = "y" + this.income.taxYear;
         this.brackets = {
             y22: {
                 limitsSingleReturn: [0, 10275, 41755, 89075, 170050, 215950, 539900],
@@ -56,8 +59,13 @@ class CalculateTaxes {
         let results = {};
         results.stateTaxSums = this.calculateStateTax(this.income.yearlySums, this.income.stateTaxPercentage);
         results.incomeAfterStateTaxes = this.calculateIncomeAfterStateTaxes(this.income.yearlySums, results.stateTaxSums);
+        results.federallyTaxableIncomeAfterStandardDeduction = this.calculateIncomeAfterStandardDeduction(
+            results.incomeAfterStateTaxes, this.income.taxYear, this.brackets, this.income.filingStatus)
+        /*results.ficaTaxSums = this.calculateFICA(this.income.yearlySums, this.income.taxYear, this.brackets,
+            this.income.filingStatus);*/
+
         //results   = adjustForStandardDeduction
-        this.cc(results);
+        //this.cc(results);
     }
 
     calculateStateTax(income, stateTaxPercentage){
@@ -79,6 +87,27 @@ class CalculateTaxes {
 
         return toBeReturned;
     }
+
+    calculateIncomeAfterStandardDeduction(incomeAfterStateTaxes, taxYear, taxBrackets, filingStatus){
+        let deductionAmount = this.getDeductionAmountBasedOnFilingStatus(taxYear, taxBrackets, filingStatus);
+    }
+
+    getDeductionAmountBasedOnFilingStatus(taxYear, taxBrackets, filingStatus){
+        let currentYear = taxBrackets[taxYear];
+
+        if (filingStatus === 'Single'){
+            return currentYear.standardDeduction.singleReturn;
+        }
+    }
+
+    calculateIncomeActuallyRemovedViaStandardDeduction(){
+
+    }
+
+/*    calculateFICA(income, taxYear, taxBrackets){
+        taxYear = "y" + taxYear; don't need
+        taxBrackets[taxYear].    these
+    }*/
 
 }
 
