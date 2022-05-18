@@ -1,9 +1,14 @@
+import Jobdatahandler from "./jobdatahandler";
+
 class CalculateTaxes {
     constructor(income){
         //this.income = income;
-        this.income = [35000, 45000, 60000, 80000, 10000, 120000, 150000, 180000, 200000, 200000, 250000, 400000, 700000, 1000000, 5000000];
-        this.filingStatus = ["Single", "Married - Joint Return", "Married - Separate Returns", "Head of Household"];
-        this.employmentType = ["Employee", "Business"];
+        this.income = {};
+        this.income.yearlySums = [35000, 45000, 60000, 80000, 10000, 120000, 150000, 180000, 200000, 200000, 250000,
+            400000, 700000, 1000000, 5000000];
+        this.income.filingStatus = ["Single", "Married - Joint Return", "Married - Separate Returns", "Head of Household"];
+        this.income.employmentType = ["Employee", "Business"];
+        this.income.stateTaxPercentage = 5
         this.brackets = {
             y22: {
                 limitsSingleReturn: [0, 10275, 41755, 89075, 170050, 215950, 539900],
@@ -42,12 +47,37 @@ class CalculateTaxes {
             },
         }
 
+        this.length = new Jobdatahandler();
+        this.length = this.length.graphMaxNumberOfYears;
         this.cc = console.log;
     }
 
     federalCalculations(){
-        //this.income = ()
-        this.cc(this.brackets);
+        let results = {};
+        results.stateTaxSums = this.calculateStateTax(this.income.yearlySums, this.income.stateTaxPercentage);
+        results.incomeAfterStateTaxes = this.calculateIncomeAfterStateTaxes(this.income.yearlySums, results.stateTaxSums);
+        //results   = adjustForStandardDeduction
+        this.cc(results);
+    }
+
+    calculateStateTax(income, stateTaxPercentage){
+        let toBeReturned = [];
+
+        for (let i = 0; i < this.length; i++){
+            toBeReturned[i] = income[i] * (stateTaxPercentage / 100);
+        }
+
+        return toBeReturned;
+    }
+
+    calculateIncomeAfterStateTaxes(income, stateTaxSums){
+        let toBeReturned = [];
+
+        for (let i = 0; i < this.length; i++){
+            toBeReturned[i] = (income[i] - stateTaxSums[i]);
+        }
+
+        return toBeReturned;
     }
 
 }
