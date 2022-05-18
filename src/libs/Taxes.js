@@ -139,32 +139,9 @@ class CalculateTaxes {
         let ficaTaxes = {};
         ficaTaxes.medicare = this.getMedicareTaxSums(income, medicareReverseCutoffPoint,
                                                         medicareReverseCutoffPercentage, ficaBracket);
-
-
-
-
-        //ficaTaxes.socSec = this.getSocSecTaxSums(income,);
-        //this.cc(ficaTaxes.medicare)
-        /*
-        if (ficaCategory === "ficaW2"){
-            for (let i = 0; i < this.length; i++) {
-                ficaTaxes.medicare[i] = income[i] * (ficaBracket.medicare.percent / 100);
-
-                //if (income[i] < )
-
-                if (income[i] < ficaBracket.socSec.cutoff) {
-                    ficaTaxes.socSec[i] = income[i] * (ficaBracket.socSec.percent / 100);
-                } else {
-                    ficaTaxes.socSec[i] = ficaBracket.socSec.cutoff * (ficaBracket.socSec.percent / 100);
-                }
-            }
-        } else if (ficaCategory === "fica1099"){
-            for (let i = 0; i < this.length; i++){
-                /!*ficaTaxes.medicare[i] =
-                ficaTaxes.socSec[i] =*!/
-            }
-        }
-*/
+        let socSecTaxPercentage = taxBrackets[taxYear][ficaCategory].socSec.percent;
+        let socSecCutoffPoint = taxBrackets[taxYear][ficaCategory].socSec.cutoff;
+        ficaTaxes.socSec = this.getSocSecTaxSums(income, socSecTaxPercentage, socSecCutoffPoint);
 
         return ficaTaxes
     }
@@ -205,23 +182,33 @@ class CalculateTaxes {
     }
 
     getMedicareTaxSums(income, medicareReverseCutoffPoint, medicareReverseCutoffPercentage, ficaBracket) {
-        let ficaTaxes = {};
-        ficaTaxes.medicare = [];
+        let sums = [];
 
         for (let i = 0; i < this.length; i++) {
-            if (income[i] < medicareReverseCutoffPoint) {
-                ficaTaxes.medicare[i] = income[i] * (ficaBracket.medicare.percent / 100);
+            if (income[i] <= medicareReverseCutoffPoint) {
+                sums[i] = income[i] * (ficaBracket.medicare.percent / 100);
             } else {
-                ficaTaxes.medicare[i] = (medicareReverseCutoffPoint * (ficaBracket.medicare.percent / 100)) +
+                sums[i] = (medicareReverseCutoffPoint * (ficaBracket.medicare.percent / 100)) +
                     (income[i] - medicareReverseCutoffPoint) * (medicareReverseCutoffPercentage / 100);
             }
         }
 
-        return ficaTaxes;
+        return sums;
     }
 
+    getSocSecTaxSums(income, socSecTaxPercentage, socSecCutoffPoint) {
+        let sums = [];
 
+        for (let i = 0; i < this.length; i++) {
+            if (income[i] <= socSecCutoffPoint) {
+                sums[i] = income[i] * (socSecTaxPercentage / 100);
+            } else {
+                sums[i] = socSecCutoffPoint * (socSecTaxPercentage / 100);
+            }
+        }
 
+        return sums;
+    }
 }
 
 export default CalculateTaxes;
