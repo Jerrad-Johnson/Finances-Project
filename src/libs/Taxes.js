@@ -8,7 +8,7 @@ class CalculateTaxes {
             400000, 700000, 1000000, 5000000];
         this.income.filingStatus = "Single";
             //"Single", "Married - Joint Return", "Married - Separate Returns", "Head of Household"
-        this.income.employmentType = 'Self-Employed';
+        this.income.employmentType = 'Employee';
             //["Employee", "Self-Employed"];
         this.income.stateTaxPercentage = 5
         this.income.taxYear = 22;
@@ -68,10 +68,10 @@ class CalculateTaxes {
                 results.incomeAfterStateTaxes, this.income.taxYear, this.brackets, this.income.filingStatus);
         results.differenceBecauseOfStandardDeduction = this.calculateAmountTaxableIncomeLoweredViaStandardDeduction(
                 results.incomeAfterStateTaxes, results.federallyTaxableIncomeAfterStandardDeduction);
-        results.ficaTaxSums = this.calculateFICA(results.federallyTaxableIncomeAfterStandardDeduction, this.income.taxYear,
+        [results.ficaTaxSums, results.incomeAfterFica] = this.calculateFICA(results.federallyTaxableIncomeAfterStandardDeduction, this.income.taxYear,
                 this.brackets, this.income.employmentType, this.income.filingStatus);
 
-//        this.cc(results);
+        this.cc(results);
     }
 
     calculateStateTax(income, stateTaxPercentage){
@@ -143,7 +143,9 @@ class CalculateTaxes {
         let socSecCutoffPoint = taxBrackets[taxYear][ficaCategory].socSec.cutoff;
         ficaTaxes.socSec = this.getSocSecTaxSums(income, socSecTaxPercentage, socSecCutoffPoint);
 
-        return ficaTaxes
+        let incomeAfterFICA = this.getTaxableIncomeAfterFICA(income, ficaTaxes.medicare, ficaTaxes.socSec);
+
+        return [ficaTaxes, incomeAfterFICA]
     }
 
     getFicaCategoryBasedOnEmploymentType(employmentType){
@@ -209,6 +211,19 @@ class CalculateTaxes {
 
         return sums;
     }
+
+    getTaxableIncomeAfterFICA(income, medicareTaxes, socSecTaxes){
+
+        let sums = [];
+
+        for (let i = 0; i < this.length; i++){
+            sums[i] = income[i] - (medicareTaxes[i] + socSecTaxes[i]);
+        }
+
+        return sums;
+    }
+
+
 }
 
 export default CalculateTaxes;
