@@ -2,13 +2,11 @@ import React, {useEffect, useState} from "react";
 import Chart from "react-apexcharts";
 import jobdatahandler from "./libs/jobdatahandler";
 import CalculateTaxes from "./libs/Taxes";
-import ThisIsStupid from "./libs/ThisIsStupid";
+import {getYearsNumbered} from "./components/jobssharedfunctions";
 let cc = console.log
-var length = new jobdatahandler;
-length = length.graphMaxNumberOfYears;
-
-/*const TaxCalculator = new CalculateTaxes();
-TaxCalculator.federalCalculations();*/
+var jobHandler = new jobdatahandler;
+let length = jobHandler.graphMaxNumberOfYears;
+var yearsArrayForGraph = getYearsNumbered();
 
 function sortFinancialData(financialData){
     financialData.sort((a, b) => {
@@ -82,21 +80,11 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     if (expenseData[0]) { expenseData = expenseData[0] }
     if (investmentData[0]) { investmentData = investmentData[0] }
 
-    let graphData = combineData(incomeData, expenseData, investmentData, graphOptionState);
-
     let incomeTaxData = new CalculateTaxes(incomeData.salaryAmounts || incomeData.incomeInGraphYearsNumberOfSteps, employmentState,
-        filingStatusState, stTaxState, "22"); // TODO In the future, add an input to change years.
+        filingStatusState, stTaxState, "22"); // TODO In the future, add an input so users can change years.
     incomeTaxData = incomeTaxData.federalCalculations();
-    cc(incomeTaxData)
 
-
-    /*let blah = new ThisIsStupid;
-    blah.federalCalculation();
-    cc(blah)*/
-
-
-
-    //TODO Get yearsNumbered directly.
+    let graphData = combineData(incomeData, expenseData, investmentData, graphOptionState);
 
     return (
         <div>
@@ -111,7 +99,7 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
                         stacked: false,
                     },
                     xaxis: {
-                        categories: investmentData.yearsNumbered
+                        categories: yearsArrayForGraph,
                     }
                 }}
             />

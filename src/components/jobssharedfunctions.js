@@ -28,5 +28,14 @@ export function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
+export function getYearsNumbered(){
+    let years = [];
+
+    for (let i = 0; i <= (lengthOfGraphInYears - 1); i++) {
+        years.push("Year " + (i + 1));
+    }
+
+    return years;
+}
 
 
