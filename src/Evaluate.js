@@ -2,12 +2,13 @@ import React, {useEffect, useState} from "react";
 import Chart from "react-apexcharts";
 import jobdatahandler from "./libs/jobdatahandler";
 import CalculateTaxes from "./libs/Taxes";
+import ThisIsStupid from "./libs/ThisIsStupid";
 let cc = console.log
 var length = new jobdatahandler;
 length = length.graphMaxNumberOfYears;
 
-const TaxCalculator = new CalculateTaxes();
-TaxCalculator.federalCalculations();
+/*const TaxCalculator = new CalculateTaxes();
+TaxCalculator.federalCalculations();*/
 
 function sortFinancialData(financialData){
     financialData.sort((a, b) => {
@@ -68,10 +69,10 @@ function PrintSum({title, financialData, typeOfFinancialData, valueKeyToFind = "
 }
 
 function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOptionState, graphOptionState,
-                              incomeData, expenseData, investmentData}){
+                              incomeData, expenseData, investmentData, employmentState, filingStatusState,
+                              stTaxState}){
 
     let foundLength = findNumberOfSheetTypesInvolved(incomeOptionState, expenseOptionState, investmentOptionState);
-    //let chartDataArray = Array(foundLength); Useless ?
 
     incomeData = findCurrentFinancialSheets(incomeData, incomeOptionState);
     expenseData = findCurrentFinancialSheets(expenseData, expenseOptionState);
@@ -81,7 +82,19 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     if (expenseData[0]) { expenseData = expenseData[0] }
     if (investmentData[0]) { investmentData = investmentData[0] }
 
-    let graphData = combineData(incomeData, expenseData, investmentData, graphOptionState)
+    let graphData = combineData(incomeData, expenseData, investmentData, graphOptionState);
+
+    let incomeTaxData = new CalculateTaxes(incomeData.salaryAmounts || , employmentState,
+        filingStatusState, stTaxState, "22"); // TODO In the future, add an input to change years.
+    incomeTaxData = incomeTaxData.federalCalculations();
+    cc(incomeTaxData)
+
+
+    /*let blah = new ThisIsStupid;
+    blah.federalCalculation();
+    cc(blah)*/
+
+
 
     //TODO Get yearsNumbered directly.
 
@@ -224,12 +237,15 @@ function Evaluate(){
     let [expenseOptionState, setExpenseOptionState] = useState(checkExistence(expenseData));
     let [investmentOptionState, setInvestmentOptionState] = useState(checkExistence(investmentData));
     let [graphOptionState, setGraphOptionState] = useState("Yearly In Pocket");
+    let [employmentState, setEmploymentState] = useState("Employee");
+    let [filingStatusState, setFilingStatusState] = useState("Single");
+    let [stTaxState, setStTaxState] = useState("0");
 
     return (
         <div className={"container"}>
             <button onClick={(e) => {
                 e.preventDefault();
-                cc(investmentData);
+                cc(employmentState);
             }}>Log</button>
             <br />
 
@@ -260,15 +276,43 @@ function Evaluate(){
                     />
                 </select>&nbsp;
                 Investments&nbsp;
+                <br />
+                <br />
 
-                <br />
-                <br />
                 <select className={"text-black"} onChange={(event) => {
                     setGraphOptionState(event.target.value);
                 }}>
                     <GraphOptions />
                 </select>&nbsp;
                 Graph Type&nbsp;
+                <br />
+                <br />
+
+                <select className={"text-black"} onChange={(event) => {
+                    setEmploymentState(event.target.value);
+                }}>
+                    <option>Employee</option>
+                    <option>Self-Employed</option>
+                </select>&nbsp;
+                Employment Type&nbsp;
+                <br />
+
+                <select className={"text-black"} onChange={(event) => {
+                    setFilingStatusState(event.target.value);
+                }}>
+                    <option>Single</option>
+                    <option>Married - Joint Return</option>
+                    <option>Married - Separate Returns</option>
+                    <option>Head of Household</option>
+                </select>&nbsp;
+                Filing Status&nbsp;
+                <br />
+
+                <input type={"text"} onChange={(event) => {
+                    setStTaxState(event.target.value)
+                }}></input>
+                State Income Tax&nbsp;
+                <br />
 
             </form>
             <br />
@@ -298,6 +342,9 @@ function Evaluate(){
                 incomeData = {incomeData}
                 expenseData = {expenseData}
                 investmentData = {investmentData}
+                employmentState = {employmentState}
+                filingStatusState = {filingStatusState}
+                stTaxState = {stTaxState}
             />
         </div>
     );

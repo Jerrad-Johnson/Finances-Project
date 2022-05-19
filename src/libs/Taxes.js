@@ -1,17 +1,14 @@
 import Jobdatahandler from "./jobdatahandler";
 
 class CalculateTaxes {
-    constructor(income){
-        //this.income = income;
+    constructor(moneyIn, employmentState, filingStatusState, stTaxState, taxYearState){
         this.income = {};
-        this.income.yearlySums = [15000, 45000, 60000, 80000, 10000, 120000, 150000, 180000, 200000, 200000, 250000,
-            400000, 700000, 1000000, 5000000];
-        this.income.filingStatus = "Single";
-            //"Single", "Married - Joint Return", "Married - Separate Returns", "Head of Household"
-        this.income.employmentType = 'Employee';
-            //["Employee", "Self-Employed"];
-        this.income.stateTaxPercentage = 5
-        this.income.taxYear = 22;
+        this.income.yearlySums = moneyIn;
+
+        this.income.employmentType = employmentState;
+        this.income.filingStatus = filingStatusState;
+        this.income.stateTaxPercentage = stTaxState;
+        this.income.taxYear = taxYearState;
         this.income.taxYear = "y" + this.income.taxYear;
         this.brackets = {
             y22: {
@@ -57,7 +54,7 @@ class CalculateTaxes {
 
         this.length = new Jobdatahandler();
         this.length = this.length.graphMaxNumberOfYears;
-        this.cc = console.log;
+        this.cc = console.dir;
     }
 
     federalCalculations(){
@@ -72,8 +69,7 @@ class CalculateTaxes {
                 this.brackets, this.income.employmentType, this.income.filingStatus);
         [results.federalIncomeTax, results.incomeAfterFederalTaxes, results.effectiveTaxPercentages] = this.calculateFederalIncomeTax(this.income.taxYear, this.brackets,
             results.incomeAfterFica, this.income.filingStatus, results.differenceBecauseOfStandardDeduction, this.income.yearlySums);
-
-        this.cc(results);
+        return results;
     }
 
     calculateStateTax(income, stateTaxPercentage){
@@ -140,7 +136,7 @@ class CalculateTaxes {
         let medicareReverseCutoffPercentage = this.getMedicareReverseCutoffPercentage(taxYear, taxBrackets, employmentType);
         let ficaTaxes = {};
         ficaTaxes.medicare = this.getMedicareTaxSums(income, medicareReverseCutoffPoint,
-                                                        medicareReverseCutoffPercentage, ficaBracket);
+            medicareReverseCutoffPercentage, ficaBracket);
         let socSecTaxPercentage = taxBrackets[taxYear][ficaCategory].socSec.percent;
         let socSecCutoffPoint = taxBrackets[taxYear][ficaCategory].socSec.cutoff;
         ficaTaxes.socSec = this.getSocSecTaxSums(income, socSecTaxPercentage, socSecCutoffPoint);
@@ -185,7 +181,7 @@ class CalculateTaxes {
         return currentYear[mapEmploymentToDeduction[employmentType]].medicare.percentageAfterReverseCutoff;
     }
 
-    getMedicareTaxSums(income, medicareReverseCutoffPoint, medicareReverseCutoffPercentage, ficaBracket) {
+    getMedicareTaxSums(income, medicareReverseCutoffPoint, medicareReverseCutoffPercentage, ficaBracket){
         let sums = [];
 
         for (let i = 0; i < this.length; i++) {
@@ -200,7 +196,7 @@ class CalculateTaxes {
         return sums;
     }
 
-    getSocSecTaxSums(income, socSecTaxPercentage, socSecCutoffPoint) {
+    getSocSecTaxSums(income, socSecTaxPercentage, socSecCutoffPoint){
         let sums = [];
 
         for (let i = 0; i < this.length; i++) {
@@ -214,7 +210,7 @@ class CalculateTaxes {
         return sums;
     }
 
-    getTaxableIncomeAfterFICA(income, medicareTaxes, socSecTaxes) {
+    getTaxableIncomeAfterFICA(income, medicareTaxes, socSecTaxes){
         let sums = [];
 
         for (let i = 0; i < this.length; i++){
@@ -224,7 +220,7 @@ class CalculateTaxes {
         return sums;
     }
 
-    calculateFederalIncomeTax(taxYear, brackets, income, filingStatus, standardDeductionActualReduction, incomeBeforeAnyTaxes) {
+    calculateFederalIncomeTax(taxYear, brackets, income, filingStatus, standardDeductionActualReduction, incomeBeforeAnyTaxes){
         let cutoffs = this.getBracketCutoffs(taxYear, brackets, filingStatus);
         let percentages = brackets[taxYear].rates;
         let federalTaxTotals = this.getSumOfTaxes(cutoffs, percentages, income);
@@ -319,7 +315,7 @@ class CalculateTaxes {
             }
         }
 
-        this.cc(sums)
+        //this.cc(sums)
         return sums;
     }
 
