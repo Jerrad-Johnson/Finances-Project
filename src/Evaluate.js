@@ -84,7 +84,7 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
 
     let graphData = combineData(incomeData, expenseData, investmentData, graphOptionState);
 
-    let incomeTaxData = new CalculateTaxes(incomeData.salaryAmounts || , employmentState,
+    let incomeTaxData = new CalculateTaxes(incomeData.salaryAmounts || incomeData.incomeInGraphYearsNumberOfSteps, employmentState,
         filingStatusState, stTaxState, "22"); // TODO In the future, add an input to change years.
     incomeTaxData = incomeTaxData.federalCalculations();
     cc(incomeTaxData)
