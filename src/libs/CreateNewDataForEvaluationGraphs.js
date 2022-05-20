@@ -35,7 +35,7 @@ class CreateNewDataForEvaluationGraphs {
         }
 
         if (this.isObject(expenses)){
-            y = this.addGraphNecessities(expenses.sumByYear, "Expenses", this.colors[2])
+            y = this.addGraphNecessities(expenses.combinedSumByYear, "Expenses", this.colors[2])
             x.push(y);
             y = {};
         }
@@ -69,14 +69,14 @@ class CreateNewDataForEvaluationGraphs {
     }
 
     combineExpenseSums(expenses){
-        expenses.sumByYear = [];
+        expenses.combinedSumByYear = [];
 
         for (let j = 0; j < expenses.graphSumObject.length; j++){
             for (let i = 0; i < this.length; i++) {
-                if (isNumeric(expenses.sumByYear[i])){
-                    expenses.sumByYear[i] = expenses.sumByYear[i] + expenses.graphSumObject[j].data[i];
+                if (isNumeric(expenses.combinedSumByYear[i])){
+                    expenses.combinedSumByYear[i] = expenses.combinedSumByYear[i] + expenses.graphSumObject[j].data[i];
                 } else {
-                    expenses.sumByYear[i] = expenses.graphSumObject[j].data[i];
+                    expenses.combinedSumByYear[i] = expenses.graphSumObject[j].data[i];
                 }
             }
         }
