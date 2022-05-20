@@ -3,6 +3,7 @@ import Chart from "react-apexcharts";
 import React from "react";
 import jobdatahandler from "../libs/jobdatahandler";
 import {getYearsNumbered} from "./jobssharedfunctions";
+import CreateNewDataForEvaluationGraphs from "../libs/CreateNewDataForEvaluationGraphs";
 
 let cc = console.dir
 var jobHandler = new jobdatahandler;
@@ -23,14 +24,13 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     if (expenseData[0]) { expenseData = expenseData[0] }
     if (investmentData[0]) { investmentData = investmentData[0] }
 
-    let incomeTaxData = new CalculateTaxes(incomeData.salaryAmounts || incomeData.incomeInGraphYearsNumberOfSteps, employmentState,
-        filingStatusState, stTaxState, "22"); // TODO In the future, add an input so users can change years.
-    incomeTaxData = incomeTaxData.federalCalculations();
+    let incomeTaxData = getIncomeTaxData(incomeData, employmentState, filingStatusState, stTaxState);
 
-    /*let newDataForGraphs = new CreateNewDataForEvaluationGraphs;
-    newDataForGraphs = CreateNewDataForEvaluationGraphs.begin();
-    newDataForGraphs.incomeAfterExpenses = getIncomeAfterExpenses(incomeData, expenseData, investmentData);*/
-    let graphData = combineData(incomeData, expenseData, investmentData, graphOptionState); //TODO Repurpose this after I have more graph data
+    let newDataForGraphs = new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData, incomeTaxData);
+    newDataForGraphs = newDataForGraphs.begin();
+
+
+    let graphData = combineData(incomeData, expenseData, investmentData, graphOptionState);         //TODO Repurpose this after I have more graph data
 
     //cc(investmentData)
 //    let temp = applyInflation(incomeData.incomeInGraphYearsNumberOfSteps);
@@ -44,7 +44,6 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
                 type = "bar"
                 height = "300"
                 options = {{
-
                     colors: graphData.colors,
                     chart: {
                         stacked: false,
@@ -162,9 +161,21 @@ function applyInflation(arr){
 }
 
 function getIncomeAfterExpenses(incomeData, expenseData, investmentData){
-    cc(incomeData)
-    cc(investmentData)
-    cc(expenseData)
+
+}
+
+function getIncomeTaxData(incomeData, employmentState, filingStatusState, stTaxState){
+    let incomeTaxData = [];
+
+    if (typeof incomeData === 'object' && !Array.isArray(incomeData) && incomeData !== null){
+        incomeTaxData = new CalculateTaxes(incomeData.salaryAmounts || incomeData.incomeInGraphYearsNumberOfSteps, employmentState,
+            filingStatusState, stTaxState, "22");
+        incomeTaxData = incomeTaxData.federalCalculations();
+    }
+    // TODO In the future, add an input so users can change years.
+
+    return incomeTaxData
+
 }
 
 

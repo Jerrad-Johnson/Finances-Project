@@ -5,9 +5,9 @@ function Nav() {
     return(
       <>
            <nav>
-              <Link to={"Career"}>Career</Link> &nbsp;
-              <Link to={"Expenses"}>Expenses</Link> &nbsp;
-              <Link to={"Investments"}>Investments</Link> &nbsp;
+              <Link to={"Career"}>Career</Link>
+              <Link to={"Expenses"}>Expenses</Link>
+              <Link to={"Investments"}>Investments</Link>
               <Link to={"Evaluate"}>Evaluate</Link>
           </nav>
       </>

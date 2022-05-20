@@ -17,7 +17,8 @@ function Evaluate(){
     let [filingStatusState, setFilingStatusState] = useState("Single");
     let [stTaxState, setStTaxState] = useState("0");
 
-    return(<div className={"container"}>
+    return(
+        <div className={"container"}>
             <button onClick={(e) => {
                 e.preventDefault();
                 cc(employmentState);

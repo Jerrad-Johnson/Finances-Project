@@ -44,6 +44,20 @@
 */
 
 body {
-  background-color: #000;
-  color:#ccc;
+    @apply bg-slate-100 text-black;
+}
+
+nav {
+    @apply
+    flex flex-wrap justify-center gap-4
+    text-blue-600
+    bg-gradient-to-b from-neutral-400 to-amber-50
+    p-2
+
+}
+
+nav.a {
+    @apply mr-2
+    bg-gradient-to-b from-neutral-400 to-red-600
+
 }

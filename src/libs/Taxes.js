@@ -4,7 +4,6 @@ class CalculateTaxes {
     constructor(moneyIn, employmentState, filingStatusState, stTaxState, taxYearState){
         this.income = {};
         this.income.yearlySums = moneyIn;
-
         this.income.employmentType = employmentState;
         this.income.filingStatus = filingStatusState;
         this.income.stateTaxPercentage = stTaxState;
