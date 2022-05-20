@@ -22,21 +22,23 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     if (investmentData[0]) { investmentData = investmentData[0] }
     let incomeTaxData = getIncomeTaxData(incomeData, employmentState, filingStatusState, stTaxState);
     let newDataForGraphs = new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData, incomeTaxData);
-    newDataForGraphs = newDataForGraphs.begin();
+
     const mapGraphOptionStateToObjectKey = {
-        "Yearly In Pocket": "yearlyInPocket",
+        "Yearly In Pocket": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData, incomeTaxData).makeYearlyInPocket(); },
     };
 
-    let singleGraphData = newDataForGraphs[mapGraphOptionStateToObjectKey[graphOptionState]];
+    let x = mapGraphOptionStateToObjectKey[graphOptionState]();
+
+    //let singleGraphData = newDataForGraphs[mapGraphOptionStateToObjectKey[graphOptionState]];
 
     return (
         <div>
             <Chart
-                series = {singleGraphData}
+                series = {x}
                 type = "bar"
                 height = "300"
                 options = {{
-                    /*colors: ["#fff000"],*/
+                /*colors: ["#fff000"],*/
                     chart: {
                         stacked: false,
                     },

@@ -4,39 +4,26 @@ import {isNumeric} from "../components/jobssharedfunctions";
 class CreateNewDataForEvaluationGraphs {
     constructor(income, expenses, investments, taxes = []) {
         this.cc = console.dir;
-        this.income = income;
-        this.expenses = expenses;
-        this.investments = investments;
+        this.income = this.addValuesToIncome(income);
+        this.expenses = this.addValuesToExpenses(expenses);
+        this.investments = this.addValuesToInvestments(investments);
         this.taxes = taxes;
+        //this.newGraphData = this.addNewData;
         this.length = new jobdatahandler().graphMaxNumberOfYears;
         this.colors = ["#ff0000", "#00ff00", "#0000ff"]
     }
 
-    begin(){
-        this.income = this.addValuesToIncome(this.income);
-        this.expenses = this.addValuesToExpenses(this.expenses);
-        this.investments = this.addValuesToInvestments(this.investments);
-
-        if (this.isObject(this.expenses)) this.expenses = this.combineExpenseSums(this.expenses);
-
-        let newGraphData = {};
-        newGraphData.yearlyInPocket = this.makeYearlyInPocket(this.income, this.expenses, this.investments);
-        //newGraphData.runningSums = this.makeRunningSums(this.income, this.expenses, this.investments);
-
-        return newGraphData;
-    }
-
-    makeYearlyInPocket(income, expenses, investments){
+    makeYearlyInPocket(){
         let x = [];
         let y = {};
 
-        y = this.addIncomeData(income, income?.sumByYear);
+        y = this.addIncomeData(this.income, this.income?.sumByYear);
         if (!this.isEmptyObject(y)) x.push(y); y = {};
 
-        y = this.addExpenseData(expenses, expenses.combinedSumByYear);
+        y = this.addExpenseData(this.expenses, this.expenses.combinedSumByYear);
         if (!this.isEmptyObject(y)) x.push(y); y = {};
 
-        y = this.addInvestmentData(investments, investments.arrayPullValueByYear, "Investment Pulls");
+        y = this.addInvestmentData(this.investments, this.investments.arrayPullValueByYear, "Investment Pulls");
         if (!this.isEmptyObject(y)) x.push(y); y = {};
 
         return x;
@@ -105,10 +92,11 @@ class CreateNewDataForEvaluationGraphs {
     }
 
     combineExpenseSums(expenses){
+        let length = new jobdatahandler().graphMaxNumberOfYears;
         expenses.combinedSumByYear = [];
 
         for (let j = 0; j < expenses.graphSumObject.length; j++){
-            for (let i = 0; i < this.length; i++) {
+            for (let i = 0; i < length; i++) {
                 if (isNumeric(expenses.combinedSumByYear[i])){
                     expenses.combinedSumByYear[i] = expenses.combinedSumByYear[i] + expenses.graphSumObject[j].data[i];
                 } else {
