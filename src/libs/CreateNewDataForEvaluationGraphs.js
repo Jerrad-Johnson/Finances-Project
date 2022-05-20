@@ -14,7 +14,7 @@ class CreateNewDataForEvaluationGraphs {
 
     begin(){
         let ck = this.checkIfEmptyArray;
-        this.income = this.makeLinearAndSteppedJobKeyNamingConsistent(this.income);
+        if (this.isObject(this.income)) { this.income = this.makeLinearAndSteppedJobKeyNamingConsistent(this.income); }
         this.expenses = this.combineExpenseSums(this.expenses);
 
         let newGraphData = {};
@@ -28,24 +28,34 @@ class CreateNewDataForEvaluationGraphs {
         let x = [];
         let y = {};
 
-        if (this.isObject(income)){
-            y = this.addGraphNecessities(income.sumByYear, "Income", this.colors[0])
-            x.push(y);
-            y = {};
-        }
+        y = this.addIncomeData(income, income?.sumByYear);
+        if (!this.isEmptyObject(y)) x.push(y); y = {};
 
-        if (this.isObject(expenses)){
-            y = this.addGraphNecessities(expenses.combinedSumByYear, "Expenses", this.colors[2])
-            x.push(y);
-            y = {};
-        }
+        y = this.addExpenseData(expenses, expenses.combinedSumByYear);
+        if (!this.isEmptyObject(y)) x.push(y); y = {};
 
-        if (this.isObject(investments)){
-            y = this.addGraphNecessities(investments.arrayPullValueByYear, "Investment Pulls", this.colors[1])
-            x.push(y);
-            y = {};
-        }
+        y = this.addInvestmentData(investments, investments.arrayPullValueByYear, "Investment Pulls");
+        if (!this.isEmptyObject(y)) x.push(y); y = {};
+
         return x;
+    }
+
+    addIncomeData(income, incomeValueArray, sheetType = "Income"){
+        if (this.isObject(income)){
+           return this.addGraphNecessities(incomeValueArray, sheetType, this.colors[0]);
+        }
+    }
+
+    addInvestmentData(income, incomeValueArray, sheetType = "Investment"){
+        if (this.isObject(income)){
+            return this.addGraphNecessities(incomeValueArray, sheetType, this.colors[1]);
+        }
+    }
+
+    addExpenseData(income, incomeValueArray, sheetType = "Expenses"){
+        if (this.isObject(income)){
+            return this.addGraphNecessities(incomeValueArray, sheetType, this.colors[2]);
+        }
     }
 
     addGraphNecessities(arrayValues, sheetType, color){
@@ -119,6 +129,14 @@ class CreateNewDataForEvaluationGraphs {
 
     isObject(x){
         return (typeof x === 'object' && !Array.isArray(x) && x !== null)
+    }
+
+    isEmptyObject(obj) {
+        if (this.isObject(obj)) {
+            return Object.keys(obj).length === 0;
+        } else {
+            return true;
+        }
     }
 
     checkIfEmptyArray(x) {
