@@ -6,14 +6,11 @@ import {getYearsNumbered} from "./jobssharedfunctions";
 import CreateNewDataForEvaluationGraphs from "../libs/CreateNewDataForEvaluationGraphs";
 
 let cc = console.dir
-var jobHandler = new jobdatahandler;
-let length = jobHandler.graphMaxNumberOfYears;
+let length = new jobdatahandler().graphMaxNumberOfYears;
 var yearsArrayForGraph = getYearsNumbered();
 
-function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOptionState, graphOptionState,
-                              incomeData, expenseData, investmentData, employmentState, filingStatusState,
-                              stTaxState}){
-
+function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOptionState, graphOptionState, incomeData,
+                              expenseData, investmentData, employmentState, filingStatusState, stTaxState}){
     incomeData = findCurrentFinancialSheets(incomeData, incomeOptionState);
     expenseData = findCurrentFinancialSheets(expenseData, expenseOptionState);
     investmentData = findCurrentFinancialSheets(investmentData, investmentOptionState);
@@ -21,20 +18,17 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     if (expenseData[0]) { expenseData = expenseData[0] }
     if (investmentData[0]) { investmentData = investmentData[0] }
     let incomeTaxData = getIncomeTaxData(incomeData, employmentState, filingStatusState, stTaxState);
-    let newDataForGraphs = new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData, incomeTaxData);
 
     const mapGraphOptionStateToObjectKey = {
         "Yearly In Pocket": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData, incomeTaxData).makeYearlyInPocket(); },
     };
 
-    let x = mapGraphOptionStateToObjectKey[graphOptionState]();
-
-    //let singleGraphData = newDataForGraphs[mapGraphOptionStateToObjectKey[graphOptionState]];
+    let graphData = mapGraphOptionStateToObjectKey[graphOptionState]();
 
     return (
         <div>
             <Chart
-                series = {x}
+                series = {graphData}
                 type = "bar"
                 height = "300"
                 options = {{
@@ -52,10 +46,6 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
 }
 
 
-function isObject(x){
-    return typeof x === 'object' && !Array.isArray(x) && x !== null;
-}
-
 function findCurrentFinancialSheets(sheets, current){
     return sheets.filter((sheet) => {
         return sheet.title === current;
@@ -70,39 +60,6 @@ function findNumberOfSheetTypesInvolved(incomeOptionState, expenseOptionState, i
     });
 
     return x = x.length;
-}
-
-function combineSinglePropertyArrays(financialDataProperty){
-    let x = [];
-
-    for (let j = 0; j < length; j++){
-        x[j] = 0;
-    }
-
-    for (let i = 0; i < financialDataProperty.length; i++) {
-        for (let j = 0; j < length; j++) {
-            x[j] = x[j] + financialDataProperty[i][j];
-        }
-    }
-
-    return x;
-}
-
-function combineMultiplePropertyArrays(financialDataProperties){
-    let x = [];
-
-    for (let j = 0; j < length; j++){
-        x[j] = 0;
-    }
-
-    for (let i = 0; i < financialDataProperties.length; i++) {
-
-        for (let j = 0; j < length; j++) {
-            x[j] = x[j] + financialDataProperties[i].data[j];
-        }
-    }
-
-    return x;
 }
 
 function applyInflation(arr){
