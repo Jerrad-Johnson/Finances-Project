@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Chart from "react-apexcharts";
 import jobdatahandler from "./libs/jobdatahandler";
 import CalculateTaxes from "./libs/Taxes";
 import {getYearsNumbered} from "./components/jobssharedfunctions";
-let cc = console.log
+import CreateNewDataForGraphs from "./libs/CreateNewDataForGraphs";
+
+let cc = console.dir
 var jobHandler = new jobdatahandler;
 let length = jobHandler.graphMaxNumberOfYears;
 var yearsArrayForGraph = getYearsNumbered();
@@ -54,7 +56,7 @@ function PrintSum({title, financialData, typeOfFinancialData, valueKeyToFind = "
     if (!financialData[0]) { return; }
 
     let getCurrentEntry = financialData.filter((e) => {
-       return e.title == title;
+       return e.title === title;
     });
 
     let sum = getCurrentEntry[0][valueKeyToFind];
@@ -84,7 +86,16 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
         filingStatusState, stTaxState, "22"); // TODO In the future, add an input so users can change years.
     incomeTaxData = incomeTaxData.federalCalculations();
 
-    let graphData = combineData(incomeData, expenseData, investmentData, graphOptionState);
+    /*let newDataForGraphs = new CreateNewDataForGraphs;
+    newDataForGraphs = CreateNewDataForGraphs.begin();
+    newDataForGraphs.incomeAfterExpenses = getIncomeAfterExpenses(incomeData, expenseData, investmentData);*/
+    let graphData = combineData(incomeData, expenseData, investmentData, graphOptionState); //TODO Repurpose this after I have more graph data
+
+
+    //cc(investmentData)
+//    let temp = applyInflation(incomeData.incomeInGraphYearsNumberOfSteps);
+
+
 
     return (
         <div>
@@ -148,19 +159,13 @@ function combineData(incomeData, expenseData, investmentData, graphOptionState, 
 
 
 function isObject(x){
-    if(typeof x === 'object' && !Array.isArray(x) && x !== null){
-        return true;
-    } else {
-        return false;
-    }
+    return typeof x === 'object' && !Array.isArray(x) && x !== null;
 }
 
 function findCurrentFinancialSheets(sheets, current){
-    let toBeReturned = sheets.filter((sheet) => {
-        return sheet.title == current;
+    return sheets.filter((sheet) => {
+        return sheet.title === current;
     });
-
-    return toBeReturned;
 }
 
 function checkExistence(financialData){
@@ -212,6 +217,22 @@ function combineMultiplePropertyArrays(financialDataProperties){
     }
 
     return x;
+}
+
+function applyInflation(arr){
+    let x = structuredClone(arr)
+
+    for (let i = 0; i < length; i++){
+        x[i] = x[i] * .9674;
+    }
+
+    return x;
+}
+
+function getIncomeAfterExpenses(incomeData, expenseData, investmentData){
+    cc(incomeData)
+    cc(investmentData)
+    cc(expenseData)
 }
 
 function Evaluate(){
@@ -298,7 +319,7 @@ function Evaluate(){
 
                 <input type={"text"} onChange={(event) => {
                     setStTaxState(event.target.value)
-                }}></input>
+                }} />
                 State Income Tax&nbsp;
                 <br />
 
