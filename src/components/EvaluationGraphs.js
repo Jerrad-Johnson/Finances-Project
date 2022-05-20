@@ -14,7 +14,6 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
                               incomeData, expenseData, investmentData, employmentState, filingStatusState,
                               stTaxState}){
 
-    let foundLength = findNumberOfSheetTypesInvolved(incomeOptionState, expenseOptionState, investmentOptionState);
     incomeData = findCurrentFinancialSheets(incomeData, incomeOptionState);
     expenseData = findCurrentFinancialSheets(expenseData, expenseOptionState);
     investmentData = findCurrentFinancialSheets(investmentData, investmentOptionState);
@@ -24,21 +23,20 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     let incomeTaxData = getIncomeTaxData(incomeData, employmentState, filingStatusState, stTaxState);
     let newDataForGraphs = new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData, incomeTaxData);
     newDataForGraphs = newDataForGraphs.begin();
-    let graphData = combineData(incomeData, expenseData, investmentData, graphOptionState);         //TODO Repurpose this after I have more graph data
+    const mapGraphOptionStateToObjectKey = {
+        "Yearly In Pocket": "yearlyInPocket",
+    };
 
-    //cc(investmentData)
-//    let temp = applyInflation(incomeData.incomeInGraphYearsNumberOfSteps);
-
-
+    let singleGraphData = newDataForGraphs[mapGraphOptionStateToObjectKey[graphOptionState]];
 
     return (
         <div>
             <Chart
-                series = {graphData}
+                series = {singleGraphData}
                 type = "bar"
                 height = "300"
                 options = {{
-                    colors: graphData.colors,
+                    /*colors: ["#fff000"],*/
                     chart: {
                         stacked: false,
                     },
@@ -49,45 +47,6 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
             />
         </div>
     );
-}
-
-function combineData(incomeData, expenseData, investmentData, graphOptionState, foundLength){
-    let x = [];
-    let y = {};
-    y.colors = [];
-    let color = [];
-
-    switch (graphOptionState){
-        case "Yearly In Pocket":
-            if (isObject(incomeData)){
-                y.data = incomeData.incomeInGraphYearsNumberOfSteps ?? incomeData.salaryAmounts;
-                y.name = "Income"
-                y.colors = "#00ff00";
-                x.push(y);
-                y = {};
-                color = [];
-            }
-
-            if (isObject(investmentData)){
-                y.data = combineSinglePropertyArrays(investmentData.arrayPullValueByYear); // TODO Add withdraw
-                y.name = "Investment"
-                y.colors = "#00ff00";
-                x.push(y);
-                y = {};
-                color = [];
-            }
-
-            if (isObject(expenseData)){
-                y.data = combineMultiplePropertyArrays(expenseData.graphSumObject); // TODO Add investment expense
-                y.name = "Expense"
-                y.colors = "#ff0000";
-                x.push(y);
-                y = {};
-                color = [];
-            }
-            break;
-    }
-    return x;
 }
 
 

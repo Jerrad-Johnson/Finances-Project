@@ -1,55 +1,64 @@
 import jobdatahandler from "./jobdatahandler";
+import {isNumeric} from "../components/jobssharedfunctions";
 
 class CreateNewDataForEvaluationGraphs {
     constructor(income, expenses, investments, taxes = []) {
-        this.income = this.makeLinearAndSteppedJobKeyNamingConsistent(income);
+        this.cc = console.dir;
+        this.income = income;
         this.expenses = expenses;
         this.investments = investments;
         this.taxes = taxes;
-        this.cc = console.dir;
-        this.length = new jobdatahandler();
-        this.length = this.length.graphMaxNumberOfYears;
+        this.length = new jobdatahandler().graphMaxNumberOfYears;
+        this.colors = ["#ff0000", "#00ff00", "#0000ff"]
     }
 
-    begin() {
+    begin(){
         let ck = this.checkIfEmptyArray;
-        let newGraphData = {};
-        newGraphData.yearlyInPocket = this.makeYearlyInPocketGraphData(this.income, this.expenses, this.investments);
-        this.cc(newGraphData.yearlyInPocket)
+        this.income = this.makeLinearAndSteppedJobKeyNamingConsistent(this.income);
+        this.expenses = this.combineExpenseSums(this.expenses);
 
-        return {};
+        let newGraphData = {};
+        newGraphData.yearlyInPocket = this.makeYearlyInPocket(this.income, this.expenses, this.investments);
+        //newGraphData.runningSums = this.makeRunningSums(this.income, this.expenses, this.investments);
+
+        return newGraphData;
     }
 
-    makeYearlyInPocketGraphData(income, expenses, investments) {
+    makeYearlyInPocket(income, expenses, investments){
         let x = [];
         let y = {};
-        y.colors = ["#ff0000", "#00ff00", "#0000ff"];
 
-        if (this.isObject(income)) {
-            y.data = this.income.sumByYear;
-            y.name = "Income"
+        if (this.isObject(income)){
+            y = this.addGraphNecessities(income.sumByYear, "Income", this.colors[0])
             x.push(y);
             y = {};
         }
 
-        if (this.isObject(investments)) {
-            y.data = this.combineSinglePropertyArrays(investments.arrayPullValueByYear); // TODO Add withdraw
-            y.name = "Investment"
+        if (this.isObject(expenses)){
+            y = this.addGraphNecessities(expenses.sumByYear, "Expenses", this.colors[2])
             x.push(y);
             y = {};
         }
 
-        if (this.isObject(expenses)) {
-            y.data = this.combineMultiplePropertyArrays(expenses.graphSumObject); // TODO Add investment expense
-            y.name = "Expense"
+        if (this.isObject(investments)){
+            y = this.addGraphNecessities(investments.arrayPullValueByYear, "Investment Pulls", this.colors[1])
             x.push(y);
             y = {};
         }
-
         return x;
     }
 
-    makeLinearAndSteppedJobKeyNamingConsistent(oldIncomeData) {
+    addGraphNecessities(arrayValues, sheetType, color){
+        let y = {};
+
+        y.data = arrayValues;
+        y.name = sheetType;
+        y.colors = color;
+
+        return y;
+    }
+
+    makeLinearAndSteppedJobKeyNamingConsistent(oldIncomeData){
         let newIncomeData = {};
         newIncomeData.sumByYear = oldIncomeData.incomeInGraphYearsNumberOfSteps || oldIncomeData.salaryAmounts;
         newIncomeData.runningSumByYear = oldIncomeData.sumIncomeByYear || oldIncomeData.salarySumByYear;
@@ -59,7 +68,23 @@ class CreateNewDataForEvaluationGraphs {
         return newIncomeData
     }
 
-    combineSinglePropertyArrays(financialDataProperty) {
+    combineExpenseSums(expenses){
+        expenses.sumByYear = [];
+
+        for (let j = 0; j < expenses.graphSumObject.length; j++){
+            for (let i = 0; i < this.length; i++) {
+                if (isNumeric(expenses.sumByYear[i])){
+                    expenses.sumByYear[i] = expenses.sumByYear[i] + expenses.graphSumObject[j].data[i];
+                } else {
+                    expenses.sumByYear[i] = expenses.graphSumObject[j].data[i];
+                }
+            }
+        }
+
+        return expenses
+    }
+
+    combineSinglePropertyArrays(financialDataProperty){
         let x = [];
 
         for (let j = 0; j < this.length; j++) {
@@ -75,7 +100,7 @@ class CreateNewDataForEvaluationGraphs {
         return x;
     }
 
-    combineMultiplePropertyArrays(financialDataProperties) {
+    combineMultiplePropertyArrays(financialDataProperties){
         let x = [];
 
         for (let j = 0; j < this.length; j++) {
@@ -92,7 +117,7 @@ class CreateNewDataForEvaluationGraphs {
         return x;
     }
 
-    isObject(x) {
+    isObject(x){
         return (typeof x === 'object' && !Array.isArray(x) && x !== null)
     }
 
