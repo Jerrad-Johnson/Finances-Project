@@ -15,21 +15,15 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
                               stTaxState}){
 
     let foundLength = findNumberOfSheetTypesInvolved(incomeOptionState, expenseOptionState, investmentOptionState);
-
     incomeData = findCurrentFinancialSheets(incomeData, incomeOptionState);
     expenseData = findCurrentFinancialSheets(expenseData, expenseOptionState);
     investmentData = findCurrentFinancialSheets(investmentData, investmentOptionState);
-
     if (incomeData[0]) { incomeData = incomeData[0] }
     if (expenseData[0]) { expenseData = expenseData[0] }
     if (investmentData[0]) { investmentData = investmentData[0] }
-
     let incomeTaxData = getIncomeTaxData(incomeData, employmentState, filingStatusState, stTaxState);
-
     let newDataForGraphs = new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData, incomeTaxData);
     newDataForGraphs = newDataForGraphs.begin();
-
-
     let graphData = combineData(incomeData, expenseData, investmentData, graphOptionState);         //TODO Repurpose this after I have more graph data
 
     //cc(investmentData)
