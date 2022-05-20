@@ -13,9 +13,11 @@ class CreateNewDataForEvaluationGraphs {
     }
 
     begin(){
-        let ck = this.checkIfEmptyArray;
-        if (this.isObject(this.income)) { this.income = this.makeLinearAndSteppedJobKeyNamingConsistent(this.income); }
-        this.expenses = this.combineExpenseSums(this.expenses);
+        this.income = this.addValuesToIncome(this.income);
+        this.expenses = this.addValuesToExpenses(this.expenses);
+        this.investments = this.addValuesToInvestments(this.investments);
+
+        if (this.isObject(this.expenses)) this.expenses = this.combineExpenseSums(this.expenses);
 
         let newGraphData = {};
         newGraphData.yearlyInPocket = this.makeYearlyInPocket(this.income, this.expenses, this.investments);
@@ -56,6 +58,30 @@ class CreateNewDataForEvaluationGraphs {
         if (this.isObject(income)){
             return this.addGraphNecessities(incomeValueArray, sheetType, this.colors[2]);
         }
+    }
+
+    addValuesToIncome(income){
+        if (this.isObject(income)) {
+            income = this.makeLinearAndSteppedJobKeyNamingConsistent(income);
+        }
+
+        return income;
+    }
+
+    addValuesToExpenses(expenses){
+        if (this.isObject(expenses)) {
+            expenses = this.combineExpenseSums(expenses);
+        }
+
+        return expenses;
+    }
+
+    addValuesToInvestments(investments){
+        if (this.isObject(investments)) {
+
+        }
+
+        return investments;
     }
 
     addGraphNecessities(arrayValues, sheetType, color){
