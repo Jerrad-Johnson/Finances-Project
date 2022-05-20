@@ -27,8 +27,8 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
         filingStatusState, stTaxState, "22"); // TODO In the future, add an input so users can change years.
     incomeTaxData = incomeTaxData.federalCalculations();
 
-    /*let newDataForGraphs = new CreateNewDataForGraphs;
-    newDataForGraphs = CreateNewDataForGraphs.begin();
+    /*let newDataForGraphs = new CreateNewDataForEvaluationGraphs;
+    newDataForGraphs = CreateNewDataForEvaluationGraphs.begin();
     newDataForGraphs.incomeAfterExpenses = getIncomeAfterExpenses(incomeData, expenseData, investmentData);*/
     let graphData = combineData(incomeData, expenseData, investmentData, graphOptionState); //TODO Repurpose this after I have more graph data
 
