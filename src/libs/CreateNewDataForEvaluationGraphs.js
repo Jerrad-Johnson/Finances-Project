@@ -1,25 +1,30 @@
 import jobdatahandler from "./jobdatahandler";
-import {isNumeric} from "../components/jobssharedfunctions";
+import {applyRoundingSingleDepthArray, isNumeric} from "../components/jobssharedfunctions";
 import expenses from "../Expenses";
 import CalculateTaxes from "./Taxes";
 import investments from "../Investments";
 
 class CreateNewDataForEvaluationGraphs {
-    constructor(income, expenses, investments, taxes = []) {
+    constructor(income, expenses, investments, taxes = [], employmentState = [],
+                filingStatusState = [], stTaxState = [], taxYearState = 22) {
         this.cc = console.dir;
         this.income = this.addValuesToIncome(income);
         this.expenses = this.addValuesToExpenses(expenses);
         this.investments = this.addValuesToInvestments(investments);
         this.taxesOnIncomeOnly = taxes;
-        this.taxesOnIncomeAndInvestments = this.getTaxesOnIncomePlusInvestments(this.income, this.investments);
+        this.taxesOnIncomeAndInvestments = this.combineIncomeAndPullsAndWithdrawls(this.income, this.investments, employmentState, filingStatusState, stTaxState, taxYearState);
         this.newGraphData = this.addNewData(this.income, this.expenses, this.investments, this.taxesOnIncomeOnly);
         this.length = new jobdatahandler().graphMaxNumberOfYears;
         this.colors = ["#ff0000", "#00ff00", "#0000ff"]
     }
 
+
     makeYearlyInPocket(){
         let x = [];
         let y = {};
+
+        this.cc(this.taxesOnIncomeAndInvestments)
+        this.cc(this.taxesOnIncomeOnly);
 
         y = this.addIncomeData(this.income, this.income?.sumByYear);
         if (!this.isEmptyObject(y)) x.push(y); y = {};
@@ -27,7 +32,7 @@ class CreateNewDataForEvaluationGraphs {
         y = this.addExpenseData(this.expenses, this.expenses.combinedSumByYear);
         if (!this.isEmptyObject(y)) x.push(y); y = {};
 
-        y = this.addInvestmentData(this.investments, this.investments.arrayCombinedPullValuesByYear, "Investment Pulls");
+        y = this.addInvestmentData(this.investments, this.investments.arrayPullValueByYearPlusWithdrawl, "Investment Pulls");
         if (!this.isEmptyObject(y)) x.push(y); y = {};
 
      /*   this.cc(this.income);
@@ -118,12 +123,29 @@ class CreateNewDataForEvaluationGraphs {
         return newIncomeData
     }
 
-    getTaxesOnIncomePlusInvestments(income, investments){
-    /*    this.cc(income)
-        this.cc(investments)*/
+    combineIncomeAndPullsAndWithdrawls(income, investments, employmentState, filingStatusState, stTaxState, taxYearState){
+        let length = new jobdatahandler().graphMaxNumberOfYears;
+        let incomeTogether = [];
+        incomeTogether.push(income.sumByYear);
+        incomeTogether.push(investments.arrayPullValueByYearPlusWithdrawl);
+        let incomeCombined = [];
 
-        //let taxesOnBoth =
+        for (let j = 0; j < incomeTogether.length; j++){
+            for (let i = 0; i < length; i++){
+                if (isNumeric(incomeCombined[i])) {
+                    incomeCombined[i] = incomeCombined[i] + incomeTogether[j][i];
+                } else {
+                    incomeCombined[i] = incomeTogether[j][i];
+                }
+            }
+        }
+
+
+        let x = new CalculateTaxes(incomeCombined, employmentState, filingStatusState, stTaxState, taxYearState).federalCalculations();
+
+        return x;
     }
+
 
     combineSums(arrs, oldKey, newKey){
         let length = new jobdatahandler().graphMaxNumberOfYears;

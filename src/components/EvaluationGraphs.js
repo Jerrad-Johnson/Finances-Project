@@ -19,8 +19,9 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     if (investmentData[0]) { investmentData = investmentData[0] }
     let incomeTaxData = getIncomeTaxData(incomeData, employmentState, filingStatusState, stTaxState);
 
+
     const mapGraphOptionStateToObjectKey = {
-        "Yearly In Pocket": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData, incomeTaxData).makeYearlyInPocket(); },
+        "Yearly In Pocket": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData, incomeTaxData, employmentState, filingStatusState, stTaxState).makeYearlyInPocket(); },
     };
 
     let graphData = mapGraphOptionStateToObjectKey[graphOptionState]();

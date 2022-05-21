@@ -38,4 +38,26 @@ export function getYearsNumbered(){
     return years;
 }
 
+export function applyRoundingSingleDepthArray(arr){
+    for (let i = 0; i < arr.length; i++) {
+        arr[i] = Math.round(arr[i]);
+    }
+    return arr;
+}
 
+export function applyRoundingTwoDepthArray(arr){
+    for (let i = 0; i < arr.length; i++){
+        for (let j = 0; j < arr[i].length; j++){
+            arr[i][j] = Math.round(arr[i][j]);
+        }
+    }
+    return arr;
+}
+
+
+export function applyRoundingSingleDepthArrayTwoDecimals(arr){
+    for (let i = 0; i < arr.length; i++) {
+        arr[i] = +arr[i].toFixed(2);
+    }
+    return arr;
+}

@@ -1,8 +1,9 @@
 import jobdatahandler from "./jobdatahandler";
+import {applyRoundingSingleDepthArray, applyRoundingTwoDepthArray} from "../components/jobssharedfunctions";
 
 class InvestmentDataHandler {
 
-    constructor(investmentData){
+    constructor(investmentData ){
         this.investmentData = investmentData;
         this.graphMaxNumberOfYears = new jobdatahandler().graphMaxNumberOfYears;
         this.cc = console.log;
@@ -26,7 +27,8 @@ class InvestmentDataHandler {
         this.runningPullSum(this.investmentData);
         this.withdrawlValue(this.investmentData);
         //this.updateArrayForWithdrawl(this.investmentData)
-        this.roundArrayNumbers(this.investmentData)
+        this.pullValueByYearPlusWithdrawl(this.investmentData);
+        this.roundArrayNumbers(this.investmentData);
         return this.investmentData;
     }
 
@@ -338,10 +340,42 @@ class InvestmentDataHandler {
         return investmentData;
    }
 
+    pullValueByYearPlusWithdrawl(investmentData){
+        let x = structuredClone(investmentData.arrayPullValueByYear);
+        x = this.sumMultipleArrays(x);
+
+        investmentData.arrayPullValueByYearPlusWithdrawl = x;
+
+        for (let i = 0; i < investmentData.yearsWithdraw.length; i++){
+            investmentData.arrayPullValueByYearPlusWithdrawl[investmentData.yearsWithdraw[i] -1]
+                = investmentData.arrayPullValueByYearPlusWithdrawl[investmentData.yearsWithdraw[i] -1]
+                + investmentData.withdrawlValue[i];
+        }
+
+        return investmentData;
+    }
+
+    sumMultipleArrays(arrs){
+        let newArr = [];
+
+        for (let i = 0; i < this.graphMaxNumberOfYears; i++){
+            newArr[i] = 0;
+        }
+
+        for (let i = 0; i < arrs.length; i++){
+            for (let j = 0; j < this.graphMaxNumberOfYears; j++){
+                newArr[j] = newArr[j] + arrs[i][j];
+            }
+        }
+
+        return newArr;
+    }
+
    roundArrayNumbers(investmentData){
        investmentData.arrayAdditionalInvestment = applyRoundingTwoDepthArray(investmentData.arrayAdditionalInvestment);
        investmentData.arrayInvestmentIncreaseByYear = applyRoundingTwoDepthArray(investmentData.arrayInvestmentIncreaseByYear);
        investmentData.arrayPullValueByYear = applyRoundingTwoDepthArray(investmentData.arrayPullValueByYear);
+       investmentData.arrayPullValueByYearPlusWithdrawl = applyRoundingSingleDepthArray(investmentData.arrayPullValueByYearPlusWithdrawl);
        investmentData.arrayRunningInvestmentValue = applyRoundingTwoDepthArray(investmentData.arrayRunningInvestmentValue);
        investmentData.arrayRunningPullSums = applyRoundingTwoDepthArray(investmentData.arrayRunningPullSums);
        investmentData.arrayRunningInvestmentValue = applyRoundingTwoDepthArray(investmentData.arrayRunningInvestmentValue);
@@ -349,24 +383,9 @@ class InvestmentDataHandler {
        investmentData.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment = applyRoundingTwoDepthArray(investmentData.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment);
        investmentData.arrayInvestmentIncreaseByYearMinusFirstYearAdlInvestment = applyRoundingTwoDepthArray(investmentData.arrayInvestmentIncreaseByYearMinusFirstYearAdlInvestment);
 
-       function applyRoundingSingleDepthArray(arr){
-           for (let i = 0; i < arr.length; i++) {
-               arr[i] = Math.round(arr[i]);
-           }
-           return arr;
-       }
-
-       function applyRoundingTwoDepthArray(arr){
-           for (let i = 0; i < arr.length; i++){
-               for (let j = 0; j < arr[i].length; j++){
-                   arr[i][j] = Math.round(arr[i][j]);
-               }
-           }
-           return arr;
-       }
-
        return investmentData;
    }
+
 }
 
     //TODO Add array of running Add'l investment that I can use as an expense point.

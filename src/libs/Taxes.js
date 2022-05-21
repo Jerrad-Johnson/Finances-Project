@@ -1,4 +1,8 @@
 import Jobdatahandler from "./jobdatahandler";
+import {
+    applyRoundingSingleDepthArray,
+    applyRoundingSingleDepthArrayTwoDecimals
+} from "../components/jobssharedfunctions";
 
 class CalculateTaxes {
     constructor(moneyIn, employmentState, filingStatusState, stTaxState, taxYearState){
@@ -68,6 +72,8 @@ class CalculateTaxes {
                 this.brackets, this.income.employmentType, this.income.filingStatus);
         [results.federalIncomeTax, results.incomeAfterFederalTaxes, results.effectiveTaxPercentages] = this.calculateFederalIncomeTax(this.income.taxYear, this.brackets,
             results.incomeAfterFica, this.income.filingStatus, results.differenceBecauseOfStandardDeduction, this.income.yearlySums);
+        results = this.roundEverything(results);
+
         return results;
     }
 
@@ -316,6 +322,22 @@ class CalculateTaxes {
 
         //this.cc(sums)
         return sums;
+    }
+
+    roundEverything(results){
+        applyRoundingSingleDepthArray(results.differenceBecauseOfStandardDeduction);
+        applyRoundingSingleDepthArray(results.federalIncomeTax);
+        applyRoundingSingleDepthArray(results.federallyTaxableIncomeAfterStandardDeduction);
+        applyRoundingSingleDepthArray(results.ficaTaxSums.medicare);
+        applyRoundingSingleDepthArray(results.ficaTaxSums.socSec);
+        applyRoundingSingleDepthArray(results.incomeAfterFederalTaxes);
+        applyRoundingSingleDepthArray(results.incomeAfterFica);
+        applyRoundingSingleDepthArray(results.incomeAfterStateTaxes);
+        applyRoundingSingleDepthArray(results.stateTaxSums);
+        applyRoundingSingleDepthArrayTwoDecimals(results.effectiveTaxPercentages);
+
+        return results
+
     }
 
 }
