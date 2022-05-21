@@ -1,5 +1,5 @@
 import jobdatahandler from "./jobdatahandler";
-import {applyRoundingSingleDepthArray, isNumeric} from "../components/jobssharedfunctions";
+import {applyRoundingSingleDepthArray, cc, createArrayOfZeros, isNumeric} from "../components/jobssharedfunctions";
 import expenses from "../Expenses";
 import CalculateTaxes from "./Taxes";
 import investments from "../Investments";
@@ -12,7 +12,7 @@ class CreateNewDataForEvaluationGraphs {
         this.expenses = this.addValuesToExpenses(expenses);
         this.investments = this.addValuesToInvestments(investments);
         this.taxesOnIncomeOnly = taxes;
-        this.taxesOnIncomeAndInvestments = this.combineIncomeAndPullsAndWithdrawls(this.income, this.investments, employmentState, filingStatusState, stTaxState, taxYearState);
+        this.taxesOnIncomeAndInvestmentIncreases = this.combineIncomeAndInvestmentIncreases(this.income, this.investments, employmentState, filingStatusState, stTaxState, taxYearState);
         this.newGraphData = this.addNewData(this.income, this.expenses, this.investments, this.taxesOnIncomeOnly);
         this.length = new jobdatahandler().graphMaxNumberOfYears;
         this.colors = ["#ff0000", "#00ff00", "#0000ff"]
@@ -23,8 +23,9 @@ class CreateNewDataForEvaluationGraphs {
         let x = [];
         let y = {};
 
-        this.cc(this.taxesOnIncomeAndInvestments)
-        this.cc(this.taxesOnIncomeOnly);
+        //this.cc(this.investments)
+        /*
+        this.cc(this.taxesOnIncomeOnly);*/
 
         y = this.addIncomeData(this.income, this.income?.sumByYear);
         if (!this.isEmptyObject(y)) x.push(y); y = {};
@@ -79,7 +80,8 @@ class CreateNewDataForEvaluationGraphs {
 
     addValuesToInvestments(investments){
         if (this.isObject(investments)) {
-            let x = this.combineSums(investments, "arrayPullValueByYear", "arrayCombinedPullValuesByYear");
+            this.combineSums(investments, "arrayPullValueByYear", "arrayCombinedPullValuesByYear");
+            this.combineInvestmentsAndAdlInvestments(investments);
         }
 
         return investments;
@@ -123,11 +125,12 @@ class CreateNewDataForEvaluationGraphs {
         return newIncomeData
     }
 
-    combineIncomeAndPullsAndWithdrawls(income, investments, employmentState, filingStatusState, stTaxState, taxYearState){
+    combineIncomeAndInvestmentIncreases(income, investments, employmentState, filingStatusState, stTaxState, taxYearState){
         let length = new jobdatahandler().graphMaxNumberOfYears;
+        let investmentProfits = this.combineSinglePropertyArrays(this.investments.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment);
         let incomeTogether = [];
         incomeTogether.push(income.sumByYear);
-        incomeTogether.push(investments.arrayPullValueByYearPlusWithdrawl);
+        incomeTogether.push(investmentProfits);
         let incomeCombined = [];
 
         for (let j = 0; j < incomeTogether.length; j++){
@@ -140,10 +143,19 @@ class CreateNewDataForEvaluationGraphs {
             }
         }
 
-
         let x = new CalculateTaxes(incomeCombined, employmentState, filingStatusState, stTaxState, taxYearState).federalCalculations();
 
         return x;
+    }
+
+    combineInvestmentsAndAdlInvestments(investments){
+        let moneyInvested = this.combineSinglePropertyArrays(investments.arrayAdditionalInvestment);
+
+        for (let i = 0; i < investments.amounts.length; i++){
+            moneyInvested[investments.yearsBegin[i] -1] = moneyInvested[investments.yearsBegin[i] -1] + investments.amounts[i];
+        }
+
+        return moneyInvested;
     }
 
 
@@ -169,14 +181,16 @@ class CreateNewDataForEvaluationGraphs {
     }
 
     combineSinglePropertyArrays(financialDataProperty){
+        let length = new jobdatahandler().graphMaxNumberOfYears;
         let x = [];
 
-        for (let j = 0; j < this.length; j++) {
+
+        for (let j = 0; j < length; j++) {
             x[j] = 0;
         }
 
         for (let i = 0; i < financialDataProperty.length; i++) {
-            for (let j = 0; j < this.length; j++) {
+            for (let j = 0; j < length; j++) {
                 x[j] = x[j] + financialDataProperty[i][j];
             }
         }
@@ -192,7 +206,6 @@ class CreateNewDataForEvaluationGraphs {
         }
 
         for (let i = 0; i < financialDataProperties.length; i++) {
-
             for (let j = 0; j < this.length; j++) {
                 x[j] = x[j] + financialDataProperties[i].data[j];
             }

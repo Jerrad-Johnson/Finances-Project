@@ -54,10 +54,23 @@ export function applyRoundingTwoDepthArray(arr){
     return arr;
 }
 
-
 export function applyRoundingSingleDepthArrayTwoDecimals(arr){
     for (let i = 0; i < arr.length; i++) {
         arr[i] = +arr[i].toFixed(2);
     }
     return arr;
+}
+
+export function createArrayOfZeros(length){
+    let arr = [];
+
+    for (let i = 0; i < length; i++){
+        arr[i] = 0;
+    }
+
+    return arr;
+}
+
+export function cc(obj){
+    return console.dir(obj);
 }
