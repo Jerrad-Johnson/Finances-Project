@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import {sortFinancialData, SelectOptions, GraphOptions, PrintSum} from "./components/EvaluationForms";
 import EvaluationGraphs from "./components/EvaluationGraphs";
+import EvaluationGeneralData from "./components/EvaluationGeneralData";
+import EvaluationForms from "./components/EvaluationForms";
 let cc = console.dir
 
 function Evaluate(){
@@ -19,109 +21,41 @@ function Evaluate(){
 
     return(
         <div className={"container"}>
-            <button onClick={(e) => {
-                e.preventDefault();
-                cc(employmentState);
-            }}>Log</button>
-            <br />
-
-            <form>
-                <select className={"text-black"} onChange={(event) => {
-                    setIncomeOptionState(event.target.value);
-                }}>
-                    <SelectOptions
-                        financialData = {incomeData}
+            <div className={"pairs"}>
+                <div className={"left"}>
+                    <EvaluationForms
+                        employmentState = {employmentState}
+                        incomeOptionState = {incomeOptionState}
+                        setIncomeOptionState = {setIncomeOptionState}
+                        incomeData = {incomeData}
+                        expenseOptionState = {expenseOptionState}
+                        setExpenseOptionState = {setExpenseOptionState}
+                        setInvestmentOptionState = {setInvestmentOptionState}
+                        setGraphOptionState = {setGraphOptionState}
+                        setEmploymentState = {setEmploymentState}
+                        setFilingStatusState = {setFilingStatusState}
+                        setStTaxState = {setStTaxState}
+                        expenseData = {expenseData}
+                        investmentData = {investmentData}
                     />
-                </select> &nbsp;
-                Income &nbsp;
+                </div>
 
-                <select className={"text-black"} onChange={(event) => {
-                    setExpenseOptionState(event.target.value);
-                }}>
-                    <SelectOptions
-                        financialData = {expenseData}
+                <div className={"right"}>
+                    <EvaluationGraphs
+                        incomeOptionState = {incomeOptionState}
+                        expenseOptionState = {expenseOptionState}
+                        investmentOptionState = {investmentOptionState}
+                        graphOptionState = {graphOptionState}
+                        incomeData = {incomeData}
+                        expenseData = {expenseData}
+                        investmentData = {investmentData}
+                        employmentState = {employmentState}
+                        filingStatusState = {filingStatusState}
+                        stTaxState = {stTaxState}
                     />
-                </select>&nbsp;
-                Expenses&nbsp;
-
-                <select className={"text-black"} onChange={(event) => {
-                    setInvestmentOptionState(event.target.value);
-                }}>
-                    <SelectOptions
-                        financialData = {investmentData}
-                    />
-                </select>&nbsp;
-                Investments&nbsp;
-                <br />
-                <br />
-
-                <select className={"text-black"} onChange={(event) => {
-                    setGraphOptionState(event.target.value);
-                }}>
-                    <GraphOptions />
-                </select>&nbsp;
-                Graph Type&nbsp;
-                <br />
-                <br />
-
-                <select className={"text-black"} onChange={(event) => {
-                    setEmploymentState(event.target.value);
-                }}>
-                    <option>Employee</option>
-                    <option>Self-Employed</option>
-                </select>&nbsp;
-                Employment Type&nbsp;
-                <br />
-
-                <select className={"text-black"} onChange={(event) => {
-                    setFilingStatusState(event.target.value);
-                }}>
-                    <option>Single</option>
-                    <option>Married - Joint Return</option>
-                    <option>Married - Separate Returns</option>
-                    <option>Head of Household</option>
-                </select>&nbsp;
-                Filing Status&nbsp;
-                <br />
-
-                <input type={"text"} onChange={(event) => {
-                    setStTaxState(event.target.value)
-                }} />
-                State Income Tax&nbsp;
-                <br />
-
-            </form>
-            <br />
-            <br />
-            <PrintSum
-                title = {incomeOptionState}
-                financialData = {incomeData}
-                typeOfFinancialData = {"income"}
-            /> Income
-            <br />
-            <PrintSum
-                title = {expenseOptionState}
-                financialData = {expenseData}
-                typeOfFinancialData = {"expense"}
-            /> Expenses
-            <br />
-            <span>Income $, Expenses $, Investment Value $</span>
-            <br />
-            <span>Difference $</span>
-            <br />
-            <br />
-            <EvaluationGraphs
-                incomeOptionState = {incomeOptionState}
-                expenseOptionState = {expenseOptionState}
-                investmentOptionState = {investmentOptionState}
-                graphOptionState = {graphOptionState}
-                incomeData = {incomeData}
-                expenseData = {expenseData}
-                investmentData = {investmentData}
-                employmentState = {employmentState}
-                filingStatusState = {filingStatusState}
-                stTaxState = {stTaxState}
-            />
+                </div>
+            </div>
+            <EvaluationGeneralData />
         </div>
     );
 }

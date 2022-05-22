@@ -44,7 +44,8 @@
 */
 
 body {
-    @apply bg-slate-100 text-black;
+    @apply text-black
+    bg-gray-200
 }
 
 nav {
@@ -53,11 +54,101 @@ nav {
     text-blue-600
     bg-gradient-to-b from-neutral-400 to-amber-50
     p-2
-
 }
 
 nav.a {
-    @apply mr-2
-    bg-gradient-to-b from-neutral-400 to-red-600
+    @apply
+    mr-2
+    bg-gradient-to-b
+    from-neutral-400 to-red-600
+}
+
+div.container {
+    @apply
+    max-w-full
+}
+
+div.pairs {
+    @apply
+    flex
+    flex-row
+    flex-wrap
+    /*place-items-start*/
+    justify-center
+    items-center
+}
+
+div.graphCard {
+    width:800px;
+}
+
+div.graphCard {
+    @apply
+    ml-20
+    mr-20
+    mt-10
+    shadow-md
+    bg-white
+    p-2
+}
+
+div.inputSet {
+    @apply
+    w-52
+    mr-10
+    ml-10
+}
+
+div.inputSelectorsCard{
+   @apply
+    p-6
+    mt-10
+    shadow-md
+    bg-white
+}
+
+div.inputSelectorsCard.last{
+    @apply
+    mb-20
+}
+
+.inputSelector {
+    @apply
+    w-36
+    block
+    mb-4
+    bg-blue-50
+    outline outline-1
+    rounded
+}
+
+.inputTextField {
+    @apply
+    block
+    w-10
+    bg-blue-50
+    outline outline-1
+    rounded
+}
+
+.inputSetTitle {
+    @apply
+    font-medium
+}
+
+.inputTitle {
+    @apply
+    text-sm
+}
+
+div.left {
+}
+
+div.right {
 
 }
+
+/*
+div.generalData {
+    @apply w-full;
+}*/

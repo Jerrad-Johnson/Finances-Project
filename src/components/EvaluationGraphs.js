@@ -21,31 +21,50 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
 
 
     const mapGraphOptionStateToObjectKey = {
-        "Yearly In Pocket": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData, incomeTaxData, employmentState, filingStatusState, stTaxState).makeYearlyInPocket(); },
+        "Yearly In Pocket": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+            incomeTaxData, employmentState, filingStatusState, stTaxState).makeYearlyInPocket(); },
     };
 
     let graphData = mapGraphOptionStateToObjectKey[graphOptionState]();
 
     return (
-        <div>
-            <Chart
-                series = {graphData}
-                type = "bar"
-                height = "300"
-                options = {{
-                /*colors: ["#fff000"],*/
-                    chart: {
-                        stacked: false,
-                    },
-                    xaxis: {
-                        categories: yearsArrayForGraph,
-                    }
-                }}
-            />
+        <div className={"right"}>
+            <div className={"graphCard"}>
+                <Chart
+                    series = {graphData}
+                    type = "bar"
+                    height = "300"
+                    options = {{
+                    /*colors: ["#fff000"],*/
+                        chart: {
+                            stacked: false,
+                        },
+                        xaxis: {
+                            categories: yearsArrayForGraph,
+                        }
+                    }}
+                />
+            </div>
+
+            <div className={"graphCard"}>
+                <Chart
+                    series = {graphData}
+                    type = "bar"
+                    height = "300"
+                    options = {{
+                        /*colors: ["#fff000"],*/
+                        chart: {
+                            stacked: false,
+                        },
+                        xaxis: {
+                            categories: yearsArrayForGraph,
+                        }
+                    }}
+                />
+            </div>
         </div>
     );
 }
-
 
 function findCurrentFinancialSheets(sheets, current){
     return sheets.filter((sheet) => {
@@ -73,10 +92,6 @@ function applyInflation(arr){
     return x;
 }
 
-function getIncomeAfterExpenses(incomeData, expenseData, investmentData){
-
-}
-
 function getIncomeTaxData(incomeData, employmentState, filingStatusState, stTaxState){
     let incomeTaxData = [];
 
@@ -88,7 +103,6 @@ function getIncomeTaxData(incomeData, employmentState, filingStatusState, stTaxS
     // TODO In the future, add an input so users can change years.
 
     return incomeTaxData
-
 }
 
 

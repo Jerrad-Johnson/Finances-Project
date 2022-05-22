@@ -1,4 +1,6 @@
 import {createArrayWithNumberOfYearsToGraph} from "./jobssharedfunctions";
+import {GraphOptions, PrintSum, SelectOptions} from "./EvaluationForms";
+import React from "react";
 var fieldsStateKey = 0;
 
 export function ExpenseForms({expenseFieldsState}){
@@ -12,7 +14,7 @@ export function ExpenseForms({expenseFieldsState}){
 
     let printFormsToDom = expenseFieldsState.map(entry => {
         return (
-            <div key={entry}>
+            <div key={entry} className={"inputSet"}>
                 <input type="text" className={"inputField label text-black mb-2 ml-2 w-40"} defaultValue={""}></input>
                 <span className={"ml-2"}> Label</span>
                 <input type="text" className={"inputField expenses payment text-black mb-2 ml-2 w-14"} defaultValue={""}></input>
@@ -94,3 +96,4 @@ function resetAllFields(expenseFieldsState, setExpenseFieldsState){
     let x = [fieldsStateKey++];
     setExpenseFieldsState(x);
 }
+
