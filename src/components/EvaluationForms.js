@@ -105,13 +105,6 @@ function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionSta
             <div className={"inputSelectorsCard"}>
                 <span className={"inputSetTitle"}>Additional Tax Info</span>
                 <form>
-                    <span className={"inputTitle"}>Graph Type</span>
-                    <select className={"inputSelector"} onChange={(event) => {
-                        setGraphOptionState(event.target.value);
-                    }}>
-                        <GraphOptions />
-                    </select>
-
                     <span className={"inputTitle"}>Employment Type</span>
                     <select className={"inputSelector"} onChange={(event) => {
                         setEmploymentState(event.target.value);

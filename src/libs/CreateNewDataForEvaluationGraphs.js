@@ -5,15 +5,19 @@ import CalculateTaxes from "./Taxes";
 import investments from "../Investments";
 
 class CreateNewDataForEvaluationGraphs {
-    constructor(income, expenses, investments, taxes = [], employmentState = [],
+    constructor(income, expenses, investments, employmentState = [],
                 filingStatusState = [], stTaxState = [], taxYearState = 22) {
         this.cc = console.dir;
         this.income = this.addValuesToIncome(income);
         this.expenses = this.addValuesToExpenses(expenses);
         this.investments = this.addValuesToInvestments(investments);
-        this.taxesOnIncomeOnly = taxes;
+        //this.taxesOnIncomeOnly = taxes;
+        this.taxesOnIncomeOnly = this.getIncomeTaxData(income, employmentState, filingStatusState, taxYearState)
         this.taxesOnIncomeAndInvestmentIncreases = this.combineIncomeAndInvestmentIncreases(this.income, this.investments, employmentState, filingStatusState, stTaxState, taxYearState);
         this.newGraphData = this.addNewData(this.income, this.expenses, this.investments, this.taxesOnIncomeOnly);
+        this.employmentState = employmentState;
+        this.filingState = filingStatusState;
+        this.taxYearState = taxYearState;
         this.length = new jobdatahandler().graphMaxNumberOfYears;
         this.colors = ["#ff0000", "#00ff00", "#0000ff"]
     }
@@ -113,6 +117,19 @@ class CreateNewDataForEvaluationGraphs {
         y.colors = color;
 
         return y;
+    }
+
+    getIncomeTaxData(income, employmentStatus, filingStatus, stTax){
+        let incomeTaxData = [];
+
+        if (typeof income === 'object' && !Array.isArray(income) && income !== null){
+            incomeTaxData = new CalculateTaxes(income.salaryAmounts || income.incomeInGraphYearsNumberOfSteps, employmentStatus,
+                filingStatus, stTax, "22");
+            incomeTaxData = incomeTaxData.federalCalculations();
+        }
+        // TODO In the future, add an input so users can change years.
+
+        return incomeTaxData
     }
 
     makeLinearAndSteppedJobKeyNamingConsistent(oldIncomeData){

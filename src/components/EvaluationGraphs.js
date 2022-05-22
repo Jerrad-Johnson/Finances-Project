@@ -17,12 +17,11 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     if (incomeData[0]) { incomeData = incomeData[0] }
     if (expenseData[0]) { expenseData = expenseData[0] }
     if (investmentData[0]) { investmentData = investmentData[0] }
-    let incomeTaxData = getIncomeTaxData(incomeData, employmentState, filingStatusState, stTaxState);
 
 
     const mapGraphOptionStateToObjectKey = {
         "Yearly In Pocket": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
-            incomeTaxData, employmentState, filingStatusState, stTaxState).makeYearlyInPocket(); },
+            employmentState, filingStatusState, stTaxState).makeYearlyInPocket(); },
     };
 
     let graphData = mapGraphOptionStateToObjectKey[graphOptionState]();
@@ -90,19 +89,6 @@ function applyInflation(arr){
     }
 
     return x;
-}
-
-function getIncomeTaxData(incomeData, employmentState, filingStatusState, stTaxState){
-    let incomeTaxData = [];
-
-    if (typeof incomeData === 'object' && !Array.isArray(incomeData) && incomeData !== null){
-        incomeTaxData = new CalculateTaxes(incomeData.salaryAmounts || incomeData.incomeInGraphYearsNumberOfSteps, employmentState,
-            filingStatusState, stTaxState, "22");
-        incomeTaxData = incomeTaxData.federalCalculations();
-    }
-    // TODO In the future, add an input so users can change years.
-
-    return incomeTaxData
 }
 
 

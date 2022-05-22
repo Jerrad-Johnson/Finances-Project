@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*TODO create a dark mode*/
+
 /*
 
 .App {
@@ -51,16 +54,17 @@ body {
 nav {
     @apply
     flex flex-wrap justify-center gap-4
-    text-blue-600
-    bg-gradient-to-b from-neutral-400 to-amber-50
-    p-2
+    p-4
+    text-lg
+    bg-white
+    font-medium
 }
+
 
 nav.a {
     @apply
     mr-2
-    bg-gradient-to-b
-    from-neutral-400 to-red-600
+    ml-2
 }
 
 div.container {
@@ -75,7 +79,7 @@ div.pairs {
     flex-wrap
     /*place-items-start*/
     justify-center
-    items-center
+    items-end
 }
 
 div.graphCard {
@@ -146,6 +150,9 @@ div.left {
 
 div.right {
 
+}
+input, select {
+    padding: 2px;
 }
 
 /*
