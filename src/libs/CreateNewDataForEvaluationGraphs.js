@@ -1,5 +1,5 @@
 import jobdatahandler from "./jobdatahandler";
-import {applyRoundingSingleDepthArray, cc, createArrayOfZeros, isNumeric, isObject, isEmptyObject, isEmptyArray} from "../components/jobssharedfunctions";
+import {cc, combineSinglePropertySubArrays, isNumeric, isObject, isEmptyObject, isEmptyArray} from "../components/jobssharedfunctions";
 import expenses from "../Expenses";
 import CalculateTaxes from "./Taxes";
 import investments from "../Investments";
@@ -146,7 +146,7 @@ class CreateNewDataForEvaluationGraphs {
     combineIncomeAndInvestmentIncreases(income, investments, employmentState, filingStatusState, stTaxState, taxYearState){
         if (!isEmptyArray(income) && !isEmptyArray(investments)) {
             let length = new jobdatahandler().graphMaxNumberOfYears;
-            let investmentProfits = this.combineSinglePropertyArrays(this.investments.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment);
+            let investmentProfits = combineSinglePropertySubArrays(this.investments.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment, this.length);
             let incomeTogether = [];
             incomeTogether.push(income.sumByYear);
             incomeTogether.push(investmentProfits);
@@ -169,9 +169,9 @@ class CreateNewDataForEvaluationGraphs {
     }
 
     combineInvestmentsAndAdlInvestments(income, investments){
-        if (!isEmptyArray(income) && !this.isEmptyArray(investments)) {
+        if (!isEmptyArray(income) && !isEmptyArray(investments)) {
 
-        let moneyInvested = this.combineSinglePropertyArrays(investments.arrayAdditionalInvestment);
+        let moneyInvested = combineSinglePropertySubArrays(investments.arrayAdditionalInvestment, this.length);
 
         for (let i = 0; i < investments.amounts.length; i++){
             moneyInvested[investments.yearsBegin[i] -1] = moneyInvested[investments.yearsBegin[i] -1] + investments.amounts[i];
