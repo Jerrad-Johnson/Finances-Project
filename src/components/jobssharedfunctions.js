@@ -92,16 +92,16 @@ export function isEmptyArray(x) {
     return (Array.isArray(x) && x.length === 0);
 }
 
-export function combineSinglePropertySubArrays(arr, lengthOfArray){
+export function combineSinglePropertySubArrays(arrs, lengthOfArray){
     let x = [];
 
     for (let j = 0; j < lengthOfArray; j++) {
         x[j] = 0;
     }
 
-    for (let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arrs.length; i++) {
         for (let j = 0; j < lengthOfArray; j++) {
-            x[j] = x[j] + arr[i][j];
+            x[j] = x[j] + arrs[i][j];
         }
     }
 

@@ -1,5 +1,13 @@
 import jobdatahandler from "./jobdatahandler";
-import {cc, combineSinglePropertySubArrays, isNumeric, isObject, isEmptyObject, isEmptyArray} from "../components/jobssharedfunctions";
+import {
+    cc,
+    combineSinglePropertySubArrays,
+    isNumeric,
+    isObject,
+    isEmptyObject,
+    isEmptyArray,
+    createArrayOfZeros
+} from "../components/jobssharedfunctions";
 import expenses from "../Expenses";
 import CalculateTaxes from "./Taxes";
 import investments from "../Investments";
@@ -12,10 +20,9 @@ class CreateNewDataForEvaluationGraphs {
         this.income = this.addValuesToIncome(income, expenses, investments, this.length);
         this.expenses = this.addValuesToExpenses(income, expenses, investments, this.length);
         this.investments = this.addValuesToInvestments(income, expenses, investments, this.length);
-        //this.taxesOnIncomeOnly = taxes;
         this.taxesOnIncomeOnly = this.getIncomeTaxData(income, employmentState, filingStatusState, taxYearState)
         this.taxesOnIncomeAndInvestmentIncreases = this.combineIncomeAndInvestmentIncreases(this.income, this.investments, employmentState, filingStatusState, stTaxState, taxYearState);
-        this.newGraphData = this.addNewData(this.income, this.expenses, this.investments, this.taxesOnIncomeOnly);
+        this.newGraphData = this.addNewData(this.income, this.expenses, this.investments, this.taxesOnIncomeOnly, this.taxesOnIncomeAndInvestmentIncreases);
         this.employmentState = employmentState;
         this.filingState = filingStatusState;
         this.taxYearState = taxYearState;
@@ -26,10 +33,6 @@ class CreateNewDataForEvaluationGraphs {
     makeYearlyInPocket(){
         let x = [];
         let y = {};
-
-        //this.cc(this.investments)
-        /*
-        this.cc(this.taxesOnIncomeOnly);*/
 
         y = this.addIncomeData(this.income, this.income?.sumByYear);
         if (!isEmptyObject(y)) x.push(y); y = {};
@@ -44,6 +47,31 @@ class CreateNewDataForEvaluationGraphs {
         this.cc(this.expenses);
         this.cc(this.investments);
         this.cc(this.taxes);*/
+
+        return x;
+    }
+
+    makeRunningIncomeSumsAndYearlyExpenses() {
+        let x = [];
+        let y = {};
+/*       this.cc(this.income);
+       this.cc(this.expenses);
+       this.cc(this.investments);
+       //this.cc(this.taxesOnIncomeOnly);
+       this.cc(this.taxesOnIncomeAndInvestmentIncreases);
+       cc(this.newGraphData)*/
+
+        y = this.addIncomeData(this.newGraphData, this.newGraphData?.liquidAssetsAfterExpenses, "Liquid Assets");
+        if (!isEmptyObject(y)) x.push(y);
+        y = {};
+
+        y = this.addExpenseData(this.newGraphData, this.newGraphData.combinedExpenses, "Expenses by Year");
+        if (!isEmptyObject(y)) x.push(y);
+        y = {};
+/*
+        y = this.addInvestmentData(this.investments, this.investments.arrayPullValueByYearPlusWithdrawl, "Investment Pulls");
+        if (!isEmptyObject(y)) x.push(y);
+        y = {};*/
 
         return x;
     }
@@ -91,12 +119,72 @@ class CreateNewDataForEvaluationGraphs {
         return investments;
     }
 
-    addNewData(income, expenses, investments, taxes){
+    addNewData(income, expenses, investments, taxesOnIncomeOnly, taxesOnIncomeAndInvestmentIncreases){
         let newData = {};
 
-        //newData.expensesWithTaxes = this.addValuesInTwoArrays(income.sumByYear, expenses.sumByYear);
+        if (isObject(income) || isObject(investments)){
+            newData = this.addLiquidAssetsIn(newData, income, investments);
+        } /*else {
+            throw new Error("Income data is needed");
+        }*/
 
+        if (isObject(expenses) && isObject(taxesOnIncomeAndInvestmentIncreases) && isObject(investments)){
+            newData = this.addCombinedExpenses(newData, expenses, taxesOnIncomeAndInvestmentIncreases, investments);
+        }
+
+        if (newData.liquidAssetsIn && newData.combinedExpenses){
+            newData = this.addLiquidAssetsAfterExpenses(newData);
+        }
+
+        return newData;
+        //newData.expensesWithTaxes = this.addValuesInTwoArrays(income.sumByYear, expenses.sumByYear);
     }
+
+    addLiquidAssetsIn(newData, income, investments){
+        newData.liquidAssetsIn = createArrayOfZeros(15);
+
+        for (let i = 0; i < this.length; i++){
+            newData.liquidAssetsIn[i] = income?.runningSumByYear[i] + investments?.arrayPullValueByYearPlusWithdrawl[i];
+        }
+
+//        cc(newData.liquidAssetsIn)
+
+        return newData;
+    }
+
+    addCombinedExpenses(newData, expenses, taxesOnIncomeAndInvestmentIncreases, investments){
+        let additionalInvestmentsByYear = combineSinglePropertySubArrays(investments.arrayAdditionalInvestment, 15);
+        newData.combinedExpenses = createArrayOfZeros(15);
+
+        for (let i = 0; i < this.length; i++) {
+            newData.combinedExpenses[i] = expenses.combinedSumByYear[i]
+                + (taxesOnIncomeAndInvestmentIncreases.incomeBeforeTaxes[i] - taxesOnIncomeAndInvestmentIncreases.incomeAfterFederalTaxes[i]
+                + additionalInvestmentsByYear[i]
+            );
+
+        }
+        for (let i = 0; i < investments.amounts.length; i++){
+            newData.combinedExpenses[investments.yearsBegin[i] -1] = newData.combinedExpenses[investments.yearsBegin[i] -1] + investments.amounts[i];
+
+        }
+
+        //cc(newData.combinedExpenses)
+
+        return newData;
+    }
+
+    addLiquidAssetsAfterExpenses(newData){
+        newData.liquidAssetsAfterExpenses = createArrayOfZeros(15);
+        newData.liquidAssetsAfterExpenses[0] = newData.liquidAssetsIn[0] - newData.combinedExpenses[0];
+
+        for (let i = 1; i < this.length; i++){
+            newData.liquidAssetsAfterExpenses[i] = (newData.liquidAssetsAfterExpenses[i -1] + newData.liquidAssetsIn[i] - newData.combinedExpenses[i]);
+        }
+            cc(newData.liquidAssetsIn[2])
+            //cc(newData.combinedExpenses)
+        return newData;
+    }
+
 
     addValuesInTwoArrays(a, b){
         let length = a.length;

@@ -22,6 +22,8 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     const mapGraphOptionStateToObjectKey = {
         "Yearly In Pocket": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeYearlyInPocket(); },
+        "Running Liquid Assets Sums vs. Yearly Expenses": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+            employmentState, filingStatusState, stTaxState).makeRunningIncomeSumsAndYearlyExpenses(); },
     };
 
     let graphData = mapGraphOptionStateToObjectKey[graphOptionState]();

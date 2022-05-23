@@ -65,13 +65,15 @@ class CalculateTaxes {
         results.stateTaxSums = this.calculateStateTax(this.income.yearlySums, this.income.stateTaxPercentage);
         results.incomeAfterStateTaxes = this.calculateIncomeAfterStateTaxes(this.income.yearlySums, results.stateTaxSums);
         results.federallyTaxableIncomeAfterStandardDeduction = this.calculateTaxableAfterStandardDeduction(
-                results.incomeAfterStateTaxes, this.income.taxYear, this.brackets, this.income.filingStatus);
+            results.incomeAfterStateTaxes, this.income.taxYear, this.brackets, this.income.filingStatus);
         results.differenceBecauseOfStandardDeduction = this.calculateAmountTaxableIncomeLoweredViaStandardDeduction(
-                results.incomeAfterStateTaxes, results.federallyTaxableIncomeAfterStandardDeduction);
+            results.incomeAfterStateTaxes, results.federallyTaxableIncomeAfterStandardDeduction);
         [results.ficaTaxSums, results.incomeAfterFica] = this.calculateFICA(results.federallyTaxableIncomeAfterStandardDeduction, this.income.taxYear,
-                this.brackets, this.income.employmentType, this.income.filingStatus);
-        [results.federalIncomeTax, results.incomeAfterFederalTaxes, results.effectiveTaxPercentages] = this.calculateFederalIncomeTax(this.income.taxYear, this.brackets,
-            results.incomeAfterFica, this.income.filingStatus, results.differenceBecauseOfStandardDeduction, this.income.yearlySums);
+            this.brackets, this.income.employmentType, this.income.filingStatus);
+        [results.federalIncomeTax, results.incomeAfterFederalTaxes, results.effectiveTaxPercentages] =
+            this.calculateFederalIncomeTax(this.income.taxYear, this.brackets, results.incomeAfterFica,
+            this.income.filingStatus, results.differenceBecauseOfStandardDeduction, this.income.yearlySums);
+        results = this.addIncomeBeforeTaxesToObject(results, this.income.yearlySums);
         results = this.roundEverything(results);
 
         return results;
@@ -322,6 +324,16 @@ class CalculateTaxes {
 
         //this.cc(sums)
         return sums;
+    }
+
+    addIncomeBeforeTaxesToObject(results, income) {
+        results.incomeBeforeTaxes = [];
+
+        for (let i = 0; i < this.length; i++) {
+            results.incomeBeforeTaxes = income;
+        }
+
+        return results;
     }
 
     roundEverything(results){
