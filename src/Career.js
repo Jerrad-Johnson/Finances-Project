@@ -16,7 +16,7 @@ function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDat
                            setSteppedJobDataState}) {
 
     return (
-        <div id={"formContainer"}>
+        <div className={"container"}>
             <LinearIncomeForms
                 linearJobDataState = {linearJobDataState}
                 setLinearJobDataState = {setLinearJobDataState}

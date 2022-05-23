@@ -16,35 +16,43 @@ function Expenses(){
     const [expensesState, setExpensesState] = useLocalStorage("expensedata", localStorage.getItem("expensedata") ?? []);
 
     return (
-        <>
-            <br />
-            <ExpenseForms
-                expenseFieldsState = {expenseFieldsState}
-            />
-            <span className={"mb-2 block"}></span>
-            <DeleteFieldButton
-                expenseFieldsState = {expenseFieldsState}
-                setExpenseFieldState = {setExpenseFieldsState}
-            />
-            &nbsp;
-            <AddFieldButton
-                expenseFieldsState = {expenseFieldsState}
-                setExpenseFieldState = {setExpenseFieldsState}
-            />
-            <br />
-            <SubmitButton
-                expensesState = {expensesState}
-                setExpensesState = {setExpensesState}
-            />
-            <ResetFieldsButton
-                expenseFieldsState = {expenseFieldsState}
-                setExpenseFieldsState = {setExpenseFieldsState}
-            />
-            <ExpenseGraphs
-                expensesState = {expensesState}
-                setExpensesState = {setExpensesState}
-            />
-        </>
+        <div className={"container"}>
+            <div className={"pairs"}>
+                <div className={"left"}>
+                    <ExpenseForms
+                        expenseFieldsState = {expenseFieldsState}
+                    />
+                    <div className={"inputSet"}>
+                        <div className={"inputSelectorsCard"}>
+                            <DeleteFieldButton
+                                expenseFieldsState = {expenseFieldsState}
+                                setExpenseFieldState = {setExpenseFieldsState}
+                            />
+                            <AddFieldButton
+                                expenseFieldsState = {expenseFieldsState}
+                                setExpenseFieldState = {setExpenseFieldsState}
+                            />
+                            <br />
+                            <SubmitButton
+                                expensesState = {expensesState}
+                                setExpensesState = {setExpensesState}
+                            />
+                            <ResetFieldsButton
+                                expenseFieldsState = {expenseFieldsState}
+                                setExpenseFieldsState = {setExpenseFieldsState}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div className={"right"}>
+                    <ExpenseGraphs
+                        expensesState = {expensesState}
+                        setExpensesState = {setExpensesState}
+                    />
+                </div>
+            </div>
+        </div>
     );
 }
 
@@ -53,7 +61,7 @@ function ExpenseGraphs({expensesState, setExpensesState}){
 
     let printToDom = expensesState.map((expenseSheet, index) => {
        return (
-           <div key={index}>
+           <div key={index} className={"graphCard"}>
                <ExpenseSumBarChart
                    expenseSheet = {expenseSheet}
                />

@@ -79,7 +79,12 @@ div.pairs {
     flex-wrap
     /*place-items-start*/
     justify-center
-    items-end
+    /*items-end:last-child*/
+}
+
+div.right {
+    /*@apply
+    items-end*/
 }
 
 div.graphCard {
@@ -116,23 +121,51 @@ div.inputSelectorsCard.last{
     mb-20
 }
 
-.inputSelector {
+button {
+    @apply
+    w-28
+    mb-2
+    bg-blue-50
+    outline outline-1
+    rounded
+    p-1
+}
+
+.inputSelector, .inputSelectorShortSidebySide {
     @apply
     w-36
     block
-    mb-4
+    mb-2
     bg-blue-50
     outline outline-1
     rounded
 }
 
-.inputTextField {
+.inputSelectorShortSidebySide{
+    @apply
+    w-10
+    inline
+    mr-4
+}
+
+.inputTextField, .inputTextFieldShort, .inputTextFieldLong {
     @apply
     block
-    w-10
+    mb-2
+    w-20
     bg-blue-50
     outline outline-1
     rounded
+}
+
+.inputTextFieldLong {
+    @apply
+    w-36
+}
+
+.inputTextFieldShort {
+    @apply
+    w-10
 }
 
 .inputSetTitle {
@@ -143,6 +176,7 @@ div.inputSelectorsCard.last{
 .inputTitle {
     @apply
     text-sm
+    block
 }
 
 div.left {

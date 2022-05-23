@@ -29,16 +29,20 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     let graphData = mapGraphOptionStateToObjectKey[graphOptionState]();
 
     return (
-        <div className={"right"}>
+        <>
             <div className={"graphCard"}>
                 <Chart
                     series = {graphData}
                     type = "bar"
                     height = "300"
+
                     options = {{
                     /*colors: ["#fff000"],*/
                         chart: {
                             stacked: false,
+                        },
+                        dataLabels: {
+                            enabled: false,
                         },
                         xaxis: {
                             categories: yearsArrayForGraph,
@@ -57,13 +61,16 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
                         chart: {
                             stacked: false,
                         },
+                        dataLabels: {
+                            enabled: false,
+                        },
                         xaxis: {
                             categories: yearsArrayForGraph,
                         }
                     }}
                 />
             </div>
-        </div>
+        </>
     );
 }
 

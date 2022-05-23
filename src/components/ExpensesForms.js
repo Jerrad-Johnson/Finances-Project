@@ -14,31 +14,35 @@ export function ExpenseForms({expenseFieldsState}){
 
     let printFormsToDom = expenseFieldsState.map(entry => {
         return (
-            <div key={entry} className={"inputSet"}>
-                <input type="text" className={"inputField label text-black mb-2 ml-2 w-40"} defaultValue={""}></input>
-                <span className={"ml-2"}> Label</span>
-                <input type="text" className={"inputField expenses payment text-black mb-2 ml-2 w-14"} defaultValue={""}></input>
-                <span className={"ml-2"}>Amount</span>
-                <select className={"frequency ml-2 text-black"}>
-                    <option value={"mo"}>Monthly</option>
-                    <option value={"yr"}>Yearly</option>
-                </select>
-                <br />
-                <select className={"beginYear ml-2 text-black"}>{optionElements}</select>
-                <select className={"endYear ml-2 text-black mb-10"} >{optionElements}</select>
-                <span className={"ml-2"}>Begin and End Years</span>
+                <div key={entry} className={"inputSelectorsCard"}>
+                    <span className={"inputSetTitle"}>Data</span>
+                    <span className={"inputTitle"}>Label</span>
+                    <input type="text" className={"label inputTextField"} defaultValue={""}></input>
+                    <span className={"inputTitle"}>Amount</span>
+                    <input type="text" className={"expense inputTextField"} defaultValue={""}></input>
+                    <span className={"inputTitle"}>Frequency</span>
+                    <select className={"frequency inputSelector"}>
+                        <option value={"mo"}>Monthly</option>
+                        <option value={"yr"}>Yearly</option>
+                    </select>
+                    <span className={"inputTitle"}>Begin and End Years</span>
+                    <select className={"beginYear inputSelectorShortSidebySide"}>{optionElements}</select>
+                    <select className={"endYear inputSelectorShortSidebySide"} >{optionElements}</select>
             </div>
         );
     });
 
     return (
-        <>
-            <form>
-                <input type="text" className={"inputField expenseTitle text-black mb-5 ml-2"} defaultValue={""}></input>
-                <span className={"ml-2"}>Title</span>
-                {printFormsToDom}
-            </form>
-        </>
+        <div className={"inputSet"}>
+            <div className={"inputSelectorsCard"}>
+                <form>
+                    <span className={"inputSetTitle"}>Title</span>
+                    <input type="text" className={"inputTextFieldLong expenseTitle"} defaultValue={""}></input>
+                </form>
+                <br />
+            </div>
+                    {printFormsToDom}
+        </div>
     );
 }
 
@@ -85,7 +89,7 @@ export function ResetFieldsButton({expenseFieldsState, setExpenseFieldsState}){
     //TODO This should also set the values of existing fields to zero.
 
     return(
-        <button className={"reset ml-4"} onClick={(e) => {
+        <button className={"reset"} onClick={(e) => {
             e.preventDefault();
             resetAllFields(expenseFieldsState, setExpenseFieldsState);
         }}>Reset</button>
