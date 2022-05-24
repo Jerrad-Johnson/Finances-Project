@@ -102,9 +102,9 @@ function LinearGraph({linearJobDataState, setLinearJobDataState}) {
         ));
 
         return (
-            <>
+            <div className={"graphCard"}>
                 {(linearJobDataState.length !== 0) && linearIncomeBarGraph}
-            </>
+            </div>
         );
     }
 }

@@ -12,11 +12,10 @@ let cc = console.log;
 var steppedIncomeFormKey = 0;
 export var jobListIncomeFormKey = 200;
 
-function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDataState,
-                           setSteppedJobDataState}) {
+function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDataState, setSteppedJobDataState}) {
 
     return (
-        <div className={"container"}>
+        <div className={"inputSet"}>
             <LinearIncomeForms
                 linearJobDataState = {linearJobDataState}
                 setLinearJobDataState = {setLinearJobDataState}
@@ -33,23 +32,22 @@ function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDat
 function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
 
     return (
-        <>
-            <br />
-            Linear-progression Job
-            <br />
+        <div className={"inputSelectorsCard"}>
+            <span className={"inputSetTitle"}>Linear-progression Job</span>
 
             <form>
-                <input type={"text"} id={"linearJobTitle"} className={"mb-5 mt-5"}></input> Job Title <br />
-                <input type={"text"} id={"incomeImmediate"} className={"mb-5"}></input> Starting income
-                &nbsp;
+                <span className={"inputTitle"}>Job Title</span>
+                <input type={"text"} id={"linearJobTitle"} className={"inputTextFieldLong"}></input>
+                <span className={"inputTitle"}>Starting Income</span>
+                <input type={"text"} id={"incomeImmediate"} className={"inputTextFieldLong"}></input>
+                <span className={"inputTitle"}>Ceiling income</span>
+                <input type={"text"} id={"incomeCeiling"} className={"inputTextFieldLong"}></input>
+                <span className={"inputTitle"}>Begin and end years
+                </span>
                 <CreateOptionForms
-                    formTitle={"Year income begins"}
                     id={"yearIncomeBegins"}
                 />
-                <input type={"text"} id={"incomeCeiling"}></input> Ceiling income
-                &nbsp;
                 <CreateOptionForms
-                    formTitle={"Year to income ceiling"}
                     id={"yearToIncomeCeiling"}
                 />
                 <button type={"click"} id={"submitLinearJob"} onClick={(e) => {
@@ -58,7 +56,7 @@ function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
                     Submit
                 </button>
             </form>
-        </>
+        </div>
     );
 }
 
@@ -67,13 +65,11 @@ function SteppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
     const [steppedIncomeFormState, setSteppedIncomeFormState] = useState(initialIncomeFormState);
 
     return (
-        <>
-            <hr className={"mb-5"}/>
-            Stepped-progression job
-            <br />
-            <br />
+        <div className={"inputSelectorsCard"}>
+            <span className={"inputSetTitle"}>Stepped-progression Job</span>
             <form>
-                <input type={"text"} id={"steppedJobTitle"} className={"mb-5"}></input> Job Title <br/>
+                <span className={"inputTitle"}>Job Title</span>
+                <input type={"text"} id={"steppedJobTitle"} className={"inputTextFieldLong"}></input>
 
                 <ListJobIncomeForms
                     steppedIncomeFormState={steppedIncomeFormState}
@@ -107,23 +103,25 @@ function SteppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
                 </button>
 
             </form>
-        </>
+        </div>
     )
 }
 
 export function CreateSteppedJobIncomeForm({id}){
     return(
         <>
-            <input type={"text"} className={"incomeSteppedJob"}></input> Income from this year
-            onward: &nbsp;
+            <span className={"inputTitle"}>Income from this year onward:</span>
+            <input type={"text"} className={"incomeSteppedJob inputTextFieldLong"}></input>
+            <span className={"inputTitle"}>Year this income begins:</span>
             <CreateOptionForms
                 id = {id}
             />
+            <hr className={"jobIncomeSeparator"}/>
         </>
     )
 }
 
-function CreateOptionForms({formTitle, id, steppedIncomeFormKey}) {
+function CreateOptionForms({id, steppedIncomeFormKey}) {
     const numberOfYearsToGraph = createArrayWithNumberOfYearsToGraph();
     const optionElements = numberOfYearsToGraph.map((year) =>
         ( <option value={year} key={year}>{year}</option> )
@@ -132,10 +130,9 @@ function CreateOptionForms({formTitle, id, steppedIncomeFormKey}) {
     // TODO Remove ID
     return (
         <>
-            <select className={"text-slate-500 "+ id} id={id} key={steppedIncomeFormKey}>
+            <select className={"inputSelectorShortSidebySide "+ id} id={id} key={steppedIncomeFormKey}>
                 {optionElements}
             </select>
-            <label> {formTitle} </label><br />
         </>
     );
 }
@@ -146,25 +143,29 @@ function Career() {
     const [steppedJobDataState, setSteppedJobDataState] = useLocalStorage("steppedjob", localStorage.getItem("steppedjob") ?? []);
 
     return (
-      <>
-          <FormContainer
-              linearJobDataState = {linearJobDataState}
-              setLinearJobDataState = {setLinearJobDataState}
-              steppedJobDataState = {steppedJobDataState}
-              setSteppedJobDataState = {setSteppedJobDataState}
-          />
-          <br />
+      <div className={"container"}>
+          <div className={"pairs"}>
+              <div className={"left"}>
+                  <FormContainer
+                      linearJobDataState = {linearJobDataState}
+                      setLinearJobDataState = {setLinearJobDataState}
+                      steppedJobDataState = {steppedJobDataState}
+                      setSteppedJobDataState = {setSteppedJobDataState}
+                  />
+              </div>
 
-          <LinearGraph
-              linearJobDataState = {linearJobDataState}
-              setLinearJobDataState = {setLinearJobDataState}
-          />
-
-          <SteppedGraph
-              steppedJobDataState = {steppedJobDataState}
-              setSteppedJobDataState = {setSteppedJobDataState}
-          />
-      </>
+              <div className={"right"}>
+                  <LinearGraph
+                      linearJobDataState = {linearJobDataState}
+                      setLinearJobDataState = {setLinearJobDataState}
+                  />
+                  <SteppedGraph
+                      steppedJobDataState = {steppedJobDataState}
+                      setSteppedJobDataState = {setSteppedJobDataState}
+                  />
+              </div>
+          </div>
+      </div>
     );
 }
 

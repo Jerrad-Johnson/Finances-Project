@@ -131,7 +131,7 @@ button {
     p-1
 }
 
-.inputSelector, .inputSelectorShortSidebySide {
+.inputSelector, .inputSelectorShortSidebySide, .inputSelectorShort {
     @apply
     w-36
     block
@@ -145,6 +145,13 @@ button {
     @apply
     w-10
     inline
+    mr-4
+}
+
+.inputSelectorShort{
+    @apply
+    w-10
+    block
     mr-4
 }
 
@@ -187,6 +194,15 @@ div.right {
 }
 input, select {
     padding: 2px;
+}
+
+hr.jobIncomeSeparator{
+    @apply
+    border-t-2
+    border-gray-300
+    mt-4
+    mb-4
+
 }
 
 /*

@@ -164,9 +164,9 @@ function SteppedGraph({steppedJobDataState, setSteppedJobDataState}){
         ));
 
         return (
-            <>
+            <div className={"graphCard"}>
                 {(steppedJobDataState.length !== 0) && steppedIncomeBarGraph}
-            </>
+            </div>
         );
     }
 }
