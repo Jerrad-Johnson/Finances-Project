@@ -1,12 +1,15 @@
 import React from "react";
-import {cc} from "./jobssharedfunctions";
+import {cc, isEmptyArray} from "./jobssharedfunctions";
+
 
 export function sortFinancialData(financialData){
-    financialData.sort((a, b) => {
-        let x = a.title.toLowerCase();
-        let y = b.title.toLowerCase();
-        return (x > y ? 1 : -1);
-    });
+    if (financialData !== null) {
+        financialData.sort((a, b) => {
+            let x = a.title.toLowerCase();
+            let y = b.title.toLowerCase();
+            return (x > y ? 1 : -1);
+        });
+    }
 
     return financialData;
 }
