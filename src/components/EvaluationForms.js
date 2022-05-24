@@ -36,7 +36,7 @@ export function SelectOptions({financialData}){
 export function GraphOptions(){
     return (
         <>
-            <option>Yearly In Pocket</option>
+            {/*<option>Yearly In Pocket</option>*/}
             <option>Running Liquid Assets Sums vs. Yearly Expenses</option>
         </>
     );
@@ -124,7 +124,7 @@ function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionSta
                     </select>
 
                     <span className={"inputTitle"}>State Income Tax</span>
-                    <input type={"text"} className={"inputTextField"} onChange={(event) => {
+                    <input type={"text"} className={"inputTextFieldShort"} onChange={(event) => {
                         setStTaxState(event.target.value)
                     }} />
                 </form>

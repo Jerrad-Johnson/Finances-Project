@@ -2,12 +2,13 @@ import CalculateTaxes from "../libs/Taxes";
 import Chart from "react-apexcharts";
 import React from "react";
 import jobdatahandler from "../libs/jobdatahandler";
-import {getYearsNumbered} from "./jobssharedfunctions";
+import {getYearsNumbered, isEmptyArray, isObject} from "./jobssharedfunctions";
 import CreateNewDataForEvaluationGraphs from "../libs/CreateNewDataForEvaluationGraphs";
 
 let cc = console.dir
 let length = new jobdatahandler().graphMaxNumberOfYears;
-var yearsArrayForGraph = getYearsNumbered();
+let yearsArrayForGraph = ["No data"];
+
 
 function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOptionState, graphOptionState, incomeData,
                               expenseData, investmentData, employmentState, filingStatusState, stTaxState}){
@@ -27,6 +28,13 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     };
 
     let graphData = mapGraphOptionStateToObjectKey[graphOptionState]();
+
+
+    if (isObject(graphData?.[0])){
+        yearsArrayForGraph = getYearsNumbered();
+    }
+
+
 
     return (
         <>

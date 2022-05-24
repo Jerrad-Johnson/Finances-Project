@@ -14,7 +14,7 @@ function Evaluate(){
     let [incomeOptionState, setIncomeOptionState] = useState(checkExistence(incomeData));
     let [expenseOptionState, setExpenseOptionState] = useState(checkExistence(expenseData));
     let [investmentOptionState, setInvestmentOptionState] = useState(checkExistence(investmentData));
-    let [graphOptionState, setGraphOptionState] = useState("Yearly In Pocket");
+    let [graphOptionState, setGraphOptionState] = useState("Running Liquid Assets Sums vs. Yearly Expenses");
     let [employmentState, setEmploymentState] = useState("Employee");
     let [filingStatusState, setFilingStatusState] = useState("Single");
     let [stTaxState, setStTaxState] = useState("0");
