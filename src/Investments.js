@@ -12,19 +12,25 @@ function Investments(){
     let [graphKey, setGraphKey] = useLocalStorage("investmentgraphkey", localStorage.getItem("investmentgraphkey") ?? 0);
 
     return (
-      <div id={"investmentcontainer"}>
-        <FormContainer
-            investmentsState = {investmentsState}
-            setInvestmentsState = {setInvestmentsState}
-            graphKey = {graphKey}
-            setGraphKey = {setGraphKey}
+      <div className={"container"}>
+          <div className={"pairs"}>
+              <div className={"left"}>
+                <FormContainer
+                    investmentsState = {investmentsState}
+                    setInvestmentsState = {setInvestmentsState}
+                    graphKey = {graphKey}
+                    setGraphKey = {setGraphKey}
+                />
+              </div>
 
-        />
-        <InvestmentGraph
-            investmentsState = {investmentsState}
-            setInvestmentsState = {setInvestmentsState}
-            graphKey = {graphKey}
-        />
+              <div className={"right"}>
+                <InvestmentGraph
+                    investmentsState = {investmentsState}
+                    setInvestmentsState = {setInvestmentsState}
+                    graphKey = {graphKey}
+                />
+              </div>
+          </div>
       </div>
     );
 }
@@ -36,36 +42,43 @@ export function FormContainer({investmentsState, setInvestmentsState, graphKey, 
     }]);
 
     return (
-        <div id="formContainer">
+        <>
             <form>
-                <br />
-                Note that the graphed values do not include adjustment for inflation or taxes and are correct only as relative values, but are highly inaccurate as absolute values. The appropriate adjustments will be made on the final page.
-                <br />
-                <br />
-                <input type="text" className={"inputfield investmentstitle ml-2"}/> Title
-                <br />
-                <br />
+                {/*Note that the graphed values do not include adjustment for inflation or taxes and are correct only as relative values, but are highly inaccurate as absolute values. The appropriate adjustments will be made on the final page.*/}
+                <div className={"inputSet"}>
+                    <div className={"inputSelectorsCard"}>
+                        <span className={"inputSetTitle"}>Investments Sheet</span>
+                        <span className={"inputTitle"}>Title</span>
+                        <input type="text" className={"investmentstitle inputTextFieldLong"}/>
+                    </div>
+                </div>
+
+
                 <InvestmentForms
                     formLengthState = {formLengthState}
                     setFormLengthState = {setFormLengthState}
                     formKey = {formKey}
                     setFormKey= {setFormKey}
                 />
-                <AddInvestmentFieldButton
-                    formLengthState = {formLengthState}
-                    setFormLengthState = {setFormLengthState}
-                    formKey = {formKey}
-                    setFormKey = {setFormKey}
-                />
-                &nbsp;
-                <SubmitButton
-                    investmentsState = {investmentsState}
-                    setInvestmentsState = {setInvestmentsState}
-                    graphKey = {graphKey}
-                    setGraphKey = {setGraphKey}
-                />
+
+                <div className={"inputSet"}>
+                    <div className={"inputSelectorsCard"}>
+                        <AddInvestmentFieldButton
+                            formLengthState = {formLengthState}
+                            setFormLengthState = {setFormLengthState}
+                            formKey = {formKey}
+                            setFormKey = {setFormKey}
+                        />
+                        <SubmitButton
+                            investmentsState = {investmentsState}
+                            setInvestmentsState = {setInvestmentsState}
+                            graphKey = {graphKey}
+                            setGraphKey = {setGraphKey}
+                        />
+                    </div>
+                </div>
             </form>
-        </div>
+        </>
     );
 }
 
@@ -77,48 +90,48 @@ function InvestmentForms({formLengthState, setFormLengthState, formKey, setFormK
 
         let printToDom = formLengthState.map((e, index) => {
         return (
-            <div key={e.formIndex} className={"investmentForms"}>
-                <hr />
-                <br />
-                <input type="text" className={"inputfield label mb-8 ml-2 w-30"}></input> Label
-                &nbsp;
-                <input type="text" className={"inputfield amount mb-8 ml-2 w-20"}></input> Amount to Invest
-                <br />
-                <input type="text" className={"inputfield additionalinvestment mb-8 ml-2 w-20"}></input> Yearly Add'l Investment
-                &nbsp;
-                <select className={"presetinvestment + e"}>
+            <div key={e.formIndex} className={"inputSet"}>
+                <div className={"inputSelectorsCard"}>
+                    <span className={"inputSetTitle"}>Investment Data</span>
+                    <span className={"inputTitle"}>Name</span>
+                    <input type="text" className={"inputTextFieldLong label"}/>
+                    <span className={"inputTitle"}>Amount to Invest</span>
+                    <input type="text" className={"inputTextFieldLong amount"}/>
+                    <span className={"inputTitle"}>Yearly Ad'l Investment</span>
+                    <input type="text" className={"inputTextFieldLong additionalinvestment"}/>
+                    <span className={"inputTitle"}>Choose Preset Values</span>
+                    <select className={"presetinvestment + e inputSelector"}>
                     <option></option>
                     <option>TBA</option>
                     {/*TODO Map options*/}
-                </select> Choose Preset Values
-
-
-                <br />
-
-                <select className={"yearBegin ml-2 text-black"}>
+                </select>
+                <span className={"inputTitle"}>Year to Invest</span>
+                <select className={"yearBegin inputSelector"}>
                     {optionElements}
-                </select> Invest
+                </select>
 
-                <select className={"yearWithdraw ml-2 text-black mb-10"}>
+                <span className={"inputTitle"}>Year to Withdraw</span>
+                <select className={"yearWithdraw inputSelector"}>
                     {optionElementsIncludingNever}
-                </select> Withdraw
+                </select>
 
-                <select className={"yearCeaseReinvesting ml-2 text-black"}>
+                <span className={"inputTitle"}>Year to Stop Reinvesting</span>
+                <select className={"yearCeaseReinvesting inputSelector"}>
                     {optionElementsIncludingNever}
-                </select> Cease Reinvesting
+                </select>
 
-                <br />
-
-                <input type="text" className={"inputfield percentreturn w-8 ml-2"}></input>&nbsp; Expected Percent Return &nbsp;
-                <input type="text" className={"inputfield percentpull w-8"}></input>&nbsp; Percent Pull Each Year (from return)
-                <br />
-                <br />
+                <span className={"inputTitle"}>Expected Return Percent</span>
+                <input type="text" className={"inputTextFieldShort percentreturn"}></input>
+                <span className={"inputTitle"}>Percent to Withdraw Each Year (from return)</span>
+                <input type="text" className={"inputTextFieldShort percentpull"} defaultValue={30}></input>
 
                 <DeleteInvestmentFieldButton
                     formLengthState = {formLengthState}
                     setFormLengthState = {setFormLengthState}
                     index = {e.formIndex}
                 />
+
+            </div>
 
             </div>
         );
@@ -138,7 +151,7 @@ function InvestmentGraph({investmentsState, setInvestmentsState, graphKey}){
 
     printToDom = investmentsState.map((e, key) => {
             return (
-                <div key={key}>
+                <div key={key} className={"graphCard"}>
                     <InvestmentRunningValueBarChart
                         key = {key}
                         investmentSheet = {e}

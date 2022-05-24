@@ -15,7 +15,7 @@ export function ExpenseForms({expenseFieldsState}){
     let printFormsToDom = expenseFieldsState.map(entry => {
         return (
                 <div key={entry} className={"inputSelectorsCard"}>
-                    <span className={"inputSetTitle"}>Data</span>
+                    <span className={"inputSetTitle"}>Expense</span>
                     <span className={"inputTitle"}>Label</span>
                     <input type="text" className={"label inputTextField"} defaultValue={""}></input>
                     <span className={"inputTitle"}>Amount</span>
@@ -36,7 +36,8 @@ export function ExpenseForms({expenseFieldsState}){
         <div className={"inputSet"}>
             <div className={"inputSelectorsCard"}>
                 <form>
-                    <span className={"inputSetTitle"}>Title</span>
+                    <span className={"inputSetTitle"}>Expenses Sheet</span>
+                    <span className={"inputTitle"}>Title</span>
                     <input type="text" className={"inputTextFieldLong expenseTitle"} defaultValue={""}></input>
                 </form>
                 <br />
