@@ -49,6 +49,7 @@ class CreateNewDataForEvaluationGraphs {
     makeRunningIncomeSumsAndYearlyExpenses() {
         let x = [];
         let y = {};
+        let arrayOfZeros = JSON.stringify(createArrayOfZeros(this.length));
 
         if (!isEmptyArray(this.income) || !isEmptyArray(this.investments)){
             y = this.addIncomeData(this.newGraphData, this.newGraphData.liquidAssetsAfterExpenses, "Liquid Assets");
@@ -56,12 +57,16 @@ class CreateNewDataForEvaluationGraphs {
             y = {};
         }
 
-        if (!isEmptyArray(this.expenses)) {
+        cc(this.newGraphData)
+        if (!isEmptyArray(this.newGraphData?.combinedExpenses) && Array.isArray(this.newGraphData?.combinedExpenses)
+            && JSON.stringify(this.newGraphData?.combinedExpenses) !== arrayOfZeros) {
+
             y = this.addExpenseData(this.newGraphData, this.newGraphData.combinedExpenses, "Expenses by Year");
             if (!isEmptyObject(y)) x.push(y);
             y = {};
         }
 
+        cc(x)
         x.explanation = "blah";
         return x;
     }
@@ -122,14 +127,9 @@ class CreateNewDataForEvaluationGraphs {
             throw new Error("Income data is needed");
         }*/
 
-        if (isObject(expenses) && isObject(taxesOnIncomeAndInvestmentIncreases) && isObject(investments)){
+        if (isObject(expenses) || this.taxesOnIncomeAndInvestmentIncreases){
             newData = this.addCombinedExpenses(newData, expenses, taxesOnIncomeAndInvestmentIncreases, investments);
-        } /*else if (isObject(expenses) && isObject(taxesOnIncomeOnly)){
-
-        } else if (isObject(expenses)) {
-
-        }*/ // TODO RETURN HERE
-
+        }
 
         if (newData.liquidAssetsIn && newData.combinedExpenses){
         }
@@ -155,19 +155,24 @@ class CreateNewDataForEvaluationGraphs {
         return newData;
     }
 
-    addCombinedExpenses(newData, expenses, taxesOnIncomeAndInvestmentIncreases, investments){
-        let additionalInvestmentsByYear = combineSinglePropertySubArrays(investments.arrayAdditionalInvestment, 15);
+    addCombinedExpenses(newData, expenses, taxesOnIncomeAndInvestmentIncreases = [], investments = []){
+        let additionalInvestmentsByYear = createArrayOfZeros(15)
+        if (!isEmptyArray(investments)) additionalInvestmentsByYear = combineSinglePropertySubArrays(investments.arrayAdditionalInvestment, 15);
         newData.combinedExpenses = createArrayOfZeros(15);
 
+        cc(taxesOnIncomeAndInvestmentIncreases)
         for (let i = 0; i < this.length; i++) {
-            newData.combinedExpenses[i] = expenses.combinedSumByYear[i]
-                + (taxesOnIncomeAndInvestmentIncreases.incomeBeforeTaxes[i] - taxesOnIncomeAndInvestmentIncreases.incomeAfterFederalTaxes[i]
-                + additionalInvestmentsByYear[i]);
+            newData.combinedExpenses[i]
+                = (expenses?.combinedSumByYear?.[i] || 0)
+                + ((taxesOnIncomeAndInvestmentIncreases?.incomeBeforeTaxes?.[i] || 0)
+                - (taxesOnIncomeAndInvestmentIncreases?.incomeAfterFederalTaxes?.[i] || 0)
+                + (additionalInvestmentsByYear?.[i] || 0));
         }
 
-        for (let i = 0; i < investments.amounts.length; i++){
-            newData.combinedExpenses[investments.yearsBegin[i] -1] = newData.combinedExpenses[investments.yearsBegin[i] -1] + investments.amounts[i];
-
+        if (!isEmptyArray(investments)){
+            for (let i = 0; i < investments.amounts.length; i++){
+                newData.combinedExpenses[investments.yearsBegin[i] -1] = newData.combinedExpenses[investments.yearsBegin[i] -1] + investments.amounts[i];
+            }
         }
 
         return newData;
@@ -235,7 +240,8 @@ class CreateNewDataForEvaluationGraphs {
 
         if (!isEmptyArray(income) || !isEmptyArray(investments)) {
             let length = new jobdatahandler().graphMaxNumberOfYears;
-            let investmentProfits = combineSinglePropertySubArrays(this.investments.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment, this.length);
+            let investmentProfits = createArrayOfZeros(15);
+            if (!isEmptyArray(investments)) investmentProfits = combineSinglePropertySubArrays(this.investments.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment, this.length);
             let incomeTogether = [];
             if (!isEmptyArray(income)) incomeTogether.push(income.sumByYear);
             if (!isEmptyArray(investments)) incomeTogether.push(investmentProfits);
