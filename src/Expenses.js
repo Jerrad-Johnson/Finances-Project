@@ -32,7 +32,6 @@ function Expenses(){
                                 expenseFieldsState = {expenseFieldsState}
                                 setExpenseFieldState = {setExpenseFieldsState}
                             />
-                            <br />
                             <SubmitButton
                                 expensesState = {expensesState}
                                 setExpensesState = {setExpensesState}

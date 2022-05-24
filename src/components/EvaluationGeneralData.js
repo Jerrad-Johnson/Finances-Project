@@ -3,7 +3,7 @@ function EvaluationGeneralData(){
     return (
         <div className={"break"}>
             <div className={"generalData"}>
-                test
+                {/*test*/}
 
             </div>
         </div>

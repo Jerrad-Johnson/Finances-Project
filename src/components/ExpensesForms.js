@@ -19,7 +19,7 @@ export function ExpenseForms({expenseFieldsState}){
                     <span className={"inputTitle"}>Label</span>
                     <input type="text" className={"label inputTextField"} defaultValue={""}></input>
                     <span className={"inputTitle"}>Amount</span>
-                    <input type="text" className={"expense inputTextField"} defaultValue={""}></input>
+                    <input type="text" className={"payment inputTextField"} defaultValue={""}></input>
                     <span className={"inputTitle"}>Frequency</span>
                     <select className={"frequency inputSelector"}>
                         <option value={"mo"}>Monthly</option>
