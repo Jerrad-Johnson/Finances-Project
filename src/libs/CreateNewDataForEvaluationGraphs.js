@@ -58,7 +58,7 @@ class CreateNewDataForEvaluationGraphs {
         }
 
         if (!isEmptyArray(this.newGraphData?.combinedExpenses) && Array.isArray(this.newGraphData?.combinedExpenses)
-            && JSON.stringify(this.newGraphData?.combinedExpenses) !== this.arrayOfZeros) {
+            && JSON.stringify(this.newGraphData?.combinedExpenses) !== JSON.stringify(this.arrayOfZeros)) {
 
             y = this.addExpenseData(this.newGraphData, this.newGraphData.combinedExpenses, "Expenses by Year");
             if (!isEmptyObject(y)) x.push(y);
@@ -85,14 +85,14 @@ class CreateNewDataForEvaluationGraphs {
             y = {};
         }
 
-        if (!isEmptyArray(this.investments) && JSON.stringify(this.newGraphData?.illiquidAssets) !== this.arrayOfZeros){
+        if (!isEmptyArray(this.investments) && JSON.stringify(this.newGraphData?.illiquidAssets) !== JSON.stringify(this.arrayOfZeros)){
             y = this.addIncomeData(this.newGraphData, this.newGraphData.illiquidAssets, "Illiquid Assets");
             if (!isEmptyObject(y)) x.push(y);
             y = {};
         }
 
         if (Array.isArray(this.newGraphData?.combinedAssetsLiquidAndIlliquid)
-            && JSON.stringify(this.newGraphData?.combinedAssetsLiquidAndIlliquid) !== this.arrayOfZeros){
+        && JSON.stringify(this.newGraphData?.combinedAssetsLiquidAndIlliquid) !== JSON.stringify(this.arrayOfZeros)){
             y = this.addIncomeData(this.newGraphData, this.newGraphData.combinedAssetsLiquidAndIlliquid, "Total Assets");
             if (!isEmptyObject(y)) x.push(y);
             y = {};
