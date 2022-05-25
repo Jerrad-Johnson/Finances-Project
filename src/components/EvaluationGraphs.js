@@ -25,6 +25,8 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
             employmentState, filingStatusState, stTaxState).makeYearlyInPocket(); },
         "Running Liquid Assets Sums vs. Yearly Expenses": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeRunningIncomeSumsAndYearlyExpenses(); },
+        "Total Assets": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+            employmentState, filingStatusState, stTaxState).makeTotalAssetsLiquidAndIlliquid(); },
     };
 
     let graphData = mapGraphOptionStateToObjectKey[graphOptionState]();

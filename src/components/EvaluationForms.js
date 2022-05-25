@@ -42,6 +42,7 @@ export function GraphOptions(){
         <>
             {/*<option>Yearly In Pocket</option>*/}
             <option>Running Liquid Assets Sums vs. Yearly Expenses</option>
+            <option>Total Assets</option>
         </>
     );
 }
