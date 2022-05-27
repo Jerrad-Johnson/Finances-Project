@@ -1,5 +1,5 @@
 import Jobdatahandler from "./jobdatahandler";
-import {applyRoundingSingleDepthArray, applyRoundingSingleDepthArrayTwoDecimals, cc} from "../components/jobssharedfunctions";
+import {applyRoundingSingleDepthArray, applyRoundingSingleDepthArrayTwoDecimals} from "../components/jobssharedfunctions";
 
 class CalculateTaxes {
     constructor(moneyIn, employmentState, filingStatusState, stTaxState, taxYearState){
@@ -344,7 +344,6 @@ class CalculateTaxes {
         applyRoundingSingleDepthArray(results.incomeAfterStateTaxes);
         applyRoundingSingleDepthArray(results.stateTaxSums);
         applyRoundingSingleDepthArrayTwoDecimals(results.effectiveTaxPercentages);
-        cc(results)
         return results
 
     }

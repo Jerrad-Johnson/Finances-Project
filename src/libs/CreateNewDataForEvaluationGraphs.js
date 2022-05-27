@@ -20,7 +20,7 @@ class CreateNewDataForEvaluationGraphs {
         this.income = this.addValuesToIncome(income, expenses, investments, this.length);
         this.expenses = this.addValuesToExpenses(income, expenses, investments, this.length);
         this.investments = this.addValuesToInvestments(income, expenses, investments, this.length);
-        this.taxesOnIncomeOnly = this.getIncomeTaxData(income, employmentState, filingStatusState, taxYearState)
+        this.taxesOnIncomeOnly = this.getIncomeTaxData(income, employmentState, filingStatusState, stTaxState, taxYearState)
         this.taxesOnIncomeAndInvestmentIncreases = this.combineIncomeAndInvestmentIncreases(this.income, this.investments, employmentState, filingStatusState, stTaxState, taxYearState);
         this.newGraphData = this.addNewData(this.income, this.expenses, this.investments, this.taxesOnIncomeOnly, this.taxesOnIncomeAndInvestmentIncreases);
         this.employmentState = employmentState;
@@ -149,6 +149,7 @@ class CreateNewDataForEvaluationGraphs {
             newData = this.addCombinedExpenses(newData, expenses, taxesOnIncomeAndInvestmentIncreases, investments);
         }
 
+
         if (isObject(expenses) || this.taxesOnIncomeOnly){
             newData = this.addCombinedExpensesMinusInvestmentData(newData, expenses, taxesOnIncomeOnly);
             //TODO
@@ -161,10 +162,12 @@ class CreateNewDataForEvaluationGraphs {
         if (newData.liquidAssetsAfterExpenses && newData.illiquidAssets){
             newData = this.addcombinedRunningAssetsLiquidAndIlliquid(newData);
         }
-        
+
         if (newData.combinedExpenses && newData.liquidAssetsIn){
            // newData = this.addLiquidAssetsAfterExpensesMinusInvestmentData(newData, taxesOnIncomeOnly);
         }
+
+        //this.logData()
 
         return newData;
         //newData.expensesWithTaxes = this.addValuesInTwoArrays(income.sumByYear, expenses.sumByYear);
@@ -211,9 +214,6 @@ class CreateNewDataForEvaluationGraphs {
     addCombinedExpensesMinusInvestmentData(newData, expenses, taxesOnIncomeOnly){
         newData.combinedExpensesMinusInvestmentData = createArrayOfZeros(this.length);
 
-        /*cc(expenses)
-        cc(taxesOnIncomeOnly)*/
-
         return newData;
     }
 
@@ -256,9 +256,6 @@ class CreateNewDataForEvaluationGraphs {
 
     addLiquidAssetsAfterExpensesMinusInvestmentData(newData, taxesOnIncomeOnly){
         newData.liquidAssetsAfterExpensesMinusInvestmentExpenses = [];
-        /*cc(newData)
-        cc(taxesOnIncomeOnly)*/
-
 
         return newData;
     }
@@ -393,11 +390,12 @@ class CreateNewDataForEvaluationGraphs {
     }
 
     logData(){
-        cc(this.income)
-        cc(this.expenses)
-        cc(this.investments)
+        //cc(this.income)
+        //cc(this.expenses)
+        //cc(this.investments)
         cc(this.taxesOnIncomeAndInvestmentIncreases)
-        cc(this.newGraphData)
+        cc(this.taxesOnIncomeOnly)
+        //cc(this.newGraphData)
     }
 }
 
