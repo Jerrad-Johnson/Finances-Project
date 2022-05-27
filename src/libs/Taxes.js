@@ -344,6 +344,7 @@ class CalculateTaxes {
         applyRoundingSingleDepthArray(results.incomeAfterStateTaxes);
         applyRoundingSingleDepthArray(results.stateTaxSums);
         applyRoundingSingleDepthArrayTwoDecimals(results.effectiveTaxPercentages);
+        cc(results)
         return results
 
     }
