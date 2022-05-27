@@ -1,8 +1,5 @@
 import Jobdatahandler from "./jobdatahandler";
-import {
-    applyRoundingSingleDepthArray,
-    applyRoundingSingleDepthArrayTwoDecimals
-} from "../components/jobssharedfunctions";
+import {applyRoundingSingleDepthArray, applyRoundingSingleDepthArrayTwoDecimals, cc} from "../components/jobssharedfunctions";
 
 class CalculateTaxes {
     constructor(moneyIn, employmentState, filingStatusState, stTaxState, taxYearState){
@@ -68,10 +65,10 @@ class CalculateTaxes {
             results.incomeAfterStateTaxes, this.income.taxYear, this.brackets, this.income.filingStatus);
         results.differenceBecauseOfStandardDeduction = this.calculateAmountTaxableIncomeLoweredViaStandardDeduction(
             results.incomeAfterStateTaxes, results.federallyTaxableIncomeAfterStandardDeduction);
-        [results.ficaTaxSums, results.incomeAfterFica] = this.calculateFICA(results.federallyTaxableIncomeAfterStandardDeduction, this.income.taxYear,
+        [results.ficaTaxSums, results.taxableIncomeAfterFICA] = this.calculateFICA(results.federallyTaxableIncomeAfterStandardDeduction, this.income.taxYear,
             this.brackets, this.income.employmentType, this.income.filingStatus);
         [results.federalIncomeTax, results.incomeAfterFederalTaxes, results.effectiveTaxPercentages] =
-            this.calculateFederalIncomeTax(this.income.taxYear, this.brackets, results.incomeAfterFica,
+            this.calculateFederalIncomeTax(this.income.taxYear, this.brackets, results.taxableIncomeAfterFICA,
             this.income.filingStatus, results.differenceBecauseOfStandardDeduction, this.income.yearlySums);
         results = this.addIncomeBeforeTaxesToObject(results, this.income.yearlySums);
         results = this.roundEverything(results);
@@ -136,21 +133,21 @@ class CalculateTaxes {
         return difference;
     }
 
-    calculateFICA(income, taxYear, taxBrackets, employmentType, filingStatus){
+    calculateFICA(taxableIncome, taxYear, taxBrackets, employmentType, filingStatus){
         let ficaCategory = this.getFicaCategoryBasedOnEmploymentType(employmentType);
         let ficaBracket = taxBrackets[taxYear][ficaCategory];
         let medicareReverseCutoffPoint = this.getMedicareReverseCutoffPoint(taxYear, taxBrackets, filingStatus);
         let medicareReverseCutoffPercentage = this.getMedicareReverseCutoffPercentage(taxYear, taxBrackets, employmentType);
         let ficaTaxes = {};
-        ficaTaxes.medicare = this.getMedicareTaxSums(income, medicareReverseCutoffPoint,
+        ficaTaxes.medicare = this.getMedicareTaxSums(taxableIncome, medicareReverseCutoffPoint,
             medicareReverseCutoffPercentage, ficaBracket);
         let socSecTaxPercentage = taxBrackets[taxYear][ficaCategory].socSec.percent;
         let socSecCutoffPoint = taxBrackets[taxYear][ficaCategory].socSec.cutoff;
-        ficaTaxes.socSec = this.getSocSecTaxSums(income, socSecTaxPercentage, socSecCutoffPoint);
+        ficaTaxes.socSec = this.getSocSecTaxSums(taxableIncome, socSecTaxPercentage, socSecCutoffPoint);
 
-        let incomeAfterFICA = this.getTaxableIncomeAfterFICA(income, ficaTaxes.medicare, ficaTaxes.socSec);
+        let taxableIncomeAfterFICA = this.getTaxableIncomeAfterFICA(taxableIncome, ficaTaxes.medicare, ficaTaxes.socSec);
 
-        return [ficaTaxes, incomeAfterFICA]
+        return [ficaTaxes, taxableIncomeAfterFICA]
     }
 
     getFicaCategoryBasedOnEmploymentType(employmentType){
@@ -217,11 +214,11 @@ class CalculateTaxes {
         return sums;
     }
 
-    getTaxableIncomeAfterFICA(income, medicareTaxes, socSecTaxes){
+    getTaxableIncomeAfterFICA(taxableIncome, medicareTaxes, socSecTaxes){
         let sums = [];
 
         for (let i = 0; i < this.length; i++){
-            sums[i] = income[i] - (medicareTaxes[i] + socSecTaxes[i]);
+            sums[i] = taxableIncome[i] - (medicareTaxes[i] + socSecTaxes[i]);
         }
 
         return sums;
@@ -343,11 +340,10 @@ class CalculateTaxes {
         applyRoundingSingleDepthArray(results.ficaTaxSums.medicare);
         applyRoundingSingleDepthArray(results.ficaTaxSums.socSec);
         applyRoundingSingleDepthArray(results.incomeAfterFederalTaxes);
-        applyRoundingSingleDepthArray(results.incomeAfterFica);
+        applyRoundingSingleDepthArray(results.taxableIncomeAfterFICA);
         applyRoundingSingleDepthArray(results.incomeAfterStateTaxes);
         applyRoundingSingleDepthArray(results.stateTaxSums);
         applyRoundingSingleDepthArrayTwoDecimals(results.effectiveTaxPercentages);
-
         return results
 
     }

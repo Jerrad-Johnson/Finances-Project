@@ -29,7 +29,7 @@ class CreateNewDataForEvaluationGraphs {
         this.arrayOfZeros = createArrayOfZeros(this.length);
     }
 
-/*    makeYearlyInPocket(){
+/*    makeYearlyExpendableMinusInvestments(){
         let x = [];
         let y = {};
 
@@ -256,8 +256,8 @@ class CreateNewDataForEvaluationGraphs {
 
     addLiquidAssetsAfterExpensesMinusInvestmentData(newData, taxesOnIncomeOnly){
         newData.liquidAssetsAfterExpensesMinusInvestmentExpenses = [];
-        cc(newData)
-        cc(taxesOnIncomeOnly)
+        /*cc(newData)
+        cc(taxesOnIncomeOnly)*/
 
 
         return newData;
