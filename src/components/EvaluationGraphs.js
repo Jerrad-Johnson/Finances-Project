@@ -47,7 +47,7 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
                     height = "300"
 
                     options = {{
-                    /*colors: ["#fff000"],*/
+                     /*colors: ["#ff0000", "#00FF00", "#0000FF"],*/
                         chart: {
                             stacked: false,
                         },

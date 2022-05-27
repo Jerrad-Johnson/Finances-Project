@@ -27,11 +27,9 @@ class CreateNewDataForEvaluationGraphs {
         this.filingState = filingStatusState;
         this.taxYearState = taxYearState;
         this.arrayOfZeros = createArrayOfZeros(this.length);
-        this.colors = ["#ff0000", "#00ff00", "#0000ff"]
     }
 
-
-    makeYearlyInPocket(){
+/*    makeYearlyInPocket(){
         let x = [];
         let y = {};
 
@@ -45,7 +43,7 @@ class CreateNewDataForEvaluationGraphs {
         if (!isEmptyObject(y)) x.push(y); y = {};
 
         return x;
-    }
+    }*/
 
     makeRunningIncomeSumsAndYearlyExpenses() {
         let x = [];
@@ -53,16 +51,14 @@ class CreateNewDataForEvaluationGraphs {
 
         if (!isEmptyArray(this.income) || !isEmptyArray(this.investments)){
             y = this.addGraphNecessities(this.newGraphData.liquidAssetsAfterExpenses, "Liquid Assets", "#00ff00");
-            if (!isEmptyObject(y)) x.push(y);
-            y = {};
+            [x, y] = this.addThisEntryToArray(x, y);
         }
 
         if (!isEmptyArray(this.newGraphData?.combinedExpenses) && Array.isArray(this.newGraphData?.combinedExpenses)
             && JSON.stringify(this.newGraphData?.combinedExpenses) !== JSON.stringify(this.arrayOfZeros)) {
 
             y = this.addGraphNecessities(this.newGraphData.combinedExpenses, "Expenses by Year", "#ff0000");
-            if (!isEmptyObject(y)) x.push(y);
-            y = {};
+            [x, y] = this.addThisEntryToArray(x, y);
         }
 
         x.explanation = "blah";
@@ -70,30 +66,42 @@ class CreateNewDataForEvaluationGraphs {
     }
 
     makeTotalAssetsLiquidAndIlliquid(){
+        this.logData()
         let x = [];
         let y = {};
 
         if (!isEmptyArray(this.income) || !isEmptyArray(this.investments)){
             y = this.addGraphNecessities(this.newGraphData.liquidAssetsAfterExpenses, "Liquid Assets", "#ff0000");
-            if (!isEmptyObject(y)) x.push(y);
-            y = {};
+            [x, y] = this.addThisEntryToArray(x, y);
         }
 
         if (!isEmptyArray(this.investments) && JSON.stringify(this.newGraphData?.illiquidAssets) !== JSON.stringify(this.arrayOfZeros)){
             y = this.addGraphNecessities(this.newGraphData.illiquidAssets, "Illiquid Assets", "#00ff00");
-            if (!isEmptyObject(y)) x.push(y);
-            y = {};
+            [x, y] = this.addThisEntryToArray(x, y);
         }
 
-        if (Array.isArray(this.newGraphData?.combinedAssetsLiquidAndIlliquid)
-                && JSON.stringify(this.newGraphData?.combinedAssetsLiquidAndIlliquid) !== JSON.stringify(this.arrayOfZeros)){
-            y = this.addGraphNecessities(this.newGraphData.combinedAssetsLiquidAndIlliquid, "Total Assets", "#0000ff");
-            if (!isEmptyObject(y)) x.push(y);
-            y = {};
+        if (Array.isArray(this.newGraphData?.combinedRunningAssetsLiquidAndIlliquid)
+                && JSON.stringify(this.newGraphData?.combinedRunningAssetsLiquidAndIlliquid) !== JSON.stringify(this.arrayOfZeros)){
+            y = this.addGraphNecessities(this.newGraphData.combinedRunningAssetsLiquidAndIlliquid, "Total Assets", "#0000ff");
+            [x, y] = this.addThisEntryToArray(x, y);
         }
 
-        cc(x)
+        x.explanation = "blah";
+        return x;
+    }
 
+
+
+    makeExpendableCash(){
+        let x = [];
+        let y = {};
+
+        if (!isEmptyArray(this.income) || !isEmptyArray(this.investments)){
+            y = this.addGraphNecessities(this.newGraphData.liquidAssetsAfterExpenses, "Liquid Assets", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        x.explanation = "blah";
         return x;
     }
 
@@ -141,12 +149,21 @@ class CreateNewDataForEvaluationGraphs {
             newData = this.addCombinedExpenses(newData, expenses, taxesOnIncomeAndInvestmentIncreases, investments);
         }
 
+        if (isObject(expenses) || this.taxesOnIncomeOnly){
+            newData = this.addCombinedExpensesMinusInvestmentData(newData, expenses, taxesOnIncomeOnly);
+            //TODO
+        }
+
         if (newData.liquidAssetsIn && newData.combinedExpenses){
             newData = this.addLiquidAssetsAfterExpenses(newData);
         }
 
         if (newData.liquidAssetsAfterExpenses && newData.illiquidAssets){
-            newData = this.addCombinedAssetsLiquidAndIlliquid(newData);
+            newData = this.addcombinedRunningAssetsLiquidAndIlliquid(newData);
+        }
+        
+        if (newData.combinedExpenses && newData.liquidAssetsIn){
+           // newData = this.addLiquidAssetsAfterExpensesMinusInvestmentData(newData, taxesOnIncomeOnly);
         }
 
         return newData;
@@ -191,6 +208,15 @@ class CreateNewDataForEvaluationGraphs {
         return newData;
     }
 
+    addCombinedExpensesMinusInvestmentData(newData, expenses, taxesOnIncomeOnly){
+        newData.combinedExpensesMinusInvestmentData = createArrayOfZeros(this.length);
+
+        /*cc(expenses)
+        cc(taxesOnIncomeOnly)*/
+
+        return newData;
+    }
+
     addLiquidAssetsAfterExpenses(newData){
         newData.liquidAssetsAfterExpenses = createArrayOfZeros(this.length);
 
@@ -216,14 +242,23 @@ class CreateNewDataForEvaluationGraphs {
         return newData;
     }
 
-    addCombinedAssetsLiquidAndIlliquid(newData){
-        newData.combinedAssetsLiquidAndIlliquid = createArrayOfZeros(this.length);
+    addcombinedRunningAssetsLiquidAndIlliquid(newData){
+        newData.combinedRunningAssetsLiquidAndIlliquid = createArrayOfZeros(this.length);
 
         for (let i = 0; i < this.length; i++) {
-            newData.combinedAssetsLiquidAndIlliquid[i]
+            newData.combinedRunningAssetsLiquidAndIlliquid[i]
                 = (newData.liquidAssetsAfterExpenses[i] || 0)
                 + (newData.illiquidAssets[i] || 0);
         }
+
+        return newData;
+    }
+
+    addLiquidAssetsAfterExpensesMinusInvestmentData(newData, taxesOnIncomeOnly){
+        newData.liquidAssetsAfterExpensesMinusInvestmentExpenses = [];
+        cc(newData)
+        cc(taxesOnIncomeOnly)
+
 
         return newData;
     }
@@ -240,7 +275,7 @@ class CreateNewDataForEvaluationGraphs {
         return newArr;
     }
 
-    addGraphNecessities(arrayValues, sheetType, color){
+    addGraphNecessities(arrayValues, sheetType, color = "#00FF00"){
         let y = {};
 
         y.data = arrayValues;
@@ -248,6 +283,13 @@ class CreateNewDataForEvaluationGraphs {
         y.colors = color;
 
         return y;
+    }
+
+    addThisEntryToArray(x, y){
+        if (!isEmptyObject(y)) x.push(y);
+        y = {};
+
+        return [x, y];
     }
 
     getIncomeTaxData(income, employmentStatus, filingStatus, stTax){
@@ -357,8 +399,6 @@ class CreateNewDataForEvaluationGraphs {
         cc(this.taxesOnIncomeAndInvestmentIncreases)
         cc(this.newGraphData)
     }
-
-
 }
 
 export default CreateNewDataForEvaluationGraphs;
