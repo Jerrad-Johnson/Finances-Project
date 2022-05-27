@@ -66,7 +66,6 @@ class CreateNewDataForEvaluationGraphs {
     }
 
     makeTotalAssetsLiquidAndIlliquid(){
-        this.logData()
         let x = [];
         let y = {};
 
@@ -213,6 +212,12 @@ class CreateNewDataForEvaluationGraphs {
 
     addCombinedExpensesMinusInvestmentData(newData, expenses, taxesOnIncomeOnly){
         newData.combinedExpensesMinusInvestmentData = createArrayOfZeros(this.length);
+
+        cc(expenses)
+        cc(taxesOnIncomeOnly)
+        for (let i = 0; i < this.length; i++){
+            //newData.combinedExpensesMinusInvestmentData[i] = expenses.combinedSumByYear[i] + taxesOnIncomeOnly.
+        }
 
         return newData;
     }

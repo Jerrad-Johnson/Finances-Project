@@ -71,6 +71,7 @@ class CalculateTaxes {
             this.calculateFederalIncomeTax(this.income.taxYear, this.brackets, results.taxableIncomeAfterFICA,
             this.income.filingStatus, results.differenceBecauseOfStandardDeduction, this.income.yearlySums);
         results = this.addIncomeBeforeTaxesToObject(results, this.income.yearlySums);
+        results = this.addTotalTaxes(results);
         results = this.roundEverything(results);
 
         return results;
@@ -333,6 +334,19 @@ class CalculateTaxes {
         return results;
     }
 
+    addTotalTaxes(results){
+        results.totalTaxes = [];
+
+        for (let i = 0; i < this.length; i++) {
+            results.totalTaxes[i]
+                = results.ficaTaxSums.medicare[i]
+                + results.ficaTaxSums.socSec[i]
+                + results.federalIncomeTax[i];
+        }
+
+        return results;
+    }
+
     roundEverything(results){
         applyRoundingSingleDepthArray(results.differenceBecauseOfStandardDeduction);
         applyRoundingSingleDepthArray(results.federalIncomeTax);
@@ -344,10 +358,9 @@ class CalculateTaxes {
         applyRoundingSingleDepthArray(results.incomeAfterStateTaxes);
         applyRoundingSingleDepthArray(results.stateTaxSums);
         applyRoundingSingleDepthArrayTwoDecimals(results.effectiveTaxPercentages);
+        applyRoundingSingleDepthArray(results.totalTaxes);
         return results
-
     }
-
 }
 
 export default CalculateTaxes;
