@@ -115,6 +115,7 @@ class CreateNewDataForEvaluationGraphs {
     addValuesToExpenses(income, expenses, investments, length){
         if (isObject(expenses)) {
             expenses = this.combineObjectArraySums(expenses, "graphSumObject", "combinedSumByYear", length);
+            //cc(expenses.graphSumObject)
         }
 
         return expenses;
@@ -122,8 +123,8 @@ class CreateNewDataForEvaluationGraphs {
 
     addValuesToInvestments(income, expenses, investments, length){
         if (isObject(investments)) {
-            this.combineObjectArraySums(investments, "arrayPullValueByYear", "arrayCombinedPullValuesByYear", length);
-            this.combineInvestmentsAndAdlInvestments(income, investments);
+            //this.combineObjectArraySums(investments, "arrayPullValueByYear", "arrayCombinedPullValuesByYear", length);
+            //this.combineInvestmentsAndAdlInvestments(income, investments);
         }
 
         return investments;
@@ -213,11 +214,13 @@ class CreateNewDataForEvaluationGraphs {
     addCombinedExpensesMinusInvestmentData(newData, expenses, taxesOnIncomeOnly){
         newData.combinedExpensesMinusInvestmentData = createArrayOfZeros(this.length);
 
-        cc(expenses)
-        cc(taxesOnIncomeOnly)
+        /*cc(expenses)
+        cc(taxesOnIncomeOnly)*/
         for (let i = 0; i < this.length; i++){
-            //newData.combinedExpensesMinusInvestmentData[i] = expenses.combinedSumByYear[i] + taxesOnIncomeOnly.
+            newData.combinedExpensesMinusInvestmentData[i] = expenses.combinedSumByYear[i] + taxesOnIncomeOnly.totalTaxes[i]
         }
+
+//        cc(expenses);
 
         return newData;
     }
@@ -360,20 +363,17 @@ class CreateNewDataForEvaluationGraphs {
 
     combineObjectArraySums(arrs, oldKey, newKey, length){
         arrs[newKey] = [];
+        arrs[newKey] = createArrayOfZeros(length);
 
         for (let j = 0; j < arrs[oldKey].length; j++){
             for (let i = 0; i < length; i++) {
-                if (isNumeric(arrs[newKey][i])){
-                    arrs[oldKey][j].data?.[i]
-                    ? arrs[newKey][i] = arrs[newKey][i] + arrs[oldKey][j].data[i]
-                    : arrs[newKey][i] = arrs[newKey][i] + arrs[oldKey][j][i];
-                } else {
-                    arrs[oldKey][j].data?.[i]
-                    ? arrs[newKey][i] = arrs[oldKey][j].data[i]
-                    : arrs[newKey][i] = arrs[oldKey][j][i];
-                }
+                    isNumeric(arrs[oldKey][j].data?.[i])
+                    ? arrs[newKey][i] = +arrs[newKey][i] + +arrs[oldKey][j].data[i]
+                    : arrs[newKey][i] = +arrs[newKey][i] + +arrs[oldKey][j][i];
             }
         }
+
+        cc(arrs[newKey])
 
         return arrs;
     }
@@ -398,8 +398,8 @@ class CreateNewDataForEvaluationGraphs {
         //cc(this.income)
         //cc(this.expenses)
         //cc(this.investments)
-        cc(this.taxesOnIncomeAndInvestmentIncreases)
-        cc(this.taxesOnIncomeOnly)
+        /*cc(this.taxesOnIncomeAndInvestmentIncreases)
+        cc(this.taxesOnIncomeOnly)*/
         //cc(this.newGraphData)
     }
 }

@@ -320,7 +320,6 @@ class CalculateTaxes {
             }
         }
 
-        //this.cc(sums)
         return sums;
     }
 
