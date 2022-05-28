@@ -33,39 +33,20 @@ class CreateNewDataForEvaluationGraphs {
         let x = [];
         let y = {};
 
-        if (!isEmptyArray(this.investments)
-            && !isEmptyArray(this.newGraphData?.combinedExpenses)
-            && Array.isArray(this.newGraphData?.combinedExpenses)
-            && JSON.stringify(this.newGraphData?.combinedExpenses) !== JSON.stringify(this.arrayOfZeros)){
-
-            if (this.newGraphData?.yearlyLiquidAssetsIn){
-                y = this.addGraphNecessities(this.newGraphData.yearlyLiquidAssetsIn, "Income by Year", "#ff0000");
-                [x, y] = this.addThisEntryToArray(x, y);
-            }
-
-            y = this.addGraphNecessities(this.newGraphData.combinedExpenses, "Expenses by Year", "#ff0000");
+        if (this.newGraphData?.yearlyLiquidAfterExpenses){
+            y = this.addGraphNecessities(this.newGraphData.yearlyLiquidAfterExpenses, "Same Year Expendable", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
+        }
 
-            if (this.newGraphData?.yearlyLiquidAfterExpenses){
-                y = this.addGraphNecessities(this.newGraphData.yearlyLiquidAfterExpenses, "Same Year Expendable", "#ff0000");
-                [x, y] = this.addThisEntryToArray(x, y);
-            }
-
-        } /*else if (!isEmptyArray(this.newGraphData?.combinedExpensesMinusInvestmentData)
-                    && Array.isArray(this.newGraphData?.combinedExpensesMinusInvestmentData)
-                    && JSON.stringify(this.newGraphData?.combinedExpensesMinusInvestmentData) !== JSON.stringify(this.arrayOfZeros)){
-            y = this.addGraphNecessities(this.newGraphData.combinedExpensesMinusInvestmentData, "Expenses by Year", "#ff0000");
+        if (this.newGraphData?.yearlyLiquidAssetsIn){
+            y = this.addGraphNecessities(this.newGraphData.yearlyLiquidAssetsIn, "Income by Year", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
-        } //TODO Unfinished*/
+        }
 
-
-
-        //cc(this.income)
-        //cc(this.newGraphData)
-        //cc(this.expenses)
-       //cc(this.taxesOnIncomeOnly)
-       //cc(this.taxesOnIncomeAndInvestmentIncreases)
-
+        if (this.newGraphData?.combinedExpenses){
+            y = this.addGraphNecessities(this.newGraphData?.combinedExpenses, "Expenses by Year", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
         return x;
     }
 
@@ -180,7 +161,7 @@ class CreateNewDataForEvaluationGraphs {
         }
 
 
-        if (isObject(expenses) || this.taxesOnIncomeOnly){
+        if (isObject(expenses) && isObject(this.taxesOnIncomeOnly)){
             newData = this.addCombinedExpensesMinusInvestmentData(newData, expenses, taxesOnIncomeOnly);
             //TODO
         }
@@ -193,7 +174,7 @@ class CreateNewDataForEvaluationGraphs {
             newData = this.addcombinedRunningAssetsLiquidAndIlliquid(newData);
         }
 
-        if (newData.combinedExpenses && newData.yearlyLiquidAssetsIn){
+        if (newData.combinedExpensesMinusInvestmentData){
            newData = this.addYearlyLiquidAfterExpensesMinusInvestmentData(newData, taxesOnIncomeOnly, income);
         }
 
