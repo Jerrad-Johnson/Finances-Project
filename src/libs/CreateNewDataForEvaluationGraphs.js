@@ -29,7 +29,7 @@ class CreateNewDataForEvaluationGraphs {
         this.arrayOfZeros = createArrayOfZeros(this.length);
     }
 
-   makeNewExpendableMinusInvestments(){
+   makeSameYearExpendable(){
         let x = [];
         let y = {};
 
@@ -38,17 +38,25 @@ class CreateNewDataForEvaluationGraphs {
             && Array.isArray(this.newGraphData?.combinedExpenses)
             && JSON.stringify(this.newGraphData?.combinedExpenses) !== JSON.stringify(this.arrayOfZeros)){
 
+            if (this.newGraphData?.yearlyLiquidAssetsIn){
+                y = this.addGraphNecessities(this.newGraphData.yearlyLiquidAssetsIn, "Income by Year", "#ff0000");
+                [x, y] = this.addThisEntryToArray(x, y);
+            }
+
             y = this.addGraphNecessities(this.newGraphData.combinedExpenses, "Expenses by Year", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
 
-            //if()
+            if (this.newGraphData?.yearlyLiquidAfterExpenses){
+                y = this.addGraphNecessities(this.newGraphData.yearlyLiquidAfterExpenses, "Same Year Expendable", "#ff0000");
+                [x, y] = this.addThisEntryToArray(x, y);
+            }
 
-        } else if (!isEmptyArray(this.newGraphData?.combinedExpensesMinusInvestmentData)
+        } /*else if (!isEmptyArray(this.newGraphData?.combinedExpensesMinusInvestmentData)
                     && Array.isArray(this.newGraphData?.combinedExpensesMinusInvestmentData)
                     && JSON.stringify(this.newGraphData?.combinedExpensesMinusInvestmentData) !== JSON.stringify(this.arrayOfZeros)){
-            y = this.addGraphNecessities(this.newGraphData.combinedExpenses, "Expenses by Year", "#ff0000");
+            y = this.addGraphNecessities(this.newGraphData.combinedExpensesMinusInvestmentData, "Expenses by Year", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
-        }
+        } //TODO Unfinished*/
 
 
 
@@ -156,11 +164,11 @@ class CreateNewDataForEvaluationGraphs {
         let newData = {};
 
         if (isObject(income) && isObject(investments)){
-            newData = this.addyearlyLiquidAssetsIn(newData, income, investments);
+            newData = this.addYearlyLiquidAssetsIn(newData, income, investments);
         } else if (isObject(income)){
-            newData = this.addyearlyLiquidAssetsIn(newData, income, []);
+            newData = this.addYearlyLiquidAssetsIn(newData, income, []);
         } else if (isObject(investments)){
-            newData = this.addyearlyLiquidAssetsIn(newData, [], investments);
+            newData = this.addYearlyLiquidAssetsIn(newData, [], investments);
         }
 
         if (isObject(investments)){
@@ -189,13 +197,17 @@ class CreateNewDataForEvaluationGraphs {
            newData = this.addYearlyLiquidAfterExpensesMinusInvestmentData(newData, taxesOnIncomeOnly, income);
         }
 
+        if (newData.yearlyLiquidAssetsIn && newData.combinedExpenses){
+            newData = this.addYearlyLiquid(newData);
+        }
+
         //this.logData()
 
         return newData;
         //newData.expensesWithTaxes = this.addValuesInTwoArrays(income.sumByYear, expenses.sumByYear);
     }
 
-    addyearlyLiquidAssetsIn(newData, income, investments){
+    addYearlyLiquidAssetsIn(newData, income, investments){
         newData.yearlyLiquidAssetsIn = createArrayOfZeros(this.length);
 
         for (let i = 0; i < this.length; i++){
@@ -286,6 +298,18 @@ class CreateNewDataForEvaluationGraphs {
         for (let i = 0; i < this.length; i++) {
             newData.yearlyLiquidAfterExpensesMinusInvestmentData[i]
                 = income.sumByYear[i] - newData.combinedExpensesMinusInvestmentData[i];
+        }
+
+        return newData;
+    }
+
+    addYearlyLiquid(newData){
+        newData.yearlyLiquidAfterExpenses = createArrayOfZeros(this.length);
+
+        for (let i = 0; i < this.length; i++) {
+            newData.yearlyLiquidAfterExpenses[i]
+            = newData.yearlyLiquidAssetsIn[i]
+            - newData.combinedExpenses[i];
         }
 
         return newData;
