@@ -211,10 +211,7 @@ class CreateNewDataForEvaluationGraphs {
             newData = this.addCombinedExpensesFromInvestmentsTaxesAndGeneral(newData, investments, expenses, taxesOnIncomeOnly, taxesOnIncomeAndInvestmentIncreases, income);
         }
 
-        //this.logData()
-
         return newData;
-        //newData.expensesWithTaxes = this.addValuesInTwoArrays(income.sumByYear, expenses.sumByYear);
     }
 
     addYearlyLiquidAssetsIn(newData, income, investments){
