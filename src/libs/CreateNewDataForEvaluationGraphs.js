@@ -54,12 +54,31 @@ class CreateNewDataForEvaluationGraphs {
         let x = [];
         let y = {};
 
-
-        /*if (this.newGraphData?.yearlyLiquidAfterExpenses){
-            y = this.addGraphNecessities(this.newGraphData.yearlyLiquidAfterExpenses, "Same Year Expendable", "#ff0000");
+        if (isObject(this.expenses)
+            && this.expenses.combinedSumByYear){
+            y = this.addGraphNecessities(this.expenses.combinedSumByYear, "General Expenses", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
-        }*/
+        }
 
+        if (Array.isArray(this.taxesOnIncomeAndInvestmentIncreases?.totalTaxes)
+            && JSON.stringify(this.taxesOnIncomeAndInvestmentIncreases?.totalTaxes) !== JSON.stringify(this.arrayOfZeros)
+            && isObject(this.investments)){
+            y = this.addGraphNecessities(this.taxesOnIncomeAndInvestmentIncreases.totalTaxes, "Taxes", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        } else if (Array.isArray(this.taxesOnIncomeOnly?.totalTaxes)
+            && isObject(this.income)
+            && JSON.stringify(this.taxesOnIncomeAndInvestmentIncreases?.totalTaxes) !== JSON.stringify(this.arrayOfZeros)){
+            y = this.addGraphNecessities(this.taxesOnIncomeOnly.totalTaxes, "Taxes", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        if (this.newGraphData?.initialAndAdditionalInvestments
+            && JSON.stringify(this.newGraphData?.initialAndAdditionalInvestments) !== JSON.stringify(this.arrayOfZeros)){
+            y = this.addGraphNecessities(this.newGraphData.initialAndAdditionalInvestments, "Investments", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        x.description = "Investment expenses includes initial investments and additional investments, but not re-investments.";
         return x;
     }
 
@@ -80,9 +99,8 @@ class CreateNewDataForEvaluationGraphs {
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
-        x.explanation = "Liquid Assets are after same-year expenses";
+        x.description = "Liquid Assets are after same-year expenses";
 
-        cc(this.newGraphData)
         return x;
     }
 
@@ -109,24 +127,9 @@ class CreateNewDataForEvaluationGraphs {
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
-        x.explanation = "blah";
+        x.description = "blah";
         return x;
     }
-
-
-
-/*    makeNewExpendableCash(){
-        let x = [];
-        let y = {};
-
-        if (!isEmptyArray(this.income) || !isEmptyArray(this.investments)){
-            y = this.addGraphNecessities(this.newGraphData.runningLiquidAssetsAfterExpenses, "Liquid Assets", "#ff0000");
-            [x, y] = this.addThisEntryToArray(x, y);
-        }
-
-        x.explanation = "blah";
-        return x;
-    }*/
 
     addValuesToIncome(income, expenses, investments, length){
         if (isObject(income)) {

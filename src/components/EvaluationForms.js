@@ -44,6 +44,7 @@ export function GraphOptions(){
             <option>Running Liquid Assets Sums vs. Yearly Expenses</option>
             <option>Total Assets</option>
             <option>Same Year Expendable</option>
+            <option>Expenses by Group</option>
         </>
     );
 }

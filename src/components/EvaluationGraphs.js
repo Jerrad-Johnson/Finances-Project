@@ -29,6 +29,8 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
             employmentState, filingStatusState, stTaxState).makeTotalAssetsLiquidAndIlliquid(); },
         "Same Year Expendable": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeSameYearExpendable(); },
+        "Expenses by Group": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+            employmentState, filingStatusState, stTaxState).makeExpenses(); },
 
     };
 
