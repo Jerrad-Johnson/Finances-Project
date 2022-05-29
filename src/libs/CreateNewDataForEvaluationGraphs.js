@@ -50,6 +50,19 @@ class CreateNewDataForEvaluationGraphs {
         return x;
     }
 
+    makeExpenses(){
+        let x = [];
+        let y = {};
+
+
+        /*if (this.newGraphData?.yearlyLiquidAfterExpenses){
+            y = this.addGraphNecessities(this.newGraphData.yearlyLiquidAfterExpenses, "Same Year Expendable", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }*/
+
+        return x;
+    }
+
     makeRunningIncomeSumsAndYearlyExpenses() {
         let x = [];
         let y = {};
@@ -182,6 +195,10 @@ class CreateNewDataForEvaluationGraphs {
             newData = this.addYearlyLiquid(newData);
         }
 
+        if (isObject(investments)){
+            newData = this.addInitialAndAdditionalInvestments(newData, investments);
+        }
+
         //this.logData()
 
         return newData;
@@ -296,6 +313,16 @@ class CreateNewDataForEvaluationGraphs {
         return newData;
     }
 
+    addInitialAndAdditionalInvestments(newData, investments){
+        newData.initialAndAdditionalInvestments = createArrayOfZeros(this.length);
+        newData.initialAndAdditionalInvestments = combineSinglePropertySubArrays(investments.arrayAdditionalInvestment, this.length);
+
+        for (let i = 0; i < investments.amounts.length; i++) {
+            newData.initialAndAdditionalInvestments[investments.yearsBegin[i]] += investments.amounts[i];
+        }
+
+        return newData;
+    }
 
     addValuesInTwoArrays(a, b){
         let length = a.length;
