@@ -78,6 +78,11 @@ class CreateNewDataForEvaluationGraphs {
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
+        if (this.newGraphData?.combinedExpensesFromInvestmentsTaxesAndGeneral){
+            y = this.addGraphNecessities(this.newGraphData.combinedExpensesFromInvestmentsTaxesAndGeneral, "Total Expenses", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
         x.description = "Investment expenses includes initial investments and additional investments, but not re-investments.";
         return x;
     }
@@ -202,6 +207,10 @@ class CreateNewDataForEvaluationGraphs {
             newData = this.addInitialAndAdditionalInvestments(newData, investments);
         }
 
+        if (isObject(expenses || income || investments)){
+            newData = this.addCombinedExpensesFromInvestmentsTaxesAndGeneral(newData, investments, expenses, taxesOnIncomeOnly, taxesOnIncomeAndInvestmentIncreases, income);
+        }
+
         //this.logData()
 
         return newData;
@@ -322,6 +331,25 @@ class CreateNewDataForEvaluationGraphs {
 
         for (let i = 0; i < investments.amounts.length; i++) {
             newData.initialAndAdditionalInvestments[investments.yearsBegin[i]] += investments.amounts[i];
+        }
+
+        return newData;
+    }
+
+    addCombinedExpensesFromInvestmentsTaxesAndGeneral(newData, investments, expenses, taxesOnIncomeOnly, taxesOnIncomeAndInvestmentIncreases, income){
+        newData.combinedExpensesFromInvestmentsTaxesAndGeneral = createArrayOfZeros(this.length);
+        let taxes = createArrayOfZeros(this.length);
+
+        if (isObject(investments) || isObject(income)){
+            isObject(investments) ? taxes = taxesOnIncomeAndInvestmentIncreases.totalTaxes : taxes = taxesOnIncomeOnly.totalTaxes;
+        }
+
+        for (let i = 0; i < this.length; i++) {
+            newData.combinedExpensesFromInvestmentsTaxesAndGeneral[i]
+            = (expenses?.combinedSumByYear[i] || 0)
+            + (newData?.initialAndAdditionalInvestments[i] || 0)
+            + (taxes[i] || 0)
+
         }
 
         return newData;
