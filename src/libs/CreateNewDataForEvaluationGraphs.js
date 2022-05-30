@@ -39,14 +39,10 @@ class CreateNewDataForEvaluationGraphs {
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
-        if (Array.isArray(this.taxesOnIncomeAndInvestmentIncreases?.totalTaxes)
-            && JSON.stringify(this.taxesOnIncomeAndInvestmentIncreases?.totalTaxes) !== JSON.stringify(this.arrayOfZeros)
-            && isObject(this.investments)){
+        if (this.standardGraphDataCheck(this.taxesOnIncomeAndInvestmentIncreases?.totalTaxes)){
             y = this.addGraphNecessities(this.taxesOnIncomeAndInvestmentIncreases.totalTaxes, "Taxes", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
-        } else if (Array.isArray(this.taxesOnIncomeOnly?.totalTaxes)
-            && isObject(this.income)
-            && JSON.stringify(this.taxesOnIncomeAndInvestmentIncreases?.totalTaxes) !== JSON.stringify(this.arrayOfZeros)){
+        } else if (this.standardGraphDataCheck(this.taxesOnIncomeAndInvestmentIncreases?.totalTaxes)){
             y = this.addGraphNecessities(this.taxesOnIncomeOnly.totalTaxes, "Taxes", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
         }
