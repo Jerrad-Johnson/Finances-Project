@@ -72,7 +72,6 @@ function updateLinearJobDataState(jobData, jobDataState, setJobDataState) {
         }
     });
     let cc = console.log
-    cc(newJobData)
 
     let extantJobs = [...jobDataState];
 

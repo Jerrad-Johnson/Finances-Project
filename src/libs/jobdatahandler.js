@@ -1,9 +1,11 @@
+
 class JobDataHandler {
 
     constructor(jobsData){
         this.jobsData = jobsData;
         this.cc = console.log;
         this.graphMaxNumberOfYears = 15;
+        this.inflationRate = 1.038;
     }
 
     findLinear(){
@@ -22,15 +24,16 @@ class JobDataHandler {
         jobs = this.sumIncomeFromLinearJob(jobs);
         jobs = this.addArrayOfNumberedYears(jobs);
         jobs = this.sumIncomeFromLinearJobByYear(jobs);
+        jobs = this.adjustForInflation(jobs);
         return(jobs);
     }
 
     beginStepped(jobs){
         jobs = this.calculateSteppedIncomeIncreaseEachYear(jobs);
+        jobs = this.adjustForInflation(jobs);
         jobs = this.addArrayOfNumberedYears(jobs);
         jobs = this.createSteppedSumArrayWithGraphYearsNumberOfSteps(jobs);
         jobs = this.sumSteppedJobIncome(jobs);
-        //this.cc(jobs)
         return(jobs);
     }
 
@@ -213,6 +216,32 @@ class JobDataHandler {
         });
 
         return jobsToBeReturned;
+    }
+
+    adjustForInflation(jobs){
+        jobs[0].adjustForInflation = true;
+
+        if (jobs[0].adjustForInflation === true){
+            for (let i = 0; i < this.graphMaxNumberOfYears; i++){
+                jobs[0].salaryAmounts[i]
+                    = jobs[0].salaryAmounts[i]
+                    + (jobs[0].salaryAmounts[i] * this.getInflationPercentage([i]))
+            }
+        }
+
+
+        return jobs;
+    }
+
+    getInflationPercentage(iterations, percentage = 1){
+        percentage = (percentage * this.inflationRate);
+
+        if (iterations > 0){
+            iterations--
+            percentage = this.getInflationPercentage(iterations, percentage);
+        }
+
+        return percentage;
     }
 
 

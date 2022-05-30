@@ -29,6 +29,15 @@ class CreateNewDataForEvaluationGraphs {
         this.arrayOfZeros = createArrayOfZeros(this.length);
     }
 
+    makeAssetsVsInflation(){
+        let x = [];
+        let y = {};
+
+
+
+        return x;
+    }
+
     makeExpenses(){
         let x = [];
         let y = {};
@@ -76,8 +85,6 @@ class CreateNewDataForEvaluationGraphs {
         }
 
         x.description = "Liquid Assets are after same-year expenses";
-
-        cc(this.taxesOnIncomeAndInvestmentIncreases)
         return x;
     }
 
@@ -99,6 +106,7 @@ class CreateNewDataForEvaluationGraphs {
             y = this.addGraphNecessities(this.newGraphData?.combinedExpenses, "Expenses by Year", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
         }
+
         return x;
     }
 
@@ -235,6 +243,12 @@ class CreateNewDataForEvaluationGraphs {
             newData = this.addCombinedExpensesFromInvestmentsTaxesAndGeneral(newData, investments, expenses, taxesOnIncomeOnly, taxesOnIncomeAndInvestmentIncreases, income);
         }
 
+        if (Array.isArray(newData.combinedRunningAssetsLiquidAndIlliquid)){
+            newData = this.addAssetsAfterInflation(newData);
+        }
+
+        cc(newData)
+
         return newData;
     }
 
@@ -370,6 +384,16 @@ class CreateNewDataForEvaluationGraphs {
             = (expenses?.combinedSumByYear?.[i] || 0)
             + (newData?.initialAndAdditionalInvestments?.[i] || 0)
             + (taxes[i] || 0)
+        }
+
+        return newData;
+    }
+
+    addAssetsAfterInflation(newData){
+        newData.combinedRunningAssetsLiquidAndIlliquidAfterInflation = createArrayOfZeros(this.length);
+
+        for (let i = 0; i < this.length; i++) {
+
         }
 
         return newData;
