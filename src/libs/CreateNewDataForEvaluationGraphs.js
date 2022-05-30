@@ -85,6 +85,7 @@ class CreateNewDataForEvaluationGraphs {
 
         x.description = "Liquid Assets are after same-year expenses";
 
+        cc(this.taxesOnIncomeAndInvestmentIncreases)
         return x;
     }
 
@@ -106,6 +107,55 @@ class CreateNewDataForEvaluationGraphs {
             y = this.addGraphNecessities(this.newGraphData?.combinedExpenses, "Expenses by Year", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
         }
+        return x;
+    }
+
+    makeTaxesByCategory(){
+        let x = [];
+        let y = {};
+        let taxesCategory = "";
+        !isObject(this.investments) ? taxesCategory = "taxesOnIncomeOnly" : taxesCategory = "taxesOnIncomeAndInvestmentIncreases";
+
+        if (Array.isArray(this[taxesCategory]?.stateTaxSums)
+            && !isEmptyArray(this[taxesCategory]?.stateTaxSums)
+            && JSON.stringify(this[taxesCategory]?.stateTaxSums) !== JSON.stringify(this.arrayOfZeros)) {
+
+            y = this.addGraphNecessities(this[taxesCategory].stateTaxSums, "State Taxes", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        if (Array.isArray(this[taxesCategory]?.federalIncomeTax)
+            && !isEmptyArray(this[taxesCategory]?.federalIncomeTax)
+            && JSON.stringify(this[taxesCategory]?.federalIncomeTax) !== JSON.stringify(this.arrayOfZeros)) {
+
+            y = this.addGraphNecessities(this[taxesCategory].federalIncomeTax, "Federal Taxes", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        if (Array.isArray(this[taxesCategory]?.ficaTaxSums?.medicare)
+            && !isEmptyArray(this[taxesCategory]?.ficaTaxSums?.medicare)
+            && JSON.stringify(this[taxesCategory]?.ficaTaxSums?.medicare) !== JSON.stringify(this.arrayOfZeros)) {
+
+            y = this.addGraphNecessities(this[taxesCategory].ficaTaxSums.medicare, "Medicare Taxes", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        if (Array.isArray(this[taxesCategory]?.ficaTaxSums?.socSec)
+            && !isEmptyArray(this[taxesCategory]?.ficaTaxSums?.socSec)
+            && JSON.stringify(this[taxesCategory]?.ficaTaxSums?.socSec) !== JSON.stringify(this.arrayOfZeros)) {
+
+            y = this.addGraphNecessities(this[taxesCategory].ficaTaxSums.socSec, "SS Taxes", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        if (Array.isArray(this[taxesCategory]?.totalTaxes)
+            && !isEmptyArray(this[taxesCategory]?.totalTaxes)
+            && JSON.stringify(this[taxesCategory]?.totalTaxes) !== JSON.stringify(this.arrayOfZeros)) {
+
+            y = this.addGraphNecessities(this[taxesCategory].totalTaxes, "Total Taxes", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
         return x;
     }
 
