@@ -51,8 +51,7 @@ class CreateNewDataForEvaluationGraphs {
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
-        if (this.newGraphData?.initialAndAdditionalInvestments
-            && JSON.stringify(this.newGraphData?.initialAndAdditionalInvestments) !== JSON.stringify(this.arrayOfZeros)){
+        if (this.standardGraphDataCheck(this.newGraphData?.initialAndAdditionalInvestments)){
             y = this.addGraphNecessities(this.newGraphData.initialAndAdditionalInvestments, "Investments", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
         }
@@ -75,10 +74,7 @@ class CreateNewDataForEvaluationGraphs {
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
-        if (!isEmptyArray(this.newGraphData?.combinedExpenses)
-            && Array.isArray(this.newGraphData?.combinedExpenses)
-            && JSON.stringify(this.newGraphData?.combinedExpenses) !== JSON.stringify(this.arrayOfZeros)) {
-
+        if (this.standardGraphDataCheck(this.newGraphData?.combinedExpenses)) {
             y = this.addGraphNecessities(this.newGraphData.combinedExpenses, "Expenses by Year", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
         }
@@ -115,7 +111,7 @@ class CreateNewDataForEvaluationGraphs {
         let y = {};
         let taxesCategory = "";
         if (isObject(this.investments) || isObject(this.income)){
-            !isObject(this.investments) ? taxesCategory = "taxesOnIncomeOnly" : taxesCategory = "taxesOnIncomeAndInvestmentIncreases";
+            isObject(this.investments) ? taxesCategory = "taxesOnIncomeAndInvestmentIncreases" : taxesCategory = "taxesOnIncomeOnly";
         }
 
         if (this.standardGraphDataCheck(this[taxesCategory]?.stateTaxSums)){
@@ -157,14 +153,11 @@ class CreateNewDataForEvaluationGraphs {
 
         if (!isEmptyArray(this.investments)
             && JSON.stringify(this.newGraphData?.runningIlliquidAssets) !== JSON.stringify(this.arrayOfZeros)){
-
             y = this.addGraphNecessities(this.newGraphData.runningIlliquidAssets, "Illiquid Assets", "#00ff00");
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
-        if (Array.isArray(this.newGraphData?.combinedRunningAssetsLiquidAndIlliquid)
-            && JSON.stringify(this.newGraphData?.combinedRunningAssetsLiquidAndIlliquid) !== JSON.stringify(this.arrayOfZeros)){
-
+        if (this.standardGraphDataCheck(this.newGraphData?.combinedRunningAssetsLiquidAndIlliquid)){
             y = this.addGraphNecessities(this.newGraphData.combinedRunningAssetsLiquidAndIlliquid, "Total Assets", "#0000ff");
             [x, y] = this.addThisEntryToArray(x, y);
         }
