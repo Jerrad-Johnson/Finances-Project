@@ -40,16 +40,15 @@ export function SelectOptions({financialData}){
 export function GraphOptions(){
     return (
         <>
-            {/*<option>Yearly In Pocket</option>*/}
-            <option>Expenses by Group</option>
             <option>Running Liquid Assets Sums vs. Yearly Expenses</option>
-            <option>Same Year Expendable</option>
             <option>Total Assets</option>
+            <option>-----</option>
+            <option>Expenses by Group</option>
+            <option>Same Year Expendable</option>
             <option>Taxes by Category</option>
         </>
     );
 }
-
 
 export function PrintSum({title, financialData, typeOfFinancialData, valueKeyToFind = "sum"}){
     if (!financialData[0]) { return; }
@@ -142,8 +141,8 @@ function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionSta
                 <span className={"inputSetTitle"}>Graph Options</span>
                 <form>
                     <span className={"inputTitle"}>First Graph</span>
-                    <select className={"inputSelector firstGraph"} onChange={(event) => {
-                        setGraphOptionState(event.target.value);
+                    <select className={"inputSelector firstGraph"} defaultValue={"Running Liquid Assets Sums vs. Yearly Expenses"} onChange={(event) => {
+                        if (event.target.value !== "-----") setGraphOptionState(event.target.value);
                     }}>
                         <GraphOptions />
                     </select>
@@ -151,8 +150,8 @@ function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionSta
 
                 <form>
                     <span className={"inputTitle"}>Second Graph</span>
-                    <select className={"inputSelector secondGraph"} onChange={(event) => {
-                        setSecondGraphOptionState(event.target.value);
+                    <select className={"inputSelector secondGraph"} defaultValue={"Total Assets"} onChange={(event) => {
+                        if (event.target.value !== "-----") setSecondGraphOptionState(event.target.value);
                     }}>
                         <GraphOptions />
                     </select>
