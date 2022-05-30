@@ -21,23 +21,22 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
 
 
     const mapGraphOptionStateToObjectKey = {
-        "Yearly In Pocket": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
-            employmentState, filingStatusState, stTaxState).makeYearlyInPocket(); },
-        "Running Liquid Assets Sums vs. Yearly Expenses": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
-            employmentState, filingStatusState, stTaxState).makeRunningIncomeSumsAndYearlyExpenses(); },
-        "Total Assets": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
-            employmentState, filingStatusState, stTaxState).makeTotalAssetsLiquidAndIlliquid(); },
-        "Same Year Expendable": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
-            employmentState, filingStatusState, stTaxState).makeSameYearExpendable(); },
+        "Assets and Inflation": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+            employmentState, filingStatusState, stTaxState).makeAssetsVsInflation(); },
         "Expenses by Group": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeExpenses(); },
+        "Running Liquid Assets Sums vs. Yearly Expenses": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+            employmentState, filingStatusState, stTaxState).makeRunningIncomeSumsAndYearlyExpenses(); },
+        "Same Year Expendable": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+            employmentState, filingStatusState, stTaxState).makeSameYearExpendable(); },
         "Taxes by Category": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeTaxesByCategory(); },
+        "Total Assets": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+            employmentState, filingStatusState, stTaxState).makeTotalAssetsLiquidAndIlliquid(); },
     };
 
     let graphData = mapGraphOptionStateToObjectKey[graphOptionState]();
     let secondGraphData = mapGraphOptionStateToObjectKey[secondGraphOptionState]();
-
 
     if (isObject(graphData?.[0])){
         yearsArrayForGraph = getYearsNumbered();
