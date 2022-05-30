@@ -15,7 +15,8 @@ function Evaluate(){
     let [incomeOptionState, setIncomeOptionState] = useState(checkExistence(incomeData));
     let [expenseOptionState, setExpenseOptionState] = useState(checkExistence(expenseData));
     let [investmentOptionState, setInvestmentOptionState] = useState(checkExistence(investmentData));
-    let [graphOptionState, setGraphOptionState] = useState("Running Liquid Assets Sums vs. Yearly Expenses");
+    let [graphOptionState, setGraphOptionState] = useState("Expenses by Group");
+    let [secondGraphOptionState, setSecondGraphOptionState] = useState("Expenses by Group");
     let [employmentState, setEmploymentState] = useState("Employee");
     let [filingStatusState, setFilingStatusState] = useState("Single");
     let [stTaxState, setStTaxState] = useState("0");
@@ -33,6 +34,7 @@ function Evaluate(){
                         setExpenseOptionState = {setExpenseOptionState}
                         setInvestmentOptionState = {setInvestmentOptionState}
                         setGraphOptionState = {setGraphOptionState}
+                        setSecondGraphOptionState = {setSecondGraphOptionState}
                         setEmploymentState = {setEmploymentState}
                         setFilingStatusState = {setFilingStatusState}
                         setStTaxState = {setStTaxState}
@@ -47,6 +49,7 @@ function Evaluate(){
                         expenseOptionState = {expenseOptionState}
                         investmentOptionState = {investmentOptionState}
                         graphOptionState = {graphOptionState}
+                        secondGraphOptionState = {secondGraphOptionState}
                         incomeData = {incomeData}
                         expenseData = {expenseData}
                         investmentData = {investmentData}

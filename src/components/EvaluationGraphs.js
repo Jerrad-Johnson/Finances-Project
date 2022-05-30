@@ -10,7 +10,7 @@ let length = new jobdatahandler().graphMaxNumberOfYears;
 let yearsArrayForGraph = ["No data"];
 
 
-function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOptionState, graphOptionState, incomeData,
+function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOptionState, graphOptionState, secondGraphOptionState, incomeData,
                               expenseData, investmentData, employmentState, filingStatusState, stTaxState}){
     incomeData = findCurrentFinancialSheets(incomeData, incomeOptionState);
     expenseData = findCurrentFinancialSheets(expenseData, expenseOptionState);
@@ -35,6 +35,7 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     };
 
     let graphData = mapGraphOptionStateToObjectKey[graphOptionState]();
+    let secondGraphData = mapGraphOptionStateToObjectKey[secondGraphOptionState]();
 
 
     if (isObject(graphData?.[0])){
@@ -68,7 +69,7 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
 
             <div className={"graphCard"}>
                 <Chart
-                    series = {graphData}
+                    series = {secondGraphData}
                     type = "bar"
                     height = "300"
                     options = {{

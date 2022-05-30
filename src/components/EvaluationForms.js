@@ -41,10 +41,10 @@ export function GraphOptions(){
     return (
         <>
             {/*<option>Yearly In Pocket</option>*/}
-            <option>Running Liquid Assets Sums vs. Yearly Expenses</option>
-            <option>Total Assets</option>
-            <option>Same Year Expendable</option>
             <option>Expenses by Group</option>
+            <option>Running Liquid Assets Sums vs. Yearly Expenses</option>
+            <option>Same Year Expendable</option>
+            <option>Total Assets</option>
         </>
     );
 }
@@ -67,7 +67,7 @@ export function PrintSum({title, financialData, typeOfFinancialData, valueKeyToF
 }
 
 function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionState, incomeData, expenseOptionState,
-                             setExpenseOptionState, setInvestmentOptionState, setGraphOptionState, setEmploymentState,
+                             setExpenseOptionState, setInvestmentOptionState, setGraphOptionState, setSecondGraphOptionState, setEmploymentState,
                              setFilingStatusState, setStTaxState, expenseData, investmentData}){
 
     return (
@@ -141,7 +141,7 @@ function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionSta
                 <span className={"inputSetTitle"}>Graph Options</span>
                 <form>
                     <span className={"inputTitle"}>First Graph</span>
-                    <select className={"inputSelector"} onChange={(event) => {
+                    <select className={"inputSelector firstGraph"} onChange={(event) => {
                         setGraphOptionState(event.target.value);
                     }}>
                         <GraphOptions />
@@ -150,7 +150,9 @@ function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionSta
 
                 <form>
                     <span className={"inputTitle"}>Second Graph</span>
-                    <select className={"inputSelector"}>
+                    <select className={"inputSelector secondGraph"} onChange={(event) => {
+                        setSecondGraphOptionState(event.target.value);
+                    }}>
                         <GraphOptions />
                     </select>
                 </form>
