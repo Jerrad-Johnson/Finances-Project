@@ -6,15 +6,15 @@ import {
     isObject,
     isEmptyObject,
     isEmptyArray,
-    createArrayOfZeros
+    createArrayOfZeros,
+    applyRoundingSingleDepthArray,
 } from "../components/jobssharedfunctions";
-import expenses from "../Expenses";
 import CalculateTaxes from "./Taxes";
-import investments from "../Investments";
 
 class CreateNewDataForEvaluationGraphs {
     constructor(income, expenses, investments, employmentState = [],
                 filingStatusState = [], stTaxState = [], taxYearState = 22) {
+        this.inflationRate = 1.038;
         this.length = new jobdatahandler().graphMaxNumberOfYears;
         this.cc = console.dir;
         this.income = this.addValuesToIncome(income, expenses, investments, this.length);
@@ -33,7 +33,20 @@ class CreateNewDataForEvaluationGraphs {
         let x = [];
         let y = {};
 
+        if (this.standardGraphDataCheck(this.newGraphData?.combinedRunningAssetsLiquidAndIlliquidDifferenceAfterInflation)) {
+            y = this.addGraphNecessities(this.newGraphData.combinedRunningAssetsLiquidAndIlliquidDifferenceAfterInflation, "Difference", "#00ff00");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
 
+        if (this.standardGraphDataCheck(this.newGraphData?.combinedRunningAssetsLiquidAndIlliquid)) {
+            y = this.addGraphNecessities(this.newGraphData.combinedRunningAssetsLiquidAndIlliquid, "Total Assets", "#00ff00");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        if (this.standardGraphDataCheck(this.newGraphData?.combinedRunningAssetsLiquidAndIlliquidAfterInflation)) {
+            y = this.addGraphNecessities(this.newGraphData.combinedRunningAssetsLiquidAndIlliquidAfterInflation, "Total Assets After Inflation", "#00ff00");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
 
         return x;
     }
@@ -70,7 +83,7 @@ class CreateNewDataForEvaluationGraphs {
         return x;
     }
 
-    makeRunningIncomeSumsAndYearlyExpenses() {
+    makeRunningIncomeSumsAndYearlyExpenses(){
         let x = [];
         let y = {};
 
@@ -247,7 +260,11 @@ class CreateNewDataForEvaluationGraphs {
             newData = this.addAssetsAfterInflation(newData);
         }
 
-        cc(newData)
+        if (Array.isArray(newData.combinedRunningAssetsLiquidAndIlliquid)
+            && Array.isArray(newData.combinedRunningAssetsLiquidAndIlliquidAfterInflation)) {
+            newData = this.addDifferenceAfterInflation(newData);
+        }
+
 
         return newData;
     }
@@ -391,9 +408,23 @@ class CreateNewDataForEvaluationGraphs {
 
     addAssetsAfterInflation(newData){
         newData.combinedRunningAssetsLiquidAndIlliquidAfterInflation = createArrayOfZeros(this.length);
+        newData.combinedRunningAssetsLiquidAndIlliquidAfterInflation[0] = newData.combinedRunningAssetsLiquidAndIlliquid[0];
 
-        for (let i = 0; i < this.length; i++) {
+        for (let i = 1; i < this.length; i++) {
+            newData.combinedRunningAssetsLiquidAndIlliquidAfterInflation[i]
+            = (newData.combinedRunningAssetsLiquidAndIlliquid[i] / this.getPercentageAfterInflation([i]));
+        }
 
+        newData.combinedRunningAssetsLiquidAndIlliquidAfterInflation = applyRoundingSingleDepthArray(newData.combinedRunningAssetsLiquidAndIlliquidAfterInflation);
+        return newData;
+    }
+
+    addDifferenceAfterInflation(newData){
+        newData.combinedRunningAssetsLiquidAndIlliquidDifferenceAfterInflation = createArrayOfZeros(this.length);
+
+        for (let i = 1; i < this.length; i++) {
+            newData.combinedRunningAssetsLiquidAndIlliquidDifferenceAfterInflation[i]
+                = newData.combinedRunningAssetsLiquidAndIlliquid[i] - newData.combinedRunningAssetsLiquidAndIlliquidAfterInflation[i];
         }
 
         return newData;
@@ -528,28 +559,12 @@ class CreateNewDataForEvaluationGraphs {
             && JSON.stringify(arr) !== JSON.stringify(this.arrayOfZeros));
     }
 
-    adjustForInflation(jobs){
-
-        if (jobs[0].adjustForInflation === true && jobs[0].salaryAmounts){
-            for (let i = jobs[0].salaryYears[0]; i < this.graphMaxNumberOfYears; i++) {
-                jobs[0].salaryAmounts[i] = Math.round((jobs[0].salaryAmounts[i] * this.getInflationPercentage([i])));
-            }
-        } else if (jobs[0].adjustForInflation === true && jobs[0].incomeInGraphYearsNumberOfSteps){
-            for (let i = jobs[0].yearIncomeBegins; i < this.graphMaxNumberOfYears; i++) {
-                jobs[0].incomeInGraphYearsNumberOfSteps[i]
-                    = Math.round((jobs[0].incomeInGraphYearsNumberOfSteps[i] * this.getInflationPercentage([i])));
-            }
-        }
-
-        return jobs;
-    }
-
-    getInflationPercentage(iterations, percentage = 1){
+    getPercentageAfterInflation(iterations, percentage = 1){
         percentage = (percentage * this.inflationRate);
 
-        if (iterations > 0){
+        if (iterations > 1){
             iterations--
-            percentage = this.getInflationPercentage(iterations, percentage);
+            percentage = this.getPercentageAfterInflation(iterations, percentage);
         }
 
         return percentage;

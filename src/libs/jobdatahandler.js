@@ -5,7 +5,6 @@ class JobDataHandler {
         this.jobsData = jobsData;
         this.cc = console.log;
         this.graphMaxNumberOfYears = 15;
-        this.inflationRate = 1.038;
     }
 
     findLinear(){

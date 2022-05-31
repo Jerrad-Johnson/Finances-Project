@@ -21,7 +21,7 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
 
 
     const mapGraphOptionStateToObjectKey = {
-        "Assets and Inflation": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+        "Assets vs. Inflation": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeAssetsVsInflation(); },
         "Expenses by Group": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeExpenses(); },
