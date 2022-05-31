@@ -33,18 +33,21 @@ class CreateNewDataForEvaluationGraphs {
         let x = [];
         let y = {};
 
-        if (this.standardGraphDataCheck(this.newGraphData?.combinedRunningAssetsLiquidAndIlliquidDifferenceAfterInflation)) {
-            y = this.addGraphNecessities(this.newGraphData.combinedRunningAssetsLiquidAndIlliquidDifferenceAfterInflation, "Difference", "#00ff00");
+        if (this.standardGraphDataCheck(this.newGraphData?.combinedRunningAssetsDifferenceAfterInflation)) {
+            y = this.addGraphNecessities(this.newGraphData.combinedRunningAssetsDifferenceAfterInflation, "Difference", "#00ff00");
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
         if (this.standardGraphDataCheck(this.newGraphData?.combinedRunningAssetsLiquidAndIlliquid)) {
             y = this.addGraphNecessities(this.newGraphData.combinedRunningAssetsLiquidAndIlliquid, "Total Assets", "#00ff00");
             [x, y] = this.addThisEntryToArray(x, y);
+        } else if (this.standardGraphDataCheck(this.newGraphData?.runningLiquidAssetsAfterExpenses)) {
+            y = this.addGraphNecessities(this.newGraphData.runningLiquidAssetsAfterExpenses, "Total Assets", "#00ff00");
+            [x, y] = this.addThisEntryToArray(x, y);
         }
-
-        if (this.standardGraphDataCheck(this.newGraphData?.combinedRunningAssetsLiquidAndIlliquidAfterInflation)) {
-            y = this.addGraphNecessities(this.newGraphData.combinedRunningAssetsLiquidAndIlliquidAfterInflation, "Total Assets After Inflation", "#00ff00");
+cc(this.newGraphData)
+        if (this.standardGraphDataCheck(this.newGraphData?.combinedRunningAssetsAfterInflation)) {
+            y = this.addGraphNecessities(this.newGraphData.combinedRunningAssetsAfterInflation, "Total Assets After Inflation", "#00ff00");
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
@@ -258,10 +261,13 @@ class CreateNewDataForEvaluationGraphs {
 
         if (Array.isArray(newData.combinedRunningAssetsLiquidAndIlliquid)){
             newData = this.addAssetsAfterInflation(newData);
+        } else if (Array.isArray(newData.runningLiquidAssetsAfterExpenses)){
+            newData = this.addAssetsAfterInflation(newData);
         }
 
         if (Array.isArray(newData.combinedRunningAssetsLiquidAndIlliquid)
-            && Array.isArray(newData.combinedRunningAssetsLiquidAndIlliquidAfterInflation)) {
+            || Array.isArray(newData.runningLiquidAssetsAfterExpenses)
+            && Array.isArray(newData.combinedRunningAssetsAfterInflation)) {
             newData = this.addDifferenceAfterInflation(newData);
         }
 
@@ -407,24 +413,35 @@ class CreateNewDataForEvaluationGraphs {
     }
 
     addAssetsAfterInflation(newData){
-        newData.combinedRunningAssetsLiquidAndIlliquidAfterInflation = createArrayOfZeros(this.length);
-        newData.combinedRunningAssetsLiquidAndIlliquidAfterInflation[0] = newData.combinedRunningAssetsLiquidAndIlliquid[0];
+        newData.combinedRunningAssetsAfterInflation = createArrayOfZeros(this.length);
 
-        for (let i = 1; i < this.length; i++) {
-            newData.combinedRunningAssetsLiquidAndIlliquidAfterInflation[i]
-            = (newData.combinedRunningAssetsLiquidAndIlliquid[i] / this.getPercentageAfterInflation([i]));
+        if (newData.combinedRunningAssetsLiquidAndIlliquid){
+            newData.combinedRunningAssetsAfterInflation[0] = newData.combinedRunningAssetsLiquidAndIlliquid[0];
+        } else if (newData.runningLiquidAssetsAfterExpenses){
+            newData.combinedRunningAssetsAfterInflation[0] = newData.runningLiquidAssetsAfterExpenses[0];
         }
 
-        newData.combinedRunningAssetsLiquidAndIlliquidAfterInflation = applyRoundingSingleDepthArray(newData.combinedRunningAssetsLiquidAndIlliquidAfterInflation);
+        for (let i = 1; i < this.length; i++) {
+            if (newData.combinedRunningAssetsLiquidAndIlliquid) {
+                newData.combinedRunningAssetsAfterInflation[i]
+                = (newData.combinedRunningAssetsLiquidAndIlliquid[i] / this.getPercentageAfterInflation([i]));
+            } else if (newData.runningLiquidAssetsAfterExpenses){
+                newData.combinedRunningAssetsAfterInflation[i]
+                = (newData.runningLiquidAssetsAfterExpenses[i] / this.getPercentageAfterInflation([i]));
+            }
+        }
+
+        newData.combinedRunningAssetsAfterInflation = applyRoundingSingleDepthArray(newData.combinedRunningAssetsAfterInflation);
         return newData;
     }
 
     addDifferenceAfterInflation(newData){
-        newData.combinedRunningAssetsLiquidAndIlliquidDifferenceAfterInflation = createArrayOfZeros(this.length);
+        newData.combinedRunningAssetsDifferenceAfterInflation = createArrayOfZeros(this.length);
 
         for (let i = 1; i < this.length; i++) {
-            newData.combinedRunningAssetsLiquidAndIlliquidDifferenceAfterInflation[i]
-                = newData.combinedRunningAssetsLiquidAndIlliquid[i] - newData.combinedRunningAssetsLiquidAndIlliquidAfterInflation[i];
+            newData.combinedRunningAssetsDifferenceAfterInflation[i]
+            = (newData.combinedRunningAssetsLiquidAndIlliquid?.[i] || newData.runningLiquidAssetsAfterExpenses?.[i])
+            - newData.combinedRunningAssetsAfterInflation[i];
         }
 
         return newData;
