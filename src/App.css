@@ -189,6 +189,18 @@ button {
     mb-0.5
 }
 
+.inputTitleCheckbox {
+    @apply
+    text-sm
+    inline-block
+    mb-0.5
+}
+
+.inputCheckbox {
+    @apply
+    ml-2
+}
+
 div.left {
 }
 
@@ -205,8 +217,9 @@ hr.jobIncomeSeparator{
     border-gray-300
     mt-4
     mb-4
-
 }
+
+
 
 /*
 div.generalData {
