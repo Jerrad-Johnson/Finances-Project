@@ -21,10 +21,10 @@ class JobDataHandler {
     beginLinear(jobs){
         jobs = this.calculateLinearIncomeIncreaseEachYear(jobs);
         jobs = this.createLinearIncomeArrayWithGraphYearsNumberOfSteps(jobs);
+        jobs = this.adjustForInflation(jobs);
         jobs = this.sumIncomeFromLinearJob(jobs);
         jobs = this.addArrayOfNumberedYears(jobs);
         jobs = this.sumIncomeFromLinearJobByYear(jobs);
-        jobs = this.adjustForInflation(jobs);
         return(jobs);
     }
 
@@ -219,16 +219,17 @@ class JobDataHandler {
     }
 
     adjustForInflation(jobs){
-        jobs[0].adjustForInflation = true;
 
-        if (jobs[0].adjustForInflation === true){
-            for (let i = 0; i < this.graphMaxNumberOfYears; i++){
-                jobs[0].salaryAmounts[i]
-                    = jobs[0].salaryAmounts[i]
-                    + (jobs[0].salaryAmounts[i] * this.getInflationPercentage([i]))
+        if (jobs[0].adjustForInflation === true && jobs[0].salaryAmounts){
+            for (let i = jobs[0].salaryYears[0]; i < this.graphMaxNumberOfYears; i++) {
+                jobs[0].salaryAmounts[i] = Math.round((jobs[0].salaryAmounts[i] * this.getInflationPercentage([i])));
+            }
+        } else if (jobs[0].adjustForInflation === true && jobs[0].incomeInGraphYearsNumberOfSteps){
+            for (let i = jobs[0].yearIncomeBegins; i < this.graphMaxNumberOfYears; i++) {
+                jobs[0].incomeInGraphYearsNumberOfSteps[i]
+                    = Math.round((jobs[0].incomeInGraphYearsNumberOfSteps[i] * this.getInflationPercentage([i])));
             }
         }
-
 
         return jobs;
     }
