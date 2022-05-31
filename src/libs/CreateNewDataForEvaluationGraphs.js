@@ -528,6 +528,33 @@ class CreateNewDataForEvaluationGraphs {
             && JSON.stringify(arr) !== JSON.stringify(this.arrayOfZeros));
     }
 
+    adjustForInflation(jobs){
+
+        if (jobs[0].adjustForInflation === true && jobs[0].salaryAmounts){
+            for (let i = jobs[0].salaryYears[0]; i < this.graphMaxNumberOfYears; i++) {
+                jobs[0].salaryAmounts[i] = Math.round((jobs[0].salaryAmounts[i] * this.getInflationPercentage([i])));
+            }
+        } else if (jobs[0].adjustForInflation === true && jobs[0].incomeInGraphYearsNumberOfSteps){
+            for (let i = jobs[0].yearIncomeBegins; i < this.graphMaxNumberOfYears; i++) {
+                jobs[0].incomeInGraphYearsNumberOfSteps[i]
+                    = Math.round((jobs[0].incomeInGraphYearsNumberOfSteps[i] * this.getInflationPercentage([i])));
+            }
+        }
+
+        return jobs;
+    }
+
+    getInflationPercentage(iterations, percentage = 1){
+        percentage = (percentage * this.inflationRate);
+
+        if (iterations > 0){
+            iterations--
+            percentage = this.getInflationPercentage(iterations, percentage);
+        }
+
+        return percentage;
+    }
+
     logData(){
         //cc(this.income)
         //cc(this.expenses)

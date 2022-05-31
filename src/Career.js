@@ -16,7 +16,6 @@ function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDat
 
     return (
         <div className={"inputSet"}>
-            <GenericJobOptions />
             <LinearIncomeForms
                 linearJobDataState = {linearJobDataState}
                 setLinearJobDataState = {setLinearJobDataState}
@@ -27,19 +26,6 @@ function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDat
             />
         </div>
     );
-}
-
-function GenericJobOptions(){
-
-    return (
-        <div className={"inputSelectorsCard"}>
-            <span className={"inputSetTitle"}>Options</span>
-            <form>
-                <span className={"inputTitleCheckbox"}>Adjust for Inflation</span>
-                <input type={"checkbox"} id={"adjustForInflation"} className={"inputCheckbox"}></input>
-            </form>
-        </div>
-    )
 }
 
 function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {

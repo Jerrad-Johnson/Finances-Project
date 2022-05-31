@@ -71,7 +71,6 @@ function setSteppedData(){
     let salaryYearsNodes = document.querySelectorAll('.yearThisSteppedIncomeBegins');
     jobDataToBeReturned.salaryAmounts = [];
     jobDataToBeReturned.salaryYears = [];
-    jobDataToBeReturned.adjustForInflation = document.querySelector('#adjustForInflation').checked;
 
     salaryAmountsNodes.forEach(e => {
         jobDataToBeReturned.salaryAmounts.push(+e.value);

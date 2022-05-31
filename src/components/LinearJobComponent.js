@@ -26,7 +26,6 @@ function setLinearJobData(){
     jobDataToBeReturned.title = document.querySelector('#linearJobTitle').value;
     jobDataToBeReturned.incomeCeiling = +document.querySelector('#incomeCeiling').value;
     jobDataToBeReturned.incomeImmediate = +document.querySelector('#incomeImmediate').value;
-    jobDataToBeReturned.adjustForInflation = document.querySelector('#adjustForInflation').checked;
 
     console.log(jobDataToBeReturned);
 
