@@ -50,9 +50,14 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
                 <Chart
                     series = {graphData}
                     type = "bar"
-                    height = "300"
+                    height = "400"
 
                     options = {{
+/*                        plotOptions: {
+                            bar: {
+                                horizontal: true,
+                            }
+                        },*/
                      /*colors: ["#ff0000", "#00FF00", "#0000FF"],*/
                         chart: {
                             stacked: false,
@@ -71,8 +76,13 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
                 <Chart
                     series = {secondGraphData}
                     type = "bar"
-                    height = "300"
+                    height = "400"
                     options = {{
+/*                        plotOptions: {
+                            bar: {
+                                horizontal: true,
+                            }
+                        },*/
                         /*colors: ["#fff000"],*/
                         chart: {
                             stacked: false,
