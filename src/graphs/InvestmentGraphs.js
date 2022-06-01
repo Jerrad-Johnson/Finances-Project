@@ -23,7 +23,7 @@ export function InvestmentRunningValueBarChart({investmentSheet}) {
     return (
         <div>
             <br />
-            Running Investment Value
+            <span className={"inputSetTitle graphTitle"}>Running Investment Value</span>
             <Chart
                 series = {dataConverted}
                 type = "bar"
