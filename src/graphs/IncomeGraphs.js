@@ -38,14 +38,17 @@ export function LinearBarChart({job}) {
                 type="bar"
                 height={chartHeight}
                 options = {{
-                    colors: [
+                    plotOptions: {
+                        bar: {
+                            horizontal: true,
+                        }
+                    },
+/*                    colors: [
                         '#00aa00', '#880000', '#880000',
-                    ],
+                    ],*/
                     xaxis: {
-                        categories: job.yearsNumbered
-                        ,
-
-                    }
+                        categories: job.yearsNumbered,
+                    },
                 }}
             />
         </div>
@@ -65,14 +68,17 @@ export function LinearSumBarChart({job}) {
                 type="bar"
                 height={chartHeight}
                 options = {{
-                    colors: [
+                    plotOptions: {
+                        bar: {
+                            horizontal: true,
+                        }
+                    },
+/*                    colors: [
                         '#00aa00', '#880000', '#880000',
-                    ],
+                    ],*/
                     xaxis: {
-                        categories: job.yearsNumbered
-                        ,
-
-                    }
+                        categories: job.yearsNumbered,
+                    },
                 }}
             />
         </div>
@@ -93,14 +99,17 @@ export function SteppedBarChart({job}) {
                 type="bar"
                 height={chartHeight}
                 options = {{
-                    colors: [
+                    plotOptions: {
+                        bar: {
+                            horizontal: true,
+                        }
+                    },
+/*                    colors: [
                         '#00aa00', '#880000', '#880000',
-                    ],
+                    ],*/
                     xaxis: {
-                        categories: job.yearsNumbered
-                        ,
-
-                    }
+                        categories: job.yearsNumbered,
+                    },
                 }}
             />
         </div>
@@ -120,14 +129,17 @@ export function SteppedSumBarChart({job}) {
                 type="bar"
                 height={chartHeight}
                 options = {{
-                    colors: [
+                    plotOptions: {
+                        bar: {
+                            horizontal: true,
+                        }
+                    },
+/*                    colors: [
                         '#00aa00', '#880000', '#880000',
-                    ],
+                    ],*/
                     xaxis: {
-                        categories: job.yearsNumbered
-                        ,
-
-                    }
+                        categories: job.yearsNumbered,
+                    },
                 }}
             />
         </div>

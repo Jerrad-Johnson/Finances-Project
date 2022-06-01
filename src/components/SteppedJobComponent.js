@@ -150,15 +150,17 @@ function SteppedGraph({steppedJobDataState, setSteppedJobDataState}){
     if (steppedJobDataState.length !== 0) {
         const steppedIncomeBarGraph = steppedJobDataState.map((job) => (
             <div className={"steppedJobBarGraph steppedJobKey" + job.key } key={job.key}>
-                Job title: {job.jobTitle} <br />
+                {/*Job title: {job.jobTitle} <br />*/}
+                <span className={"inputSetTitle graphTitle"}>Yearly Income</span>
                 <SteppedBarChart job={job}/>
+                <span className={"inputSetTitle graphTitle"}>Running Sum</span>
                 <SteppedSumBarChart job={job}/>
                 <button type={"click"} className={"deleteSteppedJobKey" + job.key}
                         onClick={(e) => {
                             e.preventDefault();
                             handleJobDelete(job.key, steppedJobDataState, setSteppedJobDataState);
                         }} >
-                    Delete Row {job.key}
+                    Delete Row{/* {job.key}*/}
                 </button>
             </div>
         ));

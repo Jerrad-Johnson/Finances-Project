@@ -219,6 +219,14 @@ hr.jobIncomeSeparator{
     mb-4
 }
 
+.graphTitle{
+    @apply
+    flex justify-center
+    mt-2
+
+
+}
+
 
 
 /*
