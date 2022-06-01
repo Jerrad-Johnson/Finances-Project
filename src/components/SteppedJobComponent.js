@@ -11,11 +11,11 @@ lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
 
 export function ListJobIncomeForms({steppedIncomeFormState}){
 
-    let printToDom = steppedIncomeFormState.map(entry => {
+    let printToDom = steppedIncomeFormState.map((entry, key) => {
         return(
             <CreateSteppedJobIncomeForm
                 id = {"yearThisSteppedIncomeBegins"}
-                key = {"steppedforms"}
+                key = {key}
             />
         )
     });

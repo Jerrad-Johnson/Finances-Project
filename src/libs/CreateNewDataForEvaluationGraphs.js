@@ -33,11 +33,6 @@ class CreateNewDataForEvaluationGraphs {
         let x = [];
         let y = {};
 
-        if (this.standardGraphDataCheck(this.newGraphData?.combinedRunningAssetsDifferenceAfterInflation)) {
-            y = this.addGraphNecessities(this.newGraphData.combinedRunningAssetsDifferenceAfterInflation, "Difference", "#00ff00");
-            [x, y] = this.addThisEntryToArray(x, y);
-        }
-
         if (this.standardGraphDataCheck(this.newGraphData?.combinedRunningAssetsLiquidAndIlliquid)) {
             y = this.addGraphNecessities(this.newGraphData.combinedRunningAssetsLiquidAndIlliquid, "Total Assets", "#00ff00");
             [x, y] = this.addThisEntryToArray(x, y);
@@ -45,9 +40,14 @@ class CreateNewDataForEvaluationGraphs {
             y = this.addGraphNecessities(this.newGraphData.runningLiquidAssetsAfterExpenses, "Total Assets", "#00ff00");
             [x, y] = this.addThisEntryToArray(x, y);
         }
-cc(this.newGraphData)
+
         if (this.standardGraphDataCheck(this.newGraphData?.combinedRunningAssetsAfterInflation)) {
             y = this.addGraphNecessities(this.newGraphData.combinedRunningAssetsAfterInflation, "Total Assets After Inflation", "#00ff00");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        if (this.standardGraphDataCheck(this.newGraphData?.combinedRunningAssetsDifferenceAfterInflation)) {
+            y = this.addGraphNecessities(this.newGraphData.combinedRunningAssetsDifferenceAfterInflation, "Difference", "#00ff00");
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
@@ -230,7 +230,6 @@ cc(this.newGraphData)
             newData = this.addCombinedExpenses(newData, expenses, taxesOnIncomeAndInvestmentIncreases, investments);
         }
 
-
         if (isObject(expenses) && isObject(this.taxesOnIncomeOnly)){
             newData = this.addCombinedExpensesMinusInvestmentData(newData, expenses, taxesOnIncomeOnly);
         }
@@ -265,12 +264,11 @@ cc(this.newGraphData)
             newData = this.addAssetsAfterInflation(newData);
         }
 
-        if (Array.isArray(newData.combinedRunningAssetsLiquidAndIlliquid)
-            || Array.isArray(newData.runningLiquidAssetsAfterExpenses)
+        if ((Array.isArray(newData.combinedRunningAssetsLiquidAndIlliquid)
+            || Array.isArray(newData.runningLiquidAssetsAfterExpenses))
             && Array.isArray(newData.combinedRunningAssetsAfterInflation)) {
             newData = this.addDifferenceAfterInflation(newData);
         }
-
 
         return newData;
     }

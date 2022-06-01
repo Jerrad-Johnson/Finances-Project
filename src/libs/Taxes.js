@@ -37,7 +37,7 @@ class CalculateTaxes {
                     socSec: {
                         percent: 6.2,
                         cutoff: 147000,
-                    }
+                    },
                 },
                 fica1099: {
                     medicare: {
@@ -47,7 +47,7 @@ class CalculateTaxes {
                     socSec: {
                         percent: 12.4,
                         cutoff: 147000,
-                    }
+                    },
                 },
             },
         }
