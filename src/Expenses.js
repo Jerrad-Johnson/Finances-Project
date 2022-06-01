@@ -69,7 +69,7 @@ function ExpenseGraphs({expensesState, setExpensesState}){
                <ExpenseRunningSumBarChart
                    expenseSheet = {expenseSheet}
                />
-               <span className={"inputSetTitle graphTitle"}>Total Expenses</span>
+               <span className={"inputSetTitle graphTitle"}>Total Expense % By Category</span>
                <ExpenseSumDonutChart
                    expenseSheet = {expenseSheet}
                /><br />
