@@ -13,10 +13,9 @@ export function ExpenseSumDonutChart({expenseSheet}) {
                 type="donut"
                 height={430}
                 options = {{
-
-                    colors: [
+/*                    colors: [
                         '#00aa00', '#880000', '#880000',
-                    ],
+                    ],*/
                     labels: expenseSheet.graphSumEachExpenseObjectForDonut[0].name,
                 }}
             />
@@ -24,19 +23,7 @@ export function ExpenseSumDonutChart({expenseSheet}) {
     );
 }
 
-
 export function ExpenseSumBarChart({expenseSheet}) {
-/*  delete expenseSheet.amount;
-    delete expenseSheet.beginYears;
-    delete expenseSheet.endYears;
-    delete expenseSheet.calculatedAmount;
-    delete expenseSheet.endYears;
-    delete expenseSheet.frequency;
-    delete expenseSheet.label;
-    delete expenseSheet.numberOfEntries;
-    delete expenseSheet.runningSumsByYear;
-    delete expenseSheet.finalSums; */
-
 
     return (
         <div>
@@ -45,14 +32,14 @@ export function ExpenseSumBarChart({expenseSheet}) {
                 type = "bar"
                 height = {chartHeight}
                 options = {{
-                    /*plotOptions: {
+                    plotOptions: {
                         bar: {
                             horizontal: true,
                         }
-                    },*/
-                    colors: [
+                    },
+/*                    colors: [
                         '#00aa00', '#880000', '#880000',
-                    ],
+                    ],*/
                     chart: {
                         stacked: true,
                     },
@@ -65,19 +52,7 @@ export function ExpenseSumBarChart({expenseSheet}) {
     );
 }
 
-
 export function ExpenseRunningSumBarChart({expenseSheet}) {
-
-/*  delete expenseSheet.amount;
-    delete expenseSheet.beginYears;
-    delete expenseSheet.endYears;
-    delete expenseSheet.calculatedAmount;
-    delete expenseSheet.endYears;
-    delete expenseSheet.frequency;
-    delete expenseSheet.label;
-    delete expenseSheet.numberOfEntries;
-    delete expenseSheet.runningSumsByYear;
-    delete expenseSheet.finalSums; */
 
     return (
         <div>
@@ -86,14 +61,14 @@ export function ExpenseRunningSumBarChart({expenseSheet}) {
                 type="bar"
                 height={chartHeight}
                 options = {{
-                    /*                    plotOptions: {
-                                            bar: {
-                                                horizontal: true,
-                                            }
-                                        },*/
-                    colors: [
+                    plotOptions: {
+                        bar: {
+                            horizontal: true,
+                        }
+                    },
+/*                    colors: [
                         '#00aa00', '#880000', '#880000',
-                    ],
+                    ],*/
                     chart: {
                         stacked: true,
                     },

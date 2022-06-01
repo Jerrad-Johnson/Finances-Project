@@ -29,14 +29,14 @@ export function InvestmentRunningValueBarChart({investmentSheet}) {
                 type = "bar"
                 height = {chartHeight}
                 options = {{
-                /*plotOptions: {
-                    bar: {
-                        horizontal: true,
-                    }
-                },*/
-                    colors: [
+                    plotOptions: {
+                        bar: {
+                            horizontal: true,
+                        }
+                    },
+                    /*colors: [
                         '#00aa00', '#880000', '#880000',
-                    ],
+                    ],*/
                     chart: {
                         stacked: true,
                     },
