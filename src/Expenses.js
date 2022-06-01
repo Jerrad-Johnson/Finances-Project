@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import {ExpenseRunningSumBarChart, ExpenseSumBarChart, ExpenseSumDonutChart} from "./graphs/ExpenseGraphs";
 import {SubmitButton, DeleteSheetButton} from "./components/ExpensesGraphs";
 import {DeleteFieldButton, ExpenseForms, AddFieldButton, ResetFieldsButton} from "./components/ExpensesForms";
@@ -61,12 +61,15 @@ function ExpenseGraphs({expensesState, setExpensesState}){
     let printToDom = expensesState.map((expenseSheet, index) => {
        return (
            <div key={index} className={"graphCard"}>
+               <span className={"inputSetTitle graphTitle"}>Yearly Expenses</span>
                <ExpenseSumBarChart
                    expenseSheet = {expenseSheet}
                />
+               <span className={"inputSetTitle graphTitle"}>Running Expenses</span>
                <ExpenseRunningSumBarChart
                    expenseSheet = {expenseSheet}
                />
+               <span className={"inputSetTitle graphTitle"}>Total Expenses</span>
                <ExpenseSumDonutChart
                    expenseSheet = {expenseSheet}
                /><br />
