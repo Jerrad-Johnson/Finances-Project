@@ -129,7 +129,7 @@ export function DeleteSheetButton({expenseSheet, expensesState, setExpensesState
         <button className={"deleteSheet"} onClick={((e) => {
             e.preventDefault();
             deleteSelectedSheet(expenseSheet.key, expensesState, setExpensesState);
-        })}>Delete Sheet {expenseSheet.key}</button>
+        })}>Delete Sheet</button>
     );
 }
 
