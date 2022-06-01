@@ -53,7 +53,7 @@ export function DeleteInvestmentFieldButton({formLengthState, setFormLengthState
         <button className={"removeInvestmentField"} onClick={(e) => {
             e.preventDefault();
             deleteInvestmentField(formLengthState, setFormLengthState, index);
-        }}>Delete Field {index}</button>
+        }}>Delete Field</button>
     );
 }
 
