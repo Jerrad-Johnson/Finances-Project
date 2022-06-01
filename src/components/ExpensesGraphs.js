@@ -1,21 +1,24 @@
 import ExpenseDataHandler from "../libs/expensedatahandler";
 import {isNumeric} from "./jobssharedfunctions";
+import {useLocalStorage} from "../hooks/useLocalStorage";
 
-let sheetObjectKey = 0;
+
 let cc = console.log;
 
 export function SubmitButton({expensesState, setExpensesState}){
+    const [sheetObjectKeyState, setSheetObjectKeyState] = useLocalStorage("expenseSheetKey", localStorage.getItem("expenseSheetKey") || 0)
+
     return (
         <button className={"submit"} onClick={(e) => {
             e.preventDefault();
 
-            handleExpensesSubmission(expensesState, setExpensesState);
-            sheetObjectKey++;
+            handleExpensesSubmission(expensesState, setExpensesState, sheetObjectKeyState);
+            setSheetObjectKeyState(sheetObjectKeyState + 1);
         }}>Submit</button>
     );
 }
 
-export function handleExpensesSubmission(expensesState, setExpensesState){
+export function handleExpensesSubmission(expensesState, setExpensesState, sheetObjectKeyState){
 
     try {
         let expenseData = getExpenseDataFromFields();
@@ -28,7 +31,7 @@ export function handleExpensesSubmission(expensesState, setExpensesState){
             expenseData = runCalculationsOnExpenseData(expenseData);
         }
 
-        expenseData = addKeyToSheet(expenseData);
+        expenseData = addKeyToSheet(expenseData, sheetObjectKeyState);
         updateExpensesState(expenseData, expensesState, setExpensesState);
     } catch (err) {
         console.log(err);
@@ -102,8 +105,8 @@ function runCalculationsOnExpenseData(expenseData){
     return dataToBeReturned.beginCalculations();
 }
 
-export function addKeyToSheet(expenseData){
-    expenseData.key = sheetObjectKey;
+export function addKeyToSheet(expenseData, sheetObjectKeyState){
+    expenseData.key = sheetObjectKeyState;
     return expenseData;
 }
 
