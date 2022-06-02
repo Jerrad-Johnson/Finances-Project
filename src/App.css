@@ -75,6 +75,7 @@ nav.a {
     ml-2
 }
 
+
 div.container {
     @apply
     max-w-full
@@ -243,7 +244,8 @@ hr.jobIncomeSeparator{
     p-2
     ml-auto
     mr-auto
-    p-8
+    px-20
+    py-12
 }
 
 .homeContainer{
@@ -267,10 +269,22 @@ h1{
     mb-2
 }
 
+
+h2{
+    @apply
+    flex justify-center
+    font-semibold
+    font-serif
+    text-lg
+    drop-shadow-md
+    mb-2
+    mt-8
+}
+
 .homeContainer span{
     @apply
     block
-    mt-2
+    mt-4
     flex justify-center
 }
 
