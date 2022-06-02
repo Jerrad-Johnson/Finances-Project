@@ -32,7 +32,7 @@ function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
 
     return (
         <div className={"inputSelectorsCard"}>
-            <span className={"inputSetTitle"}>Linear-progression Job</span>
+            <span className={"inputSetTitle"}>Consistently-Progressing Income</span>
 
             <form>
                 <span className={"inputTitle"}>Job Title</span>
@@ -65,7 +65,7 @@ function SteppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
 
     return (
         <div className={"inputSelectorsCard"}>
-            <span className={"inputSetTitle"}>Stepped-progression Job</span>
+            <span className={"inputSetTitle"}>Income with Defined Steps</span>
             <form>
                 <span className={"inputTitle"}>Job Title</span>
                 <input type={"text"} id={"steppedJobTitle"} className={"inputTextFieldLong"}></input>
@@ -81,7 +81,7 @@ function SteppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
                     addSteppedIncomeField(steppedIncomeFormState,
                         setSteppedIncomeFormState, steppedIncomeFormKey)
                 }}>
-                    Add income change
+                    Add step
                 </button>
                 &nbsp;
 
@@ -90,7 +90,7 @@ function SteppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
                     removeSteppedIncomeField(steppedIncomeFormState,
                         setSteppedIncomeFormState)
                 }}>
-                    Delete income change
+                    Delete step
                 </button>
                 <br/>
                 <button type={"click"} id={"submitSteppedJob"} onClick={(e) => {
