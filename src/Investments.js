@@ -160,7 +160,7 @@ function InvestmentGraph({investmentsState, setInvestmentsState, graphKey}){
                         f.preventDefault();
                         deleteThisGraph(investmentsState, setInvestmentsState, e.key)
                     }}
-                    >Delete row {e.key}.</button>
+                    >Delete sheet</button>
 
                 </div>
             );

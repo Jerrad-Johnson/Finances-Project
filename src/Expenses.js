@@ -65,7 +65,7 @@ function ExpenseGraphs({expensesState, setExpensesState}){
                <ExpenseSumBarChart
                    expenseSheet = {expenseSheet}
                />
-               <span className={"inputSetTitle graphTitle"}>Running Expenses</span>
+               <span className={"inputSetTitle graphTitle"}>Running Sum</span>
                <ExpenseRunningSumBarChart
                    expenseSheet = {expenseSheet}
                />

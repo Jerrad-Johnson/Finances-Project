@@ -160,7 +160,7 @@ function SteppedGraph({steppedJobDataState, setSteppedJobDataState}){
                             e.preventDefault();
                             handleJobDelete(job.key, steppedJobDataState, setSteppedJobDataState);
                         }} >
-                    Delete Row{/* {job.key}*/}
+                    Delete Sheet{/* {job.key}*/}
                 </button>
             </div>
         ));

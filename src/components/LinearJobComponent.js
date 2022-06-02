@@ -99,7 +99,7 @@ function LinearGraph({linearJobDataState, setLinearJobDataState}) {
                             e.preventDefault();
                             handleJobDelete(job.key, linearJobDataState, setLinearJobDataState);
                         }} >
-                    Delete Row{/* {job.key}*/}
+                    Delete Sheet{/* {job.key}*/}
                 </button>
             </div>
         ));
