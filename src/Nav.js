@@ -5,6 +5,7 @@ function Nav() {
     return(
       <>
            <nav>
+              <Link to={""}>Home</Link>
               <Link to={"Career"}>Career</Link>
               <Link to={"Expenses"}>Expenses</Link>
               <Link to={"Investments"}>Investments</Link>
