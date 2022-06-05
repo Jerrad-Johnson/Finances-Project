@@ -33,6 +33,8 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
             employmentState, filingStatusState, stTaxState).makeTaxesByCategory(); },
         "Total Assets": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeTotalAssetsLiquidAndIlliquid(); },
+        "Combined Investment Expenses": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+            employmentState, filingStatusState, stTaxState).makeCombinedInvestmentExpenses(); },
     };
 
     let graphData = mapGraphOptionStateToObjectKey[graphOptionState]();
@@ -41,8 +43,6 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     if (isObject(graphData?.[0])){
         yearsArrayForGraph = getYearsNumbered();
     }
-
-
 
     return (
         <>

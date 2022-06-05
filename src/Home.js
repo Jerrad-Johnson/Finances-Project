@@ -11,7 +11,8 @@ function Home(){
           <span>It's a financial planner; use it to see graphs displaying how much your expenses will cost you over the years, how much your job will provide, and the value of your investments. On the final page (Evaluate) you will be able to compare your income to expenses, see how much your federal taxes will be, the impact of inflation, and so on. </span>
           <span>You do not have to fill every section (career, expenses, investments). Just one is enough. But the more data you provide, the more informative the graphs will be. Here's an example of what you could see on the final page:</span>
           <br />
-          <img src={sampleImage}/>
+          <a href={sampleImage} target={"_blank"}><img src={sampleImage}/></a>
+
       </div>
     );
 }
