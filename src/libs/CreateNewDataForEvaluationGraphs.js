@@ -77,6 +77,7 @@ class CreateNewDataForEvaluationGraphs {
             y = this.addGraphNecessities(this.newGraphData.combinedInvestmentExpenses, "Combined Investment Expenses", "#00ff00");
             [x, y] = this.addThisEntryToArray(x, y);
         }
+        cc(this.investments)
 
         x.description = "Your pull % includes your additional investments. If you pull 30% and make an additional investment of 100k, you will pull 30k plus 30% of the return.";
 
@@ -512,10 +513,10 @@ class CreateNewDataForEvaluationGraphs {
         let pullValue = combineSinglePropertySubArrays(investments.arrayPullValueByYear, this.length);
 
         for (let i = 0; i < this.length; i++){
-            newData.reinvestedEachYear[i] = (investmentIncrease[i] - pullValue[i]);
+            newData.reinvestedEachYear[i] = investmentIncrease[i];
         }
 
-        cc(newData.reinvestedEachYear)
+//        cc(newData.reinvestedEachYear)
 
         return newData;
     }
@@ -591,8 +592,19 @@ class CreateNewDataForEvaluationGraphs {
 
         if (!isEmptyArray(income) || !isEmptyArray(investments)) {
             let length = new jobdatahandler().graphMaxNumberOfYears;
+            let investmentIncreases = createArrayOfZeros(this.length);
+            let investmentPulls = createArrayOfZeros(this.length);
             let investmentProfits = createArrayOfZeros(this.length);
-            if (!isEmptyArray(investments)) investmentProfits = combineSinglePropertySubArrays(this.investments.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment, this.length);
+
+            if (!isEmptyArray(investments)) {
+                investmentIncreases = combineSinglePropertySubArrays(this.investments.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment, this.length);
+                investmentPulls = combineSinglePropertySubArrays(this.investments.arrayPullValueByYear, this.length);
+            }
+
+            for (let i = 0; i < this.length; i++){
+                investmentProfits[i] = investmentIncreases[i] + investmentPulls[i]
+            }
+
             let incomeTogether = [];
             if (!isEmptyArray(income)) incomeTogether.push(income.sumByYear);
             if (!isEmptyArray(investments)) incomeTogether.push(investmentProfits);
