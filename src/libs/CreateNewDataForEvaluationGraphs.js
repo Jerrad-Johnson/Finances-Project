@@ -58,15 +58,18 @@ class CreateNewDataForEvaluationGraphs {
         let x = [];
         let y = {};
 
+        if (this.standardGraphDataCheck(this.newGraphData?.initialInvestments)) {
+            y = this.addGraphNecessities(this.newGraphData.initialInvestments, "Initial Investments", "#00ff00");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
         if (this.standardGraphDataCheck(this.newGraphData?.combinedAdditionalInvestments)) {
             y = this.addGraphNecessities(this.newGraphData.combinedAdditionalInvestments, "Additional Investments", "#00ff00");
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
-        cc(this.investments)
-
-        if (this.standardGraphDataCheck(this.newGraphData?.initialInvestments)) {
-            y = this.addGraphNecessities(this.newGraphData.initialInvestments, "Initial Investments", "#00ff00");
+        if (this.standardGraphDataCheck(this.newGraphData?.reinvestedEachYear)) {
+            y = this.addGraphNecessities(this.newGraphData.reinvestedEachYear, "Reinvested Each Year", "#00ff00");
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
@@ -74,6 +77,8 @@ class CreateNewDataForEvaluationGraphs {
             y = this.addGraphNecessities(this.newGraphData.combinedInvestmentExpenses, "Combined Investment Expenses", "#00ff00");
             [x, y] = this.addThisEntryToArray(x, y);
         }
+
+        x.description = "Your pull % includes your additional investments. If you pull 30% and make an additional investment of 100k, you will pull 30k plus 30% of the return.";
 
         return x;
     }
@@ -295,15 +300,19 @@ class CreateNewDataForEvaluationGraphs {
         }
 
         if (isObject(this.investments)){
-            newData = this.addCombinedInvestmentExpenses(newData, investments);
-        }
-
-        if (isObject(this.investments)){
             newData = this.addInitialInvestments(newData, investments);
         }
 
         if (isObject(this.investments)){
             newData = this.combineAdditionalInvestments(newData, investments);
+        }
+
+        if (isObject(this.investments)){
+            newData = this.addReinvestedEachYear(newData, investments);
+        }
+
+        if (isObject(this.investments)){
+            newData = this.addCombinedInvestmentExpenses(newData, investments);
         }
 
         return newData;
@@ -481,17 +490,6 @@ class CreateNewDataForEvaluationGraphs {
         return newData;
     }
 
-    addCombinedInvestmentExpenses(newData, investments) {
-        newData.combinedInvestmentExpenses = createArrayOfZeros(this.length);
-        newData.combinedInvestmentExpenses = combineSinglePropertySubArrays(investments.arrayAdditionalInvestment, this.length);
-
-        for (let i = 0; i < investments.amounts.length; i++) {
-            newData.combinedInvestmentExpenses[investments.yearsBegin[i] -1] += investments.amounts[i];
-        }
-
-        return newData;
-    }
-
     addInitialInvestments(newData, investments){
         newData.initialInvestments = createArrayOfZeros(this.length);
 
@@ -504,6 +502,35 @@ class CreateNewDataForEvaluationGraphs {
 
     combineAdditionalInvestments(newData, investments){
         newData.combinedAdditionalInvestments = combineSinglePropertySubArrays(investments.arrayAdditionalInvestment, this.length);
+
+        return newData;
+    }
+
+    addReinvestedEachYear(newData, investments){
+        newData.reinvestedEachYear = createArrayOfZeros(this.length);
+        let investmentIncrease = combineSinglePropertySubArrays(investments.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment, this.length);
+        let pullValue = combineSinglePropertySubArrays(investments.arrayPullValueByYear, this.length);
+
+        for (let i = 0; i < this.length; i++){
+            newData.reinvestedEachYear[i] = (investmentIncrease[i] - pullValue[i]);
+        }
+
+        cc(newData.reinvestedEachYear)
+
+        return newData;
+    }
+
+    addCombinedInvestmentExpenses(newData, investments) {
+        newData.combinedInvestmentExpenses = createArrayOfZeros(this.length);
+        newData.combinedInvestmentExpenses = combineSinglePropertySubArrays(investments.arrayAdditionalInvestment, this.length);
+
+        for (let i = 0; i < investments.amounts.length; i++) {
+            newData.combinedInvestmentExpenses[investments.yearsBegin[i] -1] += investments.amounts[i]
+        }
+
+        for (let i = 0; i < this.length; i++){
+            newData.combinedInvestmentExpenses[i] += newData.reinvestedEachYear[i];
+        }
 
         return newData;
     }
