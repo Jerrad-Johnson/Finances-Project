@@ -120,17 +120,17 @@ class CreateNewDataForEvaluationGraphs {
         let x = [];
         let y = {};
 
-        if (this.newGraphData?.combinedInvestmentPulls){
+        if (this.standardGraphDataCheck(this.newGraphData?.combinedInvestmentPulls)){
             y = this.addGraphNecessities(this.newGraphData.combinedInvestmentPulls, "Pulls from Investment", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
-        if (this.newGraphData?.reinvestedEachYear){
+        if (this.standardGraphDataCheck(this.newGraphData?.reinvestedEachYear)){
             y = this.addGraphNecessities(this.newGraphData.reinvestedEachYear, "Reinvested", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
-        if (this.newGraphData?.investmentCombinedIncomeByYearSansAddlInvestments){
+        if (this.standardGraphDataCheck(this.newGraphData?.investmentCombinedIncomeByYearSansAddlInvestments)){
             y = this.addGraphNecessities(this.newGraphData.investmentCombinedIncomeByYearSansAddlInvestments, "Combined Income", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
         }
@@ -208,6 +208,21 @@ class CreateNewDataForEvaluationGraphs {
 
         if (this.standardGraphDataCheck(this[taxesCategory]?.totalTaxes)){
             y = this.addGraphNecessities(this[taxesCategory].totalTaxes, "Total Taxes", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        return x;
+    }
+
+    makeTaxPercentageByYear(){
+        let x = [];
+        let y = {};
+
+        if (this.standardGraphDataCheck(this.taxesOnIncomeAndInvestmentIncreases.effectiveTaxPercentages)){
+            y = this.addGraphNecessities(this.taxesOnIncomeAndInvestmentIncreases.effectiveTaxPercentages, "Effective Tax Percentage", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        } else if (this.standardGraphDataCheck(this.taxesOnIncomeOnly.effectiveTaxPercentages)){
+            y = this.addGraphNecessities(this.taxesOnIncomeOnly.effectiveTaxPercentages, "Effective Tax Percentage", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
         }
 

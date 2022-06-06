@@ -35,6 +35,8 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
             employmentState, filingStatusState, stTaxState).makeSameYearExpendable(); },
         "Taxes by Category": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeTaxesByCategory(); },
+        "Tax Percentage by Year": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+            employmentState, filingStatusState, stTaxState).makeTaxPercentageByYear(); },
         "Total Assets": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeTotalAssetsLiquidAndIlliquid(); },
     };

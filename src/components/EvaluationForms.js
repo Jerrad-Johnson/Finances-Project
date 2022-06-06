@@ -49,6 +49,7 @@ export function GraphOptions(){
             <option>Investment Income</option>
             <option>Same Year Expendable</option>
             <option>Taxes by Category</option>
+            <option>Tax Percentage by Year</option>
         </>
     );
 }
