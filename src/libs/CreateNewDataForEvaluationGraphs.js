@@ -10,7 +10,6 @@ import {
     applyRoundingSingleDepthArray,
 } from "../components/jobssharedfunctions";
 import CalculateTaxes from "./Taxes";
-import investments from "../Investments";
 
 class CreateNewDataForEvaluationGraphs {
     constructor(income, expenses, investments, employmentState = [],
@@ -637,9 +636,9 @@ class CreateNewDataForEvaluationGraphs {
         for (let i = 0; i < this.length; i++){
             newData.combinedIncome[i]
             = (income?.sumByYear[i] || 0)
-            + (newData.combinedInvestmentPulls[i] || 0)
-            + (newData.reinvestedEachYear[i] || 0)
-            + (newData.investmentWithdrawlValues[i] || 0);
+            + (newData.combinedInvestmentPulls?.[i] || 0)
+            + (newData.reinvestedEachYear?.[i] || 0)
+            + (newData.investmentWithdrawlValues?.[i] || 0);
         }
 
         return newData;
