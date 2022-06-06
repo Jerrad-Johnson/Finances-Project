@@ -116,6 +116,38 @@ class CreateNewDataForEvaluationGraphs {
         return x;
     }
 
+    makeIncomeByGroup(){
+        let x = [];
+        let y = {};
+
+        if (this.standardGraphDataCheck(this.income?.sumByYear)){
+            y = this.addGraphNecessities(this.income?.sumByYear, "Career", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        if (this.standardGraphDataCheck(this.newGraphData?.combinedInvestmentPulls)){
+            y = this.addGraphNecessities(this.newGraphData?.combinedInvestmentPulls, "Investment Pulls", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        if (this.standardGraphDataCheck(this.newGraphData?.reinvestedEachYear)){
+            y = this.addGraphNecessities(this.newGraphData?.reinvestedEachYear, "Reinvested", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        if (this.standardGraphDataCheck(this.newGraphData?.investmentWithdrawlValues)){
+            y = this.addGraphNecessities(this.newGraphData?.investmentWithdrawlValues, "Investment Withdrawls", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        if (this.standardGraphDataCheck(this.newGraphData?.combinedIncome)){
+            y = this.addGraphNecessities(this.newGraphData?.combinedIncome, "Combined", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        return x;
+    }
+
     makeInvestmentIncome(){
         let x = [];
         let y = {};
@@ -131,7 +163,7 @@ class CreateNewDataForEvaluationGraphs {
         }
 
         if (this.standardGraphDataCheck(this.newGraphData?.investmentCombinedIncomeByYearSansAddlInvestments)){
-            y = this.addGraphNecessities(this.newGraphData.investmentCombinedIncomeByYearSansAddlInvestments, "Combined Income", "#ff0000");
+            y = this.addGraphNecessities(this.newGraphData.investmentCombinedIncomeByYearSansAddlInvestments, "Combined Investment Income", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
@@ -337,28 +369,18 @@ class CreateNewDataForEvaluationGraphs {
             newData = this.addDifferenceAfterInflation(newData);
         }
 
-        if (isObject(this.investments)){
+        if (isObject(investments)){
             newData = this.addInitialInvestments(newData, investments);
-        }
-
-        if (isObject(this.investments)){
             newData = this.combineAdditionalInvestments(newData, investments);
-        }
-
-        if (isObject(this.investments)){
             newData = this.addReinvestedEachYear(newData, investments);
-        }
-
-        if (isObject(this.investments)){
             newData = this.addCombinedInvestmentExpenses(newData, investments);
-        }
-
-        if (isObject(this.investments)){
             newData = this.addCombinedInvestmentPulls(newData, investments);
+            newData = this.addInvestmentCombinedIncomeByYearSansAddlInvestments(newData);
+            newData = this.addWithdrawlValues(newData, investments);
         }
 
-        if (isObject(this.investments)){
-            newData = this.addInvestmentCombinedIncomeByYearSansAddlInvestments(newData);
+        if (isObject(investments) || isObject(income)){
+            newData = this.combinedIncome(newData, income || []);
         }
 
         return newData;
@@ -592,6 +614,32 @@ class CreateNewDataForEvaluationGraphs {
             newData.investmentCombinedIncomeByYearSansAddlInvestments[i]
             = newData.combinedInvestmentPulls[i]
             + newData.reinvestedEachYear[i];
+        }
+
+        return newData;
+    }
+
+    addWithdrawlValues(newData, investments){
+        newData.investmentWithdrawlValues = createArrayOfZeros(this.length);
+
+        for (let i = 0; i < investments.yearsWithdraw.length; i++){
+            if (investments.yearsWithdraw[i] !== 'Never'){
+                newData.investmentWithdrawlValues[investments.yearsWithdraw[i]] = investments.withdrawlValue[i];
+            }
+        }
+
+        return newData;
+    }
+
+    combinedIncome(newData, income){
+        newData.combinedIncome = createArrayOfZeros(this.length);
+
+        for (let i = 0; i < this.length; i++){
+            newData.combinedIncome[i]
+            = (income?.sumByYear[i] || 0)
+            + (newData.combinedInvestmentPulls[i] || 0)
+            + (newData.reinvestedEachYear[i] || 0)
+            + (newData.investmentWithdrawlValues[i] || 0);
         }
 
         return newData;

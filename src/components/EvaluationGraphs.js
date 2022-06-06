@@ -27,6 +27,8 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
             employmentState, filingStatusState, stTaxState).makeCombinedInvestmentExpenses(); },
         "Expenses by Group": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeExpenses(); },
+        "Income by Group": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+            employmentState, filingStatusState, stTaxState).makeIncomeByGroup(); },
         "Investment Income": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeInvestmentIncome(); },
         "Running Liquid Assets Sums vs. Yearly Expenses": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
