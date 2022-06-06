@@ -46,9 +46,9 @@ export function GraphOptions(){
             <option>Assets vs. Inflation</option>
             <option>Combined Investment Expenses</option>
             <option>Expenses by Group</option>
+            <option>Investment Income</option>
             <option>Same Year Expendable</option>
             <option>Taxes by Category</option>
-
         </>
     );
 }

@@ -10,6 +10,7 @@ import {
     applyRoundingSingleDepthArray,
 } from "../components/jobssharedfunctions";
 import CalculateTaxes from "./Taxes";
+import investments from "../Investments";
 
 class CreateNewDataForEvaluationGraphs {
     constructor(income, expenses, investments, employmentState = [],
@@ -77,7 +78,6 @@ class CreateNewDataForEvaluationGraphs {
             y = this.addGraphNecessities(this.newGraphData.combinedInvestmentExpenses, "Combined Investment Expenses", "#00ff00");
             [x, y] = this.addThisEntryToArray(x, y);
         }
-        cc(this.investments)
 
         x.description = "Your pull % includes your additional investments. If you pull 30% and make an additional investment of 100k, you will pull 30k plus 30% of the return.";
 
@@ -113,6 +113,28 @@ class CreateNewDataForEvaluationGraphs {
         }
 
         x.description = "Investment expenses includes initial investments and additional investments, but not re-investments.";
+        return x;
+    }
+
+    makeInvestmentIncome(){
+        let x = [];
+        let y = {};
+
+        if (this.newGraphData?.combinedInvestmentPulls){
+            y = this.addGraphNecessities(this.newGraphData.combinedInvestmentPulls, "Pulls from Investment", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        if (this.newGraphData?.reinvestedEachYear){
+            y = this.addGraphNecessities(this.newGraphData.reinvestedEachYear, "Reinvested", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
+        if (this.newGraphData?.investmentCombinedIncomeByYearSansAddlInvestments){
+            y = this.addGraphNecessities(this.newGraphData.investmentCombinedIncomeByYearSansAddlInvestments, "Combined Income", "#ff0000");
+            [x, y] = this.addThisEntryToArray(x, y);
+        }
+
         return x;
     }
 
@@ -316,6 +338,14 @@ class CreateNewDataForEvaluationGraphs {
             newData = this.addCombinedInvestmentExpenses(newData, investments);
         }
 
+        if (isObject(this.investments)){
+            newData = this.addCombinedInvestmentPulls(newData, investments);
+        }
+
+        if (isObject(this.investments)){
+            newData = this.addInvestmentCombinedIncomeByYearSansAddlInvestments(newData);
+        }
+
         return newData;
     }
 
@@ -516,8 +546,6 @@ class CreateNewDataForEvaluationGraphs {
             newData.reinvestedEachYear[i] = investmentIncrease[i];
         }
 
-//        cc(newData.reinvestedEachYear)
-
         return newData;
     }
 
@@ -531,6 +559,24 @@ class CreateNewDataForEvaluationGraphs {
 
         for (let i = 0; i < this.length; i++){
             newData.combinedInvestmentExpenses[i] += newData.reinvestedEachYear[i];
+        }
+
+        return newData;
+    }
+
+    addCombinedInvestmentPulls(newData, investments){
+        newData.combinedInvestmentPulls = combineSinglePropertySubArrays(investments.arrayPullValueByYear, this.length);
+
+        return newData;
+    }
+
+    addInvestmentCombinedIncomeByYearSansAddlInvestments(newData){
+        newData.investmentCombinedIncomeByYearSansAddlInvestments = createArrayOfZeros(this.length);
+
+        for (let i = 0; i < this.length; i++){
+            newData.investmentCombinedIncomeByYearSansAddlInvestments[i]
+            = newData.combinedInvestmentPulls[i]
+            + newData.reinvestedEachYear[i];
         }
 
         return newData;

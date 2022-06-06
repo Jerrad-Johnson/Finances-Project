@@ -23,8 +23,12 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     const mapGraphOptionStateToObjectKey = {
         "Assets vs. Inflation": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeAssetsVsInflation(); },
+        "Combined Investment Expenses": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+            employmentState, filingStatusState, stTaxState).makeCombinedInvestmentExpenses(); },
         "Expenses by Group": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeExpenses(); },
+        "Investment Income": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+            employmentState, filingStatusState, stTaxState).makeInvestmentIncome(); },
         "Running Liquid Assets Sums vs. Yearly Expenses": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeRunningIncomeSumsAndYearlyExpenses(); },
         "Same Year Expendable": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
@@ -33,8 +37,6 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
             employmentState, filingStatusState, stTaxState).makeTaxesByCategory(); },
         "Total Assets": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeTotalAssetsLiquidAndIlliquid(); },
-        "Combined Investment Expenses": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
-            employmentState, filingStatusState, stTaxState).makeCombinedInvestmentExpenses(); },
     };
 
     let graphData = mapGraphOptionStateToObjectKey[graphOptionState]();
