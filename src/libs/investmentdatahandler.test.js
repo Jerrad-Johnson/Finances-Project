@@ -1,4 +1,5 @@
 import {getArrayAsString, getKey, resetArr} from "../utilities/jest-supplements";
+import {applyRoundingSingleDepthArray, applyRoundingTwoDepthArray} from "../components/jobssharedfunctions";
 import investmentdatahandler from "./investmentdatahandler";
 
 let cc = console.log;
@@ -294,8 +295,9 @@ test("runningInvestmentValue -- case Neither", () => {
     ];
 // NOTE: This additional investment array was artificial; the calculator would not return these values.
 // They would have continued to the end of the array.
-    expect(getKey(x.roundArrayNumbers(x.runningInvestmentValue(investmentData)),
-        "arrayRunningInvestmentValue")).toEqual(expectedReturn);
+
+    expect(applyRoundingTwoDepthArray(getKey(x.runningInvestmentValue(investmentData),
+        "arrayRunningInvestmentValue"))).toEqual(expectedReturn);
 });
 
 test("runningInvestmentValue -- case Both", () => {
@@ -319,8 +321,8 @@ test("runningInvestmentValue -- case Both", () => {
         [0, 0, 0, 0, 0, 500, 1525, 2601, 3731, 4918, 5164, 5164, 5164, 5164, 5164],
     ]; // These final non-zero values get chopped in the method updateArrayForWithdrawl. Consider refactoring and nixing updateArrayForWithdrawl.
 
-    expect(getKey(x.roundArrayNumbers(x.runningInvestmentValue(investmentData)),
-        "arrayRunningInvestmentValue")).toEqual(expectedReturn);
+    expect(applyRoundingTwoDepthArray(getKey(x.runningInvestmentValue(investmentData),
+        "arrayRunningInvestmentValue"))).toEqual(expectedReturn);
 });
 
 test("runningInvestmentValue -- case CeaseReinvest", () => {
@@ -344,8 +346,8 @@ test("runningInvestmentValue -- case CeaseReinvest", () => {
         [0, 0, 0, 0, 0, 500, 1525, 2601, 3731, 4918, 5164, 5164, 5164, 5164, 5164],
     ];
 
-    expect(getKey(x.roundArrayNumbers(x.runningInvestmentValue(investmentData)),
-        "arrayRunningInvestmentValue")).toEqual(expectedReturn);
+    expect(applyRoundingTwoDepthArray(getKey(x.runningInvestmentValue(investmentData),
+        "arrayRunningInvestmentValue"))).toEqual(expectedReturn);
 });
 
 test("runningInvestmentValue -- case Withdraw", () => {
@@ -369,8 +371,8 @@ test("runningInvestmentValue -- case Withdraw", () => {
         [0, 0, 0, 0, 0, 500, 1525, 2601, 3731, 4918, 5164, 0, 0, 0, 0],
     ];
 
-    expect(getKey(x.roundArrayNumbers(x.runningInvestmentValue(investmentData)),
-        "arrayRunningInvestmentValue")).toEqual(expectedReturn);
+    expect(applyRoundingTwoDepthArray(getKey(x.runningInvestmentValue(investmentData),
+        "arrayRunningInvestmentValue"))).toEqual(expectedReturn);
 });
 
 test("investmentIncreaseByYear", () => {
@@ -385,8 +387,8 @@ test("investmentIncreaseByYear", () => {
         [0, 0, 0, 0, 0, 0, 1025, 1076, 1130, 1187, 246, 0, 0, 0, 0]
     ];
 
-    expect(getKey(x.roundArrayNumbers(x.investmentIncreaseByYear(investmentData)),
-        "arrayInvestmentIncreaseByYear")).toEqual(expectedReturn);
+    expect(applyRoundingTwoDepthArray(getKey(x.investmentIncreaseByYear(investmentData),
+        "arrayInvestmentIncreaseByYear"))).toEqual(expectedReturn);
 });
 
 
@@ -405,8 +407,9 @@ test("pullValueByYear", () => {
         [0, 0, 0, 0, 0, 0, 76, 130, 187, 246, 258, 0, 0, 0, 0]
     ];
 
-    expect(getKey(x.roundArrayNumbers(x.pullValueByYear(investmentData)),
-        "arrayPullValueByYear")).toEqual(expectedReturn);
+
+    expect(applyRoundingTwoDepthArray(getKey(x.pullValueByYear(investmentData),
+        "arrayPullValueByYear"))).toEqual(expectedReturn);
 });
 
 test("runningPullSum", () => {
@@ -421,9 +424,8 @@ test("runningPullSum", () => {
         [0, 0, 0, 0, 0, 10, 60, 115, 185, 260, 340, 425, 515, 615, 735]
     ];
 
-    expect(getKey(x.roundArrayNumbers(x.runningPullSum(investmentData)),
-        "arrayRunningPullSums")).toEqual(expectedReturn);
-
+    expect(applyRoundingTwoDepthArray(getKey(x.runningPullSum(investmentData),
+        "arrayRunningPullSums"))).toEqual(expectedReturn);
 });
 
 test("withdrawlValue", () => {
@@ -435,9 +437,9 @@ test("withdrawlValue", () => {
         [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
     ];
     let expectedReturn = [20, 5];
+    expect(applyRoundingTwoDepthArray(getKey(x.withdrawlValue(investmentData),
+        "withdrawlValue"))).toEqual(expectedReturn);
 
-    expect(getKey(x.roundArrayNumbers(x.withdrawlValue(investmentData)),
-        "withdrawlValue")).toEqual(expectedReturn);
 });
 
 test("updateArrayForWithdrawl", () => {
@@ -451,8 +453,8 @@ test("updateArrayForWithdrawl", () => {
         [0, 0, 0, 0, 0, 500, 1525, 2601, 3731, 4918, 5164, 5164, 5164, 5164, 0],
     ];
 
-    expect(getKey(x.roundArrayNumbers(x.updateArrayForWithdrawl(investmentData)),
-        "arrayRunningInvestmentValue")).toEqual(expectedReturn);
+    expect(applyRoundingTwoDepthArray(getKey(x.updateArrayForWithdrawl(investmentData),
+        "arrayRunningInvestmentValue"))).toEqual(expectedReturn);
 });
 
 test("roundArrayNumbers", () => {
@@ -465,6 +467,10 @@ test("roundArrayNumbers", () => {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
     investmentData.arrayPullValueByYear = [
+        [5.4, 5.7, 2.2, 2.8, 5.5, 10.222, 15.555, 19.01, 20.01, 25, 2, 0, 15.5, 27, 100.5555252],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    investmentData.arrayPullValueByYearPlusWithdrawl = [
         [5.4, 5.7, 2.2, 2.8, 5.5, 10.222, 15.555, 19.01, 20.01, 25, 2, 0, 15.5, 27, 100.5555252],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
@@ -485,6 +491,7 @@ test("roundArrayNumbers", () => {
         [5, 6, 2, 3, 6, 10, 16, 19, 20, 25, 2, 0, 16, 27, 101],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
+
 
     expect(getKey(x.roundArrayNumbers(investmentData),
         "arrayAdditionalInvestment")).toEqual(expectedReturn);

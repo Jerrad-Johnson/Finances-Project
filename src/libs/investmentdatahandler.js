@@ -378,7 +378,7 @@ class InvestmentDataHandler {
        investmentData.arrayPullValueByYearPlusWithdrawl = applyRoundingSingleDepthArray(investmentData.arrayPullValueByYearPlusWithdrawl);
        investmentData.arrayRunningInvestmentValue = applyRoundingTwoDepthArray(investmentData.arrayRunningInvestmentValue);
        investmentData.arrayRunningPullSums = applyRoundingTwoDepthArray(investmentData.arrayRunningPullSums);
-       investmentData.arrayRunningInvestmentValue = applyRoundingTwoDepthArray(investmentData.arrayRunningInvestmentValue);
+       // Duplicate ? investmentData.arrayRunningInvestmentValue = applyRoundingTwoDepthArray(investmentData.arrayRunningInvestmentValue);
        investmentData.withdrawlValue = applyRoundingSingleDepthArray(investmentData.withdrawlValue);
        investmentData.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment = applyRoundingTwoDepthArray(investmentData.arrayInvestmentIncreaseByYearMinusAllYearAdlInvestment);
        investmentData.arrayInvestmentIncreaseByYearMinusFirstYearAdlInvestment = applyRoundingTwoDepthArray(investmentData.arrayInvestmentIncreaseByYearMinusFirstYearAdlInvestment);
