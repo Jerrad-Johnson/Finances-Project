@@ -1,11 +1,11 @@
 describe("Career page checks", () => {
     it("Page rendered", () => {
-        cy.visit("/Career.js");
+        cy.visit("/Career");
         cy.get("body").should("exist");
     });
 
    it("Linear form rendered", () => {
-       cy.get("#formContainer").should("exist");
+       cy.get(".inputSelectorsCard").eq(0).should("exist");
        cy.get("#incomeImmediate").should("exist");
        cy.get("#linearJobTitle").should("exist");
        cy.get("#incomeCeiling").should("exist");
@@ -15,14 +15,15 @@ describe("Career page checks", () => {
    });
 
    it("Creates a linear job", () => {
+       cy.get(".inputSelectorsCard").eq(1).should("exist");
        cy.get("#linearJobTitle").type("Wally");
        cy.get("#incomeImmediate").type("500");
        cy.get("#incomeCeiling").type("800");
        cy.get("#yearToIncomeCeiling").select("5");
        cy.get("#yearIncomeBegins").select("2");
        cy.get("#submitLinearJob").click();
+       cy.wait(800);
        cy.get(".linearJobKey0").should("exist");
-       cy.wait(700);
    });
 
    it("Deletes the previously-created linear job.", () => {
@@ -54,7 +55,7 @@ describe("Career page checks", () => {
        cy.get("form select.yearThisSteppedIncomeBegins").eq(2).select("8");
        cy.get("#submitSteppedJob").click();
        cy.get(".steppedJobKey0").should("exist");
-       cy.wait(700);
+       cy.wait(1500);
        cy.get(".deleteSteppedJobKey0").click();
        cy.get(".steppedJobKey0").should("not.exist");
    });

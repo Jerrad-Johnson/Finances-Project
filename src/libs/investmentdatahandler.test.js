@@ -492,7 +492,6 @@ test("roundArrayNumbers", () => {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
 
-
     expect(getKey(x.roundArrayNumbers(investmentData),
         "arrayAdditionalInvestment")).toEqual(expectedReturn);
 
