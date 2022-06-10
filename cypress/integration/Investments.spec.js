@@ -1,16 +1,16 @@
 describe("Tests the investment page", () => {
 
     it("Visits the investment page", () => {
-        cy.visit("localhost:3000/Investments.js");
+        cy.visit("/Investments");
     });
 
     it("Adds and deletes sets of fields", () => {
         cy.get(".addInvestmentFields").click();
         cy.get(".addInvestmentFields").click();
-        cy.get(".investmentForms").eq(2).should("exist");
+        cy.get(".additionalinvestment").eq(2).should("exist");
         cy.get(".removeInvestmentField").eq(2).click();
         cy.get(".removeInvestmentField").eq(1).click();
-        cy.get(".investmentForms").eq(1).should("not.exist");
+        cy.get(".additionalinvestment").eq(1).should("not.exist");
     });
 
     it("Adds two sets of fields and fills them", () => {
