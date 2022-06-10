@@ -1,6 +1,6 @@
 describe("Tests the expenses page", () => {
     it("Visits the page", () => {
-        cy.visit("http://localhost:3000/Expenses.js");
+        cy.visit("/Expenses");
     });
 
     it("Checks that entry fields can be deleted and added.", () => {
@@ -8,8 +8,7 @@ describe("Tests the expenses page", () => {
         cy.wait(100);
         cy.get(".add-entry-field").click();
         cy.wait(100);
-        cy.get(".inputField").eq(2).should("exist");
-
+        cy.get(".inputSelectorsCard").eq(2).should("exist");
         cy.get(".delete-entry-field").click();
         cy.get(".delete-entry-field").click();
         cy.get(".delete-entry-field").eq(1).should("not.exist");
