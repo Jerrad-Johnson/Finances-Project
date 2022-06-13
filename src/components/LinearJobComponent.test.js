@@ -1,4 +1,4 @@
-/*
+
 import {runCalculationsOnLinearData, checkLinearJobData} from "./LinearJobComponent";
 
 test("Good in, Good out -- error checks from checkLinearJobData", () => {
@@ -11,11 +11,11 @@ test("Good in, Good out -- error checks from checkLinearJobData", () => {
     };
     let x = checkLinearJobData(jobData);
 
-    expect(x[0].title).toBe("Wal-Mart");
-    expect(x[0].incomeCeiling).toBe(+200);
-    expect(x[0].incomeImmediate).toBe(+100);
-    expect(x[0].yearToIncomeCeiling).toBe(+6);
-    expect(x[0].yearIncomeBegins).toBe(+0);
+    expect(x.title).toBe("Wal-Mart");
+    expect(x.incomeCeiling).toBe(+200);
+    expect(x.incomeImmediate).toBe(+100);
+    expect(x.yearToIncomeCeiling).toBe(+6);
+    expect(x.yearIncomeBegins).toBe(+0);
 });
 
 test("Test error checks in checkLinearData.", () => {
@@ -71,16 +71,18 @@ test("Test error checks in checkLinearData.", () => {
 });
 
 test("Check for data match after running calculations.", () => {
-    let jobData = [{
+    let jobData = {
+        passed: true,
         title: "Wal-Mart",
         incomeCeiling: 200,
         incomeImmediate: 100,
         yearToIncomeCeiling: 14,
         yearIncomeBegins: 0,
         key: 0,
-    }];
+    };
 
-    let calculatedJobData = [{
+    let calculatedJobData = {
+        passed: true,
         incomeCeiling: 200,
         incomeImmediate: 100,
         incomeInGraphYearsNumberOfSteps: [100, 107, 114, 121, 129, 136, 143, 150, 157, 164, 171, 179, 186, 193, 200],
@@ -92,8 +94,7 @@ test("Check for data match after running calculations.", () => {
         yearIncomeBegins: 0,
         yearToIncomeCeiling: 14,
         yearsNumbered: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6', 'Year 7', 'Year 8', 'Year 9', 'Year 10', 'Year 11', 'Year 12', 'Year 13', 'Year 14', 'Year 15'],
-    }];
+    };
 
     expect(runCalculationsOnLinearData(jobData)).toEqual(calculatedJobData);
 });
-*/

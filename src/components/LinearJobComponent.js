@@ -13,7 +13,7 @@ export function handleLinearJobSubmission(linearJobDataState, setLinearJobDataSt
     jobData = setLinearJobData();
     jobData = checkLinearJobData(jobData);
 
-    if (jobData.pass === true) {
+    if (jobData.passed === true) {
         jobData = runCalculationsOnLinearData(jobData);
         updateLinearJobDataState(jobData, linearJobDataState, setLinearJobDataState);
     }
@@ -49,7 +49,7 @@ export function checkLinearJobData(jobData){
         }
         //TODO Add catch somewhere
 
-    jobData.pass = true;
+    jobData.passed = true;
     jobData.key = linearKey;
     linearKey++;
     return jobData;
