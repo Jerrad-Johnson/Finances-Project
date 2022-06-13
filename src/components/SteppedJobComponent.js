@@ -58,14 +58,14 @@ export function handleSteppedJobSubmission(steppedJobDataState, setSteppedJobDat
     let jobData = setSteppedData();
     jobData = checkSteppedData(jobData);
 
-    if (jobData[0].pass === true) {
+    if (jobData.pass === true) {
         jobData = runCalculationsOnSteppedData(jobData);
         updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDataState);
     }
 }
 
 function setSteppedData(){
-    let jobDataToBeReturned = [];
+    let jobDataToBeReturned = {};
     jobDataToBeReturned.title = document.querySelector('#steppedJobTitle').value;
     let salaryAmountsNodes = document.querySelectorAll('.incomeSteppedJob');
     let salaryYearsNodes = document.querySelectorAll('.yearThisSteppedIncomeBegins');
@@ -84,7 +84,6 @@ function setSteppedData(){
 }
 
 export function checkSteppedData(jobData){
-    let jobDataToBeReturned = [];
 
     if ((jobData.title === undefined) || (jobData.title === '')) {
         throw new Error("Job Title not set.");
@@ -105,44 +104,27 @@ export function checkSteppedData(jobData){
 
     jobData.pass = true;
     jobData.key = steppedKey++;
-    jobDataToBeReturned.push(jobData);
-    jobData = {};
-    return jobDataToBeReturned;
+    //jobData = {};
+
+    return jobData;
     //TODO Split this into check and set
 }
 
 export function runCalculationsOnSteppedData(jobData){
-    let jobDataToBeReturned = new JobDataHandler(jobData).findStepped();
+    let jobDataToBeReturned = new JobDataHandler(jobData).beginStepped();
 
     return jobDataToBeReturned;
 }
 
 function updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDataState){
-
-    let newJobData = {};
-
-    jobData.forEach((e) => { // Correcting data format error; converts from [[k:v]] to {k:v}
-        for(const [k, v] of Object.entries(e)){
-            newJobData[k] = v;
-        }
-    });
-
-
     let extantJobs = [...steppedJobDataState];
 
     if (steppedJobDataState.length === 0){
-        setSteppedJobDataState([newJobData]);
+        setSteppedJobDataState(jobData);
     } else {
-        let combinedJobs = [...extantJobs, newJobData];
+        let combinedJobs = [...extantJobs, jobData];
         setSteppedJobDataState(combinedJobs);
     }
-
-    /* From react chat:
-    setSteppedJobDataState((prevSteppedJobData) =>
-        prevSteppedJobData.length === 0
-            ? jobData
-            : prevSteppedJobData.concat(jobData)
-    );*/
 }
 
 function SteppedGraph({steppedJobDataState, setSteppedJobDataState}){

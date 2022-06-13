@@ -14,16 +14,16 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-              <BrowserRouter>
-                <Nav />
-                  <Routes>
-                      <Route path="/" element={<Home/>} />
-                      <Route path="Career" element={<Career/>} />
-                      <Route path="Expenses" element={<Expenses />} />
-                      <Route path="Investments" element={<Investments />} />
-                      <Route path="Evaluate" element={<Evaluate />} />
-                  </Routes>
-              </BrowserRouter>
+          <BrowserRouter>
+            <Nav />
+              <Routes>
+                  <Route path="/" element={<Home/>} />
+                  <Route path="Career" element={<Career/>} />
+                  <Route path="Expenses" element={<Expenses />} />
+                  <Route path="Investments" element={<Investments />} />
+                  <Route path="Evaluate" element={<Evaluate />} />
+              </Routes>
+          </BrowserRouter>
       </header>
     </div>
   );
