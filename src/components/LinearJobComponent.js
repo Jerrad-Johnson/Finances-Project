@@ -13,14 +13,16 @@ export function handleLinearJobSubmission(linearJobDataState, setLinearJobDataSt
     jobData = setLinearJobData();
     jobData = checkLinearJobData(jobData);
 
-    if (jobData[0].pass === true) {
+    if (jobData.pass === true) {
         jobData = runCalculationsOnLinearData(jobData);
         updateLinearJobDataState(jobData, linearJobDataState, setLinearJobDataState);
     }
+
+    jobData.pass = false;
 }
 
 function setLinearJobData(){
-    let jobDataToBeReturned = [];
+    let jobDataToBeReturned = {};
     jobDataToBeReturned.yearToIncomeCeiling = +document.querySelector('#yearToIncomeCeiling').value -1;
     jobDataToBeReturned.yearIncomeBegins = +document.querySelector('#yearIncomeBegins').value -1;
     jobDataToBeReturned.title = document.querySelector('#linearJobTitle').value;
@@ -33,8 +35,6 @@ function setLinearJobData(){
 }
 
 export function checkLinearJobData(jobData){
-
-    let jobDataToBeReturned = [];
 
         if ((jobData.title === undefined) || (jobData.title === '')){ //TODO Should be !==
             throw new Error("Job Title not set.");
@@ -53,34 +53,23 @@ export function checkLinearJobData(jobData){
 
     jobData.pass = true;
     jobData.key = linearKey;
-    jobDataToBeReturned.push(jobData);
-    jobData = {};
     linearKey++;
-    return jobDataToBeReturned;
+    return jobData;
     //TODO Allow user to skip Starting Income field
 }
 
 export function runCalculationsOnLinearData(jobData){
-    let jobDataToBeReturned = new JobDataHandler(jobData).findLinear();
-    return jobDataToBeReturned;
+    jobData = new JobDataHandler(jobData).beginLinear();
+    return jobData;
 }
 
 function updateLinearJobDataState(jobData, jobDataState, setJobDataState) {
-    let newJobData = {};
-
-    jobData.forEach((e) => { // Correcting data format error; converts from [[k:v]] to {k:v}
-        for (const [k, v] of Object.entries(e)) {
-            newJobData[k] = v;
-        }
-    });
-    let cc = console.log
-
     let extantJobs = [...jobDataState];
 
     if (jobDataState.length === 0) {
-        setJobDataState([newJobData]);
+        setJobDataState([jobData]);
     } else {
-        let combinedJobs = [...extantJobs, newJobData];
+        let combinedJobs = [...extantJobs, jobData];
         setJobDataState(combinedJobs);
     }
 }

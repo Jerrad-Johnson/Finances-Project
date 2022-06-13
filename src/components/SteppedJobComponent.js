@@ -62,6 +62,8 @@ export function handleSteppedJobSubmission(steppedJobDataState, setSteppedJobDat
         jobData = runCalculationsOnSteppedData(jobData);
         updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDataState);
     }
+
+    jobData.pass = false;
 }
 
 function setSteppedData(){
