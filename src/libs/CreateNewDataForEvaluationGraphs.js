@@ -635,7 +635,7 @@ class CreateNewDataForEvaluationGraphs {
 
         for (let i = 0; i < this.length; i++){
             newData.combinedIncome[i]
-            = (income?.sumByYear[i] || 0)
+            = (income?.sumByYear?.[i] || 0)
             + (newData.combinedInvestmentPulls?.[i] || 0)
             + (newData.reinvestedEachYear?.[i] || 0)
             + (newData.investmentWithdrawlValues?.[i] || 0);
