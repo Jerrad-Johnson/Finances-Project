@@ -17,8 +17,6 @@ export function handleLinearJobSubmission(linearJobDataState, setLinearJobDataSt
         jobData = runCalculationsOnLinearData(jobData);
         updateLinearJobDataState(jobData, linearJobDataState, setLinearJobDataState);
     }
-
-    jobData.pass = false;
 }
 
 function setLinearJobData(){
@@ -75,10 +73,11 @@ function updateLinearJobDataState(jobData, jobDataState, setJobDataState) {
 }
 
 function LinearGraph({linearJobDataState, setLinearJobDataState}) {
+    console.log(linearJobDataState)
     if (linearJobDataState.length !== 0) {
         const linearIncomeBarGraph = linearJobDataState.map((job) => (
             <div id="linearJob" className={"linearJobKey" + job.key } key={job.key}>
-                {/*Job title: {job.jobTitle} <br />*/}
+                Job title: {job.title} <br />
                 <span className={"inputSetTitle graphTitle"}>Yearly Income</span>
                 <LinearBarChart job={job}/>
                 <span className={"inputSetTitle graphTitle"}>Running Sum</span>
@@ -88,7 +87,7 @@ function LinearGraph({linearJobDataState, setLinearJobDataState}) {
                             e.preventDefault();
                             handleJobDelete(job.key, linearJobDataState, setLinearJobDataState);
                         }} >
-                    Delete Sheet{/* {job.key}*/}
+                    Delete
                 </button>
             </div>
         ));

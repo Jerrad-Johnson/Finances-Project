@@ -62,8 +62,6 @@ export function handleSteppedJobSubmission(steppedJobDataState, setSteppedJobDat
         jobData = runCalculationsOnSteppedData(jobData);
         updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDataState);
     }
-
-    jobData.pass = false;
 }
 
 function setSteppedData(){
@@ -122,7 +120,7 @@ function updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDa
     let extantJobs = [...steppedJobDataState];
 
     if (steppedJobDataState.length === 0){
-        setSteppedJobDataState(jobData);
+        setSteppedJobDataState([jobData]);
     } else {
         let combinedJobs = [...extantJobs, jobData];
         setSteppedJobDataState(combinedJobs);
@@ -130,11 +128,10 @@ function updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDa
 }
 
 function SteppedGraph({steppedJobDataState, setSteppedJobDataState}){
-
     if (steppedJobDataState.length !== 0) {
         const steppedIncomeBarGraph = steppedJobDataState.map((job) => (
             <div className={"steppedJobBarGraph steppedJobKey" + job.key } key={job.key}>
-                {/*Job title: {job.jobTitle} <br />*/}
+                Job title: {job.title} <br />
                 <span className={"inputSetTitle graphTitle"}>Yearly Income</span>
                 <SteppedBarChart job={job}/>
                 <span className={"inputSetTitle graphTitle"}>Running Sum</span>
@@ -144,10 +141,11 @@ function SteppedGraph({steppedJobDataState, setSteppedJobDataState}){
                             e.preventDefault();
                             handleJobDelete(job.key, steppedJobDataState, setSteppedJobDataState);
                         }} >
-                    Delete Sheet{/* {job.key}*/}
+                    Delete Sheet
                 </button>
             </div>
         ));
+        cc(steppedIncomeBarGraph);
 
         return (
             <div className={"graphCard"}>
