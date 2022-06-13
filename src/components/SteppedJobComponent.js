@@ -58,7 +58,7 @@ export function handleSteppedJobSubmission(steppedJobDataState, setSteppedJobDat
     let jobData = setSteppedData();
     jobData = checkSteppedData(jobData);
 
-    if (jobData.pass === true) {
+    if (jobData.passed === true) {
         jobData = runCalculationsOnSteppedData(jobData);
         updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDataState);
     }
@@ -102,7 +102,7 @@ export function checkSteppedData(jobData){
     }
      //TODO Add catch somewhere
 
-    jobData.pass = true;
+    jobData.passed = true;
     jobData.key = steppedKey++;
     //jobData = {};
 
