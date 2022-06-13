@@ -1,3 +1,4 @@
+/*
 import { render, screen } from '@testing-library/react';
 import {runCalculationsOnSteppedData, checkSteppedData} from "./SteppedJobComponent";
 
@@ -55,3 +56,4 @@ test("Good in, Good out; runCalculationsOnCheckedData", () => {
 
     expect(runCalculationsOnSteppedData(checkedJobData)).toEqual(jobDataReturned);
 });
+*/

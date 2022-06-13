@@ -11,21 +11,25 @@ class JobDataHandler {
 
     beginLinear(){
         let job = this.jobsData;
-        job = this.calculateLinearIncomeIncreaseEachYear(job);
-        job = this.createLinearIncomeArrayWithGraphYearsNumberOfSteps(job);
-        job = this.sumIncomeFromLinearJob(job);
-        job = this.addArrayOfNumberedYears(job);
-        job = this.sumIncomeFromLinearJobByYear(job);
-        return(job);
+        if (job.passed === true) {
+            job = this.calculateLinearIncomeIncreaseEachYear(job);
+            job = this.createLinearIncomeArrayWithGraphYearsNumberOfSteps(job);
+            job = this.sumIncomeFromLinearJob(job);
+            job = this.addArrayOfNumberedYears(job);
+            job = this.sumIncomeFromLinearJobByYear(job);
+            return (job);
+        }
     }
 
     beginStepped(){
         let job = this.jobsData;
-        job = this.calculateSteppedIncomeIncreaseEachYear(job);
-        job = this.addArrayOfNumberedYears(job);
-        job = this.createSteppedSumArrayWithGraphYearsNumberOfSteps(job);
-        job = this.sumSteppedJobIncome(job);
-        return(job);
+        if (job.passed === true) {
+            job = this.calculateSteppedIncomeIncreaseEachYear(job);
+            job = this.addArrayOfNumberedYears(job);
+            job = this.createSteppedSumArrayWithGraphYearsNumberOfSteps(job);
+            job = this.sumSteppedJobIncome(job);
+            return(job);
+        }
     }
 
     calculateSteppedIncomeIncreaseEachYear(job){
@@ -68,20 +72,6 @@ class JobDataHandler {
 
         job.sum = +sum;
         return job;
-    }
-
-    findLinearIncomeJobs() {
-        let linearIncomeJobs = [];
-
-        this.jobsData.forEach(job => {
-            if (job.incomeImmediate) {
-                linearIncomeJobs.push(job);
-            }
-        });
-
-        if (linearIncomeJobs.length >= 1){
-            return linearIncomeJobs;
-        }
     }
 
     calculateLinearIncomeIncreaseEachYear(job){
