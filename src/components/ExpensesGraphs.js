@@ -1,6 +1,7 @@
 import ExpenseDataHandler from "../libs/expensedatahandler";
 import {isNumeric} from "./jobssharedfunctions";
 import {useLocalStorage} from "../hooks/useLocalStorage";
+import {errorHandler} from "../libs/errorHandler";
 
 
 let cc = console.log;
@@ -25,17 +26,13 @@ export function handleExpensesSubmission(expensesState, setExpensesState, sheetO
 
         if (expenseData.pass == true) {
             expenseData = checkSubmissionData(expenseData);
-        }
-
-        if (expenseData.pass == true) {
             expenseData = runCalculationsOnExpenseData(expenseData);
         }
 
         expenseData = addKeyToSheet(expenseData, sheetObjectKeyState);
         updateExpensesState(expenseData, expensesState, setExpensesState);
     } catch (err) {
-        console.log(err);
-        return;
+        return errorHandler(err)
     }
 }
 
@@ -92,9 +89,11 @@ export function checkSubmissionData(expenseData){
         if (expenseData.beginYears[i] > expenseData.endYears[i]) {
             throw new Error("End year must be later than or the same year as the begin year.");
         }
+
         if (!isNumeric(expenseData.amount[i])){
-            throw new Error("Please enter a number in every expense amount/value field.");
-        }
+            throw new Error("Please enter a number in every value field.");
+        } else if (expenseData.amount[i] === 0)
+            throw new Error("Please enter a number greater than 0 in the \"Amount\" field.");
     }
 
     return expenseData;
