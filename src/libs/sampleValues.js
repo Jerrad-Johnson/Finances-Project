@@ -142,8 +142,15 @@ export function setSampleValues() {
        return new Investmentdatahandler(e).beginCalculations();
     });
 
-    //localStorage.setItem("linearjob", linearJobs);
+    localStorage.removeItem("linearjob");
+    localStorage.removeItem("steppedjob");
+    localStorage.removeItem("expensedata");
+    localStorage.removeItem("investmentdata");
 
+    localStorage.setItem("linearjob", JSON.stringify(linearJobsCalculated))
+    localStorage.setItem("steppedjob", JSON.stringify(steppedJobsCalculated));
+    localStorage.setItem("expensedata", JSON.stringify(expensesCalculated));
+    localStorage.setItem("investmentdata", JSON.stringify(investmentsCalculated));
 }
 
 
