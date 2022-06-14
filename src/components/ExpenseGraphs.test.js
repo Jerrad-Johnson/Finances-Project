@@ -23,8 +23,14 @@ test("Check title, begin vs. end year ranges, and amounts entered.", () => {
    expect(() => {
        expenseData.amount = [500, ''];
        checkSubmissionData(expenseData);
-   }).toThrow("Please enter a number in every expense amount/value field.");
+   }).toThrow("Please enter a number in every value field.");
    expenseData.amount = [500, 700];
+
+    expect(() => {
+        expenseData.amount = [0];
+        checkSubmissionData(expenseData);
+    }).toThrow("Please enter a number greater than 0 in the \"Amount\" field.");
+    expenseData.amount = [500, 700];
 
    expect(checkSubmissionData(expenseData)).toHaveProperty('amount');
 });

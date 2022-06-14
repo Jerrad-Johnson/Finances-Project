@@ -37,13 +37,13 @@ test("Test error checks in checkLinearData.", () => {
         jobDataErrorChecks.title = 'Wal-Mart';
         jobDataErrorChecks.incomeImmediate = "";
         checkLinearJobData(jobDataErrorChecks);
-    }).toThrow("Starting income NaN.");
+    }).toThrow("Set starting income to a number greater than 0.");
 
     expect(() => {
         jobDataErrorChecks.incomeImmediate = "500";
         jobDataErrorChecks.incomeCeiling = "";
         checkLinearJobData(jobDataErrorChecks);
-    }).toThrow("Ceiling Income NaN.");
+    }).toThrow("Set ceiling income to a number greater than 0.");
 
     expect(() => {
         jobDataErrorChecks.incomeCeiling = "500";

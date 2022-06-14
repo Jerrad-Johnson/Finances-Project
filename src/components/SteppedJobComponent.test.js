@@ -29,7 +29,7 @@ test("Error checks in checkSteppedJobData", () => {
         jobData.title = "Wally";
         jobData.salaryAmounts = [5, "lol"];
         checkSteppedData(jobData);
-    }).toThrow("Salary fields must be filled, and contain only numbers.");
+    }).toThrow("Set all salary fields to a number greater than 0.");
 
     expect(() => {
         jobData.salaryAmounts = [50000, 100000];
