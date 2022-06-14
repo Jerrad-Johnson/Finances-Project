@@ -1,5 +1,6 @@
 import {isNumeric} from "./jobssharedfunctions";
 import Investmentdatahandler from "../libs/investmentdatahandler";
+import {errorHandler} from "../libs/errorHandler";
 let cc = console.log;
 
 export function SubmitButton({investmentsState, setInvestmentsState, graphKey, setGraphKey}){
@@ -17,9 +18,14 @@ export function SubmitButton({investmentsState, setInvestmentsState, graphKey, s
 
 function handleSubmission(investmentsState, setInvestmentsState, graphKey, setGraphKey){
     let investmentData = getInvestmentDataFromFields();
-    investmentData = castInvestmentData(investmentData);
-    investmentData = checkInvestmentData(investmentData);
-    investmentData = runCalculationsOnInvestmentData(investmentData);
+        investmentData = castInvestmentData(investmentData);
+        try {
+            investmentData = checkInvestmentData(investmentData);
+        } catch (e) {
+            return errorHandler(e);
+        }
+
+        investmentData = runCalculationsOnInvestmentData(investmentData);
     addInvestment(investmentData, investmentsState, setInvestmentsState, graphKey, setGraphKey);
 }
 

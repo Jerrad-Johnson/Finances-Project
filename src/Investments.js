@@ -11,7 +11,7 @@ function Investments(){
     let [investmentsState, setInvestmentsState] = useLocalStorage("investmentdata", localStorage.getItem("investmentdata") ?? []);
     let [graphKey, setGraphKey] = useLocalStorage("investmentgraphkey", localStorage.getItem("investmentgraphkey") ?? 0);
 
-    return (
+        return (
       <div className={"container"}>
           <div className={"pairs"}>
               <div className={"left"}>
@@ -148,19 +148,21 @@ function InvestmentForms({formLengthState, setFormLengthState, formKey, setFormK
 
 function InvestmentGraph({investmentsState, setInvestmentsState, graphKey}){
     let printToDom = [];
+    console.log(investmentsState);
 
-    printToDom = investmentsState.map((e, key) => {
+        printToDom = investmentsState.map((e, key) => {
             return (
                 <div key={key} className={"graphCard"}>
                     <InvestmentRunningValueBarChart
-                        key = {key}
-                        investmentSheet = {e}
+                        key={key}
+                        investmentSheet={e}
                     />
                     <button className={"submitInvestments"} type={"submit"} key={graphKey} onClick={(f) => {
                         f.preventDefault();
                         deleteThisGraph(investmentsState, setInvestmentsState, e.key)
                     }}
-                    >Delete sheet</button>
+                    >Delete sheet
+                    </button>
 
                 </div>
             );
