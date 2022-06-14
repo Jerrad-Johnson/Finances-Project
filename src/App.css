@@ -290,10 +290,20 @@ h2{
 
 .errorMessage{
     position: absolute;
-    width: 300px;
+    width: 30%;
+    min-height: 150px;
     left: 50%;
+    top: 40%;
+    background-color: #fff;
     /*transform: translate(-50%, -50%) scale(0.1);*/
 
+}
+
+.errorMessage{
+    @apply
+    shadow-2xl
+    rounded-xl
+    p-4
 }
 
 

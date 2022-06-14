@@ -3,7 +3,7 @@ import {ExpenseRunningSumBarChart, ExpenseSumBarChart, ExpenseSumDonutChart} fro
 import {SubmitButton, DeleteSheetButton} from "./components/ExpensesGraphs";
 import {DeleteFieldButton, ExpenseForms, AddFieldButton, ResetFieldsButton} from "./components/ExpensesForms";
 import {useLocalStorage} from "./hooks/useLocalStorage";
-
+let cc = console.log;
 let expenseSheetKey = 0;
 
 function incrementExpenseSheetKey(){
@@ -14,6 +14,7 @@ function Expenses(){
 
     const [expenseFieldsState, setExpenseFieldsState] = useState([0]);
     const [expensesState, setExpensesState] = useLocalStorage("expensedata", localStorage.getItem("expensedata") ?? []);
+    cc(expensesState)
 
     return (
         <div className={"container"}>

@@ -37,7 +37,6 @@ test("Error checks in checkSteppedJobData", () => {
     }).toThrow("Year in field 1 is less than or equal to the year in the previous field.");
 
     jobData.salaryYears = [2, 5];
-
 });
 
 
