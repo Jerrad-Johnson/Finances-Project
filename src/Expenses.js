@@ -14,7 +14,6 @@ function Expenses(){
 
     const [expenseFieldsState, setExpenseFieldsState] = useState([0]);
     const [expensesState, setExpensesState] = useLocalStorage("expensedata", localStorage.getItem("expensedata") ?? []);
-    cc(expensesState)
 
     return (
         <div className={"container"}>

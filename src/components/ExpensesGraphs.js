@@ -110,7 +110,6 @@ export function addKeyToSheet(expenseData, sheetObjectKeyState){
 function updateExpensesState(expenseData, expensesState, setExpensesState){
     let combinedExpenseSheets;
 
-    cc(expenseData)
     if (expensesState.length !== 0){
         combinedExpenseSheets = [...[expenseData], ...expensesState];
         setExpensesState(combinedExpenseSheets);

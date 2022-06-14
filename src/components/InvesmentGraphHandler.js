@@ -42,14 +42,14 @@ function getInvestmentDataFromFields(){
 
     let investmentData = {
         title: title.value,
-        labels: [],
+        additionalInvestment: [],
         amounts: [],
-        yearsBegin: [],
-        yearsWithdraw: [],
-        yearsCeaseReinvesting: [],
+        labels: [],
         percentReturn: [],
         percentToPull: [],
-        additionalInvestment: [],
+        yearsBegin: [],
+        yearsCeaseReinvesting: [],
+        yearsWithdraw: [],
     };
 
     labels.forEach((e) => {

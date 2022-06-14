@@ -1,6 +1,7 @@
 import JobDataHandler from "./jobdatahandler";
 import ExpenseDataHandler from "./expensedatahandler";
 import {cc} from "../components/jobssharedfunctions";
+import Investmentdatahandler from "./investmentdatahandler";
 
 export function setSampleValues() {
     let linearJobs = [{
@@ -80,12 +81,37 @@ export function setSampleValues() {
         key: 30003,
     }, {
         title: "Student",
+        amount: [23000, 250, 1400, 250, 150, 300, 120, 90],
         beginYears: [1, 1, 5, 5, 1, 5, 1, 7],
         endYears: [4, 15, 15, 15, 4, 11, 6, 15],
         frequency: ['yr', 'mo', 'mo', 'mo', 'mo', 'mo', 'mo', 'mo'],
         label: ['Tuition and Dorm', 'Food', 'Rent', 'Utilities', 'Car', 'Better Car', 'Auto Ins.', 'Auto Ins change'],
         pass: true,
         key: 30004,
+    }];
+
+    let investments = [{
+        title: "Business 150k",
+        additionalInvestment: [0],
+        amounts: [150000],
+        labels: ['Reinvest gains as Owner-manager'],
+        percentReturn: [30],
+        percentToPull: [30],
+        yearsBegin: [7],
+        yearsCeaseReinvesting: ['Never'],
+        yearsWithdraw: ['Never'],
+        key: 31000,
+    }, {
+        title: "Mutual Fund",
+        additionalInvestment: [7000],
+        amounts: [10000],
+        labels: ['10k + 7k/yr additional'],
+        percentReturn: [8.7],
+        percentToPull: [30],
+        yearsBegin: [1],
+        yearsCeaseReinvesting: ['Never'],
+        yearsWithdraw: ['Never'],
+        key: 31001,
     }];
 
     let linearJobsCalculated = linearJobs.map((e) => {
@@ -100,7 +126,12 @@ export function setSampleValues() {
        return new ExpenseDataHandler(e).beginCalculations();
     });
 
-    //cc(expensesCalculated)
+    let investmentsCalculated = investments.map((e) => {
+       return new Investmentdatahandler(e).beginCalculations();
+    });
+
+
+    cc(investmentsCalculated)
     //localStorage.setItem("linearjob", linearJobs);
 
 }
