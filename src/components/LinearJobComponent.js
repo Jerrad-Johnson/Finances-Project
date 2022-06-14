@@ -33,8 +33,6 @@ function setLinearJobData(){
     jobDataToBeReturned.incomeCeiling = +document.querySelector('#incomeCeiling').value;
     jobDataToBeReturned.incomeImmediate = +document.querySelector('#incomeImmediate').value;
 
-    console.log(jobDataToBeReturned);
-
     return jobDataToBeReturned;
 }
 
@@ -79,7 +77,6 @@ function updateLinearJobDataState(jobData, jobDataState, setJobDataState) {
 }
 
 function LinearGraph({linearJobDataState, setLinearJobDataState}) {
-    console.log(linearJobDataState)
     if (linearJobDataState.length !== 0) {
         const linearIncomeBarGraph = linearJobDataState.map((job) => (
             <div id="linearJob" className={"linearJobKey" + job.key } key={job.key}>
