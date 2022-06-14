@@ -16,37 +16,32 @@ export function setSampleValues() {
 
     let steppedJobs = [{
         title: "Grocery Worker then Manager",
-        salaryAmounts: [37500, 37500, 42000, 42000, 42000, 55000, 55000, 55000, 55000,
-            55000, 55000, 55000, 55000, 55000, 55000],
+        salaryAmounts: [37500, 42000, 55000],
         salaryYears: [1, 3, 6],
         key: 29000,
         passed: true,
     }, {
         title: "Construction Worker then Foreman",
-        salaryAmounts: [37500, 45000, 45000, 52000, 52000, 52000, 72800, 72800, 72800,
-            72800, 72800, 72800, 72800, 72800, 72800],
+        salaryAmounts: [37500, 45000, 52000, 72800],
         salaryYears: [1, 2, 4, 7],
         key: 29001,
         passed: true,
 
     }, {
         title: "IT Support",
-        salaryAmounts: [50000, 60000, 60000, 75000, 75000, 75000, 75000, 75000, 75000,
-            75000, 75000, 75000, 75000, 75000, 75000],
+        salaryAmounts: [50000, 60000, 75000],
         salaryYears: [1, 2, 4],
         key: 29002,
         passed: true,
     }, {
         title: "Fast Food",
-        salaryAmounts: [27000, 27000, 27000, 27000, 27000, 27000, 27000, 27000, 27000,
-            27000, 27000, 27000, 27000, 27000, 27000],
+        salaryAmounts: [27000],
         salaryYears: [1],
         passed: true,
         key: 28004,
     }, {
         title: "Student",
-        salaryAmounts: [18000, 18000, 18000, 18000, 55000, 55000, 70000, 70000, 90000,
-            90000, 90000, 90000, 90000, 90000, 90000],
+        salaryAmounts: [18000, 55000, 70000, 90000],
         salaryYears: [1, 5, 7, 9],
         passed: true,
         key: 28006,
