@@ -73,7 +73,7 @@ function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionSta
                 <span className={"inputSetTitle"}>Choose Dataset</span>
                 <form>
                     <span className={"inputTitle"}>Income</span>
-                    <select className={"inputSelector"} onChange={(event) => {
+                    <select className={"inputSelector incomeDataset"} onChange={(event) => {
                         setIncomeOptionState(event.target.value);
                     }}>
                         <SelectOptions
@@ -82,7 +82,7 @@ function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionSta
                     </select>
 
                     <span className={"inputTitle"}>Expenses</span>
-                    <select className={"inputSelector"} onChange={(event) => {
+                    <select className={"inputSelector expensesDataset"} onChange={(event) => {
                         setExpenseOptionState(event.target.value);
                     }}>
                         <SelectOptions
@@ -91,7 +91,7 @@ function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionSta
                     </select>
 
                     <span className={"inputTitle"}>Investments</span>
-                    <select className={"inputSelector"} onChange={(event) => {
+                    <select className={"inputSelector investmentDataset"} onChange={(event) => {
                         setInvestmentOptionState(event.target.value);
                     }}>
                         <SelectOptions

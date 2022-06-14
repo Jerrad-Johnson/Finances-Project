@@ -10,7 +10,7 @@ function Home(){
           <h2>Quick Start</h2>
           <span><b>NOTE:</b> &nbsp; This will delete any values you have already set.</span>
           <span>To get preset values and see how this app works,</span>
-          <span><button onClick={(e) => {
+          <span><button className={"getSampleValues"} onClick={(e) => {
               e.preventDefault();
               setSampleValues();
               window.location.href = 'Evaluate';
