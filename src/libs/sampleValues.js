@@ -45,7 +45,8 @@ export function setSampleValues() {
         key: 28004,
     }, {
         title: "Student",
-        salaryAmounts: [18000, 18000, 18000, 18000, 55000, 55000, 70000, 70000, 90000, 90000, 90000, 90000, 90000, 90000, 90000],
+        salaryAmounts: [18000, 18000, 18000, 18000, 55000, 55000, 70000, 70000, 90000,
+            90000, 90000, 90000, 90000, 90000, 90000],
         salaryYears: [1, 5, 7, 9],
         passed: true,
         key: 28006,
@@ -92,9 +93,9 @@ export function setSampleValues() {
 
     let investments = [{
         title: "Business 150k",
+        labels: ['Reinvest gains as Owner-manager'],
         additionalInvestment: [0],
         amounts: [150000],
-        labels: ['Reinvest gains as Owner-manager'],
         percentReturn: [30],
         percentToPull: [30],
         yearsBegin: [7],
@@ -103,15 +104,26 @@ export function setSampleValues() {
         key: 31000,
     }, {
         title: "Mutual Fund",
+        labels: ['10k + 7k/yr additional'],
         additionalInvestment: [7000],
         amounts: [10000],
-        labels: ['10k + 7k/yr additional'],
         percentReturn: [8.7],
         percentToPull: [30],
         yearsBegin: [1],
         yearsCeaseReinvesting: ['Never'],
         yearsWithdraw: ['Never'],
         key: 31001,
+    }, {
+        title: "Business 300k -- Unattended IRR",
+        labels: ['Business'],
+        additionalInvestment: [0],
+        amounts: [300000],
+        percentReturn: [35],
+        percentToPull: [30],
+        yearsBegin: [7],
+        yearsCeaseReinvesting: ['Never'],
+        yearsWithdraw: ['Never'],
+        key: 31002,
     }];
 
     let linearJobsCalculated = linearJobs.map((e) => {
@@ -130,8 +142,6 @@ export function setSampleValues() {
        return new Investmentdatahandler(e).beginCalculations();
     });
 
-
-    cc(investmentsCalculated)
     //localStorage.setItem("linearjob", linearJobs);
 
 }

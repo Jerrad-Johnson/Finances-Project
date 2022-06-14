@@ -11,7 +11,9 @@ function Investments(){
     let [investmentsState, setInvestmentsState] = useLocalStorage("investmentdata", localStorage.getItem("investmentdata") ?? []);
     let [graphKey, setGraphKey] = useLocalStorage("investmentgraphkey", localStorage.getItem("investmentgraphkey") ?? 0);
 
-        return (
+    cc(investmentsState)
+
+    return (
       <div className={"container"}>
           <div className={"pairs"}>
               <div className={"left"}>
