@@ -3,6 +3,7 @@ import LinearGraph, {handleLinearJobSubmission} from "./components/LinearJobComp
 import {createArrayWithNumberOfYearsToGraph} from "./components/jobssharedfunctions";
 import SteppedGraph, {ListJobIncomeForms, addSteppedIncomeField, removeSteppedIncomeField, handleSteppedJobSubmission} from "./components/SteppedJobComponent";
 import {useLocalStorage} from "./hooks/useLocalStorage";
+import {setSampleValues} from "./libs/sampleValues";
 
 //TODO Display job title in graph
 //TODO Create a Youtube video demonstrating this app.
@@ -11,6 +12,7 @@ import {useLocalStorage} from "./hooks/useLocalStorage";
 let cc = console.log;
 var steppedIncomeFormKey = 0;
 export var jobListIncomeFormKey = 200;
+setSampleValues();
 
 function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDataState, setSteppedJobDataState}) {
 
