@@ -4,8 +4,7 @@ import JobDataHandler from "../libs/jobdatahandler";
 import {LinearBarChart, LinearSumBarChart} from "../graphs/IncomeGraphs";
 import {handleJobDelete, isNumeric} from "./jobssharedfunctions";
 import {errorHandler} from "../libs/errorHandler";
-
-//let cc = console.log;
+let cc = console.log;
 var linearKey = 0;
 
 export function handleLinearJobSubmission(linearJobDataState, setLinearJobDataState){
