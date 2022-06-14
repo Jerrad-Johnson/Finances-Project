@@ -4,6 +4,7 @@ let jobData = {
     title: "Wally",
     salaryYears: [2, 5],
     salaryAmounts: [50000, 100000],
+    passed: true,
 };
 
 let checkedJobData = {

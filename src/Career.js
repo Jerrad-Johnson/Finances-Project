@@ -12,7 +12,6 @@ import {setSampleValues} from "./libs/sampleValues";
 let cc = console.log;
 var steppedIncomeFormKey = 0;
 export var jobListIncomeFormKey = 200;
-setSampleValues();
 
 function FormContainer({linearJobDataState, setLinearJobDataState, steppedJobDataState, setSteppedJobDataState}) {
 
@@ -142,7 +141,7 @@ function CreateOptionForms({id, steppedIncomeFormKey}) {
 function Career() {
     const [linearJobDataState, setLinearJobDataState] = useLocalStorage("linearjob", localStorage.getItem("linearjob") ?? []);
     const [steppedJobDataState, setSteppedJobDataState] = useLocalStorage("steppedjob", localStorage.getItem("steppedjob") ?? []);
-
+    cc(steppedJobDataState)
     return (
       <div className={"container"}>
           <div className={"pairs"}>

@@ -42,6 +42,12 @@ export function setSampleValues() {
         salaryYears: [1],
         passed: true,
         key: 28004,
+    }, {
+        title: "Student",
+        salaryAmounts: [18000, 18000, 18000, 18000, 55000, 55000, 70000, 70000, 90000, 90000, 90000, 90000, 90000, 90000, 90000],
+        salaryYears: [1, 5, 7, 9],
+        passed: true,
+        key: 28006,
     }];
 
     let expenses = [{
@@ -70,8 +76,16 @@ export function setSampleValues() {
         endYears: [15, 15, 15, 15, 15],
         frequency: ['mo', 'mo', 'mo', 'mo', 'mo'],
         label: ['Car Payment', 'Rent', 'Utilities', 'Food', 'Car Maint & Ins'],
-        key: 30003,
         pass: true,
+        key: 30003,
+    }, {
+        title: "Student",
+        beginYears: [1, 1, 5, 5, 1, 5, 1, 7],
+        endYears: [4, 15, 15, 15, 4, 11, 6, 15],
+        frequency: ['yr', 'mo', 'mo', 'mo', 'mo', 'mo', 'mo', 'mo'],
+        label: ['Tuition and Dorm', 'Food', 'Rent', 'Utilities', 'Car', 'Better Car', 'Auto Ins.', 'Auto Ins change'],
+        pass: true,
+        key: 30004,
     }];
 
     let linearJobsCalculated = linearJobs.map((e) => {
@@ -86,7 +100,7 @@ export function setSampleValues() {
        return new ExpenseDataHandler(e).beginCalculations();
     });
 
-    cc(expensesCalculated)
+    //cc(expensesCalculated)
     //localStorage.setItem("linearjob", linearJobs);
 
 }
