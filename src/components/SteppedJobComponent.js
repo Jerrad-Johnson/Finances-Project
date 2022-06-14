@@ -3,6 +3,7 @@ import JobDataHandler from "../libs/jobdatahandler";
 import {handleJobDelete, isNumeric} from "./jobssharedfunctions";
 import {SteppedBarChart, SteppedSumBarChart} from "../graphs/IncomeGraphs";
 import {CreateSteppedJobIncomeForm} from "../Career";
+import {errorHandler} from "../libs/errorHandler";
 
 let cc = console.log;
 var steppedKey = 0;
@@ -56,8 +57,12 @@ export function removeSteppedIncomeField(steppedIncomeFormState, setSteppedIncom
 
 export function handleSteppedJobSubmission(steppedJobDataState, setSteppedJobDataState){
     let jobData = setSteppedData();
-    jobData = checkSteppedData(jobData);
 
+    try {
+        jobData = checkSteppedData(jobData);
+    } catch (err) {
+        return errorHandler(err);
+    }
     if (jobData.passed === true) {
         jobData = runCalculationsOnSteppedData(jobData);
         updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDataState);
@@ -90,8 +95,8 @@ export function checkSteppedData(jobData){
     }
 
     for (let i = 0; i < jobData.salaryAmounts.length; i++) {
-        if (!isNumeric(jobData.salaryAmounts[i])) {
-            throw new Error("Salary fields must be filled, and contain only numbers.");
+        if (!isNumeric(jobData.salaryAmounts[i]) || jobData.salaryAmounts[i] === 0) {
+            throw new Error("Set all salary fields to a number greater than 0.");
         }
     }
 

@@ -3,6 +3,7 @@ import React from "react";
 import JobDataHandler from "../libs/jobdatahandler";
 import {LinearBarChart, LinearSumBarChart} from "../graphs/IncomeGraphs";
 import {handleJobDelete, isNumeric} from "./jobssharedfunctions";
+import {errorHandler} from "../libs/errorHandler";
 
 //let cc = console.log;
 var linearKey = 0;
@@ -11,7 +12,12 @@ export function handleLinearJobSubmission(linearJobDataState, setLinearJobDataSt
     let jobData = undefined;
 
     jobData = setLinearJobData();
-    jobData = checkLinearJobData(jobData);
+
+    try {
+        jobData = checkLinearJobData(jobData);
+    } catch (err) {
+        return errorHandler(err);
+    }
 
     if (jobData.passed === true) {
         jobData = runCalculationsOnLinearData(jobData);
@@ -36,10 +42,10 @@ export function checkLinearJobData(jobData){
 
         if ((jobData.title === undefined) || (jobData.title === '')){ //TODO Should be !==
             throw new Error("Job Title not set.");
-        } else if (!isNumeric(jobData.incomeCeiling)) {
-            throw new Error("Ceiling Income NaN.");
-        } else if (!isNumeric(jobData.incomeImmediate)) {
-            throw new Error("Starting income NaN.");
+        } else if (!isNumeric(jobData.incomeCeiling) || jobData.incomeCeiling === 0) {
+            throw new Error("Set ceiling income to a number greater than 0.");
+        } else if (!isNumeric(jobData.incomeImmediate) || jobData.incomeImmediate === 0) {
+            throw new Error("Set starting income to a number greater than 0.");
         } else if (!isNumeric(jobData.yearToIncomeCeiling)) {
             throw new Error("Year to income ceiling not set.");
         } else if (!isNumeric(jobData.yearIncomeBegins)) {
