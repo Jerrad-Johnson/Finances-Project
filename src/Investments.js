@@ -148,7 +148,6 @@ function InvestmentForms({formLengthState, setFormLengthState, formKey, setFormK
 
 function InvestmentGraph({investmentsState, setInvestmentsState, graphKey}){
     let printToDom = [];
-    console.log(investmentsState);
 
         printToDom = investmentsState.map((e, key) => {
             return (
