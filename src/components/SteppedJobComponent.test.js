@@ -1,4 +1,3 @@
-import { render, screen } from '@testing-library/react';
 import {runCalculationsOnSteppedData, checkSteppedData} from "./SteppedJobComponent";
 
 let jobData = {

@@ -1,5 +1,5 @@
 import React from "react";
-import {cc, isEmptyArray} from "./jobssharedfunctions";
+import {cc} from "./jobssharedfunctions";
 
 
 export function sortFinancialData(financialData){
@@ -15,14 +15,6 @@ export function sortFinancialData(financialData){
 }
 
 export function SelectOptions({financialData}){
-    /*if (!financialData[0]) {
-        return (
-            <>
-                <option>No Data</option>
-            </>
-        );
-    }*/
-
     let printToDom = financialData.map((entry, index) => {
         return(
             <option key={index}>{entry.title}</option>
@@ -77,11 +69,6 @@ function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionSta
 
     return (
         <div className={"inputSet"}>
-{/*            <button onClick={(e) => {
-                e.preventDefault();
-                cc(employmentState);
-            }}>Log</button>
-            <br />*/}
             <div className={"inputSelectorsCard"}>
                 <span className={"inputSetTitle"}>Choose Dataset</span>
                 <form>
@@ -162,26 +149,6 @@ function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionSta
                     </select>
                 </form>
             </div>
-
-
-            {/*
-            <PrintSum
-                title = {incomeOptionState}
-                financialData = {incomeData}
-                typeOfFinancialData = {"income"}
-            /> Income
-            <br />
-            <PrintSum
-                title = {expenseOptionState}
-                financialData = {expenseData}
-                typeOfFinancialData = {"expense"}
-            /> Expenses
-            <br />
-            <span>Income $, Expenses $, Investment Value $</span>
-            <br />
-            <span>Difference $</span>
-            <br />
-            <br />*/}
         </div>
     );
 }

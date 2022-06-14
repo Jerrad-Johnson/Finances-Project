@@ -150,7 +150,6 @@ function SteppedGraph({steppedJobDataState, setSteppedJobDataState}){
                 </button>
             </div>
         ));
-        cc(steppedIncomeBarGraph);
 
         return (
             <div className={"graphCard"}>

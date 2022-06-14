@@ -1,4 +1,3 @@
-
 import {runCalculationsOnLinearData, checkLinearJobData} from "./LinearJobComponent";
 
 test("Good in, Good out -- error checks from checkLinearJobData", () => {
