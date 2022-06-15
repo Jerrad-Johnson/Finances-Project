@@ -135,26 +135,26 @@ function updateSteppedJobDataState(jobData, steppedJobDataState, setSteppedJobDa
 function SteppedGraph({steppedJobDataState, setSteppedJobDataState}){
     if (steppedJobDataState.length !== 0) {
         const steppedIncomeBarGraph = steppedJobDataState.map((job) => (
-            <div className={"steppedJobBarGraph steppedJobKey" + job.key } key={job.key}>
-                Job title: {job.title} <br />
-                <span className={"inputSetTitle graphTitle"}>Yearly Income</span>
-                <SteppedBarChart job={job}/>
-                <span className={"inputSetTitle graphTitle"}>Running Sum</span>
-                <SteppedSumBarChart job={job}/>
-                <button type={"click"} className={"deleteSteppedJobKey" + job.key}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            handleJobDelete(job.key, steppedJobDataState, setSteppedJobDataState);
-                        }} >
-                    Delete Sheet
-                </button>
+            <div className={"graphCard"}>
+                <div className={"steppedJobBarGraph steppedJobKey" + job.key } key={job.key}>
+                    <SteppedBarChart job={job}/>
+                    <span className={"inputSetTitle graphTitle"}>Running Sum</span>
+                    <SteppedSumBarChart job={job}/>
+                    <button type={"click"} className={"deleteSteppedJobKey" + job.key}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handleJobDelete(job.key, steppedJobDataState, setSteppedJobDataState);
+                            }} >
+                        Delete Sheet
+                    </button>
+                </div>
             </div>
         ));
 
         return (
-            <div className={"graphCard"}>
+            <>
                 {(steppedJobDataState.length !== 0) && steppedIncomeBarGraph}
-            </div>
+            </>
         );
     }
 }

@@ -89,7 +89,9 @@ export function LinearSumBarChart({job}) {
 export function SteppedBarChart({job}) {
 
     return (
-        <div /*key={linearIncome.key}/*/> {/*TODO Does not render key*/}
+        <>
+            Job title: {job.title} <br />
+            <span className={"inputSetTitle graphTitle"}>Yearly Income</span>
             <Chart
                 series = {[
                     {
@@ -112,7 +114,7 @@ export function SteppedBarChart({job}) {
                     },
                 }}
             />
-        </div>
+        </>
     );
 }
 

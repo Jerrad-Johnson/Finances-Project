@@ -78,26 +78,28 @@ function updateLinearJobDataState(jobData, jobDataState, setJobDataState) {
 function LinearGraph({linearJobDataState, setLinearJobDataState}) {
     if (linearJobDataState.length !== 0) {
         const linearIncomeBarGraph = linearJobDataState.map((job) => (
-            <div id="linearJob" className={"linearJobKey" + job.key } key={job.key}>
-                Job title: {job.title} <br />
-                <span className={"inputSetTitle graphTitle"}>Yearly Income</span>
-                <LinearBarChart job={job}/>
-                <span className={"inputSetTitle graphTitle"}>Running Sum</span>
-                <LinearSumBarChart job={job}/>
-                <button type={"click"} className={"deleteLinearJobKey" + job.key}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            handleJobDelete(job.key, linearJobDataState, setLinearJobDataState);
-                        }} >
-                    Delete
-                </button>
+            <div className={"graphCard"}>
+                <div id="linearJob" className={"linearJobKey" + job.key } key={job.key}>
+                    Job title: {job.title} <br />
+                    <span className={"inputSetTitle graphTitle"}>Yearly Income</span>
+                    <LinearBarChart job={job}/>
+                    <span className={"inputSetTitle graphTitle"}>Running Sum</span>
+                    <LinearSumBarChart job={job}/>
+                    <button type={"click"} className={"deleteLinearJobKey" + job.key}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handleJobDelete(job.key, linearJobDataState, setLinearJobDataState);
+                            }} >
+                        Delete
+                    </button>
+                </div>
             </div>
         ));
 
         return (
-            <div className={"graphCard"}>
+            <>
                 {(linearJobDataState.length !== 0) && linearIncomeBarGraph}
-            </div>
+            </>
         );
     }
 }
