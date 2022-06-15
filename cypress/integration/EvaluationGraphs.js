@@ -15,7 +15,7 @@ Cypress.Commands.add("tryAllGraphTypes", () => {
         "Same Year Expendable", "Taxes by Category", "Tax Percentage by Year"];
 
     for (let i = 0; i < graphOptions.length;){
-        cy.tryAllDatasetOptions(".firstGraph", ".secondGraph", graphOptions[i], graphOptions[i+1])
+        cy.tryAllDatasetOptions(".firstGraph", ".secondGraph", graphOptions[i], graphOptions[i+1]);
         i += 2;
     }
 });
