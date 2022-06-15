@@ -15,6 +15,7 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     incomeData = findCurrentFinancialSheets(incomeData, incomeOptionState);
     expenseData = findCurrentFinancialSheets(expenseData, expenseOptionState);
     investmentData = findCurrentFinancialSheets(investmentData, investmentOptionState);
+
     if (incomeData[0]) { incomeData = incomeData[0] }
     if (expenseData[0]) { expenseData = expenseData[0] }
     if (investmentData[0]) { investmentData = investmentData[0] }
@@ -46,9 +47,7 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     let graphData = mapGraphOptionStateToObjectKey[graphOptionState]();
     let secondGraphData = mapGraphOptionStateToObjectKey[secondGraphOptionState]();
 
-    if (isObject(graphData?.[0])){
-        yearsArrayForGraph = getYearsNumbered();
-    }
+    isObject(graphData?.[0]) ? yearsArrayForGraph = getYearsNumbered() : yearsArrayForGraph = ["No Data"];
 
     return (
         <>
