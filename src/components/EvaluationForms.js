@@ -43,7 +43,7 @@ export function GraphOptions(){
             <option>Same Year Expendable</option>
             <option>Taxes by Category</option>
             <option>Tax Percentage by Year</option>
-        </>
+        </> //Always update Cypress test when adding or removing a graph option.
     );
 }
 
