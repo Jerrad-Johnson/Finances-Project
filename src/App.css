@@ -295,8 +295,6 @@ h2{
     left: 50%;
     top: 40%;
     background-color: #fff;
-    /*transform: translate(-50%, -50%) scale(0.1);*/
-
 }
 
 .errorMessage{
@@ -315,12 +313,14 @@ h2{
     block
 }
 
-.removeValues{
-    opacity: 1;
-    transition: 2s;
+.getSampleValues{
+    @apply
+    mr-4
 }
 
-/*
-div.generalData {
-    @apply w-full;
-}*/
+.buttonsSideBySide{
+    @apply
+    mt-4
+    flex
+    justify-center
+}

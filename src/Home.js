@@ -11,17 +11,19 @@ function Home(){
           <span>This project is still under construction. Please excuse any bugs, poor mobile support, etc.</span>
           <h2>Quick Start</h2>
           <span><b>NOTE:</b> &nbsp; This will delete any values you have already set.</span>
-          <span>To get preset values and see how this app works, or to remove everything:</span>
-          <span><button className={"getSampleValues"} onClick={(e) => {
-              e.preventDefault();
-              setSampleValues();
-              window.location.href = 'Evaluate';
-          }}>Load</button></span>
-          <span><button className={"removeValues"} onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              removeAllValues();
-          }}>Delete</button></span>
+          <span>To get preset values and see how this app works, or to remove all data:</span>
+          <div className={"buttonsSideBySide"}>
+              <button className={"getSampleValues"} onClick={(e) => {
+                  e.preventDefault();
+                  setSampleValues();
+                  window.location.href = 'Evaluate';
+              }}>Load</button>
+              <button className={"removeValues"} onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  removeAllValues();
+              }}>Delete</button>
+          </div>
           <h2>What is this?</h2>
           <span>It's a financial planner; use it to see graphs displaying how much your expenses will cost you over the years, how much your job will provide, and the value of your investments. On the final page (Evaluate) you will be able to compare your income to expenses, see how much your federal taxes will be, the impact of inflation, and so on. </span>
           <span>You do not have to fill every section (career, expenses, investments). Just one is enough. But the more data you provide, the more informative the graphs will be. Here's an example of what you could see on the final page:</span>
