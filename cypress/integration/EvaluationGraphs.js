@@ -14,14 +14,13 @@ Cypress.Commands.add("tryAllGraphTypes", () => {
         "Combined Investment Expenses", "Expenses by Group", "Income by Group", "Investment Income",
         "Same Year Expendable", "Taxes by Category", "Tax Percentage by Year"];
 
-    for (let i = 0; i < graphOptions.length;){
+    for (let i = 0; i < graphOptions.length; i += 2){
         cy.tryAllDatasetOptions(".firstGraph", ".secondGraph", graphOptions[i], graphOptions[i+1]);
-        i += 2;
     }
 });
 
 Cypress.Commands.add("tryAllDatasetOptions", (graphOneClassName, graphTwoClassName,
-                                              graphOneName, graphTwoName) => {
+                                                       graphOneName, graphTwoName) => {
     for (let i = 0; i < 2; i++){
         let dataChoice;
         i == 0 ? dataChoice = 0 : dataChoice = "No Data";
@@ -43,7 +42,6 @@ Cypress.Commands.add("tryAllDatasetOptions", (graphOneClassName, graphTwoClassNa
         }
     }
 });
-
 
 Cypress.Commands.add("getSampleData", () => {
     cy.visit("localhost:3000");
