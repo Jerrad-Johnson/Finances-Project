@@ -1,16 +1,15 @@
 export function errorHandler(message){
-    let x = document.createElement("div");
-    x.setAttribute("class", "errorMessage");
-    x.innerText = message;
+    if (document.querySelector(".errorMessage")) return;
 
-    let y = document.createElement("button");
-    y.innerText = "Close"
-    y.setAttribute("onClick", `let temp = document.querySelector(".errorMessage"); temp.remove()`);
+    let body = document.querySelector("body");
+    let errorElement = document.createElement("div");
+    errorElement.setAttribute("class", "errorMessage");
+    errorElement.innerText = message;
+    body.append(errorElement);
 
-    x.append(y);
-
-    let z = document.querySelector("body");
-
-    z.append(x);
+    body.addEventListener("click", () => { handleErrorClick(errorElement) }, {capture: false, once: true});
 }
 
+export function handleErrorClick(errorElement){
+    errorElement.remove();
+}
