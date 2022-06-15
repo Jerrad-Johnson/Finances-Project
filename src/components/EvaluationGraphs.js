@@ -77,6 +77,7 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
                         }
                     }}
                 />
+                <span className={"evalDescription"}>{graphData.description}</span>
             </div>
 
             <div className={"graphCard"}>
@@ -102,6 +103,7 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
                         }
                     }}
                 />
+                <span className={"evalDescription"}>{secondGraphData.description}</span>
             </div>
         </>
     );

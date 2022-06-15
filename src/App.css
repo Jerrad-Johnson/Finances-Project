@@ -306,6 +306,14 @@ h2{
     p-4
 }
 
+.evalDescription{
+}
+
+.evalDescription{
+    @apply
+    text-center
+    block
+}
 
 /*
 div.generalData {

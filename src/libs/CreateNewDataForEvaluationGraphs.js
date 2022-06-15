@@ -51,6 +51,9 @@ class CreateNewDataForEvaluationGraphs {
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
+        x.description = "This takes your total assets after taxes/expenses, both liquid and illiquid, and shows their " +
+            "relative value after inflation. To at least beat inflation, consider investing your funds."
+
         return x;
     }
 
@@ -78,7 +81,8 @@ class CreateNewDataForEvaluationGraphs {
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
-        x.description = "Your pull % includes your additional investments. If you pull 30% and make an additional investment of 100k, you will pull 30k plus 30% of the return.";
+        x.description = "Your pull % includes your additional investments. If you pull 30% and make an additional " +
+            "investment of 100k, you will pull 30k plus 30% of the return.";
 
         return x;
     }
@@ -111,7 +115,9 @@ class CreateNewDataForEvaluationGraphs {
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
-        x.description = "Investment expenses includes initial investments and additional investments, but not re-investments.";
+        x.description = 'Investment expenses includes initial investments and additional investments, but not re-investments. ' +
+            'General expenses includes everything you listed on the "expenses" page, which often includes rent, car payment, etc. ' +
+            'It is assumed that you pay taxes on your investment growth, and that is included here.'
         return x;
     }
 
@@ -144,6 +150,7 @@ class CreateNewDataForEvaluationGraphs {
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
+        x.description = "Remember that the amounts you reinvested may not liquid.";
         return x;
     }
 
@@ -166,6 +173,8 @@ class CreateNewDataForEvaluationGraphs {
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
+        x.description = `Your pulls are assumed to be liquid, and your reinvestments to be illiquid -- except the portion that you pulled.`;
+
         return x;
     }
 
@@ -183,7 +192,8 @@ class CreateNewDataForEvaluationGraphs {
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
-        x.description = "Liquid Assets are after same-year expenses";
+        x.description = "This graph assumes that you save all of your earnings from previous years, minus what you explicitly listed as expenses and investments. " +
+            "Liquid Assets are after same-year expenses. And it is assumed that your investments are illiquid. except the portion that you pulled."; //TODO Does this include reinvestment as expense? Shouldn't be.
         return x;
     }
 
@@ -205,6 +215,8 @@ class CreateNewDataForEvaluationGraphs {
             y = this.addGraphNecessities(this.newGraphData?.combinedExpenses, "Expenses by Year", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
         }
+
+        x.description = "This shows what you spent in each year vs. what you earned in that same year. Savings are not shown here.";
 
         return x;
     }
@@ -242,6 +254,8 @@ class CreateNewDataForEvaluationGraphs {
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
+        x.description = "This assumes that you're paying taxes on your investment growth.";
+
         return x;
     }
 
@@ -256,6 +270,8 @@ class CreateNewDataForEvaluationGraphs {
             y = this.addGraphNecessities(this.taxesOnIncomeOnly.effectiveTaxPercentages, "Effective Tax Percentage", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
         }
+
+        x.description = "This assumes that you're paying taxes on your investment growth.";
 
         return x;
     }
@@ -280,7 +296,7 @@ class CreateNewDataForEvaluationGraphs {
             [x, y] = this.addThisEntryToArray(x, y);
         }
 
-        x.description = "blah";
+        x.description = "Assets are your income after expenses, and your investments plus their growth. It is assumed that your investments are illiquid, except the portion that you pulled.";
         return x;
     }
 
