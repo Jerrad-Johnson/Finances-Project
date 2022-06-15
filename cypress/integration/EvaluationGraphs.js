@@ -26,19 +26,19 @@ Cypress.Commands.add("tryAllDatasetOptions", (graphOneClassName, graphTwoClassNa
         let dataChoice;
         i == 0 ? dataChoice = 0 : dataChoice = "No Data";
         cy.getSampleData();
-        cy.setAndCheckOptions(graphOneClassName, graphTwoClassName, graphOneName, graphTwoName, dataChoice)
+        cy.setAndCheckOptions(graphOneClassName, graphTwoClassName, graphOneName, graphTwoName, dataChoice);
 
         for (let j = 0; j < 2; j++){
             let dataChoice;
             j == 0 ? dataChoice = 0 : dataChoice = "No Data";
             cy.getSampleData();
-            cy.setAndCheckOptions(graphOneClassName, graphTwoClassName, graphOneName, graphTwoName, dataChoice)
+            cy.setAndCheckOptions(graphOneClassName, graphTwoClassName, graphOneName, graphTwoName, dataChoice);
 
             for (let k = 0; k < 2; k++){
                 let dataChoice;
                 k == 0 ? dataChoice = 0 : dataChoice = "No Data";
                 cy.getSampleData();
-                cy.setAndCheckOptions(graphOneClassName, graphTwoClassName, graphOneName, graphTwoName, dataChoice)
+                cy.setAndCheckOptions(graphOneClassName, graphTwoClassName, graphOneName, graphTwoName, dataChoice);
             }
         }
     }
