@@ -10,6 +10,6 @@ export function errorHandler(message){
     body.addEventListener("click", () => { handleErrorClick(errorElement) }, {capture: false, once: true});
 }
 
-export function handleErrorClick(errorElement){
+function handleErrorClick(errorElement){
     errorElement.remove();
 }

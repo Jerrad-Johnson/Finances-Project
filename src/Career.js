@@ -52,8 +52,10 @@ function LinearIncomeForms({linearJobDataState, setLinearJobDataState}) {
                     id={"yearToIncomeCeiling"}
                 />
                 <button type={"click"} id={"submitLinearJob"} onClick={(e) => {
-                    e.preventDefault(); handleLinearJobSubmission(linearJobDataState,
-                        setLinearJobDataState) }}>
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleLinearJobSubmission(linearJobDataState, setLinearJobDataState);
+                }}>
                     Submit
                 </button>
             </form>
@@ -97,8 +99,8 @@ function SteppedIncomeForms({steppedJobDataState, setSteppedJobDataState}) {
                 <br/>
                 <button type={"click"} id={"submitSteppedJob"} onClick={(e) => {
                     e.preventDefault();
-                    handleSteppedJobSubmission(steppedJobDataState,
-                        setSteppedJobDataState)
+                    e.stopPropagation();
+                    handleSteppedJobSubmission(steppedJobDataState, setSteppedJobDataState)
                 }}>
                     Submit
                 </button>

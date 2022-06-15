@@ -10,6 +10,7 @@ export function SubmitButton({investmentsState, setInvestmentsState, graphKey, s
             <br />
             <button className={"submitinvestment"} onClick={(e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 handleSubmission(investmentsState, setInvestmentsState, graphKey, setGraphKey);
             }}>Submit</button>
         </>
