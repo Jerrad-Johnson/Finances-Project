@@ -1,3 +1,5 @@
+//Does not finish testing; Out of Memory error.
+
 Cypress.Commands.add("getSampleData", () => {
     cy.visit("localhost:3000");
     cy.get(".getSampleValues").click();
@@ -8,16 +10,14 @@ Cypress.Commands.add("tryAllGraphTypes", () => {
         "Combined Investment Expenses", "Expenses by Group", "Income by Group", "Investment Income",
         "Same Year Expendable", "Taxes by Category", "Tax Percentage by Year"];
 
-    for (let i = 0; i <= graphOptions.length;){
+    for (let i = 0; i < graphOptions.length;){
         cy.tryAllDatasetOptions(".firstGraph", ".secondGraph", graphOptions[i], graphOptions[i+1])
         i += 2;
     }
 });
 
-Cypress.Commands.add("tryAllDatasetOptions", (graphOneClassName, graphTwoClassName, graphOneName, graphTwoName) => {
-
-    console.log(5)
-
+Cypress.Commands.add("tryAllDatasetOptions", (graphOneClassName, graphTwoClassName,
+                            graphOneName, graphTwoName) => {
     for (let i = 0; i < 2; i++){
         cy.getSampleData();
         let dataChoice;
