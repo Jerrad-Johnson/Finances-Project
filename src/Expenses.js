@@ -61,15 +61,12 @@ function ExpenseGraphs({expensesState, setExpensesState}){
     let printToDom = expensesState.map((expenseSheet, index) => {
        return (
            <div key={index} className={"graphCard"}>
-               <span className={"inputSetTitle graphTitle"}>Yearly Expenses</span>
                <ExpenseSumBarChart
                    expenseSheet = {expenseSheet}
                />
-               <span className={"inputSetTitle graphTitle"}>Running Sum</span>
                <ExpenseRunningSumBarChart
                    expenseSheet = {expenseSheet}
                />
-               <span className={"inputSetTitle graphTitle"}>Total Expense % By Category</span>
                <ExpenseSumDonutChart
                    expenseSheet = {expenseSheet}
                /><br />

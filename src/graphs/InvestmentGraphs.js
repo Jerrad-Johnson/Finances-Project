@@ -23,6 +23,7 @@ export function InvestmentRunningValueBarChart({investmentSheet}) {
     return (
         <div>
             <br />
+            <span className={"sheetTitle"}>{investmentSheet.title}</span>
             <span className={"inputSetTitle graphTitle"}>Running Investment Value</span>
             <Chart
                 series = {dataConverted}
