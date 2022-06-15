@@ -1,6 +1,12 @@
-Cypress.Commands.add("getSampleData", () => {
-    cy.visit("localhost:3000");
-    cy.get(".getSampleValues").click();
+describe("Evaluate page checks", () => {
+    it("Gets preset values", () => {
+        cy.visit("localhost:3000");
+        cy.get(".getSampleValues").click();
+    });
+
+    it("Checks that every graph will render with any combination of datasets", () => {
+        cy.tryAllGraphTypes();
+    });
 });
 
 Cypress.Commands.add("tryAllGraphTypes", () => {
@@ -15,57 +21,43 @@ Cypress.Commands.add("tryAllGraphTypes", () => {
 });
 
 Cypress.Commands.add("tryAllDatasetOptions", (graphOneClassName, graphTwoClassName,
-                            graphOneName, graphTwoName) => {
+                                              graphOneName, graphTwoName) => {
     for (let i = 0; i < 2; i++){
         cy.getSampleData();
         let dataChoice;
         i == 0 ? dataChoice = 0 : dataChoice = "No Data";
-
-        cy.get(graphOneClassName).select(graphOneName);
-        cy.get(graphTwoClassName).select(graphTwoName);
-        cy.get(".incomeDataset").select(dataChoice);
-        cy.get(".expensesDataset").select(dataChoice);
-        cy.get(".investmentDataset").select(dataChoice);
-        cy.get(".apexcharts-canvas").eq(0).should("exist");
-        cy.get(".apexcharts-canvas").eq(1).should("exist");
+        cy.setAndCheckOptions(graphOneClassName, graphTwoClassName, graphOneName, graphTwoName, dataChoice)
 
         for (let j = 0; j < 2; j++){
             cy.getSampleData();
             let dataChoice;
             j == 0 ? dataChoice = 0 : dataChoice = "No Data";
-
-            cy.get(graphOneClassName).select(graphOneName);
-            cy.get(graphTwoClassName).select(graphTwoName);
-            cy.get(".incomeDataset").select(dataChoice);
-            cy.get(".expensesDataset").select(dataChoice);
-            cy.get(".investmentDataset").select(dataChoice);
-            cy.get(".apexcharts-canvas").eq(0).should("exist");
-            cy.get(".apexcharts-canvas").eq(1).should("exist");
+            cy.setAndCheckOptions(graphOneClassName, graphTwoClassName, graphOneName, graphTwoName, dataChoice)
 
             for (let k = 0; k < 2; k++){
                 cy.getSampleData();
                 let dataChoice;
                 k == 0 ? dataChoice = 0 : dataChoice = "No Data";
-
-                cy.get(graphOneClassName).select(graphOneName);
-                cy.get(graphTwoClassName).select(graphTwoName);
-                cy.get(".incomeDataset").select(dataChoice);
-                cy.get(".expensesDataset").select(dataChoice);
-                cy.get(".investmentDataset").select(dataChoice);
-                cy.get(".apexcharts-canvas").eq(0).should("exist");
-                cy.get(".apexcharts-canvas").eq(1).should("exist");
+                cy.setAndCheckOptions(graphOneClassName, graphTwoClassName, graphOneName, graphTwoName, dataChoice)
             }
         }
     }
 });
 
-describe("Evaluate page checks", () => {
-    it("Gets preset values", () => {
-        cy.visit("localhost:3000");
-        cy.get(".getSampleValues").click();
-    });
 
-    it("Checks that every graph will render with any combination of datasets", () => {
-        cy.tryAllGraphTypes();
-    });
+Cypress.Commands.add("getSampleData", () => {
+    cy.visit("localhost:3000");
+    cy.get(".getSampleValues").click();
 });
+
+Cypress.Commands.add("setAndCheckOptions", (graphOneClassName, graphTwoClassName,
+                                                     graphOneName, graphTwoName, dataChoice) => {
+    cy.get(graphOneClassName).select(graphOneName);
+    cy.get(graphTwoClassName).select(graphTwoName);
+    cy.get(".incomeDataset").select(dataChoice);
+    cy.get(".expensesDataset").select(dataChoice);
+    cy.get(".investmentDataset").select(dataChoice);
+    cy.get(".apexcharts-canvas").eq(0).should("exist");
+    cy.get(".apexcharts-canvas").eq(1).should("exist");
+})
+
