@@ -249,10 +249,10 @@ class CreateNewDataForEvaluationGraphs {
         let x = [];
         let y = {};
 
-        if (this.standardGraphDataCheck(this.taxesOnIncomeAndInvestmentIncreases.effectiveTaxPercentages)){
+        if (this.standardGraphDataCheck(this.taxesOnIncomeAndInvestmentIncreases?.effectiveTaxPercentages)){
             y = this.addGraphNecessities(this.taxesOnIncomeAndInvestmentIncreases.effectiveTaxPercentages, "Effective Tax Percentage", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
-        } else if (this.standardGraphDataCheck(this.taxesOnIncomeOnly.effectiveTaxPercentages)){
+        } else if (this.standardGraphDataCheck(this.taxesOnIncomeOnly?.effectiveTaxPercentages)){
             y = this.addGraphNecessities(this.taxesOnIncomeOnly.effectiveTaxPercentages, "Effective Tax Percentage", "#ff0000");
             [x, y] = this.addThisEntryToArray(x, y);
         }
