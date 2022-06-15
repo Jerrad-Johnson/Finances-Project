@@ -315,6 +315,11 @@ h2{
     block
 }
 
+.removeValues{
+    opacity: 1;
+    transition: 2s;
+}
+
 /*
 div.generalData {
     @apply w-full;
