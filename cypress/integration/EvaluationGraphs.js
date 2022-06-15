@@ -1,5 +1,3 @@
-//Does not finish testing; Out of Memory error.
-
 Cypress.Commands.add("getSampleData", () => {
     cy.visit("localhost:3000");
     cy.get(".getSampleValues").click();
