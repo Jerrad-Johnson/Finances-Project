@@ -7,7 +7,8 @@ import CreateNewDataForEvaluationGraphs from "../libs/CreateNewDataForEvaluation
 
 let cc = console.dir
 let length = new jobdatahandler().graphMaxNumberOfYears;
-let yearsArrayForGraph = ["No data"];
+let yearsArrayForGraphOne = ["No data"];
+let yearsArrayForGraphTwo = ["No data"];
 
 
 function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOptionState, graphOptionState, secondGraphOptionState, incomeData,
@@ -47,7 +48,8 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     let graphData = mapGraphOptionStateToObjectKey[graphOptionState]();
     let secondGraphData = mapGraphOptionStateToObjectKey[secondGraphOptionState]();
 
-    isObject(graphData?.[0]) ? yearsArrayForGraph = getYearsNumbered() : yearsArrayForGraph = ["No Data"];
+    Array.isArray(graphData?.[0]?.data) ? yearsArrayForGraphOne = getYearsNumbered() : yearsArrayForGraphOne = ["No Data"];
+    Array.isArray(secondGraphData?.[0]?.data) ? yearsArrayForGraphTwo = getYearsNumbered() : yearsArrayForGraphTwo = ["No Data"];
 
     return (
         <>
@@ -71,7 +73,7 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
                             enabled: false,
                         },
                         xaxis: {
-                            categories: yearsArrayForGraph,
+                            categories: yearsArrayForGraphOne,
                         }
                     }}
                 />
@@ -96,7 +98,7 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
                             enabled: false,
                         },
                         xaxis: {
-                            categories: yearsArrayForGraph,
+                            categories: yearsArrayForGraphTwo,
                         }
                     }}
                 />
