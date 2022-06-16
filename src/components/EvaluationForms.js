@@ -63,6 +63,27 @@ export function PrintSum({title, financialData, typeOfFinancialData, valueKeyToF
     );
 }
 
+function OptionsForYearRange(){
+    let graphMaxLength = JSON.parse(localStorage.getItem("graphMaxLength"));
+    let options = [];
+
+    for (let i = 0; i < graphMaxLength; i = i + 5){
+        options.push(`${i}-${i+5}`);
+    }
+
+    options = options.map((e, key) => {
+       return ( <option key={key}>{e}</option> );
+    });
+
+    return (
+        <>
+            <option>Default</option>
+            {options}
+        </>
+    );
+}
+
+
 function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionState, incomeData, expenseOptionState,
                              setExpenseOptionState, setInvestmentOptionState, setGraphOptionState, setSecondGraphOptionState, setEmploymentState,
                              setFilingStatusState, setStTaxState, expenseData, investmentData, graphRangeState, setGraphRangeState}){
@@ -103,10 +124,7 @@ function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionSta
                     <select className={"inputSelector graphRange"} onChange={(event) => {
                         setGraphRangeState(event.target.value);
                     }}>
-                        <option>Default</option>
-                        <option>1-5</option>
-                        <option>6-10</option>
-                        <option>11-15</option>
+                        <OptionsForYearRange />
                     </select>
 
                 </form>

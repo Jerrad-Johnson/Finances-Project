@@ -52,27 +52,23 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     Array.isArray(graphData?.[0]?.data) ? yearsArrayForGraphOne = getYearsNumbered() : yearsArrayForGraphOne = ["No Data"];
     Array.isArray(secondGraphData?.[0]?.data) ? yearsArrayForGraphTwo = getYearsNumbered() : yearsArrayForGraphTwo = ["No Data"];
 
-    let beginningRange = "Default";
-
-    if (graphRangeState === "Default") {
-        beginningRange = "Default";
-    } else if (graphRangeState === "1-5"){
-        beginningRange = 0;
-        graphData = changeSheetLength(graphData, beginningRange);
-        secondGraphData = changeSheetLength(secondGraphData, beginningRange);
-    } else if (graphRangeState === "6-10"){
-        beginningRange = 5;
-        graphData = changeSheetLength(graphData, beginningRange);
-        secondGraphData = changeSheetLength(secondGraphData, beginningRange);
-    } else {
-        beginningRange = 10;
-        graphData = changeSheetLength(graphData, beginningRange);
-        secondGraphData = changeSheetLength(secondGraphData, beginningRange);
+    if (graphRangeState !== "Default") {
+        [graphData, yearsArrayForGraphOne] = changeSheetLength(graphData, graphRangeState, yearsArrayForGraphOne);
+        [secondGraphData, yearsArrayForGraphTwo] = changeSheetLength(secondGraphData, graphRangeState, yearsArrayForGraphTwo);
     }
 
-
-    function changeSheetLength(graphData, beginningRange) {
+    function changeSheetLength(graphData, graphRangeState, yearsArrayForGraph) {
         let newGraphData = []
+        let newYearsArray = []
+
+        let beginningRange = graphRangeState;
+        beginningRange = Array.from(beginningRange);
+        let indexOfDash = beginningRange.indexOf("-");
+        let arrayLength = beginningRange.length
+        beginningRange.splice(indexOfDash, (arrayLength -1));
+        beginningRange = beginningRange.toString();
+        beginningRange = beginningRange.replace(',', '');
+        beginningRange = +beginningRange;
 
         for (let i = 0; i < graphData.length; i++){
             let k = 0;
@@ -83,12 +79,12 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
 
             for (let j = beginningRange; j < (beginningRange + 5); j++){
                 newGraphData[i].data[k] = graphData[i].data[j];
-                cc(graphData[i].data[j])
+                newYearsArray[k] = yearsArrayForGraph[j];
                 k++;
             }
         }
 
-        return newGraphData;
+        return [newGraphData, newYearsArray]
     }
 
     return (
