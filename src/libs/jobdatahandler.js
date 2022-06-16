@@ -4,7 +4,7 @@ class JobDataHandler {
     constructor(jobsData){
         this.jobsData = jobsData;
         this.cc = console.log;
-        this.graphMaxNumberOfYears = 15;
+        this.graphMaxNumberOfYears = JSON.parse(localStorage.getItem("graphMaxLength")) ?? 15;
     }
 
 
@@ -134,7 +134,7 @@ class JobDataHandler {
         let currentIterationSum = 0;
         let sumIncomeByYear = [];
 
-        for (let i = 0; i < 15; i++){
+        for (let i = 0; i < this.graphMaxNumberOfYears; i++){
             currentIterationSum = (currentIterationSum + job.incomeInGraphYearsNumberOfSteps[i]);
             sumIncomeByYear[i] = currentIterationSum;
         }

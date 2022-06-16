@@ -5,6 +5,7 @@ import Expenses from "./Expenses";
 import Investments from "./Investments";
 import Evaluate from "./Evaluate";
 import Home from "./Home";
+import Options from "./Options";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 let cc = console.log;
@@ -22,6 +23,7 @@ function App() {
                   <Route path="Expenses" element={<Expenses />} />
                   <Route path="Investments" element={<Investments />} />
                   <Route path="Evaluate" element={<Evaluate />} />
+                  <Route path="Options" element={<Options />} />
               </Routes>
           </BrowserRouter>
       </header>

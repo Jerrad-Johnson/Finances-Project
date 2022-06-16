@@ -79,7 +79,7 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
             newGraphData[i] = {}
             newGraphData[i].data = createArrayOfZeros(5);
             newGraphData[i].name = graphData[i].name;
-            newGraphData[i].description = graphData[i].description
+            newGraphData.description = graphData.description
 
             for (let j = beginningRange; j < (beginningRange + 5); j++){
                 newGraphData[i].data[k] = graphData[i].data[j];

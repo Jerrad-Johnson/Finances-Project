@@ -10,6 +10,7 @@ function Nav() {
               <Link to={"Expenses"}>Expenses</Link>
               <Link to={"Investments"}>Investments</Link>
               <Link to={"Evaluate"}>Evaluate</Link>
+              <Link to={"Options"}>Options</Link>
           </nav>
       </>
     );
