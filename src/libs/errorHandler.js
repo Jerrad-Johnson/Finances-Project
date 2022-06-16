@@ -8,7 +8,7 @@ export function errorHandler(message){
     body.append(errorElement);
     let appContainer = document.querySelector(".App");
     appContainer.style.opacity = "0.5"
-    body.addEventListener("click", () => { handleErrorClick(errorElement, appContainer) }, {capture: false, once: true});
+    document.addEventListener("click", () => { handleErrorClick(errorElement, appContainer) }, {capture: false, once: true});
 }
 
 function handleErrorClick(errorElement, appContainer){
