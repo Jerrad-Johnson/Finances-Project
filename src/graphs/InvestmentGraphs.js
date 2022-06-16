@@ -1,7 +1,7 @@
 import Chart from "react-apexcharts";
 import React from "react";
 
-let chartHeight = 350;
+let chartHeight = 400;
 let cc = console.log
 
 function makeDataStackedChartCompatible(labels, dataArray){

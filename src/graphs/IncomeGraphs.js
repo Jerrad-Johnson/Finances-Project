@@ -2,27 +2,7 @@ import Chart from "react-apexcharts";
 import React from "react";
 
 //let cc = console.log;
-let chartHeight = 300;
-
-export function DonutChart({jobsData}) {
-
-    //cc(jobsData)
-
-    return (
-        <>
-            <Chart
-                series={[5, 500, 5]}
-                type="donut"
-                height={430}
-                options = {{
-                    colors: [
-                        '#00aa00', '#880000', '#880000',
-                    ],
-                }}
-            />
-        </>
-    );
-}
+let chartHeight = 400;
 
 
 export function LinearBarChart({job}) {
