@@ -5,13 +5,12 @@ import {getYearsNumbered, isEmptyArray, isObject} from "./jobssharedfunctions";
 import CreateNewDataForEvaluationGraphs from "../libs/CreateNewDataForEvaluationGraphs";
 import {useState} from "react";
 import EnlargedGraph from "./EnlargedGraph";
-import {changeSheetLength} from "../libs/supplementalfunctions";
+import {changeSheetLength, findCurrentFinancialSheets} from "../libs/supplementalfunctions";
 
 let cc = console.dir
 let length = new jobdatahandler().graphMaxNumberOfYears;
 let yearsArrayForGraphOne = ["No data"];
 let yearsArrayForGraphTwo = ["No data"];
-
 
 function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOptionState, graphOptionState, secondGraphOptionState, incomeData,
                               expenseData, investmentData, employmentState, filingStatusState, stTaxState, graphRangeState}){
@@ -88,12 +87,6 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
                     height = "400"
 
                     options = {{
-/*                        plotOptions: {
-                            bar: {
-                                horizontal: true,
-                            }
-                        },*/
-                     /*colors: ["#ff0000", "#00FF00", "#0000FF"],*/
                         chart: {
                             stacked: false,
                         },
@@ -121,12 +114,6 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
                     type = "bar"
                     height = "400"
                     options = {{
-/*                        plotOptions: {
-                            bar: {
-                                horizontal: true,
-                            }
-                        },*/
-                        /*colors: ["#fff000"],*/
                         chart: {
                             stacked: false,
                         },
@@ -142,12 +129,6 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
             </div>
         </>
     );
-}
-
-function findCurrentFinancialSheets(sheets, current){
-    return sheets.filter((sheet) => {
-        return sheet.title === current;
-    });
 }
 
 export default EvaluationGraphs;

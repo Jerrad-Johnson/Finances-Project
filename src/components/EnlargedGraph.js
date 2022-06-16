@@ -3,10 +3,18 @@ import React from "react";
 
 function EnlargedGraph({enlargeGraphState, setEnlargeGraphState, graphData, yearsArrayForGraph}){
     if (enlargeGraphState == 1){
+        let originalGraphs = document.querySelectorAll(".graphCard");
+        originalGraphs.forEach((e) => {
+            e.style.display = "none";
+        });
+
         return (
-            <div>
+            <div className={"enlargedGraph"}>
+
                 <button onClick={((e) => {
-                    handleRemoveGraph(setEnlargeGraphState);
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleRemoveGraph(setEnlargeGraphState, originalGraphs);
                 })}>Close</button>
                 <Chart
                     series = {graphData}
@@ -30,8 +38,11 @@ function EnlargedGraph({enlargeGraphState, setEnlargeGraphState, graphData, year
     }
 }
 
-function handleRemoveGraph(setEnlargeGraphState){
+function handleRemoveGraph(setEnlargeGraphState, originalGraphs){
     setEnlargeGraphState(0);
+    originalGraphs.forEach((e) => {
+        e.style.display = "block";
+    });
 }
 
 export default EnlargedGraph;

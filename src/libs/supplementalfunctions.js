@@ -29,3 +29,9 @@ export function changeSheetLength(graphData, graphRangeState, yearsArrayForGraph
 
     return [newGraphData, newYearsArray]
 }
+
+export function findCurrentFinancialSheets(sheets, current){
+    return sheets.filter((sheet) => {
+        return sheet.title === current;
+    });
+}
