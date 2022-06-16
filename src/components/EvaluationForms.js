@@ -77,7 +77,7 @@ function OptionsForYearRange(){
 
     return (
         <>
-            <option>Default</option>
+            <option>All</option>
             {options}
         </>
     );

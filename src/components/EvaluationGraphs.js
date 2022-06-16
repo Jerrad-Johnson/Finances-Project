@@ -52,7 +52,7 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     Array.isArray(graphData?.[0]?.data) ? yearsArrayForGraphOne = getYearsNumbered() : yearsArrayForGraphOne = ["No Data"];
     Array.isArray(secondGraphData?.[0]?.data) ? yearsArrayForGraphTwo = getYearsNumbered() : yearsArrayForGraphTwo = ["No Data"];
 
-    if (graphRangeState !== "Default") {
+    if (graphRangeState !== "All") {
         [graphData, yearsArrayForGraphOne] = changeSheetLength(graphData, graphRangeState, yearsArrayForGraphOne);
         [secondGraphData, yearsArrayForGraphTwo] = changeSheetLength(secondGraphData, graphRangeState, yearsArrayForGraphTwo);
     }
