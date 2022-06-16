@@ -1,6 +1,5 @@
 import sampleImage from './images/sample.jpg'
 import {setSampleValues} from "./libs/sampleValues";
-import {removeAllValues} from "./libs/removeAllValues";
 
 
 function Home(){
@@ -10,19 +9,15 @@ function Home(){
           <h1>Welcome</h1>
           <span>This project is still under construction. Please excuse any bugs, poor mobile support, etc.</span>
           <h2>Quick Start</h2>
-          <span><b>NOTE:</b> &nbsp; This will delete any values you have already set.</span>
-          <span>To get preset values and see how this app works, or to remove all data:</span>
+          <span><b>NOTE:</b> &nbsp; This will delete any values you have already set. To get preset values and see how this app works,</span>
+
           <div className={"buttonsSideBySide"}>
               <button className={"getSampleValues"} onClick={(e) => {
                   e.preventDefault();
                   setSampleValues();
                   window.location.href = 'Evaluate';
               }}>Load</button>
-              <button className={"removeValues"} onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  removeAllValues();
-              }}>Delete</button>
+
           </div>
           <h2>What is this?</h2>
           <span>It's a financial planner; use it to see graphs displaying how much your expenses will cost you over the years, how much your job will provide, and the value of your investments. On the final page (Evaluate) you will be able to compare your income to expenses, see how much your federal taxes will be, the impact of inflation, and so on. </span>

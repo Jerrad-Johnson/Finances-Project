@@ -1,12 +1,9 @@
 import React, {useState} from "react";
 import {cc} from "./components/jobssharedfunctions";
-import EvaluationForms from "./components/EvaluationForms";
-import EvaluationGraphs from "./components/EvaluationGraphs";
 import EvaluationGeneralData from "./components/EvaluationGeneralData";
+import {removeAllValues} from "./libs/removeAllValues";
 
 function Options(){
-    //let [graphMaxLengthState, setGraphMaxLengthState] = useState()
-                //localStorage.removeItem("graphMaxLength");
 
     return (
         <div className={"container"}>
@@ -28,6 +25,13 @@ function Options(){
                                     <option>25</option>
                                 </select>
                             </form>
+
+                            <span className={"inputTitle"}>Remove All Sheets</span>
+                            <button className={"removeValues"} onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                removeAllValues();
+                            }}>Delete</button>
                         </div>
                     </div>
                 </div>
