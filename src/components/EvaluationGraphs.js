@@ -6,43 +6,41 @@ import {getYearsNumbered, isEmptyArray, isObject} from "./jobssharedfunctions";
 import CreateNewDataForEvaluationGraphs from "../libs/CreateNewDataForEvaluationGraphs";
 import {createArrayOfZeros} from "./jobssharedfunctions";
 import {useState} from "react";
+import EnlargedGraph from "./EnlargedGraph";
 
 let cc = console.dir
 let length = new jobdatahandler().graphMaxNumberOfYears;
 let yearsArrayForGraphOne = ["No data"];
 let yearsArrayForGraphTwo = ["No data"];
 
-function EnlargedGraph({enlargeGraphState, setEnlargeGraphState, graphData, yearsArrayForGraph}){
-    if (enlargeGraphState == 1){
-        return (
-        <div>
-            <button onClick={((e) => {
-                handleRemoveGraph(setEnlargeGraphState);
-            })}>Close</button>
-            <Chart
-                series = {graphData}
-                type = "bar"
-                height = "400"
+function changeSheetLength(graphData, graphRangeState, yearsArrayForGraph) {
+    let newGraphData = []
+    let newYearsArray = []
 
-                options = {{
-                    chart: {
-                        stacked: false,
-                    },
-                    dataLabels: {
-                        enabled: false,
-                    },
-                    xaxis: {
-                        categories: yearsArrayForGraph,
-                    }
-                }}
-            />
-        </div>
-        );
+    let beginningRange = graphRangeState;
+    beginningRange = Array.from(beginningRange);
+    let indexOfDash = beginningRange.indexOf("-");
+    let arrayLength = beginningRange.length
+    beginningRange.splice(indexOfDash, (arrayLength -1));
+    beginningRange = beginningRange.toString();
+    beginningRange = beginningRange.replace(',', '');
+    beginningRange = +beginningRange;
+
+    for (let i = 0; i < graphData.length; i++){
+        let k = 0;
+        newGraphData[i] = {}
+        newGraphData[i].data = createArrayOfZeros(5);
+        newGraphData[i].name = graphData[i].name;
+        newGraphData.description = graphData.description
+
+        for (let j = beginningRange; j < (beginningRange + 5); j++){
+            newGraphData[i].data[k] = graphData[i].data[j];
+            newYearsArray[k] = yearsArrayForGraph[j];
+            k++;
+        }
     }
-}
 
-function handleRemoveGraph(setEnlargeGraphState){
-    setEnlargeGraphState(0);
+    return [newGraphData, newYearsArray]
 }
 
 function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOptionState, graphOptionState, secondGraphOptionState, incomeData,
@@ -55,7 +53,6 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     if (incomeData[0]) { incomeData = incomeData[0] }
     if (expenseData[0]) { expenseData = expenseData[0] }
     if (investmentData[0]) { investmentData = investmentData[0] }
-
 
     const mapGraphOptionStateToObjectKey = {
         "Assets vs. Inflation": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
@@ -98,37 +95,6 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
         [graphData, yearsArrayForGraphOne] = changeSheetLength(graphData, graphRangeState, yearsArrayForGraphOne);
         [secondGraphData, yearsArrayForGraphTwo] = changeSheetLength(secondGraphData, graphRangeState, yearsArrayForGraphTwo);
     }
-
-    function changeSheetLength(graphData, graphRangeState, yearsArrayForGraph) {
-        let newGraphData = []
-        let newYearsArray = []
-
-        let beginningRange = graphRangeState;
-        beginningRange = Array.from(beginningRange);
-        let indexOfDash = beginningRange.indexOf("-");
-        let arrayLength = beginningRange.length
-        beginningRange.splice(indexOfDash, (arrayLength -1));
-        beginningRange = beginningRange.toString();
-        beginningRange = beginningRange.replace(',', '');
-        beginningRange = +beginningRange;
-
-        for (let i = 0; i < graphData.length; i++){
-            let k = 0;
-            newGraphData[i] = {}
-            newGraphData[i].data = createArrayOfZeros(5);
-            newGraphData[i].name = graphData[i].name;
-            newGraphData.description = graphData.description
-
-            for (let j = beginningRange; j < (beginningRange + 5); j++){
-                newGraphData[i].data[k] = graphData[i].data[j];
-                newYearsArray[k] = yearsArrayForGraph[j];
-                k++;
-            }
-        }
-
-        return [newGraphData, newYearsArray]
-    }
-
 
     return (
         <>
@@ -213,26 +179,5 @@ function findCurrentFinancialSheets(sheets, current){
         return sheet.title === current;
     });
 }
-
-function findNumberOfSheetTypesInvolved(incomeOptionState, expenseOptionState, investmentOptionState){
-    let x = [incomeOptionState, expenseOptionState, investmentOptionState];
-
-    x = x.filter((e) => {
-        return (e !== "No Data");
-    });
-
-    return x = x.length;
-}
-
-function applyInflation(arr){
-    let x = structuredClone(arr)
-
-    for (let i = 0; i < length; i++){
-        x[i] = x[i] * .9674;
-    }
-
-    return x;
-}
-
 
 export default EvaluationGraphs;
