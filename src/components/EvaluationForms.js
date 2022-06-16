@@ -64,7 +64,7 @@ export function PrintSum({title, financialData, typeOfFinancialData, valueKeyToF
 }
 
 function OptionsForYearRange(){
-    let graphMaxLength = JSON.parse(localStorage.getItem("graphMaxLength"));
+    let graphMaxLength = JSON.parse(localStorage.getItem("graphMaxLength")) ?? 15;
     let options = [];
 
     for (let i = 0; i < graphMaxLength; i = i + 5){
