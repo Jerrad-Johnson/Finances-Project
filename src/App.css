@@ -295,10 +295,13 @@ h2{
 
 .errorMessage{
     position: absolute;
-    width: 30%;
-    min-height: 150px;
+    max-width: 400px;
+    overflow: hidden;
+    transform: translate(-50%, -50%);
+    /*min-height: 150px;*/
     left: 50%;
     top: 40%;
+    z-index: 999;
     background-color: #fff;
 }
 

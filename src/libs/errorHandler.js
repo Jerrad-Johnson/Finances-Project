@@ -6,10 +6,12 @@ export function errorHandler(message){
     errorElement.setAttribute("class", "errorMessage");
     errorElement.innerText = message;
     body.append(errorElement);
-
-    body.addEventListener("click", () => { handleErrorClick(errorElement) }, {capture: false, once: true});
+    let appContainer = document.querySelector(".App");
+    appContainer.style.opacity = "0.5"
+    body.addEventListener("click", () => { handleErrorClick(errorElement, appContainer) }, {capture: false, once: true});
 }
 
-function handleErrorClick(errorElement){
+function handleErrorClick(errorElement, appContainer){
     errorElement.remove();
+    appContainer.style.opacity = "1";
 }
