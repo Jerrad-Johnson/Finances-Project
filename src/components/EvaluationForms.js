@@ -99,7 +99,7 @@ function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionSta
                         />
                     </select>
 
-                    <span className={"inputTitle"}>Change Years Range</span>
+                    <span className={"inputTitle"}>Display Year Range</span>
                     <select className={"inputSelector graphRange"} onChange={(event) => {
                         setGraphRangeState(event.target.value);
                     }}>

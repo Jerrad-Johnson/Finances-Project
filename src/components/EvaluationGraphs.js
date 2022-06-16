@@ -4,6 +4,7 @@ import React from "react";
 import jobdatahandler from "../libs/jobdatahandler";
 import {getYearsNumbered, isEmptyArray, isObject} from "./jobssharedfunctions";
 import CreateNewDataForEvaluationGraphs from "../libs/CreateNewDataForEvaluationGraphs";
+import {createArrayOfZeros} from "./jobssharedfunctions";
 
 let cc = console.dir
 let length = new jobdatahandler().graphMaxNumberOfYears;
@@ -50,6 +51,45 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
 
     Array.isArray(graphData?.[0]?.data) ? yearsArrayForGraphOne = getYearsNumbered() : yearsArrayForGraphOne = ["No Data"];
     Array.isArray(secondGraphData?.[0]?.data) ? yearsArrayForGraphTwo = getYearsNumbered() : yearsArrayForGraphTwo = ["No Data"];
+
+    let beginningRange = "Default";
+
+    if (graphRangeState === "Default") {
+        beginningRange = "Default";
+    } else if (graphRangeState === "1-5"){
+        beginningRange = 0;
+        graphData = changeSheetLength(graphData, beginningRange);
+        secondGraphData = changeSheetLength(secondGraphData, beginningRange);
+    } else if (graphRangeState === "6-10"){
+        beginningRange = 5;
+        graphData = changeSheetLength(graphData, beginningRange);
+        secondGraphData = changeSheetLength(secondGraphData, beginningRange);
+    } else {
+        beginningRange = 10;
+        graphData = changeSheetLength(graphData, beginningRange);
+        secondGraphData = changeSheetLength(secondGraphData, beginningRange);
+    }
+
+
+    function changeSheetLength(graphData, beginningRange) {
+        let newGraphData = []
+
+        for (let i = 0; i < graphData.length; i++){
+            let k = 0;
+            newGraphData[i] = {}
+            newGraphData[i].data = createArrayOfZeros(5);
+            newGraphData[i].name = graphData[i].name;
+            newGraphData[i].description = graphData[i].description
+
+            for (let j = beginningRange; j < (beginningRange + 5); j++){
+                newGraphData[i].data[k] = graphData[i].data[j];
+                cc(graphData[i].data[j])
+                k++;
+            }
+        }
+
+        return newGraphData;
+    }
 
     return (
         <>
