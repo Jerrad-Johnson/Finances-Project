@@ -12,7 +12,7 @@ let yearsArrayForGraphTwo = ["No data"];
 
 
 function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOptionState, graphOptionState, secondGraphOptionState, incomeData,
-                              expenseData, investmentData, employmentState, filingStatusState, stTaxState}){
+                              expenseData, investmentData, employmentState, filingStatusState, stTaxState, graphRangeState}){
     incomeData = findCurrentFinancialSheets(incomeData, incomeOptionState);
     expenseData = findCurrentFinancialSheets(expenseData, expenseOptionState);
     investmentData = findCurrentFinancialSheets(investmentData, investmentOptionState);

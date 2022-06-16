@@ -5,7 +5,6 @@ import SteppedGraph, {ListJobIncomeForms, addSteppedIncomeField, removeSteppedIn
 import {useLocalStorage} from "./hooks/useLocalStorage";
 import {setSampleValues} from "./libs/sampleValues";
 
-//TODO Display job title in graph
 //TODO Create a Youtube video demonstrating this app.
 //TODO Make formcontainer show as a pseudo-popup.
 

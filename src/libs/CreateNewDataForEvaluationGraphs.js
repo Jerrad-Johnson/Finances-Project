@@ -183,7 +183,7 @@ class CreateNewDataForEvaluationGraphs {
         let y = {};
 
         if (!isEmptyArray(this.income) || !isEmptyArray(this.investments)){
-            y = this.addGraphNecessities(this.newGraphData.runningLiquidAssetsAfterExpenses, "Liquid Assets after same-year expenses", "#00ff00"); //TODO shorten this title after implementing description
+            y = this.addGraphNecessities(this.newGraphData.runningLiquidAssetsAfterExpenses, "Liquid Assets", "#00ff00");
             [x, y] = this.addThisEntryToArray(x, y);
         }
 

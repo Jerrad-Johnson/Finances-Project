@@ -65,7 +65,7 @@ export function PrintSum({title, financialData, typeOfFinancialData, valueKeyToF
 
 function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionState, incomeData, expenseOptionState,
                              setExpenseOptionState, setInvestmentOptionState, setGraphOptionState, setSecondGraphOptionState, setEmploymentState,
-                             setFilingStatusState, setStTaxState, expenseData, investmentData}){
+                             setFilingStatusState, setStTaxState, expenseData, investmentData, graphRangeState, setGraphRangeState}){
 
     return (
         <div className={"inputSet"}>
@@ -98,6 +98,17 @@ function EvaluationForms({employmentState, incomeOptionState, setIncomeOptionSta
                             financialData = {investmentData}
                         />
                     </select>
+
+                    <span className={"inputTitle"}>Change Years Range</span>
+                    <select className={"inputSelector graphRange"} onChange={(event) => {
+                        setGraphRangeState(event.target.value);
+                    }}>
+                        <option>Default</option>
+                        <option>1-5</option>
+                        <option>6-10</option>
+                        <option>11-15</option>
+                    </select>
+
                 </form>
             </div>
 

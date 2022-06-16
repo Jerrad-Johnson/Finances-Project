@@ -20,6 +20,7 @@ function Evaluate(){
     let [employmentState, setEmploymentState] = useState("Employee");
     let [filingStatusState, setFilingStatusState] = useState("Single");
     let [stTaxState, setStTaxState] = useState("0");
+    let [graphRangeState, setGraphRangeState] = useState("Default");
 
     return(
         <div className={"container"}>
@@ -40,6 +41,8 @@ function Evaluate(){
                         setStTaxState = {setStTaxState}
                         expenseData = {expenseData}
                         investmentData = {investmentData}
+                        graphRangeState = {graphRangeState}
+                        setGraphRangeState = {setGraphRangeState}
                     />
                 </div>
 
@@ -56,6 +59,7 @@ function Evaluate(){
                         employmentState = {employmentState}
                         filingStatusState = {filingStatusState}
                         stTaxState = {stTaxState}
+                        graphRangeState = {graphRangeState}
                     />
                 </div>
             </div>
