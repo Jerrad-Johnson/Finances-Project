@@ -92,12 +92,13 @@ div.pairs {
 }
 
 div.right {
-    /*@apply
-    items-end*/
+    max-width: 800px;
+    width: 100%;
 }
 
-div.graphCard {
-    width:800px;
+.apexcharts-canvas {
+    width: 100%;
+    max-width: 380px;
 }
 
 div.graphCard {
@@ -108,6 +109,10 @@ div.graphCard {
     shadow-md
     bg-white
     p-4
+}
+
+div.graphCard {
+    max-width: 100%;
 }
 
 div.inputSet {
@@ -332,8 +337,4 @@ h2{
     left: 0;
     right: 0;
     background-color: #fff;
-}
-
-.graphCardHidden{
-    display: none;
 }

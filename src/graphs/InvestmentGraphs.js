@@ -29,6 +29,7 @@ export function InvestmentRunningValueBarChart({investmentSheet}) {
                 series = {dataConverted}
                 type = "bar"
                 height = {chartHeight}
+                width = '100%'
                 options = {{
                     plotOptions: {
                         bar: {

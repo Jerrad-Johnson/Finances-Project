@@ -193,7 +193,7 @@ class CreateNewDataForEvaluationGraphs {
         }
 
         x.description = "This graph assumes that you save all of your earnings from previous years, minus what you explicitly listed as expenses and investments. " +
-            "Liquid Assets are after same-year expenses. And it is assumed that your investments are illiquid. except the portion that you pulled."; //TODO Does this include reinvestment as expense? Shouldn't be.
+            "Liquid Assets are after same-year expenses. Expenses include taxes. And it is assumed that your investments are illiquid, except the portion that you pulled."; //TODO Does this include reinvestment as expense? Shouldn't be.
         return x;
     }
 

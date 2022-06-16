@@ -38,7 +38,7 @@ function Options(){
 
                 <div className={"right"}>
                     <div className={"graphCard"}>
-                    Lorem Ipsum
+                    After changing your max graph length, you may have to refresh the pages to get them to correctly display the options.
                     </div>
                 </div>
             </div>
