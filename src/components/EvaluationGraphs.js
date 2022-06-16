@@ -5,18 +5,52 @@ import jobdatahandler from "../libs/jobdatahandler";
 import {getYearsNumbered, isEmptyArray, isObject} from "./jobssharedfunctions";
 import CreateNewDataForEvaluationGraphs from "../libs/CreateNewDataForEvaluationGraphs";
 import {createArrayOfZeros} from "./jobssharedfunctions";
+import {useState} from "react";
 
 let cc = console.dir
 let length = new jobdatahandler().graphMaxNumberOfYears;
 let yearsArrayForGraphOne = ["No data"];
 let yearsArrayForGraphTwo = ["No data"];
 
+function EnlargedGraph({enlargeGraphState, setEnlargeGraphState, graphData, yearsArrayForGraph}){
+    if (enlargeGraphState == 1){
+        return (
+        <div>
+            <button onClick={((e) => {
+                handleRemoveGraph(setEnlargeGraphState);
+            })}>Close</button>
+            <Chart
+                series = {graphData}
+                type = "bar"
+                height = "400"
+
+                options = {{
+                    chart: {
+                        stacked: false,
+                    },
+                    dataLabels: {
+                        enabled: false,
+                    },
+                    xaxis: {
+                        categories: yearsArrayForGraph,
+                    }
+                }}
+            />
+        </div>
+        );
+    }
+}
+
+function handleRemoveGraph(setEnlargeGraphState){
+    setEnlargeGraphState(0);
+}
 
 function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOptionState, graphOptionState, secondGraphOptionState, incomeData,
                               expenseData, investmentData, employmentState, filingStatusState, stTaxState, graphRangeState}){
     incomeData = findCurrentFinancialSheets(incomeData, incomeOptionState);
     expenseData = findCurrentFinancialSheets(expenseData, expenseOptionState);
     investmentData = findCurrentFinancialSheets(investmentData, investmentOptionState);
+    let [enlargeGraphState, setEnlargeGraphState] = useState(0);
 
     if (incomeData[0]) { incomeData = incomeData[0] }
     if (expenseData[0]) { expenseData = expenseData[0] }
@@ -48,9 +82,17 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
 
     let graphData = mapGraphOptionStateToObjectKey[graphOptionState]();
     let secondGraphData = mapGraphOptionStateToObjectKey[secondGraphOptionState]();
+    let firstGraphDataForEnlargedView = graphData;
+    let secondGraphDataForEnlargedView = secondGraphData;
 
     Array.isArray(graphData?.[0]?.data) ? yearsArrayForGraphOne = getYearsNumbered() : yearsArrayForGraphOne = ["No Data"];
     Array.isArray(secondGraphData?.[0]?.data) ? yearsArrayForGraphTwo = getYearsNumbered() : yearsArrayForGraphTwo = ["No Data"];
+    let [enlargedGraphDataState, setEnlargedGraphDataState] = useState( []);
+    let [enlargedYearsArrayState, setEnlargedYearsArrayState] = useState([]);
+
+    let enlargedYearsArrayForGraphOne = yearsArrayForGraphOne;
+    let enlargedYearsArrayForGraphTwo = yearsArrayForGraphTwo;
+    let yearsArrayForEnlargedGraph = yearsArrayForGraphOne || []
 
     if (graphRangeState !== "All") {
         [graphData, yearsArrayForGraphOne] = changeSheetLength(graphData, graphRangeState, yearsArrayForGraphOne);
@@ -87,9 +129,23 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
         return [newGraphData, newYearsArray]
     }
 
+
     return (
         <>
+            <EnlargedGraph
+                enlargeGraphState = {enlargeGraphState}
+                setEnlargeGraphState = {setEnlargeGraphState}
+                graphData = {enlargedGraphDataState}
+                yearsArrayForGraph = {enlargedYearsArrayState}
+            />
             <div className={"graphCard"}>
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setEnlargedGraphDataState(firstGraphDataForEnlargedView);
+                    setEnlargedYearsArrayState(enlargedYearsArrayForGraphOne);
+                    setEnlargeGraphState(1);
+                }}>Enlarge</button>
                 <Chart
                     series = {graphData}
                     type = "bar"
@@ -117,6 +173,13 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
             </div>
 
             <div className={"graphCard"}>
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setEnlargedGraphDataState(secondGraphDataForEnlargedView)
+                    setEnlargedYearsArrayState(enlargedYearsArrayForGraphTwo);
+                    setEnlargeGraphState(1);
+                }}>Enlarge</button>
                 <Chart
                     series = {secondGraphData}
                     type = "bar"

@@ -20,7 +20,7 @@ function Evaluate(){
     let [employmentState, setEmploymentState] = useState("Employee");
     let [filingStatusState, setFilingStatusState] = useState("Single");
     let [stTaxState, setStTaxState] = useState("0");
-    let [graphRangeState, setGraphRangeState] = useState("Default");
+    let [graphRangeState, setGraphRangeState] = useState("All");
 
     return(
         <div className={"container"}>
