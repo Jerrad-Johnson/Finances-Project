@@ -1,47 +1,17 @@
-import CalculateTaxes from "../libs/Taxes";
 import Chart from "react-apexcharts";
 import React from "react";
 import jobdatahandler from "../libs/jobdatahandler";
 import {getYearsNumbered, isEmptyArray, isObject} from "./jobssharedfunctions";
 import CreateNewDataForEvaluationGraphs from "../libs/CreateNewDataForEvaluationGraphs";
-import {createArrayOfZeros} from "./jobssharedfunctions";
 import {useState} from "react";
 import EnlargedGraph from "./EnlargedGraph";
+import {changeSheetLength} from "../libs/supplementalfunctions";
 
 let cc = console.dir
 let length = new jobdatahandler().graphMaxNumberOfYears;
 let yearsArrayForGraphOne = ["No data"];
 let yearsArrayForGraphTwo = ["No data"];
 
-function changeSheetLength(graphData, graphRangeState, yearsArrayForGraph) {
-    let newGraphData = []
-    let newYearsArray = []
-
-    let beginningRange = graphRangeState;
-    beginningRange = Array.from(beginningRange);
-    let indexOfDash = beginningRange.indexOf("-");
-    let arrayLength = beginningRange.length
-    beginningRange.splice(indexOfDash, (arrayLength -1));
-    beginningRange = beginningRange.toString();
-    beginningRange = beginningRange.replace(',', '');
-    beginningRange = +beginningRange;
-
-    for (let i = 0; i < graphData.length; i++){
-        let k = 0;
-        newGraphData[i] = {}
-        newGraphData[i].data = createArrayOfZeros(5);
-        newGraphData[i].name = graphData[i].name;
-        newGraphData.description = graphData.description
-
-        for (let j = beginningRange; j < (beginningRange + 5); j++){
-            newGraphData[i].data[k] = graphData[i].data[j];
-            newYearsArray[k] = yearsArrayForGraph[j];
-            k++;
-        }
-    }
-
-    return [newGraphData, newYearsArray]
-}
 
 function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOptionState, graphOptionState, secondGraphOptionState, incomeData,
                               expenseData, investmentData, employmentState, filingStatusState, stTaxState, graphRangeState}){
