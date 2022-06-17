@@ -2,7 +2,8 @@ import Chart from "react-apexcharts";
 import React from "react";
 import jobdatahandler from "../libs/CareerDataHandler";
 import {getYearsNumbered, isEmptyArray, isObject} from "../utilities/genericFunctions";
-import CreateNewDataForEvaluationGraphs from "../libs/CreateNewDataForEvaluationGraphs";
+import EvaluationGraphsDataHandler from "../libs/EvaluationGraphsDataHandler";
+import EvaluationGraphSet from "../libs/EvaluationGraphSet";
 import {useState} from "react";
 import EnlargedGraph from "../components/EnlargedGraph";
 import {changeSheetLength, findCurrentFinancialSheets} from "../utilities/sharedFunctions";
@@ -24,25 +25,25 @@ function EvaluationGraphs({incomeOptionState, expenseOptionState, investmentOpti
     if (investmentData[0]) { investmentData = investmentData[0] }
 
     const mapGraphOptionStateToObjectKey = {
-        "Assets vs. Inflation": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+        "Assets vs. Inflation": () => { return new EvaluationGraphSet(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeAssetsVsInflation(); },
-        "Combined Investment Expenses": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+        "Combined Investment Expenses": () => { return new EvaluationGraphSet(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeCombinedInvestmentExpenses(); },
-        "Expenses by Group": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+        "Expenses by Group": () => { return new EvaluationGraphSet(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeExpenses(); },
-        "Income by Group": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+        "Income by Group": () => { return new EvaluationGraphSet(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeIncomeByGroup(); },
-        "Investment Income": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+        "Investment Income": () => { return new EvaluationGraphSet(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeInvestmentIncome(); },
-        "Running Liquid Assets Sums vs. Yearly Expenses": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+        "Running Liquid Assets Sums vs. Yearly Expenses": () => { return new EvaluationGraphSet(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeRunningIncomeSumsAndYearlyExpenses(); },
-        "Same Year Expendable": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+        "Same Year Expendable": () => { return new EvaluationGraphSet(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeSameYearExpendable(); },
-        "Taxes by Category": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+        "Taxes by Category": () => { return new EvaluationGraphSet(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeTaxesByCategory(); },
-        "Tax Percentage by Year": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+        "Tax Percentage by Year": () => { return new EvaluationGraphSet(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeTaxPercentageByYear(); },
-        "Total Assets": () => { return new CreateNewDataForEvaluationGraphs(incomeData, expenseData, investmentData,
+        "Total Assets": () => { return new EvaluationGraphSet(incomeData, expenseData, investmentData,
             employmentState, filingStatusState, stTaxState).makeTotalAssetsLiquidAndIlliquid(); },
     };
 
