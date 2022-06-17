@@ -1,6 +1,6 @@
-import {isNumeric} from "../libs/genericFunctions";
-import Investmentdatahandler from "../libs/datahandlers/InvestmentDataHandler";
-import {errorHandler} from "../libs/errorHandler";
+import {isNumeric} from "../utilities/genericFunctions";
+import Investmentdatahandler from "../libs/InvestmentDataHandler";
+import {errorHandler} from "../utilities/errorHandler";
 let cc = console.log;
 
 export function SubmitButton({investmentsState, setInvestmentsState, graphKey, setGraphKey}){

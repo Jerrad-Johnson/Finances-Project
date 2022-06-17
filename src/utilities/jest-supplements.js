@@ -2,11 +2,9 @@ export function arrayConverter(variable){
     return JSON.stringify(variable);
 }
 
-
 function getSingleKeyFromObject(ob, k){
     return ob[k];
 }
-
 
 function resetTwoArraysOfLength15ToZeros(arr){
     let x = [

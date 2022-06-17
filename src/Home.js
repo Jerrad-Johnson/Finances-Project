@@ -1,5 +1,5 @@
 import sampleImage from './images/sample.jpg'
-import {setSampleValues} from "./libs/sampleValues";
+import {setSampleValues} from "./utilities/sampleValues";
 
 
 function Home(){

@@ -1,7 +1,7 @@
-import CareerDataHandler from "./datahandlers/CareerDataHandler";
-import ExpenseDataHandler from "./datahandlers/ExpenseDataHandler";
+import CareerDataHandler from "../libs/CareerDataHandler";
+import ExpenseDataHandler from "../libs/ExpenseDataHandler";
 import {cc} from "./genericFunctions";
-import Investmentdatahandler from "./datahandlers/InvestmentDataHandler";
+import Investmentdatahandler from "../libs/InvestmentDataHandler";
 
 export function setSampleValues() {
     let linearJobs = [{

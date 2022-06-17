@@ -8,7 +8,7 @@ import {
     isEmptyArray,
     createArrayOfZeros,
     applyRoundingSingleDepthArray,
-} from "../genericFunctions";
+} from "../utilities/genericFunctions";
 import CalculateTaxes from "./TaxesCalculator";
 
 class CreateNewDataForEvaluationGraphs {

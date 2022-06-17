@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import CareerDataHandler from "../libs/datahandlers/CareerDataHandler";
+import CareerDataHandler from "../libs/CareerDataHandler";
 
 
 test('Linear data end-to-end test', () => {

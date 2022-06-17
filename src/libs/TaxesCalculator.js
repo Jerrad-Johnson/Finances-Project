@@ -1,5 +1,5 @@
 import Jobdatahandler from "./CareerDataHandler";
-import {applyRoundingSingleDepthArray, applyRoundingSingleDepthArrayTwoDecimals} from "../genericFunctions";
+import {applyRoundingSingleDepthArray, applyRoundingSingleDepthArrayTwoDecimals} from "../utilities/genericFunctions";
 
 class CalculateTaxes {
     constructor(moneyIn, employmentState, filingStatusState, stTaxState, taxYearState){

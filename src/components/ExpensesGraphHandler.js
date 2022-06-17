@@ -1,7 +1,7 @@
-import ExpenseDataHandler from "../libs/datahandlers/ExpenseDataHandler";
-import {isNumeric} from "../libs/genericFunctions";
+import ExpenseDataHandler from "../libs/ExpenseDataHandler";
+import {isNumeric} from "../utilities/genericFunctions";
 import {useLocalStorage} from "../hooks/useLocalStorage";
-import {errorHandler} from "../libs/errorHandler";
+import {errorHandler} from "../utilities/errorHandler";
 let cc = console.log;
 
 export function SubmitButton({expensesState, setExpensesState}){

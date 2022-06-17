@@ -1,5 +1,5 @@
 import React from "react";
-import {cc} from "../libs/genericFunctions";
+import {cc} from "../utilities/genericFunctions";
 
 export function SelectOptions({financialData}){
     let printToDom = financialData.map((entry, index) => {

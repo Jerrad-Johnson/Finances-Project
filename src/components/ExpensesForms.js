@@ -1,4 +1,4 @@
-import {createArrayWithNumberOfYearsToGraph} from "../libs/genericFunctions";
+import {createArrayWithNumberOfYearsToGraph} from "../utilities/genericFunctions";
 import {GraphOptions, PrintSum, SelectOptions} from "./EvaluationForms";
 import React from "react";
 var fieldsStateKey = 0;

@@ -1,9 +1,9 @@
 //TODO Hide submit button for two seconds after click.
 import React from "react";
-import CareerDataHandler from "../libs/datahandlers/CareerDataHandler";
+import CareerDataHandler from "../libs/CareerDataHandler";
 import {LinearBarChart, LinearSumBarChart} from "../graphs/CareerGraphs";
-import {handleJobDelete, isNumeric} from "../libs/genericFunctions";
-import {errorHandler} from "../libs/errorHandler";
+import {handleJobDelete, isNumeric} from "../utilities/genericFunctions";
+import {errorHandler} from "../utilities/errorHandler";
 let cc = console.log;
 var linearKey = 0;
 

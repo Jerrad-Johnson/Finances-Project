@@ -1,6 +1,6 @@
 //TODO Add delete confirmation.
-import CareerDataHandler from "./datahandlers/CareerDataHandler";
-import jobdatahandler from "./datahandlers/CareerDataHandler";
+import CareerDataHandler from "../libs/CareerDataHandler";
+import jobdatahandler from "../libs/CareerDataHandler";
 
 var lengthOfGraphInYears = new CareerDataHandler();
 lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;

@@ -1,9 +1,9 @@
 import React from "react";
-import CareerDataHandler from "../libs/datahandlers/CareerDataHandler";
-import {handleJobDelete, isNumeric} from "../libs/genericFunctions";
+import CareerDataHandler from "../libs/CareerDataHandler";
+import {handleJobDelete, isNumeric} from "../utilities/genericFunctions";
 import {SteppedBarChart, SteppedSumBarChart} from "../graphs/CareerGraphs";
 import {CreateSteppedJobIncomeForm} from "../Career";
-import {errorHandler} from "../libs/errorHandler";
+import {errorHandler} from "../utilities/errorHandler";
 
 let cc = console.log;
 var steppedKey = 0;

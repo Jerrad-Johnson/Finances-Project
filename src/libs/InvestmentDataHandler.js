@@ -1,5 +1,5 @@
 import jobdatahandler from "./CareerDataHandler";
-import {applyRoundingSingleDepthArray, applyRoundingTwoDepthArray} from "../genericFunctions";
+import {applyRoundingSingleDepthArray, applyRoundingTwoDepthArray} from "../utilities/genericFunctions";
 
 class InvestmentDataHandler {
 
