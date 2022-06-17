@@ -1,14 +1,17 @@
 import {isEmptyArray, isEmptyObject, isObject} from "../utilities/genericFunctions";
 import EvaluationGraphsDataHandler from "./EvaluationGraphsDataHandler";
+import {createArrayOfZeros} from "../utilities/genericFunctions";
 
 class EvaluationGraphSet{
     constructor(income, expenses, investments, employmentState = [],
         filingStatusState = [], stTaxState = [], taxYearState = 22){
 
         [this.newGraphData, this.expenses, this.taxesOnIncomeAndInvestmentIncreases, this.taxesOnIncomeOnly,
-            this.income, this.investments]
+            this.income, this.investments, this.length]
         = new EvaluationGraphsDataHandler(income, expenses, investments, employmentState,
             filingStatusState, stTaxState, taxYearState).getAllData();
+
+        this.arrayOfZeros = createArrayOfZeros(this.length)
     }
 
     makeAssetsVsInflation(){
@@ -308,7 +311,6 @@ class EvaluationGraphSet{
     }
 
     standardGraphDataCheck(arr){
-
         return (Array.isArray(arr)
             && !isEmptyArray(arr)
             && JSON.stringify(arr) !== JSON.stringify(this.arrayOfZeros));

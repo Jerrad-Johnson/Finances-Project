@@ -30,7 +30,7 @@ class EvaluationGraphsDataHandler {
 
     getAllData(){
         return [this.newGraphData, this.expenses, this.taxesOnIncomeAndInvestmentIncreases,
-            this.taxesOnIncomeOnly, this.income, this.investments]
+            this.taxesOnIncomeOnly, this.income, this.investments, this.length]
     }
 
     addValuesToIncome(income, expenses, investments, length){
