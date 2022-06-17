@@ -1,4 +1,4 @@
-import ExpenseDataHandler from "../libs/ExpenseDataHandler";
+import ExpenseDataHandler from "../libs/datahandlers/ExpenseDataHandler";
 import {getArrayAsString, getKey} from "../utilities/jest-supplements";
 
 

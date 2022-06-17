@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {sortFinancialData, SelectOptions, GraphOptions, PrintSum} from "./components/EvaluationForms";
+import {sortFinancialData} from "./libs/sharedFunctions";
 import EvaluationGraphs from "./graphs/EvaluationGraphs";
 import EvaluationGeneralData from "./components/EvaluationGeneralData";
 import EvaluationForms from "./components/EvaluationForms";

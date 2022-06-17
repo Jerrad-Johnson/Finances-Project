@@ -1,5 +1,5 @@
-import {isNumeric} from "./jobssharedfunctions";
-import Investmentdatahandler from "../libs/InvestmentDataHandler";
+import {isNumeric} from "../libs/genericFunctions";
+import Investmentdatahandler from "../libs/datahandlers/InvestmentDataHandler";
 import {errorHandler} from "../libs/errorHandler";
 let cc = console.log;
 

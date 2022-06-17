@@ -1,5 +1,5 @@
-import ExpenseDataHandler from "../libs/ExpenseDataHandler";
-import {isNumeric} from "./jobssharedfunctions";
+import ExpenseDataHandler from "../libs/datahandlers/ExpenseDataHandler";
+import {isNumeric} from "../libs/genericFunctions";
 import {useLocalStorage} from "../hooks/useLocalStorage";
 import {errorHandler} from "../libs/errorHandler";
 let cc = console.log;

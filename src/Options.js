@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {cc} from "./components/jobssharedfunctions";
+import {cc} from "./libs/genericFunctions";
 import EvaluationGeneralData from "./components/EvaluationGeneralData";
-import {removeAllValues} from "./libs/removeAllValues";
+import {removeAllValues} from "./libs/sharedFunctions.js";
 
 function Options(){
 

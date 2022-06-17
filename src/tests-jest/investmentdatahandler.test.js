@@ -1,6 +1,6 @@
 import {getArrayAsString, getKey, resetArr} from "../utilities/jest-supplements";
-import {applyRoundingSingleDepthArray, applyRoundingTwoDepthArray} from "../components/jobssharedfunctions";
-import investmentdatahandler from "../libs/InvestmentDataHandler";
+import {applyRoundingSingleDepthArray, applyRoundingTwoDepthArray} from "../libs/genericFunctions";
+import investmentdatahandler from "../libs/datahandlers/InvestmentDataHandler";
 
 let cc = console.log;
 var investmentData = {};

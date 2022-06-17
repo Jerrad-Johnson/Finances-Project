@@ -134,8 +134,6 @@ class CareerDataHandler {
         let currentIterationSum = 0;
         let sumIncomeByYear = [];
 
-        console.log(job.incomeInGraphYearsNumberOfSteps)
-
         for (let i = 0; i < this.graphMaxNumberOfYears; i++){
             currentIterationSum = (currentIterationSum + job.incomeInGraphYearsNumberOfSteps[i]);
             sumIncomeByYear[i] = currentIterationSum;

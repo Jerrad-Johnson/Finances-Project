@@ -1,6 +1,6 @@
 import React from "react";
-import CareerDataHandler from "../libs/CareerDataHandler";
-import {handleJobDelete, isNumeric} from "./jobssharedfunctions";
+import CareerDataHandler from "../libs/datahandlers/CareerDataHandler";
+import {handleJobDelete, isNumeric} from "../libs/genericFunctions";
 import {SteppedBarChart, SteppedSumBarChart} from "../graphs/CareerGraphs";
 import {CreateSteppedJobIncomeForm} from "../Career";
 import {errorHandler} from "../libs/errorHandler";

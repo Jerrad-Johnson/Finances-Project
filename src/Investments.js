@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {createArrayWithNumberOfYearsToGraph, isNumeric} from "./components/jobssharedfunctions";
+import {createArrayWithNumberOfYearsToGraph, isNumeric} from "./libs/genericFunctions";
 import {InvestmentRunningValueBarChart} from "./graphs/InvestmentGraphs";
 import {SubmitButton, DeleteThisGraph, DeleteButton} from "./components/InvesmentGraphHandler";
 import {getOptionElements, getOptionElementsForReinvesting, AddInvestmentFieldButton, DeleteInvestmentFieldButton} from "./components/InvestmentForms";

@@ -1,11 +1,11 @@
 import Chart from "react-apexcharts";
 import React from "react";
-import jobdatahandler from "../libs/CareerDataHandler";
-import {getYearsNumbered, isEmptyArray, isObject} from "../components/jobssharedfunctions";
-import CreateNewDataForEvaluationGraphs from "../libs/CreateNewDataForEvaluationGraphs";
+import jobdatahandler from "../libs/datahandlers/CareerDataHandler";
+import {getYearsNumbered, isEmptyArray, isObject} from "../libs/genericFunctions";
+import CreateNewDataForEvaluationGraphs from "../libs/datahandlers/CreateNewDataForEvaluationGraphs";
 import {useState} from "react";
 import EnlargedGraph from "../components/EnlargedGraph";
-import {changeSheetLength, findCurrentFinancialSheets} from "../libs/supplementalfunctions";
+import {changeSheetLength, findCurrentFinancialSheets} from "../libs/sharedFunctions";
 
 let cc = console.dir
 let length = new jobdatahandler().graphMaxNumberOfYears;

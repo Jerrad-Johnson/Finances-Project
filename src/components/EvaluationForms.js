@@ -1,18 +1,5 @@
 import React from "react";
-import {cc} from "./jobssharedfunctions";
-
-
-export function sortFinancialData(financialData){
-    if (financialData !== null) {
-        financialData.sort((a, b) => {
-            let x = a.title.toLowerCase();
-            let y = b.title.toLowerCase();
-            return (x > y ? 1 : -1);
-        });
-    }
-
-    return financialData;
-}
+import {cc} from "../libs/genericFunctions";
 
 export function SelectOptions({financialData}){
     let printToDom = financialData.map((entry, index) => {
