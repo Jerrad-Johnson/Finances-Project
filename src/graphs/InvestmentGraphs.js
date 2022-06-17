@@ -34,7 +34,7 @@ export function InvestmentRunningValueBarChart({investmentSheet}) {
                     plotOptions: {
                         bar: {
                             horizontal: true,
-                        }
+                        },
                     },
                     /*colors: [
                         '#00aa00', '#880000', '#880000',

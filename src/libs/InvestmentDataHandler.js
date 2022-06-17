@@ -1,4 +1,4 @@
-import jobdatahandler from "./jobdatahandler";
+import jobdatahandler from "./CareerDataHandler";
 import {applyRoundingSingleDepthArray, applyRoundingTwoDepthArray} from "../components/jobssharedfunctions";
 
 class InvestmentDataHandler {

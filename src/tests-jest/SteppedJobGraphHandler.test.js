@@ -1,4 +1,4 @@
-import {runCalculationsOnSteppedData, checkSteppedData} from "./SteppedJobComponent";
+import {runCalculationsOnSteppedData, checkSteppedData} from "../components/SteppedJobGraphHandler";
 
 let jobData = {
     title: "Wally",

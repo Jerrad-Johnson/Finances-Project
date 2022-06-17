@@ -1,4 +1,4 @@
-import {runCalculationsOnLinearData, checkLinearJobData} from "./LinearJobComponent";
+import {runCalculationsOnLinearData, checkLinearJobData} from "../components/LinearJobGraphHandler";
 
 test("Good in, Good out -- error checks from checkLinearJobData", () => {
     let jobData = {

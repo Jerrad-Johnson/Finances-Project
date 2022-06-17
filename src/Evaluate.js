@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {sortFinancialData, SelectOptions, GraphOptions, PrintSum} from "./components/EvaluationForms";
-import EvaluationGraphs from "./components/EvaluationGraphs";
+import EvaluationGraphs from "./graphs/EvaluationGraphs";
 import EvaluationGeneralData from "./components/EvaluationGeneralData";
 import EvaluationForms from "./components/EvaluationForms";
 let cc = console.dir

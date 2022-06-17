@@ -1,4 +1,4 @@
-import {checkSubmissionData, addKeyToSheet} from "./ExpensesGraphs";
+import {checkSubmissionData, addKeyToSheet} from "../components/ExpensesGraphHandler";
 
 var expenseData = {
     beginYears: [5, 10],

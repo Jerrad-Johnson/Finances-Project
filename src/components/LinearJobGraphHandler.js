@@ -1,7 +1,7 @@
 //TODO Hide submit button for two seconds after click.
 import React from "react";
-import JobDataHandler from "../libs/jobdatahandler";
-import {LinearBarChart, LinearSumBarChart} from "../graphs/IncomeGraphs";
+import CareerDataHandler from "../libs/CareerDataHandler";
+import {LinearBarChart, LinearSumBarChart} from "../graphs/CareerGraphs";
 import {handleJobDelete, isNumeric} from "./jobssharedfunctions";
 import {errorHandler} from "../libs/errorHandler";
 let cc = console.log;
@@ -60,7 +60,7 @@ export function checkLinearJobData(jobData){
 }
 
 export function runCalculationsOnLinearData(jobData){
-    jobData = new JobDataHandler(jobData).beginLinear();
+    jobData = new CareerDataHandler(jobData).beginLinear();
     return jobData;
 }
 

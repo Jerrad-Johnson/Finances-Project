@@ -1,10 +1,10 @@
 import Chart from "react-apexcharts";
 import React from "react";
-import jobdatahandler from "../libs/jobdatahandler";
-import {getYearsNumbered, isEmptyArray, isObject} from "./jobssharedfunctions";
+import jobdatahandler from "../libs/CareerDataHandler";
+import {getYearsNumbered, isEmptyArray, isObject} from "../components/jobssharedfunctions";
 import CreateNewDataForEvaluationGraphs from "../libs/CreateNewDataForEvaluationGraphs";
 import {useState} from "react";
-import EnlargedGraph from "./EnlargedGraph";
+import EnlargedGraph from "../components/EnlargedGraph";
 import {changeSheetLength, findCurrentFinancialSheets} from "../libs/supplementalfunctions";
 
 let cc = console.dir

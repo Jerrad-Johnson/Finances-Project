@@ -1,4 +1,4 @@
-import jobdatahandler from "./jobdatahandler";
+import jobdatahandler from "./CareerDataHandler";
 import {
     cc,
     combineSinglePropertySubArrays,
@@ -9,7 +9,7 @@ import {
     createArrayOfZeros,
     applyRoundingSingleDepthArray,
 } from "../components/jobssharedfunctions";
-import CalculateTaxes from "./Taxes";
+import CalculateTaxes from "./TaxesCalculator";
 
 class CreateNewDataForEvaluationGraphs {
     constructor(income, expenses, investments, employmentState = [],

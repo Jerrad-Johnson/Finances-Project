@@ -1,7 +1,7 @@
-import JobDataHandler from "./jobdatahandler";
-import ExpenseDataHandler from "./expensedatahandler";
+import CareerDataHandler from "./CareerDataHandler";
+import ExpenseDataHandler from "./ExpenseDataHandler";
 import {cc} from "../components/jobssharedfunctions";
-import Investmentdatahandler from "./investmentdatahandler";
+import Investmentdatahandler from "./InvestmentDataHandler";
 
 export function setSampleValues() {
     let linearJobs = [{
@@ -122,11 +122,11 @@ export function setSampleValues() {
     }];
 
     let linearJobsCalculated = linearJobs.map((e) => {
-        return new JobDataHandler(e).beginLinear();
+        return new CareerDataHandler(e).beginLinear();
     });
 
     let steppedJobsCalculated = steppedJobs.map((e) => {
-        return new JobDataHandler(e).beginStepped();
+        return new CareerDataHandler(e).beginStepped();
     });
 
     let expensesCalculated = expenses.map((e) => {

@@ -1,4 +1,4 @@
-import {checkInvestmentData} from "./InvesmentGraphHandler";
+import {checkInvestmentData} from "../components/InvesmentGraphHandler";
 //let cc = console.log;
 
 test("Error Handling", () => {

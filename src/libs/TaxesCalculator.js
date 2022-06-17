@@ -1,4 +1,4 @@
-import Jobdatahandler from "./jobdatahandler";
+import Jobdatahandler from "./CareerDataHandler";
 import {applyRoundingSingleDepthArray, applyRoundingSingleDepthArrayTwoDecimals} from "../components/jobssharedfunctions";
 
 class CalculateTaxes {

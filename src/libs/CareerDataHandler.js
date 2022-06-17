@@ -1,5 +1,5 @@
 
-class JobDataHandler {
+class CareerDataHandler {
 
     constructor(jobsData){
         this.jobsData = jobsData;
@@ -106,7 +106,7 @@ class JobDataHandler {
             runningTotalSalary = (runningTotalSalary + job.incomeIncreasePerYear);
         }
 
-        for (let i = job.yearToIncomeCeiling +1; i <= 14; i++){
+        for (let i = job.yearToIncomeCeiling +1; i <= (this.graphMaxNumberOfYears -1); i++){
             incomeInGraphYearsNumberOfSteps[i] = job.incomeCeiling;
         }
 
@@ -134,6 +134,8 @@ class JobDataHandler {
         let currentIterationSum = 0;
         let sumIncomeByYear = [];
 
+        console.log(job.incomeInGraphYearsNumberOfSteps)
+
         for (let i = 0; i < this.graphMaxNumberOfYears; i++){
             currentIterationSum = (currentIterationSum + job.incomeInGraphYearsNumberOfSteps[i]);
             sumIncomeByYear[i] = currentIterationSum;
@@ -159,4 +161,4 @@ class JobDataHandler {
 
 }
 
-export default JobDataHandler;
+export default CareerDataHandler;

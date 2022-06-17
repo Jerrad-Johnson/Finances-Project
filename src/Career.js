@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
-import LinearGraph, {handleLinearJobSubmission} from "./components/LinearJobComponent";
+import LinearGraph, {handleLinearJobSubmission} from "./components/LinearJobGraphHandler";
 import {createArrayWithNumberOfYearsToGraph} from "./components/jobssharedfunctions";
-import SteppedGraph, {ListJobIncomeForms, addSteppedIncomeField, removeSteppedIncomeField, handleSteppedJobSubmission} from "./components/SteppedJobComponent";
+import SteppedGraph, {ListJobIncomeForms, addSteppedIncomeField, removeSteppedIncomeField, handleSteppedJobSubmission} from "./components/SteppedJobGraphHandler";
 import {useLocalStorage} from "./hooks/useLocalStorage";
 import {setSampleValues} from "./libs/sampleValues";
 

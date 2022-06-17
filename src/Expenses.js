@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {ExpenseRunningSumBarChart, ExpenseSumBarChart, ExpenseSumDonutChart} from "./graphs/ExpenseGraphs";
-import {SubmitButton, DeleteSheetButton} from "./components/ExpensesGraphs";
+import {SubmitButton, DeleteSheetButton} from "./components/ExpensesGraphHandler";
 import {DeleteFieldButton, ExpenseForms, AddFieldButton, ResetFieldsButton} from "./components/ExpensesForms";
 import {useLocalStorage} from "./hooks/useLocalStorage";
 let cc = console.log;

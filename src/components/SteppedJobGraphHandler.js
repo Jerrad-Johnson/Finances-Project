@@ -1,13 +1,13 @@
 import React from "react";
-import JobDataHandler from "../libs/jobdatahandler";
+import CareerDataHandler from "../libs/CareerDataHandler";
 import {handleJobDelete, isNumeric} from "./jobssharedfunctions";
-import {SteppedBarChart, SteppedSumBarChart} from "../graphs/IncomeGraphs";
+import {SteppedBarChart, SteppedSumBarChart} from "../graphs/CareerGraphs";
 import {CreateSteppedJobIncomeForm} from "../Career";
 import {errorHandler} from "../libs/errorHandler";
 
 let cc = console.log;
 var steppedKey = 0;
-let lengthOfGraphInYears = new JobDataHandler();
+let lengthOfGraphInYears = new CareerDataHandler();
 lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
 
 export function ListJobIncomeForms({steppedIncomeFormState}){
@@ -116,7 +116,7 @@ export function checkSteppedData(jobData){
 }
 
 export function runCalculationsOnSteppedData(jobData){
-    let jobDataToBeReturned = new JobDataHandler(jobData).beginStepped();
+    let jobDataToBeReturned = new CareerDataHandler(jobData).beginStepped();
 
     return jobDataToBeReturned;
 }

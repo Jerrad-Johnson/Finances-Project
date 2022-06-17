@@ -1,8 +1,8 @@
 //TODO Add delete confirmation.
-import JobDataHandler from "../libs/jobdatahandler";
-import jobdatahandler from "../libs/jobdatahandler";
+import CareerDataHandler from "../libs/CareerDataHandler";
+import jobdatahandler from "../libs/CareerDataHandler";
 
-var lengthOfGraphInYears = new JobDataHandler();
+var lengthOfGraphInYears = new CareerDataHandler();
 lengthOfGraphInYears = lengthOfGraphInYears.graphMaxNumberOfYears;
 
 export function handleJobDelete(key, jobDataState, setJobDataState){

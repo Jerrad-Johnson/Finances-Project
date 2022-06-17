@@ -1,4 +1,4 @@
-import ExpenseDataHandler from "../libs/expensedatahandler";
+import ExpenseDataHandler from "../libs/ExpenseDataHandler";
 import {isNumeric} from "./jobssharedfunctions";
 import {useLocalStorage} from "../hooks/useLocalStorage";
 import {errorHandler} from "../libs/errorHandler";
