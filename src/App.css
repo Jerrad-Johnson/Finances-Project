@@ -4,48 +4,6 @@
 
 /*TODO create a dark mode*/
 
-/*
-
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-*/
-
 body {
     @apply text-black
     bg-slate-600
@@ -68,13 +26,11 @@ nav {
     max-width: 1048px;
 }
 
-
 nav.a {
     @apply
     mr-2
     ml-2
 }
-
 
 div.container {
     @apply
@@ -86,9 +42,7 @@ div.pairs {
     flex
     flex-row
     flex-wrap
-    /*place-items-start*/
     justify-center
-    /*items-end:last-child*/
 }
 
 div.right {
@@ -103,8 +57,6 @@ div.right {
 
 div.graphCard {
     @apply
-    /*ml-20
-    mr-20*/
     mt-10
     shadow-md
     bg-white
@@ -119,7 +71,6 @@ div.inputSet {
     @apply
     w-52
     mr-10
-    /*ml-10*/
 }
 
 div.inputSelectorsCard{
@@ -298,7 +249,6 @@ h2{
     max-width: 400px;
     overflow: hidden;
     transform: translate(-50%, -50%);
-    /*min-height: 150px;*/
     left: 50%;
     top: 40%;
     z-index: 999;

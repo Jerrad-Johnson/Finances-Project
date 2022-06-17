@@ -60,4 +60,3 @@ describe("Career page checks", () => {
        cy.get(".steppedJobKey0").should("not.exist");
    });
 });
-

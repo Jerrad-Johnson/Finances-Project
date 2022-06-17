@@ -33,7 +33,6 @@ export function addSteppedIncomeField(steppedIncomeFormState, setSteppedIncomeFo
         if (steppedIncomeFormState.length >= lengthOfGraphInYears) {
             throw new Error("There are as many fields as years; you cannot add more.")
         }
-        //TODO Add catch somewhere
 
     let arrayToBeReturned = [...steppedIncomeFormState];
     let dataToAppend = [{
@@ -105,14 +104,12 @@ export function checkSteppedData(jobData){
             throw new Error("Year in field " +i+ " is less than or equal to the year in the previous field.");
         }
     }
-     //TODO Add catch somewhere
 
     jobData.passed = true;
     jobData.key = steppedKey++;
     //jobData = {};
 
     return jobData;
-    //TODO Split this into check and set
 }
 
 export function runCalculationsOnSteppedData(jobData){

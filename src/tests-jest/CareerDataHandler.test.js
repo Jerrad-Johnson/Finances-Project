@@ -155,4 +155,3 @@ var steppedJobData = {
     key: 0,
     passed: true,
 };
-

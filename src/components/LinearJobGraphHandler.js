@@ -50,13 +50,11 @@ export function checkLinearJobData(jobData){
         } else if (+jobData.yearIncomeBegins >= +jobData.yearToIncomeCeiling) {
             throw new Error("Beginning income year is later than or equal to ceiling income year.");
         }
-        //TODO Add catch somewhere
 
     jobData.passed = true;
     jobData.key = linearKey;
     linearKey++;
     return jobData;
-    //TODO Allow user to skip Starting Income field
 }
 
 export function runCalculationsOnLinearData(jobData){

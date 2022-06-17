@@ -6,9 +6,9 @@ function Home(){
 
     return (
       <div className={"homeContainer"}>
-          <h1>Welcome</h1>
-          <span>This project is still under construction. Please excuse any bugs, poor mobile support, etc.</span>
-          <h2>Quick Start</h2>
+          {/*<h1>Welcome</h1>
+          <span>This project is still under construction. Please excuse any bugs, poor mobile support, etc.</span>*/}
+          <h1>Quick Start</h1>
           <span><b>NOTE:</b> &nbsp; This will delete any values you have already set. To get preset values and see how this app works,</span>
 
           <div className={"buttonsSideBySide"}>

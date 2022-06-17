@@ -130,11 +130,11 @@ export function setSampleValues() {
     });
 
     let expensesCalculated = expenses.map((e) => {
-       return new ExpenseDataHandler(e).beginCalculations();
+        return new ExpenseDataHandler(e).beginCalculations();
     });
 
     let investmentsCalculated = investments.map((e) => {
-       return new Investmentdatahandler(e).beginCalculations();
+        return new Investmentdatahandler(e).beginCalculations();
     });
 
     localStorage.removeItem("linearjob");
@@ -147,32 +147,3 @@ export function setSampleValues() {
     localStorage.setItem("expensedata", JSON.stringify(expensesCalculated));
     localStorage.setItem("investmentdata", JSON.stringify(investmentsCalculated));
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

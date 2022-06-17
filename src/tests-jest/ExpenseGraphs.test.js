@@ -38,5 +38,3 @@ test("Check title, begin vs. end year ranges, and amounts entered.", () => {
 test("Check that a key gets added to expenseData", () => {
     expect(addKeyToSheet(expenseData)).toHaveProperty('key');
 });
-
-

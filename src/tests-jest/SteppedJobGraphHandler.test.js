@@ -55,4 +55,3 @@ test("Good in, Good out; runCalculationsOnSteppedData", () => {
 
     expect(runCalculationsOnSteppedData(checkedJobData)).toEqual(jobDataReturned);
 });
-

@@ -20,9 +20,6 @@ export function ExpenseSumBarChart({expenseSheet}) {
                             horizontal: true,
                         }
                     },
-/*                    colors: [
-                        '#00aa00', '#880000', '#880000',
-                    ],*/
                     chart: {
                         stacked: true,
                     },
@@ -45,9 +42,6 @@ export function ExpenseSumDonutChart({expenseSheet}) {
                 type="donut"
                 height={430}
                 options = {{
-/*                    colors: [
-                        '#00aa00', '#880000', '#880000',
-                    ],*/
                     labels: expenseSheet.graphSumEachExpenseObjectForDonut[0].name,
                 }}
             />
@@ -70,9 +64,6 @@ export function ExpenseRunningSumBarChart({expenseSheet}) {
                             horizontal: true,
                         }
                     },
-/*                    colors: [
-                        '#00aa00', '#880000', '#880000',
-                    ],*/
                     chart: {
                         stacked: true,
                     },

@@ -18,4 +18,3 @@ function resetTwoArraysOfLength15ToZeros(arr){
 export let getArrayAsString = arrayConverter;
 export let getKey = getSingleKeyFromObject;
 export let resetArr = resetTwoArraysOfLength15ToZeros;
-

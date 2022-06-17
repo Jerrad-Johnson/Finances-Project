@@ -101,4 +101,3 @@ function resetAllFields(expenseFieldsState, setExpenseFieldsState){
     let x = [fieldsStateKey++];
     setExpenseFieldsState(x);
 }
-

@@ -68,7 +68,7 @@ class EvaluationGraphsDataHandler {
         }
 
         if (isObject(investments)){
-            newData = this.addrunningIlliquidAssets(newData, investments);
+            newData = this.addRunningIlliquidAssets(newData, investments);
         }
 
         if (isObject(expenses) || this.taxesOnIncomeAndInvestmentIncreases){
@@ -84,7 +84,7 @@ class EvaluationGraphsDataHandler {
         }
 
         if (newData.runningLiquidAssetsAfterExpenses && newData.runningIlliquidAssets){
-            newData = this.addcombinedRunningAssetsLiquidAndIlliquid(newData);
+            newData = this.addCombinedRunningAssetsLiquidAndIlliquid(newData);
         }
 
         if (newData.combinedExpensesMinusInvestmentData){
@@ -192,7 +192,7 @@ class EvaluationGraphsDataHandler {
         return newData;
     }
 
-    addrunningIlliquidAssets(newData, investments){
+    addRunningIlliquidAssets(newData, investments){
         newData.runningIlliquidAssets = createArrayOfZeros(this.length);
 
         for (let j = 0; j < investments.arrayRunningInvestmentValue.length; j++){
@@ -205,7 +205,7 @@ class EvaluationGraphsDataHandler {
         return newData;
     }
 
-    addcombinedRunningAssetsLiquidAndIlliquid(newData){
+    addCombinedRunningAssetsLiquidAndIlliquid(newData){
         newData.combinedRunningAssetsLiquidAndIlliquid = createArrayOfZeros(this.length);
 
         for (let i = 0; i < this.length; i++) {

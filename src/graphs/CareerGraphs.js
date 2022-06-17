@@ -23,9 +23,6 @@ export function LinearBarChart({job}) {
                             horizontal: true,
                         }
                     },
-/*                    colors: [
-                        '#00aa00', '#880000', '#880000',
-                    ],*/
                     xaxis: {
                         categories: job.yearsNumbered,
                     },
@@ -53,9 +50,6 @@ export function LinearSumBarChart({job}) {
                             horizontal: true,
                         }
                     },
-/*                    colors: [
-                        '#00aa00', '#880000', '#880000',
-                    ],*/
                     xaxis: {
                         categories: job.yearsNumbered,
                     },
@@ -86,9 +80,6 @@ export function SteppedBarChart({job}) {
                             horizontal: true,
                         }
                     },
-/*                    colors: [
-                        '#00aa00', '#880000', '#880000',
-                    ],*/
                     xaxis: {
                         categories: job.yearsNumbered,
                     },
@@ -116,9 +107,6 @@ export function SteppedSumBarChart({job}) {
                             horizontal: true,
                         }
                     },
-/*                    colors: [
-                        '#00aa00', '#880000', '#880000',
-                    ],*/
                     xaxis: {
                         categories: job.yearsNumbered,
                     },
@@ -127,4 +115,3 @@ export function SteppedSumBarChart({job}) {
         </div>
     );
 }
-

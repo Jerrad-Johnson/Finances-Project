@@ -180,5 +180,4 @@ function deleteThisGraph(investmentsState, setInvestmentsState, key){
     setInvestmentsState(newState);
 }
 
-
 export default Investments;

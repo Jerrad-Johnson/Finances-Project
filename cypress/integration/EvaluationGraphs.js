@@ -58,4 +58,3 @@ Cypress.Commands.add("setAndCheckOptions", (graphOneClassName, graphTwoClassName
     cy.get(".apexcharts-canvas").eq(0).should("exist");
     cy.get(".apexcharts-canvas").eq(1).should("exist");
 })
-

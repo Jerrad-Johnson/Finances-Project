@@ -236,10 +236,10 @@ class CalculateTaxes {
 
     getBracketCutoffs(taxYear, brackets, filingStatus){
         const mapFilingStatusToObject = {
-            "Single":"limitsSingleReturn",
-            "Married - Joint Return":"limitsMarriedJointReturn",
-            "Married - Separate Returns":"limitsMarriedSeparateReturns",
-            "Head of Household":"limitsHeadOfHouseholdReturn",
+            "Single": "limitsSingleReturn",
+            "Married - Joint Return": "limitsMarriedJointReturn",
+            "Married - Separate Returns": "limitsMarriedSeparateReturns",
+            "Head of Household": "limitsHeadOfHouseholdReturn",
         }
 
         return brackets[taxYear][mapFilingStatusToObject[filingStatus]];

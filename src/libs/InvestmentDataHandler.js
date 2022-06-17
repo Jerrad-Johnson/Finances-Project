@@ -83,6 +83,7 @@ class InvestmentDataHandler {
             investmentData.arrayInvestmentIncreaseByYear[i] = [];
             investmentData.arrayAdditionalInvestment[i] = [];
             investmentData.withdrawlValue[i] = 0;
+
             for (let j = 0; j < this.graphMaxNumberOfYears; j++) {
                 investmentData.arrayPullPercentagesByYear[i][j] = 0;
                 investmentData.arrayReinvestPercentagesByYear[i][j] = 0;
