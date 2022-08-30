@@ -1,9 +1,9 @@
 import React, {useContext, useState} from "react";
-import LinearGraph, {handleLinearJobSubmission} from "./components/LinearJobGraphHandler";
-import {createArrayWithNumberOfYearsToGraph} from "./utilities/genericFunctions";
-import SteppedGraph, {ListJobIncomeForms, addSteppedIncomeField, removeSteppedIncomeField, handleSteppedJobSubmission} from "./components/SteppedJobGraphHandler";
-import {useLocalStorage} from "./hooks/useLocalStorage";
-import {setSampleValues} from "./utilities/sampleValues";
+import LinearGraph, {handleLinearJobSubmission} from "../components/LinearJobGraphHandler";
+import {createArrayWithNumberOfYearsToGraph} from "../utilities/genericFunctions";
+import SteppedGraph, {ListJobIncomeForms, addSteppedIncomeField, removeSteppedIncomeField, handleSteppedJobSubmission} from "../components/SteppedJobGraphHandler";
+import {useLocalStorage} from "../hooks/useLocalStorage";
+import {setSampleValues} from "../utilities/sampleValues";
 
 //TODO Create a Youtube video demonstrating this app.
 //TODO Make formcontainer show as a pseudo-popup.

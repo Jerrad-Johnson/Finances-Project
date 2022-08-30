@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import {sortFinancialData} from "./utilities/sharedFunctions";
-import EvaluationGraphs from "./graphs/EvaluationGraphs";
-import EvaluationGeneralData from "./components/EvaluationGeneralData";
-import EvaluationForms from "./components/EvaluationForms";
+import {sortFinancialData} from "../utilities/sharedFunctions";
+import EvaluationGraphs from "../graphs/EvaluationGraphs";
+import EvaluationGeneralData from "../components/EvaluationGeneralData";
+import EvaluationForms from "../components/EvaluationForms";
 let cc = console.dir
 
 function Evaluate(){

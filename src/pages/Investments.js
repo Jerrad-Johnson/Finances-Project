@@ -1,9 +1,9 @@
 import {useState} from "react";
-import {createArrayWithNumberOfYearsToGraph, isNumeric} from "./utilities/genericFunctions";
-import {InvestmentRunningValueBarChart} from "./graphs/InvestmentGraphs";
-import {SubmitButton, DeleteThisGraph, DeleteButton} from "./components/InvesmentGraphHandler";
-import {getOptionElements, getOptionElementsForReinvesting, AddInvestmentFieldButton, DeleteInvestmentFieldButton} from "./components/InvestmentForms";
-import {useLocalStorage} from "./hooks/useLocalStorage";
+import {createArrayWithNumberOfYearsToGraph, isNumeric} from "../utilities/genericFunctions";
+import {InvestmentRunningValueBarChart} from "../graphs/InvestmentGraphs";
+import {SubmitButton, DeleteThisGraph, DeleteButton} from "../components/InvesmentGraphHandler";
+import {getOptionElements, getOptionElementsForReinvesting, AddInvestmentFieldButton, DeleteInvestmentFieldButton} from "../components/InvestmentForms";
+import {useLocalStorage} from "../hooks/useLocalStorage";
 
 let cc = console.log;
 

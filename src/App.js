@@ -1,11 +1,11 @@
 import './App.css';
-import Nav from "./Nav";
-import Career from "./Career";
-import Expenses from "./Expenses";
-import Investments from "./Investments";
-import Evaluate from "./Evaluate";
-import Home from "./Home";
-import Options from "./Options";
+import Nav from "./components/Nav";
+import Career from "./pages/Career";
+import Expenses from "./pages/Expenses";
+import Investments from "./pages/Investments";
+import Evaluate from "./pages/Evaluate";
+import Home from "./pages/Home";
+import Options from "./pages/Options";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 let cc = console.log;

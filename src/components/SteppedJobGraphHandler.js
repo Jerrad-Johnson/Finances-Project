@@ -2,7 +2,7 @@ import React from "react";
 import CareerDataHandler from "../libs/CareerDataHandler";
 import {handleJobDelete, isNumeric} from "../utilities/genericFunctions";
 import {SteppedBarChart, SteppedSumBarChart} from "../graphs/CareerGraphs";
-import {CreateSteppedJobIncomeForm} from "../Career";
+import {CreateSteppedJobIncomeForm} from "../pages/Career";
 import {errorHandler} from "../utilities/errorHandler";
 
 let cc = console.log;

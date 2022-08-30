@@ -16,7 +16,15 @@ to invest.
 
 ## Installation
 - Get [repository](https://github.com/Jerrad-Johnson/Finances-Project)
-- Use `npm run` in project's directory.
+- Use `npm install` in project's directory.
+
+## Testing
+- Use `npm start` to start the react dev server
+- Use `npm run cypress` for DOM testing
+- Use `npm run test` to test scripts directly
+
+## Deployment
+- Use `npm run build` to create a deployable version of the app, then navigate to the project's folder, then to the `build` subfolder. Upload the `build` folder's contents to a webserver, and set URL rewrites. 
 
 ## Features to Add
 - Allow users to download all their raw data
