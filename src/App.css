@@ -51,8 +51,8 @@ div.right {
 }
 
 .apexcharts-canvas {
-    width: 100%;
-    max-width: 380px;
+    width: 100% !important;
+    max-width: 380px !important;
 }
 
 div.graphCard {

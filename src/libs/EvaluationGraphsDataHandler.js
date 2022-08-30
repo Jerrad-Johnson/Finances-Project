@@ -26,6 +26,7 @@ class EvaluationGraphsDataHandler {
         this.filingState = filingStatusState;
         this.taxYearState = taxYearState;
         this.arrayOfZeros = createArrayOfZeros(this.length);
+        console.log(this.income, this.expenses, this.investments, this.taxesOnIncomeAndInvestmentIncreases, this.taxesOnIncomeOnly, this.newGraphData)
     }
 
     getAllData(){
